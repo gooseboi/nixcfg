@@ -13,10 +13,44 @@
 
   home.stateVersion = "24.11";
 
-  home.packages = with pkgs; [
-    # Fonts
-    noto-fonts
-  ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues nerd-fonts);
+  home.packages = with pkgs;
+    [
+      # Utils
+      btop
+      btrfs-progs
+      dosfstools
+      dust
+      exfatprogs
+      fd
+      ffmpeg-full
+      fzf
+      htop
+      libqalculate
+      man
+      man-db
+      man-pages
+      man-pages-posix
+      ntfs3g
+      p7zip
+      socat
+      tealdeer
+      unzip
+
+      # Dev
+      odin
+      python3
+      zig
+
+      # Typesetting
+      texliveFull
+      typst
+
+      # Fonts
+      libertinus
+      noto-fonts
+      noto-fonts-color-emoji
+    ]
+    ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues nerd-fonts);
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in

@@ -88,10 +88,6 @@
 
   programs.firefox.enable = true;
   programs.neovim.enable = true;
-  programs.git.enable = true;
-
-  environment.systemPackages = with pkgs; [
-  ];
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
