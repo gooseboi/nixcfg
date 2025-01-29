@@ -1,22 +1,23 @@
-{ config, pkgs, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-d2e00eab-b629-46f1-8127-283fe4bba9eb".device = "/dev/disk/by-uuid/d2e00eab-b629-46f1-8127-283fe4bba9eb";
-  networking.hostName = "anatidae"; 
+  networking.hostName = "anatidae";
 
   # TODO: network-manager wireless
   # networking.wireless.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;
 
@@ -74,7 +75,7 @@
   users.users.chonk = {
     isNormalUser = true;
     description = "chonk";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
     ];
   };
