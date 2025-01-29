@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -78,6 +79,11 @@
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
     ];
+  };
+
+  home-manager = {
+    extraSpecialArgs = {inherit inputs;};
+    users.chonk = import ./home.nix;
   };
 
   programs.firefox.enable = true;
