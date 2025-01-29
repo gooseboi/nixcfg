@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./home/git.nix
+    ./home/alacritty.nix
   ];
 
   home.username = "chonk";
@@ -13,12 +14,9 @@
   home.stateVersion = "24.11";
 
   home.packages = with pkgs; [
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-  ];
+    # Fonts
+    noto-fonts
+  ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues nerd-fonts);
 
   home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
