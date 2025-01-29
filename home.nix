@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./home/git.nix
+    ./home/tmux.nix
     ./home/alacritty.nix
   ];
 
