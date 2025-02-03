@@ -4,9 +4,11 @@
   ...
 }: {
   imports = [
+    ./home/alacritty.nix
+    ./home/eza.nix
     ./home/git.nix
     ./home/tmux.nix
-    ./home/alacritty.nix
+    ./home/zsh.nix
   ];
 
   home.username = "chonk";

@@ -77,9 +77,9 @@
     isNormalUser = true;
     description = "chonk";
     extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-    ];
+    shell = pkgs.zsh;
   };
+  programs.zsh.enable = true;
 
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
@@ -88,6 +88,8 @@
 
   programs.firefox.enable = true;
   programs.neovim.enable = true;
+
+  environment.pathsToLink = ["/share/zsh"];
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
