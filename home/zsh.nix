@@ -1,4 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  stringToPath = prefix: pathStr: prefix + builtins.toPath pathStr;
+  absoluteStringToPath = pathStr: stringToPath /. pathStr;
+  removeHomeDirPrefix = path: lib.path.removePrefix (absoluteStringToPath config.home.homeDirectory) path;
+in {
   programs.zsh = {
     enable = true;
 
@@ -7,6 +16,7 @@
     syntaxHighlighting.enable = true;
     completionInit = "autoload -U compinit && compinit -u";
     autocd = true;
+    dotDir = "${removeHomeDirPrefix (absoluteStringToPath "${config.xdg.configHome}/zsh")}";
 
     history = {
       append = true;
