@@ -9,10 +9,12 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
 
-  boot.initrd.luks.devices."luks-d2e00eab-b629-46f1-8127-283fe4bba9eb".device = "/dev/disk/by-uuid/d2e00eab-b629-46f1-8127-283fe4bba9eb";
+    initrd.luks.devices."luks-d2e00eab-b629-46f1-8127-283fe4bba9eb".device = "/dev/disk/by-uuid/d2e00eab-b629-46f1-8127-283fe4bba9eb";
+  };
   networking.hostName = "anatidae";
 
   # TODO: network-manager wireless
@@ -42,11 +44,12 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
+  services = {
+    xserver.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+    displayManager.sddm.enable = true;
+    desktopManager.plasma6.enable = true;
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -79,15 +82,17 @@
     extraGroups = ["networkmanager" "wheel"];
     shell = pkgs.zsh;
   };
-  programs.zsh.enable = true;
 
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     users.chonk = import ./home.nix;
   };
 
-  programs.firefox.enable = true;
-  programs.neovim.enable = true;
+  programs = {
+    zsh.enable = true;
+    firefox.enable = true;
+    neovim.enable = true;
+  };
 
   environment.pathsToLink = ["/share/zsh"];
 

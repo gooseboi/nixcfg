@@ -18,8 +18,10 @@
     flake-utils,
     ...
   } @ inputs:
-    flake-utils.lib.eachDefaultSystem (system: {
-      formatter = nixpkgs.legacyPackages.${system}.alejandra;
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = import nixpkgs {inherit system;};
+    in {
+      formatter = pkgs.alejandra;
     })
     // {
       nixosConfigurations.anatidae = nixpkgs.lib.nixosSystem {
