@@ -49,4 +49,8 @@ in {
       PS1="%{$fg[blue]%}[%D{%f/%m/%y} %D{%H:%M:%S}] %B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
     '';
   };
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 }
