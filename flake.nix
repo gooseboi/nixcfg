@@ -16,6 +16,7 @@
     self,
     nixpkgs,
     flake-utils,
+    home-manager,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
@@ -28,7 +29,7 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./configuration.nix
-          inputs.home-manager.nixosModules.default
+          home-manager.nixosModules.default
         ];
       };
     };
