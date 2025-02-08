@@ -19,6 +19,10 @@
       enableVimMode = true;
       enableFzfIntegration = true;
     };
+    tmux = {
+      enable = true;
+      enableSessionizer = true;
+    };
   };
 
   home = {
