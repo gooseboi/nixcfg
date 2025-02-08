@@ -4,11 +4,7 @@
   ...
 }: {
   imports = [
-    ./home/alacritty.nix
-    ./home/eza.nix
-    ./home/git.nix
-    ./home/tmux.nix
-    ./home/zsh.nix
+    ./home
   ];
 
   chonkos = {
@@ -23,6 +19,7 @@
       enable = true;
       enableSessionizer = true;
     };
+    zathura.enable = true;
   };
 
   home = {
