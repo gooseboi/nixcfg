@@ -16,5 +16,6 @@
   config.programs.eza = lib.mkIf config.chonkos.eza.enable {
     enable = true;
     enableZshIntegration = config.chonkos.eza.enableZshIntegration;
+    icons = "auto";
   };
 }
