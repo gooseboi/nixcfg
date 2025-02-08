@@ -1,0 +1,42 @@
+# This script does the following:
+#	$0 sets the wallpaper
+#	$0 file sets the image as the wallpaper
+#	$0 directory sets a random image from the directory as the wallpaper
+#	$0 -r directory sets a random image from the directory as the wallpaper,
+#	but makes it change every time the program is ran
+
+# Location of link to wallpaper link.
+bgloc="${XDG_DATA_HOME:-$HOME/.local/share/}/bg"
+
+updatebetterlock() {
+	[ "$2" = "silent" ] || notify-send -i "$1" "Lock screen update started..."
+	betterlockscreen -u "$1"
+	[ "$2" = "silent" ] || notify-send -i "$1" "Lock screen update finished"
+}
+
+if [ -n "$1" ]; then
+	rm "$bgloc"
+	if [ "$1" = "-r" ]; then
+		trueloc="$(readlink -f "$2")"
+		ln -sf "$trueloc" "$bgloc" && notify-send -i "$bgloc" "Setting random wallpaper on startup..."
+	else
+		trueloc="$(readlink -f "$1")" &&
+		case "$(file --mime-type -b "$trueloc")" in
+			image/* ) ln -sf "$(readlink -f "$1")" "$bgloc" && notify-send -i "$bgloc" "Setting wallpaper..." ;;
+			inode/directory ) ln -sf "$(find "$trueloc" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)" "$bgloc" && notify-send -i "$bgloc" "Setting random wallpaper..." ;;
+			*) notify-send "Error" "Not a valid image." ; exit 1;;
+		esac
+	fi
+fi
+
+if [ -z "$(find "$bgloc" -type l -xtype f)" ]; then
+	randomfile=$(find -L "$bgloc" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)
+	pidof -x swaybg >/dev/null 2>/dev/null && killall swaybg
+	swaybg -i "$randomfile" -o stretch >/dev/null 2>/dev/null &
+	#[ -n "$1" ] && updatebetterlock "$randomfile"
+	#[ -n "$1" ] || updatebetterlock "$randomfile" "silent"
+else
+	pidof -x swaybg >/dev/null 2>/dev/null && killall swaybg
+	swaybg -i "$bgloc" -o stretch >/dev/null 2>/dev/null &
+	#[ -n "$1" ] && updatebetterlock "$bgloc"
+fi

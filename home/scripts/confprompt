@@ -1,0 +1,18 @@
+conffile="${XDG_CONFIG_HOME:-$HOME/.config}/conflist"
+delim=":"
+prompt="rofi -dmenu"
+
+openfile() {
+	"$TERMINAL" -e "$EDITOR" "$1"
+}
+
+confnames=$(sort "$conffile" | sed "s/$delim.*//")
+
+selectedname=$(echo "$confnames" | $prompt -p "Select a config")
+[ -z "$selectedname" ] && exit
+
+selectedfile=$(grep "$selectedname$delim" "$conffile" | sed "s/.*$delim//")
+[ -z "$selectedfile" ] && exit
+
+file=$(eval echo -n "$selectedfile")
+openfile "$file"

@@ -21,6 +21,7 @@
     };
     zathura.enable = true;
     jujutsu.enable = true;
+    scripts.enable = true;
   };
 
   home = {

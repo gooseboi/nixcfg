@@ -1,0 +1,1 @@
+newsboat -c $HOME/dox/newsboat/cache.db -u $HOME/dox/newsboat/urls

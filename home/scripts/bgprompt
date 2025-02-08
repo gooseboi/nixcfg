@@ -1,0 +1,14 @@
+walldir="$HOME/wallpapers"
+
+# TODO: Properly ignore files
+# TODO: Maybe make this a menu to recurse into folders rather than an all out list
+choice="$(printf "%s\\nrandom\\nrandom keep" "$(find "$walldir" -type f -not -path '*/.git/*' -not -name 'index' -not -name 'check.py' -not -name 'ignorelist' | sed "s#$walldir##g" | sed 's#^/##g')" | rofi -dmenu -i -p "Choose a background")"
+[ -z "$choice" ] && exit
+
+if [ "$choice" = "random" ]; then
+	setbg "$walldir"
+elif [ "$choice" = "random keep" ]; then
+	setbg -r "$walldir"
+else
+	setbg "$walldir/$choice"
+fi
