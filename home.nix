@@ -20,6 +20,7 @@
       enableSessionizer = true;
     };
     zathura.enable = true;
+    jujutsu.enable = true;
   };
 
   home = {
