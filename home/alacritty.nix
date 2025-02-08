@@ -1,5 +1,14 @@
-{pkgs, ...}: {
-  programs.alacritty = {
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: {
+  options.chonkos.alacritty = {
+    enable = lib.mkEnableOption "enables alacritty";
+  };
+
+  config.programs.alacritty = lib.mkIf config.chonkos.alacritty.enable {
     enable = true;
 
     settings = {

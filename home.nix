@@ -11,6 +11,16 @@
     ./home/zsh.nix
   ];
 
+  chonkos = {
+    alacritty.enable = true;
+    eza.enable = true;
+    zsh = {
+      enable = true;
+      enableVimMode = true;
+      enableFzfIntegration = true;
+    };
+  };
+
   home = {
     username = "chonk";
     homeDirectory = "/home/chonk";
