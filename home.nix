@@ -8,6 +8,7 @@
   ];
 
   chonkos = {
+    hyprland.enable = true;
     alacritty.enable = true;
     eza.enable = true;
     zsh = {
