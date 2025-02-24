@@ -69,10 +69,17 @@
     neovim.enable = true;
   };
 
+  chonkos = {
+    tailscale = {
+      enable = true;
+      preferredInterface = "enp0s3";
+    };
+  };
+
   environment.pathsToLink = ["/share/zsh"];
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
