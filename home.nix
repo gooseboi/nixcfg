@@ -44,15 +44,20 @@
         fzf
         htop
         libqalculate
+        magic-wormhole
         man
         man-db
         man-pages
         man-pages-posix
         ntfs3g
         p7zip
+        ripgrep
         socat
         tealdeer
         unzip
+
+        # Nix utils
+        nh
 
         # Dev
         odin
