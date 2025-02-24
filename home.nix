@@ -23,6 +23,7 @@
     zathura.enable = true;
     jujutsu.enable = true;
     scripts.enable = true;
+    fonts.enable = true;
   };
 
   home = {
@@ -31,49 +32,42 @@
 
     stateVersion = "24.11";
 
-    packages = with pkgs;
-      [
-        # Utils
-        btop
-        btrfs-progs
-        dosfstools
-        dust
-        exfatprogs
-        fd
-        ffmpeg-full
-        fzf
-        htop
-        libqalculate
-        magic-wormhole
-        man
-        man-db
-        man-pages
-        man-pages-posix
-        ntfs3g
-        p7zip
-        ripgrep
-        socat
-        tealdeer
-        unzip
+    packages = with pkgs; [
+      # Utils
+      btop
+      btrfs-progs
+      dosfstools
+      dust
+      exfatprogs
+      fd
+      ffmpeg-full
+      fzf
+      htop
+      libqalculate
+      magic-wormhole
+      man
+      man-db
+      man-pages
+      man-pages-posix
+      ntfs3g
+      p7zip
+      ripgrep
+      socat
+      tealdeer
+      unzip
 
-        # Nix utils
-        nh
+      # Nix utils
+      nh
 
-        # Dev
-        odin
-        python3
-        zig
+      # Dev
+      odin
+      python3
+      zig
 
-        # Typesetting
-        texliveFull
-        typst
-
-        # Fonts
-        libertinus
-        noto-fonts
-        noto-fonts-color-emoji
-      ]
-      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues nerd-fonts);
+      # Typesetting
+      texliveFull
+      typst
+    ];
 
     file = {
       # # Building this configuration will create a copy of 'dotfiles/screenrc' in

@@ -1,12 +1,15 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
   ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["corefonts" "vista-fonts"];
 
   # Bootloader.
   boot = {
