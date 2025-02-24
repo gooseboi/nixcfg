@@ -16,8 +16,8 @@
 
       extraConfig = ''
         debug {
-	    disable_logs = ${toString (! config.chonkos.hyprland.enableDebug)}
-	}
+          disable_logs = ${toString (! config.chonkos.hyprland.enableDebug)}
+        }
 
         # This is an example Hyprland config file.
         #
@@ -278,9 +278,20 @@
         bind = SUPER, GRAVE, exec, pypr toggle python
         bind = SUPER SHIFT, GRAVE, exec, pypr toggle qalc
       '';
-
     };
 
-      home.sessionVariables.NIXOS_OZONE_WL = "1";
+    home.sessionVariables.NIXOS_OZONE_WL = "1";
+
+    programs.waybar = {
+      enable = true;
+
+      # Both of these are mostly stolen from
+      # https://gitlab.com/librephoenix/nixos-config/ with some small changes for me
+      #
+      # Cool dude
+      style = ./waybar/style.css;
+      # TODO: Fix this
+      #settings = builtins.fromJSON (builtins.readFile ./waybar/config.json);
+    };
   };
 }
