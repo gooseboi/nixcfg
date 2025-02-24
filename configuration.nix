@@ -64,7 +64,6 @@
   };
 
   programs = {
-    zsh.enable = true;
     firefox.enable = true;
     neovim.enable = true;
   };
@@ -74,12 +73,9 @@
       enable = true;
       preferredInterface = "enp0s3";
     };
+    openssh.enable = true;
+    zsh.enable = true;
   };
-
-  environment.pathsToLink = ["/share/zsh"];
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
