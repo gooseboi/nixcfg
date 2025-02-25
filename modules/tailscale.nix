@@ -5,6 +5,7 @@
   ...
 }: let
   cfg = config.chonkos;
+  interfaceName = "ts0";
 in {
   options.chonkos.tailscale = {
     enable = lib.mkEnableOption "enables tailscale";
@@ -20,6 +21,7 @@ in {
   config = lib.mkIf cfg.tailscale.enable {
     services.tailscale = {
       enable = true;
+      inherit interfaceName;
       useRoutingFeatures = "both";
     };
 
@@ -32,7 +34,7 @@ in {
       useNetworkd = true;
       firewall = {
         checkReversePath = "loose";
-        trustedInterfaces = ["tailscale0"];
+        trustedInterfaces = [interfaceName];
       };
     };
 
