@@ -74,7 +74,6 @@
   chonkos = {
     tailscale = {
       enable = true;
-      preferredInterface = "enp0s3";
     };
     openssh.enable = true;
     zsh.enable = true;
