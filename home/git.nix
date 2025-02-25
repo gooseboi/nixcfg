@@ -7,12 +7,35 @@
     extraConfig = {
       color.ui = true;
 
+      init.defaultBranch = "master";
+
       core = {
         editor = "nvim";
         autocrlf = "input";
         safecrlf = true;
       };
+
+      merge.tool = "nvim -d";
     };
+
+    includes = [
+      {
+        condition = "gitdir:~/dev/uni/**";
+        contents = {
+          user = {
+            name = "Guzman Zugnoni";
+            email = "guzman.zugnoni@correo.ucu.edu.uy";
+            signingkey = "~/.ssh/id_uni.pub";
+          };
+
+          commit.gpgsign = true;
+          gpg.format = "ssh";
+          core.sshCommand = "ssh -i ~/.ssh/id_uni";
+
+          url."ssh://git@github.com/".insteadOf = "https://github.com";
+        };
+      }
+    ];
 
     aliases = {
       c = "commit";
