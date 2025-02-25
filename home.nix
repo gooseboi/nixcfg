@@ -47,6 +47,7 @@
       file
       fzf
       htop
+      killall
       libqalculate
       magic-wormhole
       man
@@ -59,6 +60,7 @@
       socat
       tealdeer
       unzip
+      wget
 
       # Nix utils
       nh
