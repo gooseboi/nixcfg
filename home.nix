@@ -20,6 +20,7 @@
       enable = true;
       enableSessionizer = true;
     };
+    nvim.enable = true;
     zathura.enable = true;
     jujutsu.enable = true;
     scripts.enable = true;

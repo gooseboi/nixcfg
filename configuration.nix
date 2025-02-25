@@ -66,10 +66,7 @@
     users.chonk = import ./home.nix;
   };
 
-  programs = {
-    firefox.enable = true;
-    neovim.enable = true;
-  };
+  programs.firefox.enable = true;
 
   chonkos = {
     tailscale = {

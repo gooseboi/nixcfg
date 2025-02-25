@@ -13,5 +13,6 @@
     ++ [
       ./hyprland
       ./scripts
+      ./nvim
     ];
 }
