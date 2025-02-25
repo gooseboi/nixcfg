@@ -15,22 +15,24 @@ in {
   config =
     lib.mkIf config.chonkos.scripts.enable
     {
+      chonkos.rofi.enable = true;
+
       home.packages =
         builtins.map (
           f: pkgs.writeShellScriptBin f (builtins.readFile (./. + "/${f}"))
         )
         fileNames
         ++ (with pkgs; [
+          swaybg
           curl
           ffmpeg-full
+          file
           hyprpicker
+          libnotify
           mpv
-          rofi-wayland
           simple-mtpfs
           wl-clipboard
           yt-dlp
-          file
-          libnotify
         ]);
     };
 }

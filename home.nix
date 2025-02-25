@@ -25,6 +25,7 @@
     jujutsu.enable = true;
     scripts.enable = true;
     fonts.enable = true;
+    rofi.enable = true;
   };
 
   home = {

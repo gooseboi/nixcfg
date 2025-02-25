@@ -6,6 +6,7 @@
       ./fonts.nix
       ./git.nix
       ./jujutsu.nix
+      ./rofi.nix
       ./tmux.nix
       ./zathura.nix
       ./zsh.nix

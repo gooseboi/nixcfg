@@ -32,16 +32,23 @@
 
     home.sessionVariables.NIXOS_OZONE_WL = "1";
 
+    home.packages = with pkgs; [
+      killall # For waybar start script
+    ];
+
     programs.waybar = {
       enable = true;
 
-      # Both of these are mostly stolen from
-      # https://gitlab.com/librephoenix/nixos-config/ with some small changes for me
-      #
-      # Cool dude
       style = ./waybar/style.css;
-      # TODO: Fix this
-      #settings = builtins.fromJSON (builtins.readFile ./waybar/config.json);
+    };
+
+    # TODO: Use xdg config dir instead
+    home.file.".config/waybar/waybar.sh" = {
+      source = ./waybar/waybar.sh;
+      executable = true;
+    };
+    home.file.".config/waybar/config.jsonc" = {
+      source = ./waybar/config.jsonc;
     };
   };
 }
