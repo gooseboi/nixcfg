@@ -20,15 +20,17 @@ in {
           f: pkgs.writeShellScriptBin f (builtins.readFile (./. + "/${f}"))
         )
         fileNames
-        ++ [
-          pkgs.curl
-          pkgs.ffmpeg-full
-          pkgs.hyprpicker
-          pkgs.mpv
-          pkgs.rofi-wayland
-          pkgs.simple-mtpfs
-          pkgs.wl-clipboard
-          pkgs.yt-dlp
-        ];
+        ++ (with pkgs; [
+          curl
+          ffmpeg-full
+          hyprpicker
+          mpv
+          rofi-wayland
+          simple-mtpfs
+          wl-clipboard
+          yt-dlp
+          file
+          libnotify
+        ]);
     };
 }

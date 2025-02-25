@@ -37,6 +37,7 @@
       # Utils
       btop
       btrfs-progs
+      curl
       dosfstools
       dust
       exfatprogs
@@ -45,7 +46,6 @@
       file
       fzf
       htop
-      libnotify
       libqalculate
       magic-wormhole
       man
