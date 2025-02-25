@@ -42,8 +42,10 @@
       exfatprogs
       fd
       ffmpeg-full
+      file
       fzf
       htop
+      libnotify
       libqalculate
       magic-wormhole
       man
