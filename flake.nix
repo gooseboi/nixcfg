@@ -10,6 +10,11 @@
     };
 
     flake-utils.url = "github:numtide/flake-utils";
+
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -17,6 +22,7 @@
     nixpkgs,
     flake-utils,
     home-manager,
+    fenix,
     ...
   } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
@@ -29,6 +35,9 @@
         specialArgs = {inherit inputs;};
         modules = [
           ./configuration.nix
+          ({pkgs, ...}: {
+            nixpkgs.overlays = [fenix.overlays.default];
+          })
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

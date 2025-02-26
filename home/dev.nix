@@ -14,9 +14,24 @@ in {
     home = {
       packages = with pkgs; [
         # Dev
+        clang-tools
+        gdb
+        gf
+        go
+        libgcc
+        python3Full
         odin
-        python3
         zig
+
+        cargo-expand
+        cargo-fuzz
+        (fenix.complete.withComponents [
+          "cargo"
+          "clippy"
+          "rust-src"
+          "rustc"
+          "rustfmt"
+        ])
       ];
 
       sessionVariables = {
