@@ -2,6 +2,7 @@
   imports =
     [
       ./alacritty.nix
+      ./dev.nix
       ./eza.nix
       ./fonts.nix
       ./git.nix
