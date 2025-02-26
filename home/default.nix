@@ -8,6 +8,7 @@
       ./jujutsu.nix
       ./rofi.nix
       ./tmux.nix
+      ./utils.nix
       ./zathura.nix
       ./zsh.nix
     ]

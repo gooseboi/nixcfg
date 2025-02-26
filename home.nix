@@ -26,6 +26,7 @@
     scripts.enable = true;
     fonts.enable = true;
     rofi.enable = true;
+    utils.enable = true;
   };
 
   home = {
@@ -35,36 +36,6 @@
     stateVersion = "24.11";
 
     packages = with pkgs; [
-      # Utils
-      btop
-      btrfs-progs
-      curl
-      dosfstools
-      dust
-      exfatprogs
-      fd
-      ffmpeg-full
-      file
-      fzf
-      htop
-      killall
-      libqalculate
-      magic-wormhole
-      man
-      man-db
-      man-pages
-      man-pages-posix
-      ntfs3g
-      p7zip
-      ripgrep
-      socat
-      tealdeer
-      unzip
-      wget
-
-      # Nix utils
-      nh
-
       # Dev
       odin
       python3
@@ -74,19 +45,6 @@
       texliveFull
       typst
     ];
-
-    file = {
-      # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-      # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-      # # symlink to the Nix store copy.
-      # ".screenrc".source = dotfiles/screenrc;
-
-      # # You can also set the file content immediately.
-      # ".gradle/gradle.properties".text = ''
-      #   org.gradle.console=verbose
-      #   org.gradle.daemon.idletimeout=3600000
-      # '';
-    };
 
     sessionVariables =
       # Default Apps
@@ -127,13 +85,11 @@
         NUGET_PACKAGES = "${config.xdg.cacheHome}/nuget";
         OPAMROOT = "${config.xdg.dataHome}/opam";
         PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
-        RIPGREP_CONFIG_PATH = "${config.xdg.configHome}/rip/ripgreprc";
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         SQLITE_HISTORY = "${config.xdg.cacheHome}/sqlite_history";
         STACK_ROOT = "${config.xdg.dataHome}/stack";
         TEXMFVAR = "${config.xdg.cacheHome}/texlive/texmf-var";
         VAGRANT_HOME = "${config.xdg.dataHome}/vagrant";
-        WGETRC = "${config.xdg.configHome}/wgetrc";
         WINEPREFIX = "${config.xdg.dataHome}/wine";
         _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.xdg.configHome}/java -Dswing.aatext=true -Dawt.useSystemAAFontSettings=on";
       }
