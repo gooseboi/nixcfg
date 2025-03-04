@@ -18,12 +18,9 @@
 
     initrd.luks.devices."luks-d2e00eab-b629-46f1-8127-283fe4bba9eb".device = "/dev/disk/by-uuid/d2e00eab-b629-46f1-8127-283fe4bba9eb";
   };
-  networking.hostName = "anatidae";
 
   # TODO: network-manager wireless
   # networking.wireless.enable = true;
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   networking.networkmanager.enable = true;
 

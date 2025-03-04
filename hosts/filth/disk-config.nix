@@ -1,0 +1,4 @@
+{lib, ...}: {
+  disko.devices = {
+  };
+}

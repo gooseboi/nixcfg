@@ -15,35 +15,78 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
+  outputs = inputs @ {
+    disko,
+    fenix,
     flake-utils,
     home-manager,
-    fenix,
+    nixos-hardware,
+    nixpkgs,
     ...
-  } @ inputs:
+  }: let
+    mkHost = hostName: system: extraModules: let
+    in
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+        };
+
+        modules =
+          [
+            ./hosts/${hostName}/configuration.nix
+
+            ./modules
+            disko.nixosModules.disko
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+            }
+
+            ({...}: {
+              nixpkgs.overlays = [fenix.overlays.default];
+            })
+
+            ({...}: {
+              networking.hostName = hostName;
+
+              nixpkgs.hostPlatform = system;
+
+              nix = {
+                settings.experimental-features = ["nix-command" "flakes"];
+                registry.nixpkgs.to = {
+                  owner = "NixOS";
+                  repo = "nixpkgs";
+                  rev = inputs.nixpkgs.rev;
+                  type = "github";
+                };
+              };
+            })
+          ]
+          ++ extraModules;
+      };
+  in
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
     in {
       formatter = pkgs.alejandra;
     })
     // {
-      nixosConfigurations.anatidae = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs;};
-        modules = [
-          ./configuration.nix
-          ({pkgs, ...}: {
-            nixpkgs.overlays = [fenix.overlays.default];
-          })
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-          }
-          ./modules
+      nixosConfigurations = {
+        filth = mkHost "filth" "aarch64-linux" [
+          nixos-hardware.nixosModules.raspberry-pi-4
         ];
+
+        anatidae = mkHost "anatidae" "x86_64-linux" [];
       };
     };
 }
