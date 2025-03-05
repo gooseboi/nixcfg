@@ -1,10 +1,12 @@
 {
-  config,
   pkgs,
   lib,
   inputs,
   ...
 }: {
+  # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
+  # TODO: binfmt registrations (https://mynixos.com/nixpkgs/option/boot.binfmt.emulatedSystems)
+
   imports = [
     ./hardware-configuration.nix
   ];
