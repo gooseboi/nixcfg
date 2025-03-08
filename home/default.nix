@@ -1,4 +1,8 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.chonkos;
 in {
   imports =
@@ -21,8 +25,19 @@ in {
       ./nvim
     ];
 
-  home = {
-    username = cfg.user;
-    homeDirectory = "/home/${cfg.user}";
+  options.chonkos = {
+    user = lib.mkOption {
+      type = lib.types.str;
+      example = "chonk";
+      description = "the user to add the modules to";
+      readOnly = true;
+    };
+  };
+
+  config = {
+    home = {
+      username = cfg.user;
+      homeDirectory = "/home/${cfg.user}";
+    };
   };
 }

@@ -57,7 +57,7 @@
             {
               home-manager = {
                 useGlobalPkgs = true;
-                sharedModules = import ./home;
+                sharedModules = [./home];
 
                 extraSpecialArgs = {inherit inputs;};
               };

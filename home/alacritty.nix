@@ -147,7 +147,7 @@
     home = {
       packages = with pkgs; [nerd-fonts.sauce-code-pro];
 
-      home.sessionVariables.TERMINAL = "alacritty";
+      sessionVariables.TERMINAL = "alacritty";
     };
   };
 }

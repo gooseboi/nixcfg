@@ -4,8 +4,7 @@
   ...
 }: {
   chonkos = {
-    # TODO: Add
-    # user = "chonk";
+    user = "chonk";
 
     hyprland.enable = true;
     alacritty.enable = true;
