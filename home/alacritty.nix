@@ -143,6 +143,11 @@
         window.opacity = 0.9;
       };
     };
-    home.packages = with pkgs; [nerd-fonts.sauce-code-pro];
+
+    home = {
+      packages = with pkgs; [nerd-fonts.sauce-code-pro];
+
+      home.sessionVariables.TERMINAL = "alacritty";
+    };
   };
 }

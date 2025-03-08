@@ -57,17 +57,16 @@
     isNormalUser = true;
     description = "chonk";
     extraGroups = ["networkmanager" "wheel"];
-    shell = pkgs.zsh;
   };
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
     users.chonk = import ./home.nix;
   };
 
   programs.firefox.enable = true;
 
   chonkos = {
+    user = "chonk";
     tailscale.enable = true;
     openssh.enable = true;
     zsh.enable = true;

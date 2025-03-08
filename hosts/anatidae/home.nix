@@ -3,11 +3,10 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ./home
-  ];
-
   chonkos = {
+    # TODO: Add
+    # user = "chonk";
+
     hyprland.enable = true;
     alacritty.enable = true;
     eza.enable = true;
@@ -31,9 +30,6 @@
   };
 
   home = {
-    username = "chonk";
-    homeDirectory = "/home/chonk";
-
     stateVersion = "24.11";
 
     packages = with pkgs; [
@@ -47,7 +43,6 @@
       {
         EDITOR = "nvim";
         VISUAL = "nvim";
-        TERMINAL = "alacritty";
         BROWSER = "librewolf";
         VIDEO = "mpv";
         COLORTERM = "truecolor";

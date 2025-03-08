@@ -43,19 +43,32 @@
 
         modules =
           [
+            # System config
             ./hosts/${hostName}/configuration.nix
 
+            # Load system modules
             ./modules
+
+            # Disko
             disko.nixosModules.disko
+
+            # Home manager configs
             home-manager.nixosModules.home-manager
             {
-              home-manager.useGlobalPkgs = true;
+              home-manager = {
+                useGlobalPkgs = true;
+                sharedModules = import ./home;
+
+                extraSpecialArgs = {inherit inputs;};
+              };
             }
 
+            # Overlays
             ({...}: {
               nixpkgs.overlays = [fenix.overlays.default];
             })
 
+            # Nix/General configs
             ({...}: {
               networking.hostName = hostName;
 

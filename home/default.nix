@@ -1,4 +1,6 @@
-{...}: {
+{config, ...}: let
+  cfg = config.chonkos;
+in {
   imports =
     [
       ./alacritty.nix
@@ -18,4 +20,9 @@
       ./scripts
       ./nvim
     ];
+
+  home = {
+    username = cfg.user;
+    homeDirectory = "/home/${cfg.user}";
+  };
 }

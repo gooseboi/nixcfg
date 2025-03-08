@@ -12,5 +12,6 @@ in {
   config = lib.mkIf cfg.zsh.enable {
     programs.zsh.enable = true;
     environment.pathsToLink = ["/share/zsh"];
+    users.users.${cfg.user}.shell = pkgs.zsh;
   };
 }
