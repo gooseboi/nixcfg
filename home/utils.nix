@@ -11,7 +11,7 @@
   removeHomeDirPrefix = path: lib.path.removePrefix (absoluteStringToPath config.home.homeDirectory) path;
   removeHomeDirPrefixStr = path: removeHomeDirPrefix (absoluteStringToPath path);
 
-  configHome = removeHomeDirPrefixStr "${config.xdg.configHome}";
+  inherit (config.xdg) configHome;
 
   ripgrep_config = "${configHome}/ripgrep/ripgreprc";
   wgetrc = "${configHome}/wgetrc";
@@ -24,6 +24,7 @@ in {
     home = {
       packages = with pkgs; [
         # Utils
+        moreutils
         btop
         btrfs-progs
         curl
@@ -60,8 +61,8 @@ in {
       };
 
       file = {
-        "${ripgrep_config}".text = "";
-        "${wgetrc}".text = ''
+        "${removeHomeDirPrefixStr ripgrep_config}".text = "";
+        "${removeHomeDirPrefixStr wgetrc}".text = ''
           hsts-file = ${config.xdg.cacheHome}/wget-hsts
         '';
       };
