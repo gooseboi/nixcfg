@@ -24,7 +24,7 @@ in {
     home = {
       packages = with pkgs; [
         # Utils
-        moreutils
+        gdu
         btop
         btrfs-progs
         curl
@@ -43,11 +43,13 @@ in {
         man-db
         man-pages
         man-pages-posix
+        moreutils
         ntfs3g
         p7zip
         ripgrep
         socat
         tealdeer
+        tree
         unzip
         wget
 
