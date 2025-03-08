@@ -22,6 +22,14 @@
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = inputs @ {
@@ -31,6 +39,7 @@
     home-manager,
     nixos-hardware,
     nixpkgs,
+    nvf,
     ...
   }: let
     mkHost = hostName: system: extraModules: let
@@ -57,7 +66,7 @@
             {
               home-manager = {
                 useGlobalPkgs = true;
-                sharedModules = [./home];
+                sharedModules = [./home nvf.homeManagerModules.default];
 
                 extraSpecialArgs = {inherit inputs;};
               };

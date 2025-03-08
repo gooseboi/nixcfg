@@ -1,26 +1,35 @@
 {
   pkgs,
-  lib,
   config,
+  lib,
   ...
 }: let
   cfg = config.chonkos.nvim;
 in {
   options.chonkos.nvim = {
-    enable = lib.mkEnableOption "enable neovim";
+    enable = lib.mkEnableOption "enables neovim support";
   };
+  config = lib.mkIf cfg.enable {
+    home.sessionVariables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
 
-  config = {
-    programs.neovim = lib.mkIf cfg.enable {
+    programs.nvf = {
       enable = true;
-      plugins = with pkgs.vimPlugins; [
-      ];
-      extraPackages = with pkgs; [
-        ripgrep
-        git
-        fd
-        nixd
-      ];
+      settings = {
+        imports = [
+          ./telescope.nix
+        ];
+        vim.viAlias = true;
+        vim.vimAlias = true;
+        vim.extraPackages = with pkgs; [
+          ripgrep
+          git
+          fd
+          nixd
+        ];
+      };
     };
   };
 }

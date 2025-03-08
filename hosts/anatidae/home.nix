@@ -40,8 +40,6 @@
     sessionVariables =
       # Default Apps
       {
-        EDITOR = "nvim";
-        VISUAL = "nvim";
         BROWSER = "librewolf";
         VIDEO = "mpv";
         COLORTERM = "truecolor";
