@@ -19,10 +19,23 @@ in {
       enable = true;
       settings = {
         imports = [
-          ./telescope.nix
         ];
         vim.viAlias = true;
         vim.vimAlias = true;
+
+        vim.extraLuaFiles =
+          builtins.map (
+            p:
+              builtins.path {
+                path = p;
+                name = builtins.baseNameOf (builtins.toString p);
+              }
+          ) [
+            ./config.lua
+            ./remap.lua
+            ./neovide.lua
+          ];
+
         vim.extraPackages = with pkgs; [
           ripgrep
           git
