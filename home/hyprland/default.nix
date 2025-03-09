@@ -30,6 +30,19 @@
       extraConfig = builtins.readFile ./hyprland.conf;
     };
 
+    xdg.portal = {
+      enable = true;
+      config.common.default = "*";
+
+      configPackages = [
+        pkgs.hyprland
+      ];
+
+      extraPortals = [
+        pkgs.xdg-desktop-portal-hyprland
+      ];
+    };
+
     home.sessionVariables.NIXOS_OZONE_WL = "1";
 
     home.packages = with pkgs; [
