@@ -30,9 +30,16 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
   };
 
   outputs = inputs @ {
+    agenix,
     disko,
     fenix,
     flake-utils,
@@ -60,6 +67,9 @@
 
             # Disko
             disko.nixosModules.disko
+
+            # Secrets
+            agenix.nixosModules.default
 
             # Home manager configs
             home-manager.nixosModules.home-manager

@@ -3,11 +3,15 @@
   lib,
   ...
 }: {
-  imports = [
-    ./ssh.nix
-    ./tailscale.nix
-    ./zsh.nix
-  ];
+  imports =
+    [
+      ./ssh.nix
+      ./tailscale.nix
+      ./zsh.nix
+    ]
+    ++ [
+      ./secrets
+    ];
 
   options.chonkos = {
     user = lib.mkOption {

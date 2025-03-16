@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   inputs,
@@ -67,6 +68,7 @@
     isNormalUser = true;
     description = "chonk";
     extraGroups = ["networkmanager" "wheel"];
+    hashedPasswordFile = config.age.secrets."chonk.hashedPassword".path;
   };
 
   home-manager = {
