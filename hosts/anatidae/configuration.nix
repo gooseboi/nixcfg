@@ -6,7 +6,7 @@
   ...
 }: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
-  # TODO: binfmt registrations (https://mynixos.com/nixpkgs/option/boot.binfmt.emulatedSystems)
+  # TODO: nix-ld)
 
   imports = [
     ./hardware-configuration.nix
@@ -19,6 +19,10 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
+
+    binfmt = {
+      emulatedSystems = ["aarch64-linux" "riscv64-linux"];
+    };
   };
 
   # TODO: network-manager wireless
