@@ -13,6 +13,4 @@
   boot.initrd.kernelModules = ["dm-snapshot"];
   boot.kernelModules = ["kvm-intel"];
   boot.extraModulePackages = [];
-
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
