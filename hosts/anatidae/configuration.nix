@@ -7,7 +7,6 @@
 }: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
   # TODO: nix-ld
-  # TODO: Add tlp
 
   imports = [
     ./hardware-configuration.nix
@@ -60,10 +59,6 @@
     graphics.enable = true;
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.chonk = {
     isNormalUser = true;
     description = "chonk";
@@ -83,6 +78,7 @@
     openssh.enable = true;
     zsh.enable = true;
     network-manager.enable = true;
+    tlp.enable = true;
   };
 
   # Open ports in the firewall.

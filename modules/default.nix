@@ -8,6 +8,7 @@
       ./network-manager.nix
       ./ssh.nix
       ./tailscale.nix
+      ./tlp.nix
       ./zsh.nix
     ]
     ++ [
