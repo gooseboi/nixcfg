@@ -2,11 +2,10 @@
   pkgs,
   config,
   lib,
+  mkMyLib,
   ...
 }: let
-  stringToPath = prefix: pathStr: prefix + builtins.toPath pathStr;
-  absoluteStringToPath = pathStr: stringToPath /. pathStr;
-  removeHomeDirPrefix = path: lib.path.removePrefix (absoluteStringToPath config.home.homeDirectory) path;
+  myLib = mkMyLib config;
 in {
   options.chonkos.zsh = {
     enable = lib.mkEnableOption "enable zsh";
@@ -23,7 +22,7 @@ in {
       syntaxHighlighting.enable = true;
       completionInit = "autoload -U compinit && compinit -u";
       autocd = true;
-      dotDir = "${removeHomeDirPrefix (absoluteStringToPath "${config.xdg.configHome}/zsh")}";
+      dotDir = "${myLib.removeHomeDirPrefixStr "${config.xdg.configHome}/zsh"}";
 
       history = {
         append = true;

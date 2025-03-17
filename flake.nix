@@ -73,7 +73,11 @@
 
             # Home manager configs
             home-manager.nixosModules.home-manager
-            ({config, ...}: {
+            ({
+              config,
+              lib,
+              ...
+            }: {
               home-manager = {
                 useGlobalPkgs = true;
                 sharedModules = [./home nvf.homeManagerModules.default];
@@ -81,13 +85,21 @@
                 extraSpecialArgs = {
                   inherit inputs;
                   systemConfig = config;
+                  mkMyLib = hmConfig: rec {
+                    stringToPath = prefix: pathStr: prefix + builtins.toPath pathStr;
+                    absoluteStringToPath = pathStr: stringToPath /. pathStr;
+                    removeHomeDirPrefix = path: lib.path.removePrefix (absoluteStringToPath hmConfig.home.homeDirectory) path;
+                    removeHomeDirPrefixStr = path: removeHomeDirPrefix (absoluteStringToPath path);
+                  };
                 };
               };
             })
 
             # Overlays
-            ({...}: {
+            ({lib, ...}: {
               nixpkgs.overlays = [fenix.overlays.default];
+
+              nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["corefonts" "vista-fonts"];
             })
 
             # Nix/General configs

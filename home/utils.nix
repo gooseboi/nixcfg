@@ -2,14 +2,12 @@
   pkgs,
   lib,
   config,
+  mkMyLib,
   ...
 }: let
   cfg = config.chonkos.utils;
 
-  stringToPath = prefix: pathStr: prefix + builtins.toPath pathStr;
-  absoluteStringToPath = pathStr: stringToPath /. pathStr;
-  removeHomeDirPrefix = path: lib.path.removePrefix (absoluteStringToPath config.home.homeDirectory) path;
-  removeHomeDirPrefixStr = path: removeHomeDirPrefix (absoluteStringToPath path);
+  myLib = mkMyLib config;
 
   inherit (config.xdg) configHome;
 
@@ -63,8 +61,8 @@ in {
       };
 
       file = {
-        "${removeHomeDirPrefixStr ripgrep_config}".text = "";
-        "${removeHomeDirPrefixStr wgetrc}".text = ''
+        "${myLib.removeHomeDirPrefixStr ripgrep_config}".text = "";
+        "${myLib.removeHomeDirPrefixStr wgetrc}".text = ''
           hsts-file = ${config.xdg.cacheHome}/wget-hsts
         '';
       };

@@ -13,8 +13,6 @@
     ./disk-config.nix
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["corefonts" "vista-fonts"];
-
   # Bootloader.
   boot = {
     loader.systemd-boot.enable = true;
@@ -66,9 +64,7 @@
     hashedPasswordFile = config.age.secrets."chonk.hashedPassword".path;
   };
 
-  home-manager = {
-    users.chonk = import ./home.nix;
-  };
+  home-manager.users.chonk = import ./home.nix;
 
   programs.firefox.enable = true;
 

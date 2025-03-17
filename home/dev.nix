@@ -2,9 +2,16 @@
   pkgs,
   config,
   lib,
+  mkMyLib,
   ...
 }: let
   cfg = config.chonkos.dev;
+
+  myLib = mkMyLib config;
+
+  inherit (config.xdg) configHome;
+
+  python_rc = "${configHome}/python/pythonrc";
 in {
   options.chonkos.dev = {
     enable = lib.mkEnableOption "enable dev tools";
@@ -50,10 +57,14 @@ in {
         NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
         NUGET_PACKAGES = "${config.xdg.cacheHome}/nuget";
         OPAMROOT = "${config.xdg.dataHome}/opam";
-        PYTHONSTARTUP = "${config.xdg.configHome}/python/pythonrc";
+        PYTHONSTARTUP = python_rc;
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         VAGRANT_HOME = "${config.xdg.dataHome}/vagrant";
         _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.xdg.configHome}/java -Dswing.aatext=true -Dawt.useSystemAAFontSettings=on";
+      };
+
+      file = {
+        "${myLib.removeHomeDirPrefixStr python_rc}".text = "";
       };
     };
   };
