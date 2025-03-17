@@ -74,6 +74,11 @@
       };
   };
 
+  programs.chromium = {
+    enable = true;
+    package = pkgs.brave;
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
