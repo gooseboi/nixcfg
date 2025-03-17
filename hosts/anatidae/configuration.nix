@@ -6,7 +6,8 @@
   ...
 }: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
-  # TODO: nix-ld)
+  # TODO: nix-ld
+  # TODO: Add tlp
 
   imports = [
     ./hardware-configuration.nix

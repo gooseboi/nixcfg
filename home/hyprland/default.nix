@@ -3,26 +3,28 @@
   config,
   lib,
   ...
-}: {
+}: let
+  cfg = config.chonkos.hyprland;
+in {
   options.chonkos.hyprland = {
     enable = lib.mkEnableOption "enable hyprland";
     enableMpd = lib.mkEnableOption "enable mpd support";
     enableDebug = lib.mkEnableOption "enable debug logs";
   };
 
-  config = lib.mkIf config.chonkos.hyprland.enable {
+  config = lib.mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
 
       settings = {
-        debug.disable_logs = !config.chonkos.hyprland.enableDebug;
+        debug.disable_logs = !cfg.enableDebug;
 
         exec-once = [
           "${pkgs.networkmanagerapplet}/bin/nm-applet"
           "${pkgs.blueman}/bin/blueman-applet"
           "${pkgs.util-linux}/bin/rfkill block bluetooth"
           "${pkgs.dunst}/bin/dunst"
-          (lib.optionalString config.chonkos.hyprland.enableMpd "${pkgs/mpd}/bin/mpd")
+          (lib.optionalString cfg.enableMpd "${pkgs/mpd}/bin/mpd")
           "${pkgs.swayidle}/bin/swayidle -w before-sleep 'hyprland-before-sleep.sh'"
         ];
       };
@@ -46,7 +48,9 @@
     home.sessionVariables.NIXOS_OZONE_WL = "1";
 
     home.packages = with pkgs; [
-      killall # For waybar start script
+      # For waybar
+      killall # Start script
+      font-awesome # The bar's font
     ];
 
     programs.waybar = {
