@@ -2,6 +2,7 @@
   pkgs,
   config,
   lib,
+  systemConfig,
   ...
 }: let
   cfg = config.chonkos.hyprland;
@@ -20,7 +21,7 @@ in {
         debug.disable_logs = !cfg.enableDebug;
 
         exec-once = [
-          "${pkgs.networkmanagerapplet}/bin/nm-applet"
+          (lib.optionalString systemConfig.chonkos.network-manager.enable "${pkgs.networkmanagerapplet}/bin/nm-applet")
           "${pkgs.blueman}/bin/blueman-applet"
           "${pkgs.util-linux}/bin/rfkill block bluetooth"
           "${pkgs.dunst}/bin/dunst"

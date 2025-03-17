@@ -73,14 +73,17 @@
 
             # Home manager configs
             home-manager.nixosModules.home-manager
-            {
+            ({config, ...}: {
               home-manager = {
                 useGlobalPkgs = true;
                 sharedModules = [./home nvf.homeManagerModules.default];
 
-                extraSpecialArgs = {inherit inputs;};
+                extraSpecialArgs = {
+                  inherit inputs;
+                  systemConfig = config;
+                };
               };
-            }
+            })
 
             # Overlays
             ({...}: {

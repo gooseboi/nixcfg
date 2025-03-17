@@ -26,11 +26,6 @@
     };
   };
 
-  # TODO: network-manager wireless
-  # networking.wireless.enable = true;
-
-  networking.networkmanager.enable = true;
-
   time.timeZone = "America/Montevideo";
 
   i18n = rec {
@@ -72,7 +67,7 @@
   users.users.chonk = {
     isNormalUser = true;
     description = "chonk";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = ["wheel"];
     hashedPasswordFile = config.age.secrets."chonk.hashedPassword".path;
   };
 
@@ -87,6 +82,7 @@
     tailscale.enable = true;
     openssh.enable = true;
     zsh.enable = true;
+    network-manager.enable = true;
   };
 
   # Open ports in the firewall.
