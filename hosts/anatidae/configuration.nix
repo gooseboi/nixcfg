@@ -70,6 +70,7 @@
 
   chonkos = {
     user = "chonk";
+    desktop.enable = true;
     tailscale.enable = true;
     openssh.enable = true;
     zsh.enable = true;

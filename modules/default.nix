@@ -5,6 +5,7 @@
 }: {
   imports =
     [
+      ./desktop.nix
       ./network-manager.nix
       ./ssh.nix
       ./tailscale.nix

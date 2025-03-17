@@ -14,6 +14,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    chonkos.desktop.enable = true;
+
     wayland.windowManager.hyprland = {
       enable = true;
 

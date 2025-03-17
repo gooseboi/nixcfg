@@ -8,6 +8,7 @@ in {
   imports =
     [
       ./alacritty.nix
+      ./desktop.nix
       ./dev.nix
       ./eza.nix
       ./fonts.nix
