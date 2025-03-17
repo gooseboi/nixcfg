@@ -80,7 +80,7 @@
         };
 
         font = {
-          size = 10.0;
+          size = 11.0;
           normal.family = "SauceCodePro NFM Medium";
         };
 
