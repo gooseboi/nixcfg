@@ -50,8 +50,11 @@ in {
 
     home.packages = with pkgs; [
       # For waybar
-      killall # Start script
       font-awesome # The bar's font
+      procps # Start script
+      findutils # Start script (xargs)
+      gawk # Start script
+      gnugrep # Start script
     ];
 
     programs.waybar = {
