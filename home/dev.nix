@@ -13,14 +13,15 @@ in {
   config = lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        # Dev
+        clang
         clang-tools
+        (lib.hiPrio gcc) # To stop conflict with clang for c++ bin
         gdb
         gf
         go
         libgcc
-        python3Full
         odin
+        python3Full
         zig
 
         cargo-expand
