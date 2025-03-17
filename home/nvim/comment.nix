@@ -3,12 +3,14 @@
   lib,
   ...
 }: {
-  vim.extraPlugins = with pkgs.vimPlugins; {
-    comment-nvim = {
-      package = comment-nvim;
-      setup = ''
-        require("Comment").setup()
-      '';
-    };
-  };
+  home.file.".config/nvim/lua/chonk/plugins/comment.lua".text = with pkgs.vimPlugins; ''
+    return {
+      dir = "${comment-nvim}",
+      name = "Comment",
+      config = function()
+      	-- sets gc for commenting lines
+      	require("Comment").setup()
+      end
+    }
+  '';
 }

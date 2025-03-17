@@ -3,10 +3,21 @@
   lib,
   ...
 }: {
-  vim.extraPlugins = with pkgs.vimPlugins; {
-    telescope-nvim = {
-      package = telescope-nvim;
-      setup = ''
+  programs.neovim.extraPackages = with pkgs; [
+    ripgrep
+    git
+    fd
+  ];
+
+  home.file.".config/nvim/lua/chonk/plugins/telescope.lua".text = with pkgs.vimPlugins; ''
+    return {
+      dir = "${telescope-nvim}",
+      name = "telescope-nvim",
+      dependencies = {
+        { dir = "${plenary-nvim}", name = "plenary", },
+        { dir = "${telescope-fzf-native-nvim}", name = "telescope-fzf-native-nvim", },
+      },
+      config = function()
         -- Make sure telescope is installed
         local telescope_ok, telescope = pcall(require, "telescope")
         if not telescope_ok then
@@ -68,16 +79,7 @@
         	vim.keymap.set('n', '<leader>pf', builtin.git_files, { noremap = true, silent = true })
         	vim.keymap.set('n', '<leader>gs', builtin.live_grep, { noremap = true, silent = true })
         end
-      '';
-      after = ["plenary-nvim" "telescope-fzf-native-nvim"];
-    };
-
-    plenary-nvim = {
-      package = plenary-nvim;
-    };
-
-    telescope-fzf-native-nvim = {
-      package = telescope-fzf-native-nvim;
-    };
-  };
+      end
+    }
+  '';
 }

@@ -3,10 +3,14 @@
   lib,
   ...
 }: {
-  vim.extraPlugins = with pkgs.vimPlugins; {
-    oil-nvim = {
-      package = oil-nvim;
-      setup = ''
+  home.file.".config/nvim/lua/chonk/plugins/oil.lua".text = with pkgs.vimPlugins; ''
+    return {
+      dir = "${oil-nvim}",
+      name = "oil",
+      dependencies = {
+        { dir = "${nvim-web-devicons}", name = "nvim-web-devicons" },
+      },
+      config = function()
         CustomOilBar = function()
         	local path = vim.fn.expand "%"
         	path = path:gsub("oil://", "")
@@ -33,8 +37,7 @@
 
         -- Open parent directory in current window
         vim.keymap.set("n", "<leader>-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
-      '';
-      after = ["nvim-web-devicons"];
-    };
-  };
+      end
+    }
+  '';
 }

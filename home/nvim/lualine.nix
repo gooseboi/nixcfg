@@ -3,10 +3,14 @@
   lib,
   ...
 }: {
-  vim.extraPlugins = with pkgs.vimPlugins; {
-    lualine = {
-      package = lualine-nvim;
-      setup = ''
+  home.file.".config/nvim/lua/chonk/plugins/lualine.lua".text = with pkgs.vimPlugins; ''
+    return {
+      dir =  "${lualine-nvim}",
+      name = "lualine",
+      dependencies = {
+        { dir = "${nvim-web-devicons}", name = "nvim-web-devicons" },
+      },
+      config = function()
         require("lualine").setup {
         	options = {
         		icons_enabled = true,
@@ -47,12 +51,7 @@
         	inactive_winbar = {},
         	extensions = {}
         }
-      '';
-      after = ["nvim-web-devicons"];
-    };
-
-    nvim-web-devicons = {
-      package = nvim-web-devicons;
-    };
-  };
+      end
+    }
+  '';
 }
