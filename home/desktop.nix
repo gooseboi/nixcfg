@@ -20,5 +20,11 @@ in {
         '';
       }
     ];
+
+    home.packages = with pkgs; [
+      imv
+      xfce.thunar
+      gimp
+    ];
   };
 }
