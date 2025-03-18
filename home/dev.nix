@@ -20,15 +20,16 @@ in {
   config = lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
+        (lib.hiPrio gcc) # To stop conflict with clang for c++ bin
         clang
         clang-tools
-        (lib.hiPrio gcc) # To stop conflict with clang for c++ bin
         gdb
         gf
         go
         libgcc
         odin
         python3Full
+        uv
         zig
 
         temurin-bin-21
