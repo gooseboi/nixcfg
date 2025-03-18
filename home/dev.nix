@@ -31,6 +31,9 @@ in {
         python3Full
         zig
 
+        temurin-bin-21
+        maven
+
         cargo-expand
         cargo-fuzz
         (fenix.complete.withComponents [
