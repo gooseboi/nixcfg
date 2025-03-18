@@ -3,8 +3,8 @@
   lib,
   ...
 }: {
-  home.file.".config/nvim/lua/chonk/plugins/oil.lua".text = with pkgs.vimPlugins; ''
-    return {
+  config = with pkgs.vimPlugins; ''
+    {
       dir = "${oil-nvim}",
       name = "oil",
       dependencies = {
@@ -38,6 +38,6 @@
         -- Open parent directory in current window
         vim.keymap.set("n", "<leader>-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
       end
-    }
+    },
   '';
 }

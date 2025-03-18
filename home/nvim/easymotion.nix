@@ -3,8 +3,8 @@
   lib,
   ...
 }: {
-  home.file.".config/nvim/lua/chonk/plugins/easymotion.lua".text = with pkgs.vimPlugins; ''
-    return {
+  config = with pkgs.vimPlugins; ''
+    {
       dir = "${easymotion}",
       name = easymotion,
       config = function()
@@ -13,6 +13,6 @@
         kset("", "<leader>unused", "<Plug>(easymotion-overwin-w)")
         kset("", "<C-f>", "<Plug>(easymotion-overwin-w)", { noremap = true, silent = true })
       end
-    }
+    },
   '';
 }

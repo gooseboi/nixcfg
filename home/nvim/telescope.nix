@@ -3,14 +3,14 @@
   lib,
   ...
 }: {
-  programs.neovim.extraPackages = with pkgs; [
+  packages = with pkgs; [
     ripgrep
     git
     fd
   ];
 
-  home.file.".config/nvim/lua/chonk/plugins/telescope.lua".text = with pkgs.vimPlugins; ''
-    return {
+  config = with pkgs.vimPlugins; ''
+    {
       dir = "${telescope-nvim}",
       name = "telescope-nvim",
       dependencies = {
@@ -80,6 +80,6 @@
         	vim.keymap.set('n', '<leader>gs', builtin.live_grep, { noremap = true, silent = true })
         end
       end
-    }
+    },
   '';
 }

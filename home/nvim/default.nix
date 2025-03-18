@@ -1,21 +1,54 @@
-{
+inputs @ {
   pkgs,
   config,
   lib,
   ...
 }: let
   cfg = config.chonkos.nvim;
-in {
-  imports = [
+
+  luaFiles = [
+    ./lua/config.lua
+    ./lua/filetypes.lua
+    ./lua/neovide.lua
+    ./lua/remap.lua
+  ];
+
+  pluginFiles = [
     ./comment.nix
-    ./easymotion.nix
     ./gruvbox.nix
+    ./easymotion.nix
     ./lualine.nix
     ./oil.nix
     ./telescope.nix
-    # ./treesitter.nix
+    ./treesitter.nix
   ];
 
+  pluginContents = builtins.map (f: import f inputs) pluginFiles;
+  pluginDeps = lib.lists.flatten (builtins.map (p: p.packages or []) pluginContents);
+  pluginSpecs = builtins.concatStringsSep "\n\n" (builtins.map (p: p.config) pluginContents);
+
+  nvim_package = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
+    viAlias = true;
+    vimAlias = true;
+
+    plugins = with pkgs.vimPlugins; [lazy-nvim];
+    wrapperArgs = with lib; ''--prefix PATH : "${makeBinPath (lists.unique (lists.flatten pluginDeps))}"'';
+
+    luaRcContent = ''
+      ${builtins.concatStringsSep "\n\n" (builtins.map (f: builtins.readFile f) luaFiles)}
+
+      require("lazy").setup({
+      	spec = {
+          ${pluginSpecs}
+      	},
+        rocks = { enabled = false },
+        pkg = { enabled = false },
+        install = { missing = false },
+        change_detection = { enabled = false },
+      })
+    '';
+  };
+in {
   options.chonkos.nvim = {
     enable = lib.mkEnableOption "enables neovim support";
   };
@@ -26,40 +59,8 @@ in {
       VISUAL = "nvim";
     };
 
-    home.file.".config/nvim/lua/chonk/init.lua".text = ''
-      require "chonk.config"
-      require "chonk.filetypes"
-      require "chonk.neovide"
-      require "chonk.remap"
-    '';
-    home.file.".config/nvim/lua/chonk/config.lua".source = ./lua/config.lua;
-    home.file.".config/nvim/lua/chonk/filetypes.lua".source = ./lua/filetypes.lua;
-    home.file.".config/nvim/lua/chonk/neovide.lua".source = ./lua/neovide.lua;
-    home.file.".config/nvim/lua/chonk/remap.lua".source = ./lua/remap.lua;
-
-    programs.neovim = {
-      enable = true;
-      plugins = [pkgs.vimPlugins.lazy-nvim];
-      extraLuaConfig = ''
-        require "chonk"
-
-        require("lazy").setup({
-        	spec = {
-        		{ import = "chonk/plugins" },
-        	},
-          rocks = { enabled = false },
-          pkg = { enabled = false },
-          install = { missing = false },
-          change_detection = { enabled = false },
-        })
-      '';
-
-      viAlias = true;
-      vimAlias = true;
-
-      extraPackages = with pkgs; [
-        nixd
-      ];
-    };
+    home.packages = [
+      nvim_package
+    ];
   };
 }

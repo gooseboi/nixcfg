@@ -3,8 +3,8 @@
   lib,
   ...
 }: {
-  home.file.".config/nvim/lua/chonk/plugins/gruvbox.lua".text = with pkgs.vimPlugins; ''
-    return {
+  config = with pkgs.vimPlugins; ''
+    {
       dir = "${gruvbox-material}",
       name = "gruvbox-material",
       config = function()
@@ -13,6 +13,6 @@
         vim.o.background = "dark"
         vim.cmd.colorscheme("gruvbox-material")
       end
-    }
+    },
   '';
 }

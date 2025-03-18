@@ -3,8 +3,8 @@
   lib,
   ...
 }: {
-  home.file.".config/nvim/lua/chonk/plugins/lualine.lua".text = with pkgs.vimPlugins; ''
-    return {
+  config = with pkgs.vimPlugins; ''
+    {
       dir =  "${lualine-nvim}",
       name = "lualine",
       dependencies = {
@@ -52,6 +52,6 @@
         	extensions = {}
         }
       end
-    }
+    },
   '';
 }
