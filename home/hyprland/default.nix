@@ -30,7 +30,7 @@ in {
         debug.disable_logs = !cfg.enableDebug;
 
         exec-once = [
-          (lib.optionalString nmEnabled "${pkgs.networkmanagerapplet}/bin/nm-applet")
+          (lib.optionalString nmEnabled "nm-applet")
           "${pkgs.blueman}/bin/blueman-applet"
           "${pkgs.util-linux}/bin/rfkill block bluetooth"
           "${pkgs.dunst}/bin/dunst"
