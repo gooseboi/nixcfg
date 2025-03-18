@@ -14,9 +14,12 @@ inputs @ {
   ];
 
   pluginFiles = [
+    ./cmp.nix
     ./comment.nix
-    ./gruvbox.nix
     ./easymotion.nix
+    ./gruvbox.nix
+    ./harpoon.nix
+    ./lsp.nix
     ./lualine.nix
     ./oil.nix
     ./telescope.nix

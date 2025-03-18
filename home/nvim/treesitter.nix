@@ -44,6 +44,7 @@ in {
       dir = "${p.nvim-treesitter}",
       name = "nvim-treesitter",
       config = function()
+        vim.opt.runtimepath:append("${p.nvim-treesitter}")
         vim.opt.runtimepath:append("${grammarsPath}")
         require ('nvim-treesitter.configs').setup {
           auto_install = false,
