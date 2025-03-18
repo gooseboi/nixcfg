@@ -61,7 +61,7 @@
     isNormalUser = true;
     description = "chonk";
     extraGroups = ["wheel"];
-    hashedPasswordFile = config.age.secrets."chonk.hashedPassword".path;
+    hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
   };
 
   home-manager.users.chonk = import ./home.nix;

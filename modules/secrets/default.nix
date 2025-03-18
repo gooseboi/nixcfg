@@ -1,3 +1,3 @@
 {...}: {
-  age.secrets."chonk.hashedPassword".file = ./chonk.hashedPassword.age;
+  age.secrets.chonk-hashedPassword.file = ./chonk-hashedPassword.age;
 }
