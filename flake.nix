@@ -97,7 +97,10 @@
 
             # Overlays
             ({lib, ...}: {
-              nixpkgs.overlays = [fenix.overlays.default];
+              nixpkgs.overlays = [
+                fenix.overlays.default
+                agenix.overlays.default
+              ];
 
               nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["corefonts" "vista-fonts"];
             })

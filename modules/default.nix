@@ -5,6 +5,7 @@
 }: {
   imports =
     [
+      ./agenix.nix
       ./desktop.nix
       ./network-manager.nix
       ./ssh.nix
