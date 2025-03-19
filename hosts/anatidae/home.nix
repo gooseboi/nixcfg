@@ -38,7 +38,6 @@
       # Default Apps
       {
         BROWSER = "librewolf";
-        VIDEO = "mpv";
         COLORTERM = "truecolor";
         OPENER = "xdg-open";
         PAGER = "less";
@@ -59,15 +58,6 @@
         STACK_ROOT = "${config.xdg.dataHome}/stack";
         TEXMFVAR = "${config.xdg.cacheHome}/texlive/texmf-var";
         WINEPREFIX = "${config.xdg.dataHome}/wine";
-      }
-      //
-      # Scaling
-      {
-        QT_AUTO_SCREEN_SCALE_FACTOR = 0;
-        QT_SCALE_FACTOR = 1;
-        QT_SCREEN_SCALE_FACTORS = "1;1;1";
-        GDK_SCALE = 1;
-        GDK_DPI_SCALE = 1;
       };
   };
 
