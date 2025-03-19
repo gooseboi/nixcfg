@@ -103,7 +103,7 @@
               nixpkgs.hostPlatform = system;
 
               nix = {
-                settings.experimental-features = ["nix-command" "flakes"];
+                settings.experimental-features = ["nix-command" "flakes" "pipe-operators"];
                 registry.nixpkgs.to = {
                   owner = "NixOS";
                   repo = "nixpkgs";
