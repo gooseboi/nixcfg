@@ -7,6 +7,7 @@
     [
       ./agenix.nix
       ./desktop.nix
+      ./docker.nix
       ./network-manager.nix
       ./ssh.nix
       ./tailscale.nix

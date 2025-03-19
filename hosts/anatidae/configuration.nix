@@ -77,6 +77,7 @@
     zsh.enable = true;
     network-manager.enable = true;
     tlp.enable = true;
+    docker.enable = true;
   };
 
   # Open ports in the firewall.
