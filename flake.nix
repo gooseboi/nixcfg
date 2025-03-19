@@ -85,6 +85,7 @@
             }: {
               home-manager = {
                 useGlobalPkgs = true;
+                useUserPackages = true;
                 sharedModules = [./home];
 
                 extraSpecialArgs = {
