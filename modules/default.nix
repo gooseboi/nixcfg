@@ -14,12 +14,9 @@
       ./tlp.nix
       ./virt-manager.nix
       ./zsh.nix
-      ./alacritty.nix
     ]
     ++ [
       ./secrets
-      ./nvim
-      ./hyprland
     ];
 
   options.chonkos = {

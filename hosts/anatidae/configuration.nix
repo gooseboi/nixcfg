@@ -52,6 +52,11 @@
     ];
   };
 
+  programs.hyprland.enable = true;
+  hardware = {
+    graphics.enable = true;
+  };
+
   users.users.chonk = {
     isNormalUser = true;
     description = "chonk";
@@ -74,9 +79,6 @@
     tlp.enable = true;
     docker.enable = true;
     virt-manager.enable = true;
-    hyprland.enable = true;
-    alacritty.enable = true;
-    nvim.enable = true;
   };
 
   # Open ports in the firewall.
