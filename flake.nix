@@ -1,6 +1,20 @@
 {
   description = "Nixos config flake";
 
+  nixConfig = {
+    experimental-features = [
+      "cgroups"
+      "flakes"
+      "nix-command"
+      "pipe-operators"
+    ];
+
+    accept-flake-config = true;
+    trusted-users = ["root" "@build" "@wheel" "@admin"];
+    warn-dirty = false;
+    use-cgroups = true;
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -103,7 +117,7 @@
               nixpkgs.hostPlatform = system;
 
               nix = {
-                settings.experimental-features = ["nix-command" "flakes" "pipe-operators"];
+                settings = (import ./flake.nix).nixConfig;
                 registry.nixpkgs.to = {
                   owner = "NixOS";
                   repo = "nixpkgs";
