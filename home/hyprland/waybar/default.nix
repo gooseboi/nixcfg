@@ -19,12 +19,11 @@
       style = ./style.css;
     };
 
-    # TODO: Use xdg config dir instead
-    home.file.".config/waybar/waybar.sh" = {
+    xdg.configFile."waybar/waybar.sh" = {
       source = ./waybar.sh;
       executable = true;
     };
-    home.file.".config/waybar/config.jsonc" = {
+    xdg.configFile."waybar/config.jsonc" = {
       source = ./config.jsonc;
     };
   };
