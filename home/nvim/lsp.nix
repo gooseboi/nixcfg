@@ -10,6 +10,7 @@
     gopls
     lua-language-server
     nixd
+    alejandra
     ols
     zls
   ];
