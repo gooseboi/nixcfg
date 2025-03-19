@@ -23,6 +23,17 @@ in {
 
     home.packages = lib.lists.optional nmEnabled pkgs.networkmanagerapplet;
 
+    home.pointerCursor = {
+      enable = true;
+      package = pkgs.bibata-cursors;
+      size = 24;
+      name = "Bibata-Original-Classic";
+
+      hyprcursor.enable = true;
+      x11.enable = true;
+      gtk.enable = true;
+    };
+
     wayland.windowManager.hyprland = {
       enable = true;
 
