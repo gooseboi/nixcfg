@@ -6,8 +6,6 @@
   chonkos = {
     user = "chonk";
 
-    hyprland.enable = true;
-    alacritty.enable = true;
     eza.enable = true;
     zsh = {
       enable = true;
@@ -18,7 +16,6 @@
       enable = true;
       enableSessionizer = true;
     };
-    nvim.enable = true;
     zathura.enable = true;
     jujutsu.enable = true;
     scripts.enable = true;

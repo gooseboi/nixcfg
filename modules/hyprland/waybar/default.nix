@@ -1,10 +1,5 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}: {
-  config = lib.mkIf config.chonkos.hyprland.enable {
+{pkgs, ...}: {
+  config = {
     home.packages = with pkgs; [
       font-awesome # The bar's font
       procps # Start script

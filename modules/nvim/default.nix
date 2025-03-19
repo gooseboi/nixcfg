@@ -57,13 +57,22 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
+    programs.neovim = {
+      enable = true;
+
+      viAlias = true;
+      vimAlias = true;
     };
 
-    home.packages = [
-      nvim_package
+    home-manager.sharedModules = [
+      {
+        home.sessionVariables = {
+          EDITOR = "nvim";
+          VISUAL = "nvim";
+        };
+
+        home.packages = [nvim_package];
+      }
     ];
   };
 }

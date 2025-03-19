@@ -12,5 +12,14 @@ in {
 
   config = lib.mkIf cfg.enable {
     services.upower.enable = true;
+    home-manager.sharedModules = [
+      {
+        home.packages = with pkgs; [
+          imv
+          xfce.thunar
+          gimp
+        ];
+      }
+    ];
   };
 }
