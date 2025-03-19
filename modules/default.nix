@@ -12,6 +12,7 @@
       ./ssh.nix
       ./tailscale.nix
       ./tlp.nix
+      ./virt-manager.nix
       ./zsh.nix
     ]
     ++ [

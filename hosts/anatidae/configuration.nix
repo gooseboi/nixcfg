@@ -78,6 +78,7 @@
     network-manager.enable = true;
     tlp.enable = true;
     docker.enable = true;
+    virt-manager.enable = true;
   };
 
   # Open ports in the firewall.
