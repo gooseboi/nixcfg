@@ -137,10 +137,6 @@
     })
     // {
       nixosConfigurations = {
-        filth = mkHost "filth" "aarch64-linux" [
-          nixos-hardware.nixosModules.raspberry-pi-4
-        ];
-
         anatidae = mkHost "anatidae" "x86_64-linux" [
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-gpu-intel
