@@ -76,6 +76,51 @@
     virt-manager.enable = true;
   };
 
+  systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
+  services.syncthing = {
+    enable = true;
+
+    user = config.chonkos.user;
+    dataDir = "/home/${config.chonkos.user}";
+    overrideDevices = true;
+    overrideFolders = true;
+
+    settings = {
+      devices = {
+        "anser" = {id = "3IBIEL6-GQNWOKJ-NZ5UJHB-QNC54FV-3I7EU7G-M5NPWDH-AWGHDCB-WFXV6AE";};
+      };
+
+      folders = {
+        "dox" = {
+          id = "4lkyi-u5rlc";
+          path = "~/dox";
+          devices = ["anser"];
+          ignorePerms = false;
+        };
+        "music" = {
+          id = "hygaw-rg6ui";
+          path = "~/music";
+          devices = ["anser"];
+          ignorePerms = false;
+        };
+        "pix" = {
+          id = "zdjf-o6neh";
+          path = "~/pix";
+          devices = ["anser"];
+          ignorePerms = false;
+        };
+        "vids" = {
+          id = "kqsee-nrs9r";
+          path = "~/vids";
+          devices = ["anser"];
+          ignorePerms = false;
+        };
+      };
+
+      options.urAccepted = -1; # Disable telemetry.
+    };
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
