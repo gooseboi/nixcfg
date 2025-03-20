@@ -21,11 +21,10 @@ in {
   config = lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        # Utils
-        gdu
         btop
         btrfs-progs
         curl
+        dig
         dosfstools
         dust
         exfatprogs
@@ -33,7 +32,9 @@ in {
         ffmpeg-full
         file
         fzf
+        gdu
         htop
+        hyperfine
         killall
         libqalculate
         magic-wormhole
@@ -42,17 +43,17 @@ in {
         man-pages
         man-pages-posix
         moreutils
+        nh
         ntfs3g
+        oha
         p7zip
         ripgrep
         socat
         tealdeer
         tree
         unzip
+        watch
         wget
-
-        # Nix utils
-        nh
       ];
 
       sessionVariables = {
