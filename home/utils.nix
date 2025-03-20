@@ -9,10 +9,8 @@
 
   myLib = mkMyLib config;
 
-  inherit (config.xdg) configHome;
-
-  ripgrep_config = "${configHome}/ripgrep/ripgreprc";
-  wgetrc = "${configHome}/wgetrc";
+  ripgrep_config = "ripgrep/ripgreprc";
+  wgetrc = "wgetrc";
 in {
   options.chonkos.utils = {
     enable = lib.mkEnableOption "enable utils";
@@ -62,13 +60,13 @@ in {
     };
 
     home.sessionVariables = {
-      RIPGREP_CONFIG_PATH = ripgrep_config;
-      WGETRC = wgetrc;
+      RIPGREP_CONFIG_PATH = config.xdg.configHome + ripgrep_config;
+      WGETRC = config.xdg.configHome + wgetrc;
     };
 
-    home.file = {
-      "${myLib.removeHomeDirPrefixStr ripgrep_config}".text = "";
-      "${myLib.removeHomeDirPrefixStr wgetrc}".text = ''
+    xdg.configFile = {
+      ${ripgrep_config}.text = "";
+      ${wgetrc}.text = ''
         hsts-file = ${config.xdg.cacheHome}/wget-hsts
       '';
     };
