@@ -13,6 +13,7 @@
     alejandra
     ols
     zls
+    jdt-language-server
   ];
 
   config = with pkgs.vimPlugins; ''
@@ -100,6 +101,8 @@
     			pylsp = {},
 
     			clangd = {},
+
+          jdtls = {},
 
     			zls = {
     				settings = {},
