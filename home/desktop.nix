@@ -40,6 +40,7 @@ in {
         imv
         xfce.thunar
         gimp
+        libreoffice-fresh
       ];
     };
   };
