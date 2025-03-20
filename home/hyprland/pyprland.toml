@@ -1,0 +1,18 @@
+[pyprland]
+plugins = ["scratchpads", "magnify"]
+
+[scratchpads.python]
+animation = "fromTop"
+command = "alacritty --class python-scratchpad -e python"
+class = "python-scratchpad"
+size = "35% 35%"
+max_size = "75% 60%"
+margin = 200
+
+[scratchpads.qalc]
+animation = "fromTop"
+command = "alacritty --class qalc-scratchpad -e qalc"
+class = "qalc-scratchpad"
+size = "35% 35%"
+max_size = "75% 60%"
+margin = 200

@@ -21,7 +21,12 @@ in {
   config = lib.mkIf cfg.enable {
     chonkos.desktop.enable = true;
 
-    home.packages = lib.lists.optional nmEnabled pkgs.networkmanagerapplet;
+    home.packages =
+      lib.lists.optional nmEnabled pkgs.networkmanagerapplet
+      ++ (with pkgs; [
+        libqalculate
+        pyprland
+      ]);
 
     home.pointerCursor = {
       enable = true;
@@ -67,5 +72,7 @@ in {
     };
 
     home.sessionVariables.NIXOS_OZONE_WL = "1";
+
+    xdg.configFile."hypr/pyprland.toml".source = ./pyprland.toml;
   };
 }
