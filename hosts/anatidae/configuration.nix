@@ -1,12 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  inputs,
-  ...
-}: {
+{config, ...}: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
-  # TODO: nix-ld
 
   imports = [
     ./hardware-configuration.nix
@@ -22,6 +15,8 @@
       emulatedSystems = ["aarch64-linux" "riscv64-linux"];
     };
   };
+
+  programs.nix-ld.enable = true;
 
   time.timeZone = "America/Montevideo";
 
