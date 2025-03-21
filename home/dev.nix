@@ -59,7 +59,7 @@ in {
         NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
         NUGET_PACKAGES = "${config.xdg.cacheHome}/nuget";
         OPAMROOT = "${config.xdg.dataHome}/opam";
-        PYTHONSTARTUP = config.xdg.configHome + python_rc;
+        PYTHONSTARTUP = "${config.xdg.configHome}/" + python_rc;
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         VAGRANT_HOME = "${config.xdg.dataHome}/vagrant";
         _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.xdg.configHome}/java -Dswing.aatext=true -Dawt.useSystemAAFontSettings=on";
