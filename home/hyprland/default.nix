@@ -7,6 +7,17 @@
 }: let
   cfg = config.chonkos.hyprland;
   nmEnabled = systemConfig.chonkos.network-manager.enable;
+
+  hyprland_before_sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" (with pkgs; ''
+    ${hyprland}/bin/hyprctl switchxkblayout at-translated-set-2-keyboard 0
+    ${playerctl}/bin/playerctl pause -a
+    hyprsetvol -m
+    ${swaylock}/bin/swaylock -f -i ~/.local/share/bg
+  '');
+
+  scripts = builtins.map (
+    f: pkgs.writeShellScriptBin f (builtins.readFile (./scripts + "/${f}"))
+  ) (builtins.map (f: f.name) (lib.attrsToList (builtins.readDir ./scripts)));
 in {
   imports = [
     ./waybar
@@ -26,7 +37,22 @@ in {
       ++ (with pkgs; [
         libqalculate
         pyprland
-      ]);
+        swaylock
+        swayidle
+      ])
+      ++ scripts
+      ++ (with pkgs; [
+        # Script deps
+        acpi
+        gawk
+        light
+        gnused
+        mpc
+        coreutils
+        pamixer
+        pulseaudioFull
+      ])
+      ++ lib.lists.optional cfg.enableMpd pkgs.mpd;
 
     home.pointerCursor = {
       enable = true;
@@ -51,7 +77,7 @@ in {
           "${pkgs.util-linux}/bin/rfkill block bluetooth"
           "${pkgs.dunst}/bin/dunst"
           (lib.optionalString cfg.enableMpd "${pkgs/mpd}/bin/mpd")
-          "${pkgs.swayidle}/bin/swayidle -w before-sleep 'hyprland-before-sleep.sh'"
+          "${pkgs.swayidle}/bin/swayidle -w before-sleep ${hyprland_before_sleep}/bin/hyprland-before-sleep.sh"
         ];
       };
 

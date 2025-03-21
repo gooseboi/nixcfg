@@ -41,6 +41,7 @@ in {
         xfce.thunar
         gimp
         libreoffice-fresh
+        playerctl
       ];
     };
   };
