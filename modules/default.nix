@@ -8,6 +8,7 @@
       ./agenix.nix
       ./desktop.nix
       ./docker.nix
+      ./hyprland.nix
       ./network-manager.nix
       ./ssh.nix
       ./tailscale.nix

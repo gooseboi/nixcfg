@@ -47,15 +47,10 @@
     ];
   };
 
-  programs.hyprland.enable = true;
-  hardware = {
-    graphics.enable = true;
-  };
-
   users.users.chonk = {
     isNormalUser = true;
     description = "chonk";
-    extraGroups = ["wheel"];
+    extraGroups = ["wheel" "video" "audio" "dialout"];
     hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
   };
 
@@ -74,6 +69,7 @@
     tlp.enable = true;
     docker.enable = true;
     virt-manager.enable = true;
+    hyprland.enable = true;
   };
 
   systemd.services.syncthing.environment.STNODEFAULTFOLDER = "true";
