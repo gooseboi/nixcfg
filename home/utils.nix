@@ -31,6 +31,7 @@ in {
       gdu
       htop
       hyperfine
+      jq
       killall
       libqalculate
       magic-wormhole
