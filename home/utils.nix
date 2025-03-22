@@ -39,6 +39,7 @@ in {
       man-pages-posix
       moreutils
       nh
+      nodePackages.prettier
       ntfs3g
       oha
       p7zip

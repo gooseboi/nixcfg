@@ -9,13 +9,16 @@ in {
   programs.firefox = lib.mkIf cfg.enable {
     enable = true;
     package = pkgs.librewolf;
+    configPath = ".librewolf";
 
     profiles.chonk = {
       settings = {
-        "browser.toolbars.bookmarks.visibility" = "always";
-        "browser.fullscreen.autohide" = false;
-        "privacy.userContext.enabled" = true;
         "browser.aboutConfig.showWarning" = false;
+        "browser.ctrlTab.sortByRecentlyUsed" = true;
+        "browser.fullscreen.autohide" = false;
+        "browser.safebrowsing.provider.mozilla.updateURL" = null;
+        "browser.tabs.warnOnClose" = false;
+        "browser.toolbars.bookmarks.visibility" = "always";
         "browser.uiCustomization.state" = builtins.toJSON {
           placements = {
             "widget-overflow-fixed-list" = [];
@@ -28,7 +31,6 @@ in {
               "vertical-spacer"
               "urlbar-container"
               "customizableui-special-spring2"
-              "save-to-pocket-button"
               "downloads-button"
               "fxa-toolbar-menu-button"
               "unified-extensions-button"
@@ -49,8 +51,15 @@ in {
           currentVersion = 21;
           newElementCount = 2;
         };
+        "browser.warnOnQuit" = false;
+        "browser.warnOnQuitShortcut" = false;
+        "media.eme.enabled" = true;
+        "privacy.globalprivacycontrol.enabled" = true;
+        "privacy.sanitize.pending" = [];
+        "privacy.sanitize.sanitizeOnShutdown" = false;
+        "privacy.userContext.enabled" = true;
+        "signon.management.page.breach-alerts.enabled" = false;
         "trailhead.firstrun.didSeeAboutWelcome" = true;
-        "browser.safebrowsing.provider.mozilla.updateURL" = null;
       };
 
       search = {
