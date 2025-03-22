@@ -40,5 +40,6 @@ in {
       username = cfg.user;
       homeDirectory = "/home/${cfg.user}";
     };
+    xdg.enable = true;
   };
 }
