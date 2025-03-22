@@ -15,13 +15,9 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      btrfs-progs
       curl
       dig
-      dosfstools
       dust
-      ethtool
-      exfatprogs
       fd
       ffmpeg-full
       file
@@ -40,17 +36,26 @@ in {
       moreutils
       nh
       nodePackages.prettier
-      ntfs3g
       oha
       p7zip
       ripgrep
       rsync
       socat
+      speedtest-rs
       tealdeer
       tree
       unzip
       watch
       wget
+
+      # Hardware
+      btrfs-progs
+      dosfstools
+      ethtool
+      exfatprogs
+      ntfs3g
+      smartmontools
+      zfs
     ];
 
     programs.btop = {
