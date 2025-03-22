@@ -11,6 +11,10 @@ in {
     enable = lib.mkEnableOption "enable desktop configurations";
   };
 
+  imports = [
+    ./firefox.nix
+  ];
+
   config = lib.mkIf cfg.enable {
     assertions = [
       {

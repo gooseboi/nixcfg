@@ -8,7 +8,6 @@ in {
   imports =
     [
       ./alacritty.nix
-      ./desktop.nix
       ./dev.nix
       ./eza.nix
       ./fonts.nix
@@ -21,9 +20,10 @@ in {
       ./zsh.nix
     ]
     ++ [
+      ./desktop
       ./hyprland
-      ./scripts
       ./nvim
+      ./scripts
     ];
 
   options.chonkos = {

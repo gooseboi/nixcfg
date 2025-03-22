@@ -31,8 +31,6 @@
 
   home-manager.users.chonk = import ./home.nix;
 
-  programs.firefox.enable = true;
-
   chonkos = {
     user = "chonk";
     agenix.enable = true;
