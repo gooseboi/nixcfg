@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     ./syncthing.nix
+    ./brave
   ];
 
   # Bootloader.
