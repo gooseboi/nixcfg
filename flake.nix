@@ -13,6 +13,7 @@
     trusted-users = ["root" "@build" "@wheel" "@admin"];
     warn-dirty = false;
     use-cgroups = true;
+    use-xdg-base-directories = true;
   };
 
   inputs = {
