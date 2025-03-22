@@ -81,6 +81,21 @@ in {
           "x-scheme-handler/mailto" = ["thunderbird.desktop"];
         };
       };
+
+      userDirs = {
+        enable = true;
+        createDirectories = true;
+
+        documents = "${config.home.homeDirectory}/dox";
+        download = "${config.home.homeDirectory}/down";
+        music = "${config.home.homeDirectory}/music";
+        pictures = "${config.home.homeDirectory}/pix";
+        videos = "${config.home.homeDirectory}/vids";
+
+        desktop = null;
+        publicShare = null;
+        templates = null;
+      };
     };
   };
 }
