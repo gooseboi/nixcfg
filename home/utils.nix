@@ -2,12 +2,9 @@
   pkgs,
   lib,
   config,
-  mkMyLib,
   ...
 }: let
   cfg = config.chonkos.utils;
-
-  myLib = mkMyLib config;
 
   ripgrep_config = "ripgrep/ripgreprc";
   wgetrc = "wgetrc";
@@ -23,6 +20,7 @@ in {
       dig
       dosfstools
       dust
+      ethtool
       exfatprogs
       fd
       ffmpeg-full
@@ -45,6 +43,7 @@ in {
       oha
       p7zip
       ripgrep
+      rsync
       socat
       tealdeer
       tree
