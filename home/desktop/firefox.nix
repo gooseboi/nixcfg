@@ -13,6 +13,41 @@ in {
         "browser.toolbars.bookmarks.visibility" = "always";
         "browser.fullscreen.autohide" = false;
         "privacy.userContext.enabled" = true;
+        "browser.aboutConfig.showWarning" = false;
+        "browser.uiCustomization.state" = builtins.toJSON {
+          placements = {
+            "widget-overflow-fixed-list" = [];
+            "unified-extensions-area" = [];
+            "nav-bar" = [
+              "back-button"
+              "forward-button"
+              "stop-reload-button"
+              "customizableui-special-spring1"
+              "vertical-spacer"
+              "urlbar-container"
+              "customizableui-special-spring2"
+              "save-to-pocket-button"
+              "downloads-button"
+              "fxa-toolbar-menu-button"
+              "unified-extensions-button"
+            ];
+            toolbar-menubar = ["menubar-items"];
+            TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
+            vertical-tabs = [];
+            PersonalToolbar = ["personal-bookmarks"];
+          };
+          seen = ["developer-button"];
+          dirtyAreaCache = [
+            "nav-bar"
+            "vertical-tabs"
+            "toolbar-menubar"
+            "TabsToolbar"
+            "PersonalToolbar"
+          ];
+          currentVersion = 21;
+          newElementCount = 2;
+        };
+        "trailhead.firstrun.didSeeAboutWelcome" = true;
       };
 
       search = {
@@ -59,6 +94,7 @@ in {
           id = 5;
         };
       };
+      containersForce = true;
     };
 
     policies = {
