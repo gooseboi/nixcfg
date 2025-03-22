@@ -9,6 +9,7 @@
       ./desktop.nix
       ./docker.nix
       ./hyprland.nix
+      ./i18n.nix
       ./network-manager.nix
       ./ssh.nix
       ./tailscale.nix
