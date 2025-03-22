@@ -8,6 +8,8 @@
 in {
   programs.firefox = lib.mkIf cfg.enable {
     enable = true;
+    package = pkgs.librewolf;
+
     profiles.chonk = {
       settings = {
         "browser.toolbars.bookmarks.visibility" = "always";
@@ -48,6 +50,7 @@ in {
           newElementCount = 2;
         };
         "trailhead.firstrun.didSeeAboutWelcome" = true;
+        "browser.safebrowsing.provider.mozilla.updateURL" = null;
       };
 
       search = {
