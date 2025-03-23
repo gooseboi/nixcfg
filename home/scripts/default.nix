@@ -23,14 +23,15 @@ in {
         )
         fileNames
         ++ (with pkgs; [
-          swaybg
           curl
           ffmpeg-full
           file
           hyprpicker
           libnotify
           mpv
+          newsboat
           simple-mtpfs
+          swaybg
           wl-clipboard
           yt-dlp
         ]);
