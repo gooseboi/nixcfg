@@ -46,6 +46,12 @@
           path = "~/vids";
           devices = ["anser"];
         };
+        "wiki" = {
+          enable = true;
+          id = "tubeq-7p6cx";
+          path = "~/wiki";
+          devices = ["anser"];
+        };
       };
 
       options.urAccepted = -1; # Disable telemetry.
