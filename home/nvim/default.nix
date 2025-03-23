@@ -24,6 +24,7 @@ inputs @ {
     ./oil.nix
     ./telescope.nix
     ./treesitter.nix
+    ./vimwiki.nix
   ];
 
   pluginContents = builtins.map (f: import f inputs) pluginFiles;
