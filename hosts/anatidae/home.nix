@@ -40,7 +40,6 @@
     sessionVariables =
       # Default Apps
       {
-        BROWSER = "librewolf";
         COLORTERM = "truecolor";
         OPENER = "xdg-open";
         PAGER = "less";

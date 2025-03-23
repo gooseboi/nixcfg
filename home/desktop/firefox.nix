@@ -131,4 +131,6 @@ in {
       };
     };
   };
+
+  home.sessionVariables.BROWSER = "librewolf";
 }
