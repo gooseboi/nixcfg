@@ -29,7 +29,6 @@ in {
           hyprpicker
           libnotify
           mpv
-          newsboat
           simple-mtpfs
           swaybg
           wl-clipboard
