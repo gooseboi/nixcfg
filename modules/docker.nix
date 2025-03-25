@@ -20,6 +20,7 @@ in {
 
         defaultNetwork.settings.dns_enabled = true;
       };
+      oci-containers.backend = "podman";
     };
 
     environment.systemPackages = with pkgs; [

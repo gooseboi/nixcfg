@@ -1,7 +1,8 @@
 {config, ...}: {
   imports = [
-    ./hardware-configuration.nix
     ./disk-config.nix
+    ./hardware-configuration.nix
+    ./services
   ];
 
   # Bootloader.
