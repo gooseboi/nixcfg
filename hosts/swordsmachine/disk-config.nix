@@ -61,6 +61,7 @@
                   mountpoint = "/nix";
                   mountOptions = [
                     "noatime"
+                    "compress=zstd:3"
                   ];
                 };
               };
