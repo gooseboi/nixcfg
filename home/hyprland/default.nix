@@ -46,13 +46,18 @@ in {
       ++ (with pkgs; [
         # Script deps
         acpi
-        gawk
-        light
-        gnused
-        mpc
         coreutils
+        gawk
+        gnused
+        grim
+        libnotify
+        light
+        mpc
         pamixer
         pulseaudioFull
+        slurp
+        wl-clipboard
+        zbar
       ])
       ++ lib.lists.optional cfg.enableMpd pkgs.mpd;
 

@@ -1,4 +1,4 @@
-# wayland-screenshot <full|section> [copy]
+# hyprscreenshot <full|section> [copy]
 # Takes a screenshot, either fullscreen or an interactive selection. If a qr
 # code is detected, it prompts to copy the result into the clipboard.
 # If it doesn't, then move to the screenshots folder, and copy if the argument
