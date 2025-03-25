@@ -78,12 +78,15 @@
             agenix.nixosModules.default
 
             # Home manager configs
-            home-manager.nixosModules.home-manager
             ({
               config,
               lib,
               ...
             }: {
+              imports = [
+                home-manager.nixosModules.home-manager
+              ];
+
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
