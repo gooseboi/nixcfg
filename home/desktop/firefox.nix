@@ -11,72 +11,105 @@ in {
     package = pkgs.librewolf;
     configPath = ".librewolf";
 
-    profiles.chonk = {
-      settings = {
-        "browser.aboutConfig.showWarning" = false;
-        "browser.ctrlTab.sortByRecentlyUsed" = true;
-        "browser.fullscreen.autohide" = false;
-        "browser.safebrowsing.provider.mozilla.updateURL" = null;
-        "browser.tabs.warnOnClose" = false;
-        "browser.toolbars.bookmarks.visibility" = "always";
-        "browser.uiCustomization.state" = builtins.toJSON {
-          placements = {
-            "widget-overflow-fixed-list" = [];
-            "unified-extensions-area" = [];
-            "nav-bar" = [
-              "back-button"
-              "forward-button"
-              "stop-reload-button"
-              "customizableui-special-spring1"
-              "vertical-spacer"
-              "urlbar-container"
-              "customizableui-special-spring2"
-              "downloads-button"
-              "fxa-toolbar-menu-button"
-              "unified-extensions-button"
-            ];
-            toolbar-menubar = ["menubar-items"];
-            TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
-            vertical-tabs = [];
-            PersonalToolbar = ["personal-bookmarks"];
+    policies = {
+      AutofillAddressEnabled = false;
+      AutofillCreditCardEnabled = false;
+      DisableFirefoxAccounts = true;
+      DisableFirefoxScreenshots = true;
+      DisableFirefoxStudies = true;
+      DisableMasterPasswordCreation = true;
+      DisablePocket = true;
+      DisableProfileImport = true;
+      DisableProfileRefresh = true;
+      DisableTelemetry = true;
+      DontCheckDefaultBrowser = true;
+      OfferToSaveLogins = false;
+      UserMessaging = {
+        ExtensionRecommendations = false;
+        FeatureRecommendations = false;
+        FirefoxLabs = false;
+        MoreFromMozilla = false;
+        SkipOnboarding = true;
+        UrlbarInterventions = false;
+      };
+      SearchEngines = {
+        Add = [
+          {
+            Name = "Unduck";
+            URLTemplate = "http://unduck.link?q={searchTerms}";
+            Method = "GET";
+            Alias = "@ud";
+            IconUrl = "https://unduck.link/search.svg";
+          }
+        ];
+        Default = "Unduck";
+      };
+      Preferences = lib.listToAttrs (lib.mapAttrsToList (n: v: {
+          name = n;
+          value = {
+            Value = v;
+            Status = "locked";
           };
-          seen = ["developer-button"];
-          dirtyAreaCache = [
-            "nav-bar"
-            "vertical-tabs"
-            "toolbar-menubar"
-            "TabsToolbar"
-            "PersonalToolbar"
-          ];
-          currentVersion = 21;
-          newElementCount = 2;
-        };
-        "browser.warnOnQuit" = false;
-        "browser.warnOnQuitShortcut" = false;
-        "media.eme.enabled" = true;
-        "privacy.globalprivacycontrol.enabled" = true;
+        })
+        {
+          "browser.aboutConfig.showWarning" = false;
+          "browser.ctrlTab.sortByRecentlyUsed" = true;
+          "browser.fullscreen.autohide" = false;
+          "browser.tabs.warnOnClose" = false;
+          "browser.toolbars.bookmarks.visibility" = "always";
+          "browser.safebrowsing.provider.mozilla.updateURL" = null;
+          # browser/components/preferences/main.js:1796 STARTUP_PREF_RESTORE_SESSION
+          "browser.startup.page" = 3;
+          "browser.startup.homepage" = "about:home";
+          "browser.uiCustomization.state" = builtins.toJSON {
+            placements = {
+              "widget-overflow-fixed-list" = [];
+              "unified-extensions-area" = [];
+              "nav-bar" = [
+                "back-button"
+                "forward-button"
+                "stop-reload-button"
+                "customizableui-special-spring1"
+                "vertical-spacer"
+                "urlbar-container"
+                "customizableui-special-spring2"
+                "downloads-button"
+                "fxa-toolbar-menu-button"
+                "unified-extensions-button"
+              ];
+              toolbar-menubar = ["menubar-items"];
+              TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
+              vertical-tabs = [];
+              PersonalToolbar = ["personal-bookmarks"];
+            };
+            seen = ["developer-button"];
+            dirtyAreaCache = [
+              "nav-bar"
+              "vertical-tabs"
+              "toolbar-menubar"
+              "TabsToolbar"
+              "PersonalToolbar"
+            ];
+            currentVersion = 21;
+            newElementCount = 2;
+          };
+          "browser.warnOnQuit" = false;
+          "browser.warnOnQuitShortcut" = false;
+          "media.eme.enabled" = true;
+          "privacy.globalprivacycontrol.enabled" = true;
+          "signon.management.page.breach-alerts.enabled" = false;
+        });
+    };
+
+    profiles.chonk = {
+      # Some setting are here cuz https://mozilla.github.io/policy-templates/#preferences
+      # ie, not all preferences can be set through policy.
+      settings = {
         "privacy.sanitize.pending" = [];
         "privacy.sanitize.sanitizeOnShutdown" = false;
         "privacy.userContext.enabled" = true;
-        "signon.management.page.breach-alerts.enabled" = false;
+        "privacy.userContext.newTabContainerOnLeftClick.enabled" = true;
         "trailhead.firstrun.didSeeAboutWelcome" = true;
-      };
-
-      search = {
-        engines = {
-          "Unduck" = {
-            urls = [{template = ["https://unduck.link?q={searchTerms}"];}];
-            icon = pkgs.fetchurl {
-              url = "https://unduck.link/search.svg";
-              sha256 = "sha256-fcI9HeFaMujs9HApnKEpgpygizY3m5jxAV070YXLJsM=";
-            };
-            definedAliases = ["@ud"];
-          };
-          "MetaGer".metadata.hidden = true;
-          "Mojeek".metadata.hidden = true;
-          "DuckDuckGo Lite".metadata.hidden = true;
-        };
-        force = true;
       };
 
       containers = {
@@ -105,30 +138,18 @@ in {
           icon = "chill";
           id = 5;
         };
+        social = {
+          color = "orange";
+          icon = "gift";
+          id = 6;
+        };
+        pron = {
+          color = "purple";
+          icon = "fruit";
+          id = 7;
+        };
       };
       containersForce = true;
-    };
-
-    policies = {
-      AutofillAddressEnabled = false;
-      AutofillCreditCardEnabled = false;
-      DisableFirefoxAccounts = true;
-      DisableFirefoxScreenshots = true;
-      DisableFirefoxStudies = true;
-      DisableMasterPasswordCreation = true;
-      DisablePocket = true;
-      DisableProfileImport = true;
-      DisableProfileRefresh = true;
-      DisableTelemetry = true;
-      DontCheckDefaultBrowser = true;
-      OfferToSaveLogins = false;
-      UserMessaging = {
-        ExtensionRecommendations = false;
-        FeatureRecommendations = false;
-        UrlbarInterventions = false;
-        SkipOnboarding = false;
-        MoreFromMozilla = false;
-      };
     };
   };
 
