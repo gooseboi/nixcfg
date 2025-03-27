@@ -30,6 +30,7 @@
   };
 
   home-manager.users.chonk = import ./home.nix;
+  services.logind.lidSwitch = "ignore";
 
   chonkos = {
     user = "chonk";
