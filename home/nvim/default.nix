@@ -13,19 +13,22 @@ inputs @ {
     ./lua/remap.lua
   ];
 
-  pluginFiles = [
-    ./cmp.nix
-    ./comment.nix
-    ./easymotion.nix
-    ./gruvbox.nix
-    ./harpoon.nix
-    ./lsp.nix
-    ./lualine.nix
-    ./oil.nix
-    ./telescope.nix
-    ./treesitter.nix
-    ./vimwiki.nix
-  ];
+  pluginFiles =
+    [
+      ./comment.nix
+      ./easymotion.nix
+      ./gruvbox.nix
+      ./lualine.nix
+      ./oil.nix
+    ]
+    ++ lib.lists.optionals (! cfg.server) [
+      ./cmp.nix
+      ./harpoon.nix
+      ./lsp.nix
+      ./telescope.nix
+      ./treesitter.nix
+      ./vimwiki.nix
+    ];
 
   pluginContents = builtins.map (f: import f inputs) pluginFiles;
   pluginDeps = lib.lists.flatten (builtins.map (p: p.packages or []) pluginContents);
@@ -55,6 +58,7 @@ inputs @ {
 in {
   options.chonkos.nvim = {
     enable = lib.mkEnableOption "enables neovim support";
+    server = lib.mkEnableOption "marks this neovim install as for a server";
   };
 
   config = lib.mkIf cfg.enable {

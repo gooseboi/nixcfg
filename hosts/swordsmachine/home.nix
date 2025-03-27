@@ -15,8 +15,10 @@
     tmux = {
       enable = true;
     };
-    nvim.enable = true;
-    jujutsu.enable = true;
+    nvim = {
+      enable = true;
+      server = true;
+    };
     utils.enable = true;
   };
 
