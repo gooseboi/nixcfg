@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   programs.git = {
     enable = true;
     userName = "Guzman Zugnoni";
@@ -18,9 +18,8 @@
       merge.tool = "nvim -d";
     };
 
-    includes = [
-      {
-        condition = "gitdir:~/dev/uni/**";
+    includes = let
+      uniConfig = {
         contents = {
           user = {
             name = "Guzman Zugnoni";
@@ -34,7 +33,16 @@
 
           url."ssh://git@github.com/".insteadOf = "https://github.com";
         };
-      }
+      };
+    in [
+      (uniConfig
+        // {
+          condition = "gitdir:~/dev/uni/**";
+        })
+      (uniConfig
+        // {
+          condition = "gitdir:~/dox/uni/**";
+        })
     ];
 
     aliases = {
