@@ -44,6 +44,9 @@
     i18n.enable = true;
   };
 
+  # https://nixos.wiki/wiki/Systemd-networkd#When_to_use
+  systemd.network.wait-online.enable = false;
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
