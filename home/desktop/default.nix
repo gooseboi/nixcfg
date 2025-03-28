@@ -49,6 +49,7 @@ in {
         onlyoffice-bin
         playerctl
         xfce.thunar
+        discord
       ];
     };
 

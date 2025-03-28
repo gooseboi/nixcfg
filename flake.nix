@@ -112,7 +112,7 @@
                 agenix.overlays.default
               ];
 
-              nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["corefonts" "vista-fonts"];
+              nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["corefonts" "vista-fonts" "discord"];
             })
 
             # Nix/General configs
