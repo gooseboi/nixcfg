@@ -13,24 +13,16 @@
 
   time.timeZone = "America/Montevideo";
 
-  users.users = {
-    chonk = {
-      isNormalUser = true;
-      description = "chonk";
-      extraGroups = ["wheel" "video" "audio" "dialout"];
-      hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuUT9jJWba9PeWFpaEyypGMSk1F4hO5rYwtiruh9+uZ"
-      ];
-    };
-
-    root.openssh.authorizedKeys.keys = [
+  users.users.chonk = {
+    isNormalUser = true;
+    description = "chonk";
+    extraGroups = ["wheel" "video" "audio" "dialout"];
+    hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
+    openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuUT9jJWba9PeWFpaEyypGMSk1F4hO5rYwtiruh9+uZ"
     ];
   };
-
   home-manager.users.chonk = import ./home.nix;
-  services.logind.lidSwitch = "ignore";
 
   chonkos = {
     user = "chonk";
@@ -46,6 +38,7 @@
 
   # https://nixos.wiki/wiki/Systemd-networkd#When_to_use
   systemd.network.wait-online.enable = false;
+  services.logind.lidSwitch = "ignore";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
