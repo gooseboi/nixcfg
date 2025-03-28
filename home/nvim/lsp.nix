@@ -4,16 +4,17 @@
   ...
 }: {
   packages = with pkgs; [
+    alejandra
     bash-language-server
     clang-tools
     fenix.rust-analyzer
     gopls
+    jdt-language-server
     lua-language-server
     nixd
-    alejandra
     ols
+    tinymist
     zls
-    jdt-language-server
   ];
 
   config = with pkgs.vimPlugins; ''
@@ -75,17 +76,6 @@
     				},
     			},
 
-    			rust_analyzer = {
-    				["rust-analyzer"] = {
-    					cargo = { allFeatures = true, },
-    					imports = { group = { enable = false, }, },
-    					completion = { postfix = { enable = false, }, },
-    					check = { command = "clippy" }
-    				}
-    			},
-
-    			gopls = {},
-
     			nixd = {
     				settings = {
     					nixd = {
@@ -96,13 +86,21 @@
     				},
     			},
 
-    			bashls = {},
+    			ols = {
+    				init_options = {
+    					checker_args = "-strict-style",
+    				},
+    			},
 
-    			pylsp = {},
+    			rust_analyzer = {
+    				["rust-analyzer"] = {
+    					cargo = { allFeatures = true, },
+    					imports = { group = { enable = false, }, },
+    					completion = { postfix = { enable = false, }, },
+    					check = { command = "clippy" }
+    				}
+    			},
 
-    			clangd = {},
-
-          jdtls = {},
 
     			zls = {
     				settings = {},
@@ -112,11 +110,12 @@
     				end,
     			},
 
-    			ols = {
-    				init_options = {
-    					checker_args = "-strict-style",
-    				},
-    			},
+    			gopls = {},
+    			bashls = {},
+    			pylsp = {},
+    			clangd = {},
+          jdtls = {},
+          tinymist = {},
     		}
 
     		local lspconfig = require("lspconfig")
