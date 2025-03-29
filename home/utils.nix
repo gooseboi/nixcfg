@@ -55,6 +55,8 @@ in {
       exfatprogs
       ntfs3g
       smartmontools
+      usbutils
+      util-linux
       zfs
     ];
 
