@@ -60,10 +60,10 @@ in {
         defaultApplications = {
           "application/json" = ["nvim.desktop"];
           "application/pdf" = ["org.pwmt.zathura.desktop"];
-          "application/vnd.ms-powerpoint.presentation.macroEnabled.12" = ["org.onlyoffice.desktopeditors.desktop"];
-          "application/vnd.ms-powerpoint" = ["org.onlyoffice.desktopeditors.desktop"];
-          "application/vnd.openxmlformats-officedocument.presentationml.presentation" = ["org.onlyoffice.desktopeditors.desktop"];
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = ["org.onlyoffice.desktopeditors.desktop"];
+          "application/vnd.ms-powerpoint.presentation.macroEnabled.12" = ["impress.desktop" "org.onlyoffice.desktopeditors.desktop"];
+          "application/vnd.ms-powerpoint" = ["impress.desktop" "org.onlyoffice.desktopeditors.desktop"];
+          "application/vnd.openxmlformats-officedocument.presentationml.presentation" = ["impress.desktop" "org.onlyoffice.desktopeditors.desktop"];
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = ["writer.desktop" "org.onlyoffice.desktopeditors.desktop"];
           "audio/mpeg" = ["mpv.desktop"];
           "image/bmp" = ["imv.desktop"];
           "image/gif" = ["imv.desktop"];
