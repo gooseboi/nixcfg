@@ -52,15 +52,31 @@ in {
           };
         })
         {
+          # Don't show warning when accessing about:config
           "browser.aboutConfig.showWarning" = false;
+
+          # Ctrl-Tab scrolls recently used, not by tab order
           "browser.ctrlTab.sortByRecentlyUsed" = true;
+
+          # Don't hide tabs when fullscreened
           "browser.fullscreen.autohide" = false;
+
+          # Don't warn when closing multiple tabs (cuz we save them)
           "browser.tabs.warnOnClose" = false;
+
+          # Always show bookmarks bar
           "browser.toolbars.bookmarks.visibility" = "always";
+
+          # Disable safebrowsing
           "browser.safebrowsing.provider.mozilla.updateURL" = null;
-          # browser/components/preferences/main.js:1796 STARTUP_PREF_RESTORE_SESSION
+
+          # Restore tabs when opening the browser, without asking
+          # See browser/components/preferences/main.js:1796
+          # STARTUP_PREF_RESTORE_SESSION in the firefox source code
           "browser.startup.page" = 3;
           "browser.startup.homepage" = "about:home";
+
+          # Set the layout of all the buttons
           "browser.uiCustomization.state" = builtins.toJSON {
             placements = {
               "widget-overflow-fixed-list" = [];
@@ -93,10 +109,20 @@ in {
             currentVersion = 21;
             newElementCount = 2;
           };
+
+          # Don't show a dialong when quitting with closing button
           "browser.warnOnQuit" = false;
+
+          # Don't show a dialong when quitting with shortcut
           "browser.warnOnQuitShortcut" = false;
+
+          # Enable DRM
           "media.eme.enabled" = true;
+
+          # Enable Global Privacy Control
           "privacy.globalprivacycontrol.enabled" = true;
+
+          # Disable breach alerts
           "signon.management.page.breach-alerts.enabled" = false;
         });
     };
@@ -106,9 +132,16 @@ in {
       # ie, not all preferences can be set through policy.
       settings = {
         "privacy.sanitize.pending" = [];
+
         "privacy.sanitize.sanitizeOnShutdown" = false;
+
+        # Enable Containers
         "privacy.userContext.enabled" = true;
+
+        # Always ask what container to use when using the mouse
         "privacy.userContext.newTabContainerOnLeftClick.enabled" = true;
+
+        # Don't ever show welcome screen
         "trailhead.firstrun.didSeeAboutWelcome" = true;
       };
 
