@@ -51,35 +51,43 @@ in {
 
       defaultKeymap = lib.mkIf config.chonkos.zsh.enableVimMode "viins";
 
-      initExtra = ''
-        autoload -U colors && colors
+      initExtra =
+        /*
+        bash
+        */
+        ''
+          autoload -U colors && colors
 
-        PS1="%{$fg[blue]%}[%D{%f/%m/%y} %D{%H:%M:%S}] %B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
+          PS1="%{$fg[blue]%}[%D{%f/%m/%y} %D{%H:%M:%S}] %B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
 
-        zstyle ':completion:*' menu select
-        # Auto complete with case insenstivity
-        zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+          zstyle ':completion:*' menu select
+          # Auto complete with case insenstivity
+          zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-        ${lib.optionalString config.chonkos.zsh.enableVimMode ''
-          # Fix backspace bug when switching modes
-          bindkey "^?" backward-delete-char
+          ${lib.optionalString config.chonkos.zsh.enableVimMode
+            /*
+            bash
+            */
+            ''
+              # Fix backspace bug when switching modes
+              bindkey "^?" backward-delete-char
 
-          # Change cursor shape for different vi modes.
-          function zle-keymap-select {
-            if [[ ''${KEYMAP} == vicmd ]] ||
-               [[ $1 = 'block' ]]; then
-              echo -ne '\e[1 q'
-            elif [[ ''${KEYMAP} == main ]] ||
-                 [[ ''${KEYMAP} == viins ]] ||
-                 [[ ''${KEYMAP} = ''' ]] ||
-                 [[ $1 = 'beam' ]]; then
-              echo -ne '\e[5 q'
-            fi
-          }
-        ''}
+              # Change cursor shape for different vi modes.
+              function zle-keymap-select {
+                if [[ ''${KEYMAP} == vicmd ]] ||
+                   [[ $1 = 'block' ]]; then
+                  echo -ne '\e[1 q'
+                elif [[ ''${KEYMAP} == main ]] ||
+                     [[ ''${KEYMAP} == viins ]] ||
+                     [[ ''${KEYMAP} = ''' ]] ||
+                     [[ $1 = 'beam' ]]; then
+                  echo -ne '\e[5 q'
+                fi
+              }
+            ''}
 
-        zle -N zle-keymap-select
-      '';
+          zle -N zle-keymap-select
+        '';
     };
 
     fzf = lib.mkIf config.chonkos.zsh.enableFzfIntegration {

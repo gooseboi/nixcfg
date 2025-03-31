@@ -41,19 +41,23 @@ inputs @ {
     plugins = with pkgs.vimPlugins; [lazy-nvim];
     wrapperArgs = with lib; ''--prefix PATH : "${makeBinPath (lists.unique (lists.flatten pluginDeps))}"'';
 
-    luaRcContent = ''
-      ${builtins.concatStringsSep "\n\n" (builtins.map (f: builtins.readFile f) luaFiles)}
+    luaRcContent =
+      /*
+      lua
+      */
+      ''
+        ${builtins.concatStringsSep "\n\n" (builtins.map (f: builtins.readFile f) luaFiles)}
 
-      require("lazy").setup({
-      	spec = {
-          ${pluginSpecs}
-      	},
-        rocks = { enabled = false },
-        pkg = { enabled = false },
-        install = { missing = false },
-        change_detection = { enabled = false },
-      })
-    '';
+        require("lazy").setup({
+        	spec = {
+            ${pluginSpecs}
+        	},
+          rocks = { enabled = false },
+          pkg = { enabled = false },
+          install = { missing = false },
+          change_detection = { enabled = false },
+        })
+      '';
   };
 in {
   options.chonkos.nvim = {

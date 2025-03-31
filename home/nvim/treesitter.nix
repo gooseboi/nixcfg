@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   p = pkgs.vimPlugins;
   grammarsPath = pkgs.symlinkJoin {
     name = "nvim-treesitter-grammars";
@@ -39,23 +35,27 @@
   # latex
   # typst
 in {
-  config = ''
-    {
-      dir = "${p.nvim-treesitter}",
-      name = "nvim-treesitter",
-      config = function()
-        vim.opt.runtimepath:append("${p.nvim-treesitter}")
-        vim.opt.runtimepath:append("${grammarsPath}")
-        require ('nvim-treesitter.configs').setup {
-          auto_install = false,
-          sync_install = false,
-          ignore_install = {},
-          modules = {},
+  config =
+    /*
+    lua
+    */
+    ''
+      {
+        dir = "${p.nvim-treesitter}",
+        name = "nvim-treesitter",
+        config = function()
+          vim.opt.runtimepath:append("${p.nvim-treesitter}")
+          vim.opt.runtimepath:append("${grammarsPath}")
+          require ('nvim-treesitter.configs').setup {
+            auto_install = false,
+            sync_install = false,
+            ignore_install = {},
+            modules = {},
 
-          highlight = { enable = true },
-          indent = { enable = true },
-        }
-      end
-    },
-  '';
+            highlight = { enable = true },
+            indent = { enable = true },
+          }
+        end
+      },
+    '';
 }

@@ -62,17 +62,21 @@ in {
             gtk-primary-button-warps-slider = false;
           }
           // commonConfig;
-        extraCss = ''
-          .deadd-noti-center {
-              font-family: Roboto;
-          }
+        extraCss =
+          /*
+          css
+          */
+          ''
+            .deadd-noti-center {
+                font-family: Roboto;
+            }
 
-          image.deadd-noti-center.notification.image {
-            margin-left: 1em;
-            margin-bottom: 1em;
-            margin-top: 1em;
-          }
-        '';
+            image.deadd-noti-center.notification.image {
+              margin-left: 1em;
+              margin-bottom: 1em;
+              margin-top: 1em;
+            }
+          '';
       };
     };
   };
