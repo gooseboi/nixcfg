@@ -9,6 +9,7 @@
     lua-language-server
     nixd
     ols
+    python3Full.pkgs.python-lsp-server
     tinymist
     zls
   ];
