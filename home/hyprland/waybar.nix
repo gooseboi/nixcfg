@@ -92,6 +92,7 @@
           };
 
           clock = {
+            interval = 1;
             format = "{:%a %Y-%m-%d %H:%M:%S}";
             tooltip-format = "<tt><small>{calendar}</small></tt>";
           };
@@ -121,8 +122,8 @@
             format = "{capacity}% {icon}";
             format-charging = "{capacity}% ";
             format-plugged = "{capacity}% ";
-            format-good = ""; # An empty format will hide the module
-            format-full = "";
+            # format-good = ""; # An empty format will hide the module
+            # format-full = "";
             format-icons = ["" "" "" "" ""];
           };
 
