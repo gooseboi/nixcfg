@@ -143,6 +143,12 @@ in {
 
         # Don't ever show welcome screen
         "trailhead.firstrun.didSeeAboutWelcome" = true;
+
+        # Font to use
+        "font.name.serif.x-western" = "Lexend";
+
+        # Font size
+        "font.size.variable.x-western" = 16;
       };
 
       containers = {

@@ -24,6 +24,9 @@ in {
         corefonts
         vistafonts
       ]
-      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues nerd-fonts);
+      ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues nerd-fonts)
+      ++ [
+        font-manager
+      ];
   };
 }

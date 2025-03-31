@@ -13,6 +13,7 @@ in {
 
   imports = [
     ./firefox.nix
+    ./gtk.nix
     ./imv.nix
     ./newsboat.nix
     ./xdg.nix
