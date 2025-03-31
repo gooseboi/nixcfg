@@ -35,6 +35,7 @@ in {
       man-pages-posix
       moreutils
       nh
+      nix-tree
       nodePackages.prettier
       oha
       p7zip
