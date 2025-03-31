@@ -75,6 +75,8 @@ in {
     wayland.windowManager.hyprland = {
       enable = true;
 
+      systemd.enable = true;
+
       settings = {
         debug.disable_logs = !cfg.enableDebug;
 
