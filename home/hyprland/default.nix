@@ -22,7 +22,7 @@
   ) (builtins.map (f: f.name) (lib.attrsToList (builtins.readDir ./scripts)));
 in {
   imports = [
-    ./waybar
+    ./waybar.nix
   ];
 
   options.chonkos.hyprland = {
