@@ -23,19 +23,21 @@ in
 
     src = fetchurl {
       url = "https://download.brother.com/welcome/dlf105168/${model}pdrv-${version}-1.i386.deb";
-      sha256 = "6daf0144b5802ea8da394ca14db0e6f0200d4049545649283791f899b7f7bd26";
+      sha256 = "sha256-Pt6BmmWuw3nsdnb3rAysq9cIefuq8seXjurkBsDhwfI=";
     };
 
     nativeBuildInputs = [
       dpkg
       makeWrapper
     ];
+
     buildInputs = [
       cups
       ghostscript
       a2ps
       gawk
     ];
+
     unpackPhase = "dpkg-deb -x $src $out";
 
     installPhase = ''
@@ -43,12 +45,19 @@ in
       # --replace /opt "$out/opt"
 
       patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
-      $out/opt/brother/Printers/${model}/lpd/br${model}filter
+      $out/opt/brother/Printers/${model}/lpd/i686/br${model}filter
+      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
+      $out/opt/brother/Printers/${model}/lpd/i686/brprintconf_${model}
+
+      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
+      $out/opt/brother/Printers/${model}/lpd/x86_64/br${model}filter
+      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
+      $out/opt/brother/Printers/${model}/lpd/x86_64/brprintconf_${model}
 
       mkdir -p $out/lib/cups/filter/
-      ln -s $out/opt/brother/Printers/${model}/lpd/filter${model} $out/lib/cups/filter/brlpdwrapper${model}
+      ln -s $out/opt/brother/Printers/${model}/lpd/filter_${model} $out/lib/cups/filter/brlpdwrapper${model}
 
-      wrapProgram $out/opt/brother/Printers/${model}/lpd/filter${model} \
+      wrapProgram $out/opt/brother/Printers/${model}/lpd/filter_${model} \
         --prefix PATH ":" ${
         lib.makeBinPath [
           gawk
