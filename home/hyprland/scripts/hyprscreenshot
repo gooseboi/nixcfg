@@ -28,9 +28,9 @@ fi
 if [ "$1" = "full" ]; then
 	grim "$outfile"
 elif [ "$1" = "section" ]; then
-	slurp | grim -t png -g - $outfile
+	slurp | grim -t png -g - "$outfile"
 else
-	echo "Command `$1` is invalid" 1>&2
+	echo "Command $($1) is invalid" 1>&2
 fi
 
 # True if file exists and has a size greater than zero.
@@ -39,7 +39,7 @@ fi
 scanresult=$(zbarimg --quiet --raw "$outfile" | tr -d '\n')
 
 movefile() {
-	mkdir $(dirname "$fname")
+	mkdir -p "$(dirname "$fname")"
 	mv "$outfile" "$fname" && notify-send "Screenshot" "Capture saved to $fname"
 }
 
