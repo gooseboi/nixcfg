@@ -36,14 +36,14 @@ in {
   hardware.printers = {
     # Bus 001 Device 003: ID 04f9:0475 Brother Industries, Ltd DCP-T420W
     ensurePrinters = [
-      {
-        name = "DCPT420W";
-        location = "Cuarto de Guz";
-        deviceUri = "usb://Brother";
-        ppdOptions = {
-          pageSize = "A4";
-        };
-      }
+      # {
+      #   name = "DCPT420W";
+      #   location = "Cuarto de Guz";
+      #   deviceUri = "usb://Brother";
+      #   ppdOptions = {
+      #     pageSize = "A4";
+      #   };
+      # }
     ];
   };
 }
