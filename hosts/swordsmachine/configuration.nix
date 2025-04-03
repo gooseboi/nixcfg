@@ -28,6 +28,8 @@
     user = "chonk";
     agenix.enable = true;
     tailscale.enable = true;
+    tailscale.enableExitNode = true;
+    tailscale.preferredInterface = "enp2s0f3u2";
     openssh.enable = true;
     zsh.enable = true;
     network-manager.enable = true;
