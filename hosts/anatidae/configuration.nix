@@ -37,6 +37,7 @@
     desktop.enable = true;
     tailscale.enable = true;
     openssh.enable = true;
+    mosh.enable = true;
     zsh.enable = true;
     network-manager.enable = true;
     tlp.enable = true;
