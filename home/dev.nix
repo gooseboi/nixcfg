@@ -90,6 +90,7 @@ in {
 
               history: Path = state_home / 'python_history'
 
+              history.touch(exist_ok=True)
               readline.read_history_file(str(history))
               atexit.register(readline.write_history_file, str(history))
 
