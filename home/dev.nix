@@ -19,6 +19,7 @@ in {
     home = {
       packages = with pkgs; [
         (lib.hiPrio gcc) # To stop conflict with clang for c++ bin
+        bun
         clang
         clang-tools
         gdb
@@ -26,6 +27,7 @@ in {
         go
         libgcc
         odin
+        pnpm
         python3Full
         uv
         zig
