@@ -26,6 +26,7 @@
     rofi.enable = true;
     utils.enable = true;
     dev.enable = true;
+    nushell.enable = true;
   };
 
   home = {

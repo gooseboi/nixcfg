@@ -13,6 +13,7 @@ in {
       ./fonts.nix
       ./git.nix
       ./jujutsu.nix
+      ./nushell.nix
       ./rofi.nix
       ./tmux.nix
       ./utils.nix
