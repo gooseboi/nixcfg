@@ -26,6 +26,7 @@ in {
         gf
         go
         libgcc
+        mermaid-cli
         odin
         pnpm
         python3Full

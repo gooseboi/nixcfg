@@ -40,6 +40,7 @@ in {
       nodePackages.prettier
       oha
       p7zip
+      pandoc
       ripgrep
       rsync
       socat
@@ -49,6 +50,8 @@ in {
       unzip
       watch
       wget
+      zip
+      zstd
 
       # Hardware
       btrfs-progs
