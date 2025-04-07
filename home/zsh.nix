@@ -31,24 +31,6 @@ in {
         save = 10000000;
       };
 
-      shellAliases = {
-        # Common
-        cp = "cp -iv";
-        mv = "mv -iv";
-        rm = "rm -vI";
-        mkd = "mkdir -pv";
-        yt = "youtube-dl -f best -ic --add-metadata";
-        yta = "youtube-dl -f best -icx --add-metadata";
-        ytp = "yt-dlp --download-archive ~/.config/yt/yt-dl-vid.conf";
-        ytap = "yt-dlp -icx --add-metadata";
-        ffmpeg = "ffmpeg -hide_banner";
-        xclipboard = "xclip -selection clipboard";
-
-        # Colour
-        grep = "grep --color=auto";
-        diff = "diff --color=auto";
-      };
-
       defaultKeymap = lib.mkIf config.chonkos.zsh.enableVimMode "viins";
 
       initExtra =
