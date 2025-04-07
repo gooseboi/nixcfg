@@ -20,7 +20,6 @@ in {
       enableCompletion = true;
 
       syntaxHighlighting.enable = true;
-      completionInit = "autoload -U compinit && compinit -u";
       autocd = true;
       dotDir = "${myLib.removeHomeDirPrefixStr "${config.xdg.configHome}/zsh"}";
 
