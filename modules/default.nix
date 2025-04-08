@@ -10,7 +10,6 @@
       ./docker.nix
       ./hyprland.nix
       ./i18n.nix
-      ./mosh.nix
       ./network-manager.nix
       ./ssh.nix
       ./tailscale.nix
