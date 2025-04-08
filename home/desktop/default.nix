@@ -45,13 +45,14 @@ in {
         };
 
       packages = with pkgs; [
+        discord
         gimp
         libreoffice-fresh
         mpv
         onlyoffice-bin
         playerctl
+        whatsapp-for-linux
         xfce.thunar
-        discord
       ];
     };
   };

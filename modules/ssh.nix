@@ -10,6 +10,11 @@ in {
   };
 
   config = lib.mkIf cfg.openssh.enable {
+    programs.mosh = {
+      enable = true;
+      openFirewall = true;
+    };
+
     services.openssh = {
       enable = true;
       settings = {

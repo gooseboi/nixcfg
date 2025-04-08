@@ -2,12 +2,9 @@
   pkgs,
   config,
   lib,
-  mkMyLib,
   ...
 }: let
   cfg = config.chonkos.dev;
-
-  myLib = mkMyLib config;
 
   python_rc = "python/pythonrc";
 in {
@@ -22,8 +19,10 @@ in {
         bun
         clang
         clang-tools
+        deno
         gdb
         gf
+        gh
         go
         libgcc
         mermaid-cli

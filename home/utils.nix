@@ -15,10 +15,14 @@ in {
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
+      asciinema
+      cowsay
       curl
       czkawka-full
       dig
+      doggo
       dust
+      fastfetch
       fd
       ffmpeg-full
       file
@@ -45,7 +49,10 @@ in {
       rsync
       socat
       speedtest-rs
+      strace
       tealdeer
+      time
+      traceroute
       tree
       unzip
       watch
