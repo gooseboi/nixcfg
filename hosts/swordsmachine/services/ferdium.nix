@@ -7,6 +7,7 @@
   stateDir = "/var/lib/${stateDirName}";
   dataDir = "${stateDir}/data";
   recipesDir = "${stateDir}/recipes";
+  systemdServiceName = "${config.virtualisation.oci-containers.backend}-${serviceName}";
 in {
   assertions = [
     {
@@ -17,23 +18,19 @@ in {
     }
   ];
 
-  users.users.${user} = {
-    group = group;
-    isSystemUser = true;
-  };
-  users.groups.${group} = {};
-
-  systemd.services."${config.virtualisation.oci-containers.backend}-${serviceName}".serviceConfig = {
+  systemd.services.${systemdServiceName}.serviceConfig = {
     StateDirectory = "${stateDirName}";
   };
+
+  systemd.tmpfiles.rules = [
+    "d ${recipesDir} 0775 - - - -"
+    "d ${dataDir} 0775 - - - -"
+  ];
 
   virtualisation.oci-containers.containers = {
     "${serviceName}" = {
       image = "docker.io/ferdium/ferdium-server";
       autoStart = true;
-
-      user = "${user}:{group}";
-      podman.user = user;
 
       volumes = [
         "${dataDir}:/data"
@@ -44,9 +41,9 @@ in {
         NODE_ENV = "production";
         APP_URL = "https://ferdium.gooseman.net";
         DB_CONNECTION = "sqlite";
-        IS_CREATION_ENABLED = "false";
+        IS_CREATION_ENABLED = "true";
         IS_DASHBOARD_ENABLED = "true";
-        IS_REGISTRATION_ENABLED = "false";
+        IS_REGISTRATION_ENABLED = "true";
         CONNECT_WITH_FRANZ = "false";
         DATA_DIR = "/data";
         JWT_USE_PEM = "true";
