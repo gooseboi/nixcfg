@@ -1,7 +1,55 @@
-{...}: {
+{config, ...}: let
+  inherit (config.networking) domain;
+
+  serviceDomain = "git.${domain}";
+in {
   services.forgejo = {
     enable = true;
 
     lfs.enable = true;
+
+    database.type = "sqlite3";
+
+    settings = {
+      default = {
+        APP_NAME = "Chonk's terrible git repos";
+        RUN_MODE = "prod";
+      };
+
+      server = {
+        DOMAIN = serviceDomain;
+        SSH_DOMAIN = serviceDomain;
+        HTTP_PORT = 3000;
+        DISABLE_SSH = false;
+        ROOT_URL = "https://${serviceDomain}";
+      };
+
+      repository = {
+        DEFAULT_BRANCH = "master";
+        DEFAULT_MERGE_STYLE = "rebase-merge";
+        DEFAULT_REPO_UNITS = "repo.code, repo.issues, repo.pulls";
+
+        DEFAULT_PUSH_CREATE_PRIVATE = false;
+        ENABLE_PUSH_CREATE_ORG = true;
+        ENABLE_PUSH_CREATE_USER = true;
+
+        DISABLE_STARS = true;
+      };
+
+      service = {
+        DISABLE_REGISTRATION = true;
+        REQUIRE_SIGNIN_VIEW = false;
+        REGISTER_EMAIL_CONFIRM = false;
+        ALLOW_ONLY_EXTERNAL_REGISTRATION = false;
+        ENABLE_CAPTCHA = false;
+        DEFAULT_KEEP_EMAIL_PRIVATE = false;
+        DEFAULT_ALLOW_CREATE_ORGANIZATION = false;
+        DEFAULT_ENABLE_TIMETRACKING = true;
+      };
+
+      "git.timeout".MIGRATE = 7200;
+
+      actions.ENABLED = false;
+    };
   };
 }

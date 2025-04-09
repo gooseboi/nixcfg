@@ -1,7 +1,7 @@
 {config, ...}: let
+  inherit (config.networking) domain;
+
   serviceName = "ferdium-server";
-  user = serviceName;
-  group = serviceName;
 
   stateDirName = serviceName;
   stateDir = "/var/lib/${stateDirName}";
@@ -9,15 +9,6 @@
   recipesDir = "${stateDir}/recipes";
   systemdServiceName = "${config.virtualisation.oci-containers.backend}-${serviceName}";
 in {
-  assertions = [
-    {
-      assertion = config.virtualisation.oci-containers.backend == "podman";
-      message = ''
-        This doesn't work with docker.
-      '';
-    }
-  ];
-
   systemd.services.${systemdServiceName}.serviceConfig = {
     StateDirectory = "${stateDirName}";
   };
@@ -39,7 +30,7 @@ in {
       ports = ["127.0.0.1:3333:3333"];
       environment = {
         NODE_ENV = "production";
-        APP_URL = "https://ferdium.gooseman.net";
+        APP_URL = "https://ferdium.${domain}";
         DB_CONNECTION = "sqlite";
         IS_CREATION_ENABLED = "true";
         IS_DASHBOARD_ENABLED = "true";

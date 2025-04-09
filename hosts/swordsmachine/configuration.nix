@@ -42,6 +42,8 @@
   systemd.network.wait-online.enable = false;
   services.logind.lidSwitch = "ignore";
 
+  networking.domain = "gooseman.net";
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
