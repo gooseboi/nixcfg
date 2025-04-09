@@ -18,7 +18,10 @@ in {
       asciinema
       cowsay
       curl
-      czkawka-full
+      (czkawka-full.override
+        {
+          extraPackages = [ffmpeg-full];
+        })
       dig
       doggo
       dust
