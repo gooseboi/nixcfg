@@ -7,11 +7,6 @@
     user = "chonk";
 
     eza.enable = true;
-    zsh = {
-      enable = true;
-      enableVimMode = true;
-      enableFzfIntegration = true;
-    };
     tmux = {
       enable = true;
     };

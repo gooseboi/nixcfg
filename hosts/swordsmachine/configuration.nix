@@ -32,6 +32,7 @@
     tailscale.preferredInterface = "enp2s0f3u2";
     openssh.enable = true;
     zsh.enable = true;
+    zsh.enableVimMode = true;
     network-manager.enable = true;
     tlp.enable = true;
     docker.enable = true;

@@ -18,7 +18,6 @@ in {
       ./tmux.nix
       ./utils.nix
       ./zathura.nix
-      ./zsh.nix
     ]
     ++ [
       ./hyprland

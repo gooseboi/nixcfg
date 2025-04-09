@@ -82,6 +82,8 @@ in {
       };
     };
 
+    programs.fzf.enable = true;
+
     home.sessionVariables = {
       RIPGREP_CONFIG_PATH = "${config.xdg.configHome}/" + ripgrep_config;
       WGETRC = "${config.xdg.configHome}/" + wgetrc;

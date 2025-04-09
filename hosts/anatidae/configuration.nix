@@ -38,6 +38,7 @@
     tailscale.enable = true;
     openssh.enable = true;
     zsh.enable = true;
+    zsh.enableVimMode = true;
     network-manager.enable = true;
     tlp.enable = true;
     docker.enable = true;

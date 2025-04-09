@@ -2,16 +2,15 @@
   pkgs,
   config,
   lib,
-  mkMyLib,
   ...
 }: let
-  myLib = mkMyLib config;
+  cfg = config.chonkos.nushell;
 in {
   options.chonkos.nushell = {
     enable = lib.mkEnableOption "enable nushell";
   };
 
-  config.programs.nushell = lib.mkIf config.chonkos.zsh.enable {
+  config.programs.nushell = lib.mkIf cfg.enable {
     enable = true;
   };
 }
