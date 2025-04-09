@@ -17,7 +17,6 @@
     zathura.enable = true;
     jujutsu.enable = true;
     scripts.enable = true;
-    fonts.enable = true;
     rofi.enable = true;
     utils.enable = true;
     dev.enable = true;

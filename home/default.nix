@@ -10,7 +10,6 @@ in {
       ./alacritty.nix
       ./dev.nix
       ./eza.nix
-      ./fonts.nix
       ./git.nix
       ./jujutsu.nix
       ./nushell.nix

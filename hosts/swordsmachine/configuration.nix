@@ -26,17 +26,18 @@
 
   chonkos = {
     user = "chonk";
+
     agenix.enable = true;
+    docker.enable = true;
+    i18n.enable = true;
+    network-manager.enable = true;
+    openssh.enable = true;
     tailscale.enable = true;
     tailscale.enableExitNode = true;
     tailscale.preferredInterface = "enp2s0f3u2";
-    openssh.enable = true;
+    tlp.enable = true;
     zsh.enable = true;
     zsh.enableVimMode = true;
-    network-manager.enable = true;
-    tlp.enable = true;
-    docker.enable = true;
-    i18n.enable = true;
   };
 
   # https://nixos.wiki/wiki/Systemd-networkd#When_to_use

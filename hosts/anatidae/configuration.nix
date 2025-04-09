@@ -33,18 +33,20 @@
 
   chonkos = {
     user = "chonk";
+
     agenix.enable = true;
     desktop.enable = true;
-    tailscale.enable = true;
-    openssh.enable = true;
-    zsh.enable = true;
-    zsh.enableVimMode = true;
-    network-manager.enable = true;
-    tlp.enable = true;
     docker.enable = true;
-    virt-manager.enable = true;
+    fonts.enable = true;
     hyprland.enable = true;
     i18n.enable = true;
+    network-manager.enable = true;
+    openssh.enable = true;
+    tailscale.enable = true;
+    tlp.enable = true;
+    virt-manager.enable = true;
+    zsh.enable = true;
+    zsh.enableVimMode = true;
   };
 
   # Open ports in the firewall.

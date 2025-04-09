@@ -7,6 +7,7 @@
     [
       ./agenix.nix
       ./docker.nix
+      ./fonts.nix
       ./hyprland.nix
       ./i18n.nix
       ./network-manager.nix
