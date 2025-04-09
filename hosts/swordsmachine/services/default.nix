@@ -3,6 +3,7 @@
     ./caddy.nix
     ./ferdium.nix
     ./forgejo.nix
+    ./stirlingpdf.nix
     ./vaultwarden.nix
   ];
 
