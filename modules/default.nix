@@ -6,7 +6,6 @@
   imports =
     [
       ./agenix.nix
-      ./desktop.nix
       ./docker.nix
       ./hyprland.nix
       ./i18n.nix
@@ -19,6 +18,7 @@
       ./zsh.nix
     ]
     ++ [
+      ./desktop
       ./secrets
     ];
 

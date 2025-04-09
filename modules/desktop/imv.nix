@@ -2,10 +2,8 @@
   config,
   lib,
   ...
-}: let
-  cfg = config.chonkos.desktop;
-in {
-  programs.imv = lib.mkIf cfg.enable {
+}: {
+  programs.imv = {
     enable = true;
     settings = {
       binds = {

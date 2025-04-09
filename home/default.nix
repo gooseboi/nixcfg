@@ -21,7 +21,6 @@ in {
       ./zsh.nix
     ]
     ++ [
-      ./desktop
       ./hyprland
       ./nvim
       ./scripts

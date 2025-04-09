@@ -1,12 +1,5 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: let
-  cfg = config.chonkos.desktop;
-in {
-  programs.newsboat = lib.mkIf cfg.enable {
+{pkgs, ...}: {
+  programs.newsboat = {
     enable = true;
     autoReload = true;
     extraConfig = ''

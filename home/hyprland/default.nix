@@ -32,8 +32,6 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    chonkos.desktop.enable = true;
-
     home.packages =
       lib.lists.optional nmEnabled pkgs.networkmanagerapplet
       ++ (with pkgs; [

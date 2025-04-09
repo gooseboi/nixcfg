@@ -1,12 +1,9 @@
 {
   pkgs,
-  config,
   lib,
   ...
-}: let
-  cfg = config.chonkos.desktop;
-in {
-  programs.firefox = lib.mkIf cfg.enable {
+}: {
+  programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
     configPath = ".librewolf";
