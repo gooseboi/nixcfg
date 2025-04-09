@@ -15,7 +15,6 @@
     };
     nvim.enable = true;
     zathura.enable = true;
-    jujutsu.enable = true;
     scripts.enable = true;
     rofi.enable = true;
     utils.enable = true;

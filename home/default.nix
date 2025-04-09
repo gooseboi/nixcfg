@@ -11,7 +11,6 @@ in {
       ./dev.nix
       ./eza.nix
       ./git.nix
-      ./jujutsu.nix
       ./nushell.nix
       ./rofi.nix
       ./tmux.nix
