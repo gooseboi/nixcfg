@@ -41,6 +41,7 @@ in {
       man-db
       man-pages
       man-pages-posix
+      (callPackage ./mc-monitor.nix {})
       moreutils
       nh
       nix-tree

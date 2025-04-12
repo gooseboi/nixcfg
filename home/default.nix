@@ -14,13 +14,13 @@ in {
       ./nushell.nix
       ./rofi.nix
       ./tmux.nix
-      ./utils.nix
       ./zathura.nix
     ]
     ++ [
       ./hyprland
       ./nvim
       ./scripts
+      ./utils
     ];
 
   options.chonkos = {
