@@ -1,14 +1,18 @@
 {
   config,
   lib,
-  pkgs,
+  systemConfig,
   ...
-}: {
+}: let
+  inherit (systemConfig.chonkos) theme;
+
+  cfg = config.chonkos.alacritty;
+in {
   options.chonkos.alacritty = {
     enable = lib.mkEnableOption "enables alacritty";
   };
 
-  config = lib.mkIf config.chonkos.alacritty.enable {
+  config = lib.mkIf cfg.enable {
     programs.alacritty = {
       enable = true;
 
@@ -79,9 +83,9 @@
           };
         };
 
-        font = {
-          size = 11.0;
-          normal.family = "SauceCodePro NFM Medium";
+        font = with theme.font; {
+          size = size.normal;
+          normal.family = mono.name;
         };
 
         keyboard = {
@@ -144,10 +148,6 @@
       };
     };
 
-    home = {
-      packages = with pkgs; [nerd-fonts.sauce-code-pro];
-
-      sessionVariables.TERMINAL = "alacritty";
-    };
+    home.sessionVariables.TERMINAL = "alacritty";
   };
 }

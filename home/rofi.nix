@@ -2,8 +2,11 @@
   config,
   lib,
   pkgs,
+  systemConfig,
   ...
 }: let
+  inherit (systemConfig.chonkos) theme;
+
   cfg = config.chonkos.rofi;
 in {
   options.chonkos.rofi = {
@@ -24,13 +27,11 @@ in {
         else (with pkgs; [rofi-emoji-wayland]);
 
       theme = "gruvbox-dark-hard";
-      extraConfig = {
+      extraConfig = with theme.font; {
         modi = "window,drun,ssh,run,emoji";
-        font = "hack 10";
+        font = "${sans.name} ${builtins.toString size.big}";
         m = "-1";
       };
     };
-
-    home.packages = with pkgs; [nerd-fonts.hack];
   };
 }

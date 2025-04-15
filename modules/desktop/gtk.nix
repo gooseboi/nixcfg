@@ -2,8 +2,11 @@
   config,
   lib,
   pkgs,
+  systemConfig,
   ...
-}: {
+}: let
+  inherit (systemConfig.chonkos) theme;
+in {
   gtk = let
     commonConfig = {
       gtk-xft-antialias = 1;
@@ -22,15 +25,14 @@
   in {
     enable = true;
 
-    font = {
-      name = "Lexend";
-      package = pkgs.lexend;
-      size = 12;
+    font = with theme.font; {
+      name = sans.name;
+      package = sans.package;
+      size = size.normal;
     };
 
     iconTheme = {
-      name = "Gruvbox-Plus-Dark";
-      package = pkgs.gruvbox-plus-icons;
+      inherit (theme.icons) name package;
     };
 
     theme = {

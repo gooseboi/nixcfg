@@ -1,8 +1,11 @@
 {
   pkgs,
   lib,
+  systemConfig,
   ...
-}: {
+}: let
+  inherit (systemConfig.chonkos) theme;
+in {
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
@@ -142,10 +145,10 @@
         "trailhead.firstrun.didSeeAboutWelcome" = true;
 
         # Font to use
-        "font.name.serif.x-western" = "Lexend";
+        "font.name.serif.x-western" = theme.font.sans.name;
 
         # Font size
-        "font.size.variable.x-western" = 16;
+        "font.size.variable.x-western" = theme.font.size.normal;
       };
 
       containers = {

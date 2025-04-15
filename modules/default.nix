@@ -9,6 +9,7 @@
       ./network-manager.nix
       ./ssh.nix
       ./tailscale.nix
+      ./theme.nix
       ./tlp.nix
       ./users.nix
       ./virt-manager.nix

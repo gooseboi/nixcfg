@@ -2,18 +2,14 @@
   config,
   lib,
   pkgs,
+  systemConfig,
   ...
-}: {
-  config = lib.mkIf config.chonkos.hyprland.enable {
-    home.packages = with pkgs; [
-      font-awesome # The bar's font
-      lexend
-      procps # Start script
-      findutils # Start script (xargs)
-      gawk # Start script
-      gnugrep # Start script
-    ];
+}: let
+  inherit (systemConfig.chonkos) theme;
 
+  cfg = config.chonkos.hyprland;
+in {
+  config = lib.mkIf cfg.enable {
     programs.waybar = {
       enable = true;
 
@@ -184,10 +180,9 @@
         */
         ''
           * {
-          	/* `otf-font-awesome` is required to be installed for icons */
-          	font-family: Lexend;
+          	font-family: ${theme.font.sans.name};
 
-          	font-size: 16px;
+          	font-size: ${builtins.toString theme.font.size.big};
           }
 
           window#waybar {
