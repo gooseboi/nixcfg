@@ -1,9 +1,9 @@
-{...}: {
+{
   imports = [
     ./caddy.nix
     ./ferdium.nix
     ./forgejo.nix
-    ./stirlingpdf.nix
+    ./stirling-pdf.nix
     ./vaultwarden.nix
   ];
 

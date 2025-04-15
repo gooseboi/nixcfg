@@ -4,6 +4,8 @@
   ...
 }: let
   inherit (config) networking;
+
+  cfg = config.chonkos.services;
 in {
   services.caddy = {
     enable = true;
@@ -29,19 +31,13 @@ in {
           };
         };
     in
-      lib.mkMerge [
-        (reverse_proxy {
-          subdomain = "pass";
-          port = 8222;
-        })
-        (reverse_proxy {
-          subdomain = "ferdium";
-          port = 3333;
-        })
-        (reverse_proxy {
-          subdomain = "git";
-          port = 3000;
-        })
-      ];
+      lib.mkMerge (map ({value, ...}: (reverse_proxy {
+          subdomain = value.serviceSubDomain;
+          port = value.servicePort;
+        }))
+        (
+          lib.attrsToList
+          cfg
+        ));
   };
 }
