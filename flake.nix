@@ -46,118 +46,40 @@
   };
 
   outputs = inputs @ {
-    agenix,
-    disko,
-    fenix,
     flake-utils,
-    home-manager,
     nixos-hardware,
     nixpkgs,
     ...
-  }: let
-    mkHost = hostName: system: extraModules: let
-    in
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {
-          inherit inputs;
-        };
-
-        modules =
-          [
-            # System config
-            ./hosts/${hostName}/configuration.nix
-
-            # Load system modules
-            ./modules
-
-            # Disko
-            disko.nixosModules.disko
-
-            # Secrets
-            agenix.nixosModules.default
-
-            # Home manager configs
-            ({
-              config,
-              lib,
-              ...
-            }: {
-              imports = [
-                home-manager.nixosModules.home-manager
-              ];
-
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                sharedModules = [./home];
-
-                extraSpecialArgs = {
-                  inherit inputs;
-                  systemConfig = config;
-                  mkMyLib = hmConfig: rec {
-                    stringToPath = prefix: pathStr: prefix + builtins.toPath pathStr;
-                    absoluteStringToPath = pathStr: stringToPath /. pathStr;
-                    removeHomeDirPrefix = path: lib.path.removePrefix (absoluteStringToPath hmConfig.home.homeDirectory) path;
-                    removeHomeDirPrefixStr = path: removeHomeDirPrefix (absoluteStringToPath path);
-                  };
-                };
-              };
-            })
-
-            # Overlays
-            ({lib, ...}: {
-              nixpkgs.overlays = [
-                fenix.overlays.default
-                agenix.overlays.default
-              ];
-
-              nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) ["corefonts" "vista-fonts" "discord"];
-            })
-
-            # Nix/General configs
-            ({...}: {
-              networking.hostName = hostName;
-
-              nixpkgs.hostPlatform = system;
-
-              nix = {
-                settings = (import ./flake.nix).nixConfig;
-                registry.nixpkgs.to = {
-                  owner = "NixOS";
-                  repo = "nixpkgs";
-                  rev = inputs.nixpkgs.rev;
-                  type = "github";
-                };
-              };
-            })
-          ]
-          ++ extraModules;
-      };
-  in
+  }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
     in {
       formatter = pkgs.alejandra;
     })
-    // {
-      nixosConfigurations = {
-        anatidae = mkHost "anatidae" "x86_64-linux" [
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-gpu-intel
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-          {
-            hardware.intelgpu.enableHybridCodec = true;
-          }
-        ];
+    // (
+      let
+        lib = nixpkgs.lib.extend (import ./lib inputs);
 
-        swordsmachine = mkHost "swordsmachine" "x86_64-linux" [
-          nixos-hardware.nixosModules.common-cpu-amd
-          nixos-hardware.nixosModules.common-cpu-amd-pstate
-          nixos-hardware.nixosModules.common-cpu-amd-zenpower
-          nixos-hardware.nixosModules.common-gpu-amd
-          nixos-hardware.nixosModules.common-pc-laptop-ssd
-        ];
-      };
-    };
+        inherit (lib) mkHost;
+      in {
+        nixosConfigurations = {
+          anatidae = mkHost "anatidae" "x86_64-linux" (with nixos-hardware.nixosModules; [
+            common-cpu-intel
+            common-gpu-intel
+            common-pc-laptop-ssd
+            {
+              hardware.intelgpu.enableHybridCodec = true;
+            }
+          ]);
+
+          swordsmachine = mkHost "swordsmachine" "x86_64-linux" (with nixos-hardware.nixosModules; [
+            common-cpu-amd
+            common-cpu-amd-pstate
+            common-cpu-amd-zenpower
+            common-gpu-amd
+            common-pc-laptop-ssd
+          ]);
+        };
+      }
+    );
 }
