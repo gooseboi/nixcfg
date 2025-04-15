@@ -45,4 +45,5 @@
       templates = null;
     };
   };
+  home.preferXdgDirectories = true;
 }
