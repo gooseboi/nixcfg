@@ -1,7 +1,7 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }: let
   files = lib.attrsToList (builtins.readDir ./.);

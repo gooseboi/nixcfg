@@ -1,7 +1,7 @@
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }: {
   config = lib.mkIf config.chonkos.hyprland.enable {

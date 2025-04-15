@@ -1,8 +1,4 @@
 {
-  config,
-  lib,
-  ...
-}: {
   programs.imv = {
     enable = true;
     settings = {

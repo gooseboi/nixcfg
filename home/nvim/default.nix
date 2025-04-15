@@ -1,7 +1,7 @@
 inputs @ {
-  pkgs,
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.chonkos.nvim;

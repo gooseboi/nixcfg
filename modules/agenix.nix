@@ -14,8 +14,6 @@ in {
     age.identityPaths = [
       "/root/.ssh/id"
     ];
-    environment = {
-      systemPackages = [pkgs.agenix];
-    };
+    environment.systemPackages = [pkgs.agenix];
   };
 }

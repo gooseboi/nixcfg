@@ -1,9 +1,9 @@
 # TODO: https://wiki.hyprland.org/Configuring/Window-Rules/ for file picker
 # TODO: try niri
 {
-  pkgs,
   config,
   lib,
+  pkgs,
   systemConfig,
   ...
 }: let
