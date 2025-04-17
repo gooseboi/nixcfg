@@ -34,6 +34,7 @@ in {
           DOMAIN = serviceDomain;
           SSH_DOMAIN = serviceDomain;
           HTTP_PORT = 3000;
+          HTTP_ADDR = "127.0.0.1";
           DISABLE_SSH = false;
           ROOT_URL = "https://${serviceDomain}";
         };
