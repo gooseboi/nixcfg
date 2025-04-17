@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (config.networking) domain;
@@ -20,15 +21,14 @@ in {
     services.forgejo = {
       enable = true;
 
+      package = pkgs.forgejo;
+
       lfs.enable = true;
 
       database.type = "sqlite3";
 
       settings = {
-        default = {
-          APP_NAME = "Chonk's terrible git repos";
-          RUN_MODE = "prod";
-        };
+        DEFAULT.APP_NAME = "Chonk's terrible git repos";
 
         server = {
           DOMAIN = serviceDomain;
