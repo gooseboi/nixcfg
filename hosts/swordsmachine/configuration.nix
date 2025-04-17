@@ -1,6 +1,7 @@
 {config, ...}: {
   imports = [
     ./disk-config.nix
+    ./freedns.nix
     ./hardware-configuration.nix
     ./services
   ];
