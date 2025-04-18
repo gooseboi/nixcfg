@@ -62,7 +62,25 @@ in {
           DEFAULT_ENABLE_TIMETRACKING = true;
         };
 
-        "git.timeout".MIGRATE = 7200;
+        cron = {
+          RUN_AT_START = false;
+          NOTICE_ON_SUCCESS = true;
+        };
+
+        "cron.git_gc_repos" = {
+          ENABLED = true;
+          RUN_AT_START = false;
+          SCHEDULE = "@midnight";
+          TIMEOUT = "180s";
+          NOTICE_ON_SUCCESS = true;
+        };
+
+        "git.timeout" = {
+          MIGRATE = 7200;
+          MIRROR = 7200;
+        };
+
+        ui.DEFAULT_THEME = "forgejo-dark";
 
         actions.ENABLED = false;
       };
