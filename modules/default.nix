@@ -8,6 +8,7 @@
       ./i18n.nix
       ./network-manager.nix
       ./ssh.nix
+      ./systemd.nix
       ./tailscale.nix
       ./theme.nix
       ./tlp.nix
