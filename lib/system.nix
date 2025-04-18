@@ -79,12 +79,7 @@ inputs: self: super: {
 
             nix = {
               settings = (import (self + /flake.nix)).nixConfig;
-              registry.nixpkgs.to = {
-                owner = "NixOS";
-                repo = "nixpkgs";
-                rev = inputs.nixpkgs.rev;
-                type = "github";
-              };
+              registry.nixpkgs.flake = inputs.nixpkgs;
             };
           })
         ]
