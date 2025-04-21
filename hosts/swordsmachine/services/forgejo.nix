@@ -78,6 +78,7 @@ in {
         "git.timeout" = {
           MIGRATE = 7200;
           MIRROR = 7200;
+          GC = 7200;
         };
 
         ui.DEFAULT_THEME = "forgejo-dark";
