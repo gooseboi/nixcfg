@@ -13,6 +13,7 @@
     programs.tmux = lib.mkIf config.chonkos.tmux.enable {
       enable = true;
 
+      # TODO: Use current user shell
       shell = "${pkgs.zsh}/bin/zsh";
       historyLimit = 100000;
 

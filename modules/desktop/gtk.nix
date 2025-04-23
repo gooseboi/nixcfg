@@ -18,10 +18,14 @@ in {
       gtk-button-images = 1;
       gtk-menu-images = 1;
     };
-    commonConfigStr = lib.concatStringsSep "\n" (map ({
-      name,
-      value,
-    }: "${name} = ${builtins.toString value}") (lib.attrsToList commonConfig));
+    commonConfigStr =
+      commonConfig
+      |> lib.attrsToList
+      |> map ({
+        name,
+        value,
+      }: "${name} = ${builtins.toString value}")
+      |> lib.concatStringsSep "\n";
   in {
     enable = true;
 

@@ -17,9 +17,16 @@
     ${swaylock}/bin/swaylock -f -i ~/.local/share/bg
   '');
 
-  scripts = builtins.map (
-    f: pkgs.writeShellScriptBin f (builtins.readFile (./scripts + "/${f}"))
-  ) (builtins.map (f: f.name) (lib.attrsToList (builtins.readDir ./scripts)));
+  scripts =
+    builtins.readDir ./scripts
+    |> lib.attrsToList
+    |> map (f: f.name)
+    |> builtins.map (
+      f: ((./scripts
+          + "/${f}")
+        |> builtins.readFile
+        |> pkgs.writeShellScriptBin f)
+    );
 in {
   imports = [
     ./waybar.nix

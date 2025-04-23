@@ -30,23 +30,34 @@ inputs @ {
       ./vimwiki.nix
     ];
 
-  pluginContents = builtins.map (f: import f inputs) pluginFiles;
-  pluginDeps = lib.lists.flatten (builtins.map (p: p.packages or []) pluginContents);
-  pluginSpecs = builtins.concatStringsSep "\n\n" (builtins.map (p: p.config) pluginContents);
+  pluginContents =
+    pluginFiles
+    |> map (f: import f inputs);
+  pluginDeps =
+    pluginContents
+    |> map (p: p.packages or [])
+    |> lib.lists.flatten;
+  pluginSpecs =
+    pluginContents
+    |> map (p: p.config)
+    |> builtins.concatStringsSep "\n\n";
 
   nvim_package = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
     viAlias = true;
     vimAlias = true;
 
     plugins = with pkgs.vimPlugins; [lazy-nvim];
-    wrapperArgs = with lib; ''--prefix PATH : "${makeBinPath (lists.unique (lists.flatten pluginDeps))}"'';
+    wrapperArgs = with lib; ''--prefix PATH : "${pluginDeps
+        |> lists.flatten
+        |> lists.unique
+        |> makeBinPath}"'';
 
     luaRcContent =
       /*
       lua
       */
       ''
-        ${builtins.concatStringsSep "\n\n" (builtins.map (f: builtins.readFile f) luaFiles)}
+        ${luaFiles |> map (f: builtins.readFile f) |> builtins.concatStringsSep "\n\n"}
 
         require("lazy").setup({
         	spec = {

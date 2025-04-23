@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  files = lib.attrsToList (builtins.readDir ./.);
-  filteredFiles = builtins.filter (f: f.value != "directory" && !lib.strings.hasSuffix ".nix" f.name) files;
-  fileNames = builtins.map (f: f.name) filteredFiles;
+  files = builtins.readDir ./. |> lib.attrsToList;
+  filteredFiles = files |> builtins.filter (f: f.value != "directory" && !lib.strings.hasSuffix ".nix" f.name);
+  fileNames = filteredFiles |> map (f: f.name);
 in {
   options.chonkos.scripts = {
     enable = lib.mkEnableOption "enable scripts";
@@ -18,10 +18,10 @@ in {
       chonkos.rofi.enable = true;
 
       home.packages =
-        builtins.map (
-          f: pkgs.writeShellScriptBin f (builtins.readFile (./. + "/${f}"))
-        )
-        fileNames
+        (fileNames
+          |> map (
+            f: pkgs.writeShellScriptBin f (builtins.readFile (./. + "/${f}"))
+          ))
         ++ (with pkgs; [
           curl
           ffmpeg-full
