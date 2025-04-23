@@ -34,6 +34,7 @@
     network-manager.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
+    theme.enable = false;
     tailscale.enableExitNode = true;
     tailscale.preferredInterface = "enp2s0f3u2";
     tlp.enable = true;
