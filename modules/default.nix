@@ -7,6 +7,7 @@
       ./hyprland.nix
       ./i18n.nix
       ./network-manager.nix
+      ./nix-ld.nix
       ./ssh.nix
       ./systemd.nix
       ./tailscale.nix
