@@ -192,6 +192,11 @@ in {
           icon = "fruit";
           id = 7;
         };
+        games = {
+          color = "blue";
+          icon = "chill";
+          id = 8;
+        };
       };
       containersForce = true;
     };
