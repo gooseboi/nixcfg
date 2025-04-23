@@ -14,14 +14,14 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = with pkgs; let
+      mc-monitor = callPackage ./mc-monitor.nix {};
+      czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg-full];};
+    in [
       asciinema
       cowsay
       curl
-      (czkawka-full.override
-        {
-          extraPackages = [ffmpeg-full];
-        })
+      czkawka-full
       dig
       doggo
       dust
@@ -41,7 +41,7 @@ in {
       man-db
       man-pages
       man-pages-posix
-      (callPackage ./mc-monitor.nix {})
+      mc-monitor
       moreutils
       nh
       nix-tree
@@ -66,10 +66,12 @@ in {
 
       # Hardware
       btrfs-progs
+      cpufrequtils
       dosfstools
       ethtool
       exfatprogs
       ntfs3g
+      powertop
       smartmontools
       usbutils
       util-linux
