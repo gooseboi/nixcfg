@@ -20,6 +20,7 @@
     utils.enable = true;
     dev.enable = true;
     nushell.enable = true;
+    direnv.enable = true;
   };
 
   home = {

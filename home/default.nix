@@ -9,6 +9,7 @@ in {
     [
       ./alacritty.nix
       ./dev.nix
+      ./direnv.nix
       ./eza.nix
       ./git.nix
       ./nushell.nix
