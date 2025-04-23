@@ -9,8 +9,8 @@
   cfg = config.chonkos.theme;
 in {
   options.chonkos.theme = {
-    font.size.normal = mkConst 12;
-    font.size.big = mkConst 18;
+    font.size.normal = mkConst 13;
+    font.size.big = mkConst 19;
 
     font.sans.name = mkConst "Lexend";
     font.sans.package = mkConst pkgs.lexend;

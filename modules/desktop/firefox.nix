@@ -130,7 +130,9 @@ in {
     profiles.chonk = {
       # Some setting are here cuz https://mozilla.github.io/policy-templates/#preferences
       # ie, not all preferences can be set through policy.
-      settings = {
+      settings = let
+        fontSize = 1.1 * theme.font.size.normal |> builtins.ceil;
+      in {
         "privacy.sanitize.pending" = [];
 
         "privacy.sanitize.sanitizeOnShutdown" = false;
@@ -146,9 +148,12 @@ in {
 
         # Font to use
         "font.name.serif.x-western" = theme.font.sans.name;
+        "font.name.monospace.x-western" = theme.font.mono.name;
 
         # Font size
-        "font.size.variable.x-western" = theme.font.size.normal;
+        "font.size.variable.x-western" = fontSize;
+        "font.size.monospace.x-western" = fontSize;
+        "font.minimum-size.x-western" = fontSize;
       };
 
       containers = {
