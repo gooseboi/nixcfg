@@ -15,12 +15,12 @@ in {
 
     environment.systemPackages = with pkgs; [
       discord
+      ferdium
       gimp
       libreoffice-fresh
       mpv
       onlyoffice-bin
       playerctl
-      whatsapp-for-linux
       xfce.thunar
     ];
 
