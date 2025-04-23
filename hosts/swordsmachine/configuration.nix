@@ -31,22 +31,32 @@
     agenix.enable = true;
     docker.enable = true;
     i18n.enable = true;
-    network-manager.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
     theme.enable = false;
     tailscale.enableExitNode = true;
-    tailscale.preferredInterface = "enp2s0f3u2";
+    tailscale.preferredInterface = "enig0";
     tlp.enable = true;
     zsh.enable = true;
     zsh.enableVimMode = true;
   };
 
-  # https://nixos.wiki/wiki/Systemd-networkd#When_to_use
-  systemd.network.wait-online.enable = false;
-  services.logind.lidSwitch = "ignore";
+  systemd.network = {
+    enable = true;
+    links = {
+      "10-enig0" = {
+        matchConfig.MACAddress = "40:ae:30:b2:d7:fe";
+        linkConfig.Name = "enig0";
+      };
+    };
+  };
+  networking = {
+    useDHCP = true;
+    interfaces.enig0.useDHCP = true;
+    domain = "gooseman.net";
+  };
 
-  networking.domain = "gooseman.net";
+  services.logind.lidSwitch = "ignore";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
