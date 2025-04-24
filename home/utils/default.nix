@@ -61,6 +61,7 @@ in {
       traceroute
       tree
       unzip
+      vimv-rs
       watch
       wget
       zip
