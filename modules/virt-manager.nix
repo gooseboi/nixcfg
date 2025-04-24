@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.chonkos.virt-manager;
@@ -12,7 +13,10 @@ in {
   config = lib.mkIf cfg.enable {
     programs.virt-manager.enable = true;
 
-    virtualisation.libvirtd.enable = true;
+    virtualisation.libvirtd = {
+      enable = true;
+      qemu.vhostUserPackages = with pkgs; [virtiofsd];
+    };
     users.groups.libvirtd.members = [config.chonkos.user];
 
     virtualisation.spiceUSBRedirection.enable = true;
