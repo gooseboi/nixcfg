@@ -19,11 +19,13 @@ in {
       czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg-full];};
     in [
       asciinema
+      compose2nix
       cowsay
       curl
       czkawka-full
       dig
       doggo
+      dos2unix
       dust
       fastfetch
       fd
