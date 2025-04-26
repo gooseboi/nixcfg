@@ -10,6 +10,9 @@
   serviceSubDomain = "git";
   serviceDomain = "${serviceSubDomain}.${domain}";
 in {
+  # TODO: Repo code indexing (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#indexer-indexer)
+  # TODO: Prometheus (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#metrics-metrics)
+
   options.chonkos.services.forgejo = {
     serviceName = mkConst "forgejo";
     servicePort = mkConst 3000;

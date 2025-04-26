@@ -7,6 +7,8 @@
 
   cfg = config.chonkos.services;
 in {
+  # TODO: X-Real-IP
+
   services.caddy = {
     enable = true;
     virtualHosts = let

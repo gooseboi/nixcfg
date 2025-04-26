@@ -1,5 +1,6 @@
 {config, ...}: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
+  # TODO: lanzaboote (https://github.com/nix-community/lanzaboote)
 
   imports = [
     ./hardware-configuration.nix
