@@ -25,7 +25,16 @@ inputs @ {
 
   pluginSpecs =
     pluginContents
-    |> map (p: p.config)
+    |> map (p: builtins.readFile p.config)
+    |> map (p:
+      /*
+      lua
+      */
+      ''
+        (function()
+          ${p}
+        end)(),
+      '')
     |> builtins.concatStringsSep "\n\n";
 
   nvim_package = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {

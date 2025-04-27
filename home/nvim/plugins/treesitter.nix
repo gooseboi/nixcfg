@@ -1,8 +1,7 @@
 {pkgs, ...}: let
-  p = pkgs.vimPlugins;
   grammarsPath = pkgs.symlinkJoin {
     name = "nvim-treesitter-grammars";
-    paths = p.nvim-treesitter.withAllGrammars.dependencies;
+    paths = pkgs.vimPlugins.nvim-treesitter.withAllGrammars.dependencies;
   };
   # These are the ones I'd actually want, but I'll just install all of them for
   # now, cuz it isn't that big really
@@ -37,27 +36,10 @@
 in {
   isDesktop = true;
 
-  config =
-    /*
-    lua
-    */
-    ''
-      {
-        dir = "${p.nvim-treesitter}",
-        name = "nvim-treesitter",
-        config = function()
-          vim.opt.runtimepath:append("${p.nvim-treesitter}")
-          vim.opt.runtimepath:append("${grammarsPath}")
-          require ('nvim-treesitter.configs').setup {
-            auto_install = false,
-            sync_install = false,
-            ignore_install = {},
-            modules = {},
-
-            highlight = { enable = true },
-            indent = { enable = true },
-          }
-        end
-      },
-    '';
+  config = pkgs.replaceVarsWith {
+    src = ./configs/treesitter.lua;
+    replacements = with pkgs.vimPlugins; {
+      inherit nvim-treesitter grammarsPath;
+    };
+  };
 }

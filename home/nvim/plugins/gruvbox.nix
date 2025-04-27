@@ -1,18 +1,8 @@
 {pkgs, ...}: {
-  config = with pkgs.vimPlugins;
-  /*
-  lua
-  */
-    ''
-      {
-        dir = "${gruvbox-material}",
-        name = "gruvbox-material",
-        config = function()
-          vim.g.gruvbox_material_background = "hard"
-          vim.g.gruvbox_material_better_performance = 1
-          vim.o.background = "dark"
-          vim.cmd.colorscheme("gruvbox-material")
-        end
-      },
-    '';
+  config = pkgs.replaceVarsWith {
+    src = ./configs/gruvbox.lua;
+    replacements = with pkgs.vimPlugins; {
+      inherit gruvbox-material;
+    };
+  };
 }
