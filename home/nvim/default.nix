@@ -16,7 +16,8 @@ inputs @ {
     listFiles ./plugins
     |> filter (hasSuffix ".nix")
     |> map (f: import f inputs)
-    |> filter ({isDesktop ? false, ...}: isDesktop -> (! cfg.server));
+    |> filter ({isDesktop ? false, ...}: isDesktop -> (! cfg.server))
+    |> filter ({enable ? true, ...}: enable);
 
   pluginDeps =
     pluginContents
