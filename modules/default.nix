@@ -1,26 +1,7 @@
-{lib, ...}: {
-  imports =
-    [
-      ./agenix.nix
-      ./docker.nix
-      ./fonts.nix
-      ./hyprland.nix
-      ./i18n.nix
-      ./network-manager.nix
-      ./nix-ld.nix
-      ./ssh.nix
-      ./systemd.nix
-      ./tailscale.nix
-      ./theme.nix
-      ./tlp.nix
-      ./users.nix
-      ./virt-manager.nix
-      ./zsh.nix
-    ]
-    ++ [
-      ./desktop
-      ./secrets
-    ];
+{lib, ...}: let
+  inherit (lib) listNixWithDirs remove;
+in {
+  imports = listNixWithDirs ./. |> remove ./default.nix;
 
   options.chonkos = {
     user = lib.mkOption {

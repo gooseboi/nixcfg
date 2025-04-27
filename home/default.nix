@@ -3,26 +3,11 @@
   lib,
   ...
 }: let
+  inherit (lib) listNixWithDirs remove;
+
   cfg = config.chonkos;
 in {
-  imports =
-    [
-      ./alacritty.nix
-      ./dev.nix
-      ./direnv.nix
-      ./eza.nix
-      ./git.nix
-      ./nushell.nix
-      ./rofi.nix
-      ./tmux.nix
-      ./zathura.nix
-    ]
-    ++ [
-      ./hyprland
-      ./nvim
-      ./scripts
-      ./utils
-    ];
+  imports = listNixWithDirs ./. |> remove ./default.nix;
 
   options.chonkos = {
     user = lib.mkOption {

@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: let
+  inherit (lib) listNixWithDirs remove;
+
   cfg = config.chonkos.desktop;
 in {
   options.chonkos.desktop = {
@@ -26,13 +28,7 @@ in {
 
     home-manager.sharedModules = [
       {
-        imports = [
-          ./firefox.nix
-          ./gtk.nix
-          ./imv.nix
-          ./newsboat.nix
-          ./xdg.nix
-        ];
+        imports = listNixWithDirs ./. |> remove ./default.nix;
 
         config = {
           home = {
