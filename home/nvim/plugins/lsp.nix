@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  isDesktop = true;
+
   packages = with pkgs; [
     alejandra
     bash-language-server

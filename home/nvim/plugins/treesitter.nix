@@ -35,6 +35,8 @@
   # latex
   # typst
 in {
+  isDesktop = true;
+
   config =
     /*
     lua

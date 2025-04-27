@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  isDesktop = true;
+
   config = with pkgs.vimPlugins;
   /*
   lua

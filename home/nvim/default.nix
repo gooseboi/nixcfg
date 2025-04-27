@@ -4,39 +4,25 @@ inputs @ {
   pkgs,
   ...
 }: let
+  inherit (lib) filter hasSuffix listFiles;
+
   cfg = config.chonkos.nvim;
 
-  luaFiles = [
-    ./lua/config.lua
-    ./lua/filetypes.lua
-    ./lua/neovide.lua
-    ./lua/remap.lua
-  ];
-
-  pluginFiles =
-    [
-      ./comment.nix
-      ./easymotion.nix
-      ./gruvbox.nix
-      ./lualine.nix
-      ./oil.nix
-    ]
-    ++ lib.lists.optionals (! cfg.server) [
-      ./cmp.nix
-      ./harpoon.nix
-      ./lsp.nix
-      ./telescope.nix
-      ./treesitter.nix
-      ./vimwiki.nix
-    ];
+  luaFiles =
+    listFiles ./lua
+    |> filter (hasSuffix ".lua");
 
   pluginContents =
-    pluginFiles
-    |> map (f: import f inputs);
+    listFiles ./plugins
+    |> filter (hasSuffix ".nix")
+    |> map (f: import f inputs)
+    |> filter ({isDesktop ? false, ...}: isDesktop -> (! cfg.server));
+
   pluginDeps =
     pluginContents
     |> map (p: p.packages or [])
     |> lib.lists.flatten;
+
   pluginSpecs =
     pluginContents
     |> map (p: p.config)
