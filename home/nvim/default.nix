@@ -25,15 +25,12 @@ inputs @ {
 
   pluginSpecs =
     pluginContents
-    |> map (p: builtins.readFile p.config)
     |> map (p:
       /*
       lua
       */
       ''
-        (function()
-          ${p}
-        end)(),
+        (dofile "${p.config}"),
       '')
     |> builtins.concatStringsSep "\n\n";
 
