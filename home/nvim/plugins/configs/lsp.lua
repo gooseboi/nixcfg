@@ -30,8 +30,8 @@ return {
 			bufmap('gs', telescope.lsp_document_symbols)
 			bufmap('gS', telescope.lsp_dynamic_workspace_symbols)
 
-			bufmap("[d", vim.diagnostic.goto_prev)
-			bufmap("]d", vim.diagnostic.goto_next)
+			bufmap("[d", function() vim.diagnostic.jump({ count = 1, float = true }) end)
+			bufmap("]d", function() vim.diagnostic.jump({ count = -1, float = true }) end)
 
 			bufmap('K', vim.lsp.buf.hover)
 
@@ -85,7 +85,7 @@ return {
 			zls = {
 				settings = {},
 
-				on_attach = function(...)
+				on_attach = function(_)
 					vim.g.zig_fmt_autosave = false
 				end,
 			},
