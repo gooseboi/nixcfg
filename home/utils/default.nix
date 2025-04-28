@@ -36,6 +36,7 @@ in {
       htop
       hyperfine
       jq
+      just
       killall
       libqalculate
       magic-wormhole
