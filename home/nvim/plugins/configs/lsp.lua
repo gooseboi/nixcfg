@@ -91,6 +91,10 @@ return {
 				end,
 			},
 
+			hls = {
+				filetypes = { 'haskell', 'lhaskell', 'cabal' },
+			},
+
 			gopls = {},
 			bashls = {},
 			pylsp = {},

@@ -47,6 +47,11 @@ in {
           "rustfmt"
         ])
 
+        # Haskell
+        ghc
+        cabal-cli
+        stack
+
         # Solo
         go
         odin

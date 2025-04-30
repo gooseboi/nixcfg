@@ -7,6 +7,7 @@
     clang-tools
     fenix.rust-analyzer
     gopls
+    haskell-language-server
     jdt-language-server
     lua-language-server
     nixd
