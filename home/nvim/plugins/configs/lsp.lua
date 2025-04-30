@@ -4,6 +4,7 @@ return {
 	dependencies = {
 		{ dir = "@neodev-nvim@",    name = "neodev-nvim", },
 		{ dir = "@telescope-nvim@", name = "telescope-nvim", },
+		{ dir = "@blink-cmp@",      name = "blink.cmp", },
 	},
 
 	config = function()
@@ -44,7 +45,7 @@ return {
 		end
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
-		capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+		capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
 		require("neodev").setup()
 

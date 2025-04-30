@@ -19,7 +19,13 @@
   config = pkgs.replaceVarsWith {
     src = ./configs/lsp.lua;
     replacements = with pkgs.vimPlugins; {
-      inherit nvim-lspconfig neodev-nvim telescope-nvim;
+      inherit
+        nvim-lspconfig
+        # Deps
+        neodev-nvim
+        telescope-nvim
+        blink-cmp
+        ;
     };
   };
 }

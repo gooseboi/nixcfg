@@ -2,15 +2,10 @@
   isDesktop = true;
 
   config = pkgs.replaceVarsWith {
-    src = ./configs/cmp.lua;
+    src = ./configs/blink.lua;
     replacements = with pkgs.vimPlugins; {
       inherit
-        nvim-cmp
-        # Deps
-        cmp-nvim-lsp
-        luasnip
-        cmp_luasnip
-        cmp-path
+        blink-cmp
         ;
     };
   };
