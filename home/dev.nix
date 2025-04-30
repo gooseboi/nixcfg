@@ -15,26 +15,28 @@ in {
   config = lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
+        # C/C++
         (lib.hiPrio gcc) # To stop conflict with clang for c++ bin
-        bun
         clang
         clang-tools
-        deno
         gdb
         gf
-        gh
-        go
         libgcc
-        mermaid-cli
-        odin
+
+        # Javascript
+        bun
+        deno
         pnpm
+
+        # Python
         python3Full
         uv
-        zig
 
+        # Java
         temurin-bin-21
         maven
 
+        # Rust
         cargo-expand
         cargo-fuzz
         (fenix.complete.withComponents [
@@ -44,6 +46,15 @@ in {
           "rustc"
           "rustfmt"
         ])
+
+        # Solo
+        go
+        odin
+        zig
+
+        # General
+        gh
+        mermaid-cli
       ];
 
       sessionVariables = {
