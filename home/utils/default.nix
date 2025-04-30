@@ -16,6 +16,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; let
       mc-monitor = callPackage ./mc-monitor.nix {};
+      rust-stakeholder = callPackage ./rust-stakeholder.nix {};
       czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg-full];};
     in [
       asciinema
@@ -54,6 +55,7 @@ in {
       pandoc
       ripgrep
       rsync
+      rust-stakeholder
       socat
       speedtest-rs
       strace
