@@ -29,7 +29,17 @@ in {
         pnpm
 
         # Python
-        python3Full
+        (python3Full.withPackages
+          (p:
+            with p; [
+              beautifulsoup4
+              lxml
+              numpy
+              pandas
+              pillow
+              requests
+              scipy
+            ]))
         uv
 
         # Java
