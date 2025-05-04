@@ -40,6 +40,7 @@ in {
       just
       killall
       libqalculate
+      libxml2
       magic-wormhole
       man
       man-db
@@ -67,6 +68,7 @@ in {
       vimv-rs
       watch
       wget
+      xxd
       zip
       zstd
 
