@@ -47,6 +47,7 @@ in {
       man-pages
       man-pages-posix
       mc-monitor
+      mcrcon
       moreutils
       nh
       nix-tree
