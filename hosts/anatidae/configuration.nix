@@ -34,7 +34,35 @@
     hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
   };
 
-  home-manager.users.chonk = import ./home.nix;
+  home-manager.users.chonk = {pkgs, ...}: {
+    chonkos = {
+      user = "chonk";
+
+      hyprland.enable = true;
+      alacritty.enable = true;
+      eza.enable = true;
+      tmux.enable = true;
+      tmux.enableSessionizer = true;
+      nvim.enable = true;
+      zathura.enable = true;
+      scripts.enable = true;
+      rofi.enable = true;
+      utils.enable = true;
+      dev.enable = true;
+      nushell.enable = true;
+      direnv.enable = true;
+    };
+
+    home = {
+      stateVersion = "24.11";
+
+      packages = with pkgs; [
+        # Typesetting
+        texliveFull
+        typst
+      ];
+    };
+  };
 
   chonkos = {
     user = "chonk";

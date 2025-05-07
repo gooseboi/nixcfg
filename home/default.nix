@@ -66,5 +66,8 @@ in {
         TEXMFVAR = "${config.xdg.cacheHome}/texlive/texmf-var";
         WINEPREFIX = "${config.xdg.dataHome}/wine";
       };
+
+    # Let Home Manager install and manage itself.
+    programs.home-manager.enable = true;
   };
 }

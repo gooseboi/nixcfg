@@ -23,7 +23,19 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuUT9jJWba9PeWFpaEyypGMSk1F4hO5rYwtiruh9+uZ"
     ];
   };
-  home-manager.users.chonk = import ./home.nix;
+  home-manager.users.chonk = {
+    chonkos = {
+      user = "chonk";
+
+      eza.enable = true;
+      tmux.enable = true;
+      nvim.enable = true;
+      nvim.server = true;
+      utils.enable = true;
+    };
+
+    home.stateVersion = "24.11";
+  };
 
   chonkos = {
     user = "chonk";
