@@ -17,10 +17,6 @@
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
-
-    binfmt = {
-      emulatedSystems = ["aarch64-linux" "riscv64-linux"];
-    };
   };
 
   programs.nix-ld.enable = true;
@@ -68,6 +64,7 @@
     user = "chonk";
 
     agenix.enable = true;
+    binfmt.enable = true;
     desktop.enable = true;
     docker.enable = true;
     fonts.enable = true;
