@@ -49,6 +49,7 @@
     tailscale.enableExitNode = true;
     tailscale.preferredInterface = "enig0";
     tlp.enable = true;
+    tlp.batMaxFreq = 30;
     zsh.enable = true;
     zsh.enableVimMode = true;
   };

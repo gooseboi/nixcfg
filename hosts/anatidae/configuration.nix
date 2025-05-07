@@ -74,6 +74,7 @@
     openssh.enable = true;
     tailscale.enable = true;
     tlp.enable = true;
+    tlp.batMaxFreq = 60;
     virt-manager.enable = true;
     zsh.enable = true;
     zsh.enableVimMode = true;
