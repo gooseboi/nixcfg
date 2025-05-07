@@ -13,18 +13,16 @@ in {
   config = lib.mkIf cfg.enable {
     virtualisation = {
       containers.enable = true;
-      podman = {
+      docker = {
         enable = true;
 
-        dockerCompat = true;
-
-        defaultNetwork.settings.dns_enabled = true;
+        storageDriver = "btrfs";
       };
     };
+    users.users.${config.chonkos.user}.extraGroups = ["docker"];
 
     environment.systemPackages = with pkgs; [
       dive
-      podman-compose
     ];
   };
 }
