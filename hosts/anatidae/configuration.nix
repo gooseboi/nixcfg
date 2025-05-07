@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  ...
+}: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
   # TODO: lanzaboote (https://github.com/nix-community/lanzaboote)
 
@@ -49,6 +53,10 @@
     zsh.enable = true;
     zsh.enableVimMode = true;
   };
+
+  # When on the default "powersave", then the frequency is stuck on 0.8GHz,
+  # pretty unusable.
+  services.tlp.settings.CPU_SCALING_GOVERNOR_ON_BAT = lib.mkForce "performance";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
