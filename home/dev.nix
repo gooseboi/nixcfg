@@ -37,8 +37,10 @@ in {
         maven
 
         # Rust
+        cargo-show-asm
         cargo-expand
         cargo-fuzz
+        cargo-nextest
         (fenix.complete.withComponents [
           "cargo"
           "clippy"
