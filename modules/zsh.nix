@@ -39,7 +39,7 @@ in {
 
           defaultKeymap = lib.mkIf config.chonkos.zsh.enableVimMode "viins";
 
-          initExtra =
+          initContent =
             /*
             bash
             */
