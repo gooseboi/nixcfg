@@ -12,7 +12,6 @@ in {
 
   config = lib.mkIf cfg.enable {
     virtualisation = {
-      containers.enable = true;
       docker = {
         enable = true;
 
