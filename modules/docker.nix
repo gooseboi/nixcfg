@@ -18,7 +18,7 @@ in {
         storageDriver = "btrfs";
       };
     };
-    users.users.${config.chonkos.user}.extraGroups = ["docker"];
+    users.extraGroups.docker.members = [config.chonkos.user];
 
     environment.systemPackages = with pkgs; [
       dive
