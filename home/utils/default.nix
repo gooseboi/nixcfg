@@ -76,6 +76,7 @@ in {
       # Hardware
       btrfs-progs
       cpufrequtils
+      dmidecode
       dosfstools
       ethtool
       exfatprogs
