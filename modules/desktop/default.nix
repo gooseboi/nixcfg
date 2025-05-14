@@ -4,13 +4,15 @@
   pkgs,
   ...
 }: let
-  inherit (lib) listNixWithDirs remove;
+  inherit (lib) listNixWithDirs;
 
   cfg = config.chonkos.desktop;
 in {
   options.chonkos.desktop = {
     enable = lib.mkEnableOption "enable desktop configurations";
   };
+
+  imports = listNixWithDirs ./nixos;
 
   config = lib.mkIf cfg.enable {
     services.upower.enable = true;
@@ -28,7 +30,7 @@ in {
 
     home-manager.sharedModules = [
       {
-        imports = listNixWithDirs ./. |> remove ./default.nix;
+        imports = listNixWithDirs ./home;
 
         config = {
           home = {
