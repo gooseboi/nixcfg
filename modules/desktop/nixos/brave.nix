@@ -11,10 +11,16 @@ in {
 
     home-manager.sharedModules = [
       {
-        programs.chromium = {
+        programs.chromium = let
+          enabledFeatures = ["TouchpadOverscrollHistoryNavigation"];
+          enabledFeaturesStr = lib.strings.concatStringsSep "," enabledFeatures;
+        in {
           enable = true;
           package = pkgs.brave;
-          commandLineArgs = ["--password-store=basic" "--enable-features=TouchpadOverscrollHistoryNavigation"];
+          commandLineArgs = [
+            "--password-store=basic"
+            "--enable-features=${enabledFeaturesStr}"
+          ];
         };
       }
     ];
