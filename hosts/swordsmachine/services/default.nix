@@ -1,4 +1,10 @@
 {
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.chonkos.services;
+in {
   # TODO: Immich (https://immich.app/)
   # TODO: Radarr, Sonarr (https://wiki.servarr.com/radarr)
   # TODO: Syncserver (https://github.com/mozilla-services/syncstorage-rs)
@@ -11,7 +17,19 @@
     ./ferdium.nix
     ./forgejo.nix
     ./stirling-pdf.nix
+    ./suwayomi-server.nix
     ./vaultwarden.nix
+  ];
+
+  assertions = [
+    {
+      assertion =
+        cfg
+        |> lib.attrValues
+        |> map (srv: srv.servicePort)
+        |> (v: v == lib.unique v);
+      message = "Two services cannot share the same port";
+    }
   ];
 
   virtualisation.oci-containers.backend = "podman";
