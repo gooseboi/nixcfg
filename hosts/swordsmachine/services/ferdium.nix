@@ -49,7 +49,7 @@ in {
           DB_CONNECTION = "sqlite";
           IS_CREATION_ENABLED = "true";
           IS_DASHBOARD_ENABLED = "true";
-          IS_REGISTRATION_ENABLED = "true";
+          IS_REGISTRATION_ENABLED = "false";
           CONNECT_WITH_FRANZ = "false";
           DATA_DIR = "/data";
           JWT_USE_PEM = "true";
