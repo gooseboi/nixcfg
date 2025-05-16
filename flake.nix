@@ -79,6 +79,10 @@
             common-gpu-amd
             common-pc-laptop-ssd
           ]);
+
+          looker = mkHost "looker" "aarch64-linux" (with nixos-hardware.nixosModules; [
+            raspberry-pi-4
+          ]);
         };
       }
     );
