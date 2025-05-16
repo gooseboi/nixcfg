@@ -61,6 +61,7 @@ in {
 
         # General
         gh
+        gnumake
         mermaid-cli
       ];
 
