@@ -31,7 +31,6 @@
       tmux.enable = true;
       nvim.enable = true;
       nvim.server = true;
-      utils.enable = true;
     };
 
     home.stateVersion = "24.11";
@@ -45,11 +44,12 @@
     i18n.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
-    theme.enable = false;
     tailscale.enableExitNode = true;
     tailscale.preferredInterface = "enig0";
-    tlp.enable = true;
+    theme.enable = false;
     tlp.batMaxFreq = 30;
+    tlp.enable = true;
+    utils.enable = true;
     zsh.enable = true;
     zsh.enableVimMode = true;
   };

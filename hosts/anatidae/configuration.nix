@@ -42,7 +42,6 @@
       zathura.enable = true;
       scripts.enable = true;
       rofi.enable = true;
-      utils.enable = true;
       dev.enable = true;
       nushell.enable = true;
       direnv.enable = true;
@@ -72,8 +71,9 @@
     network-manager.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
-    tlp.enable = true;
     tlp.batMaxFreq = 60;
+    tlp.enable = true;
+    utils.enable = true;
     virt-manager.enable = true;
     zsh.enable = true;
     zsh.enableVimMode = true;
