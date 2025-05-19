@@ -1,21 +1,6 @@
 {
   description = "Nixos config flake";
 
-  nixConfig = {
-    experimental-features = [
-      "cgroups"
-      "flakes"
-      "nix-command"
-      "pipe-operators"
-    ];
-
-    accept-flake-config = true;
-    trusted-users = ["root" "@build" "@wheel" "@admin"];
-    warn-dirty = false;
-    use-cgroups = true;
-    use-xdg-base-directories = true;
-  };
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 

@@ -78,7 +78,20 @@ inputs: self: super: {
             nixpkgs.hostPlatform = system;
 
             nix = {
-              settings = (import (self + /flake.nix)).nixConfig;
+              settings = {
+                experimental-features = [
+                  "cgroups"
+                  "flakes"
+                  "nix-command"
+                  "pipe-operators"
+                ];
+
+                trusted-users = ["root" "@build" "@wheel" "@admin"];
+                warn-dirty = false;
+                use-cgroups = true;
+                use-xdg-base-directories = true;
+              };
+
               registry.nixpkgs.flake = inputs.nixpkgs;
             };
           })
