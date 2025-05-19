@@ -19,9 +19,11 @@ in {
         (lib.hiPrio gcc) # To stop conflict with clang for c++ bin
         clang
         clang-tools
+        cmake
         gdb
         gf
         libgcc
+        meson
 
         # Javascript
         bun
