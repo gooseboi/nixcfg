@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.chonkos;
@@ -10,6 +11,10 @@ in {
   };
 
   config = lib.mkIf cfg.openssh.enable {
+    environment.systemPackages = with pkgs; [
+      openssh
+    ];
+
     programs.mosh = {
       enable = true;
       openFirewall = true;
