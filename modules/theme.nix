@@ -4,14 +4,12 @@
   lib,
   ...
 }: let
-  inherit (lib) mkConst;
+  inherit (lib) mkConst mkDisableOption;
 
   cfg = config.chonkos.theme;
 in {
   options.chonkos.theme = {
-    enable =
-      lib.mkEnableOption "enable automatic install of theme packages"
-      // {default = true;};
+    enable = mkDisableOption "enable automatic install of theme packages";
 
     font.size.normal = mkConst 13;
     font.size.big = mkConst 19;

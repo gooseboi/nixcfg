@@ -3,11 +3,13 @@
   lib,
   ...
 }: let
+  inherit (lib) mkEnableOption mkOption mkIf;
+
   cfg = config.chonkos.tlp;
 in {
   options.chonkos.tlp = {
-    enable = lib.mkEnableOption "enable tlp service";
-    batMaxFreq = lib.mkOption {
+    enable = mkEnableOption "enable tlp service";
+    batMaxFreq = mkOption {
       type = lib.types.int;
       description = "percentage to run cpu when on battery";
       example = 60;
@@ -15,7 +17,7 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     services.tlp = {
       enable = true;
       settings = {

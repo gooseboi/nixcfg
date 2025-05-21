@@ -1,5 +1,5 @@
 _: _: super: let
-  inherit (super) mkOption;
+  inherit (super) mkOption mkEnableOption;
 in {
   mkConst = value:
     mkOption {
@@ -11,4 +11,6 @@ in {
     mkOption {
       inherit default;
     };
+
+  mkDisableOption = s: ((mkEnableOption s) // {default = true;});
 }
