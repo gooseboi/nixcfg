@@ -18,8 +18,6 @@
     loader.efi.canTouchEfiVariables = true;
   };
 
-  programs.nix-ld.enable = true;
-
   time.timeZone = "America/Montevideo";
 
   users.users.chonk = {
@@ -87,12 +85,6 @@
   # When on the default "powersave", then the frequency is stuck on 0.8GHz,
   # pretty unusable.
   services.tlp.settings.CPU_SCALING_GOVERNOR_ON_BAT = lib.mkForce "performance";
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   system.stateVersion = "24.05"; # This shouldn't be changed
 }
