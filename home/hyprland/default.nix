@@ -7,6 +7,8 @@
   systemConfig,
   ...
 }: let
+  inherit (lib) mkEnableOption mkOption;
+
   cfg = config.chonkos.hyprland;
   nmEnabled = systemConfig.chonkos.network-manager.enable;
 
@@ -33,9 +35,13 @@ in {
   ];
 
   options.chonkos.hyprland = {
-    enable = lib.mkEnableOption "enable hyprland";
-    enableMpd = lib.mkEnableOption "enable mpd support";
-    enableDebug = lib.mkEnableOption "enable debug logs";
+    enable = mkEnableOption "enable hyprland";
+    enableMpd = mkEnableOption "enable mpd support";
+    enableDebug = mkEnableOption "enable debug logs";
+    monitors = mkOption {
+      type = lib.types.listOf lib.types.str;
+      readOnly = true;
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -83,6 +89,8 @@ in {
       systemd.enable = true;
 
       settings = {
+        monitor = cfg.monitors;
+
         debug.disable_logs = !cfg.enableDebug;
 
         exec-once = [
