@@ -37,6 +37,7 @@
   };
 
   chonkos = {
+    type = "server";
     user = "chonk";
 
     agenix.enable = true;

@@ -59,6 +59,7 @@
   };
 
   chonkos = {
+    type = "desktop";
     user = "chonk";
 
     agenix.enable = true;
