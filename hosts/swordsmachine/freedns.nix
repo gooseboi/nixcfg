@@ -15,6 +15,8 @@
   };
 
   systemd.services."freedns-update" = {
+    after = ["network.target"];
+    requires = ["network.target"];
     script = ''
       set -eux
 
