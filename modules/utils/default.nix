@@ -59,6 +59,7 @@ in {
         ripgrep
         rsync
         rust-stakeholder
+        simple-http-server
         socat
         speedtest-rs
         strace
