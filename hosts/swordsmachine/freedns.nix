@@ -20,8 +20,12 @@
     script = ''
       set -eux
 
-      TOKEN="$(cat ${config.age.secrets.freedns-token.path})"
-      ${pkgs.curl}/bin/curl https://freedns.afraid.org/dynamic/update.php?$TOKEN
+      ${pkgs.curl}/bin/curl \
+        -sS \
+        --get \
+        --retry 3 --retry-delay 5 --max-time 10 \
+        --data-urlencode "@${config.age.secrets.freedns-token.path}" \
+        https://freedns.afraid.org/dynamic/update.php
     '';
 
     serviceConfig = {
