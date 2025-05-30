@@ -30,11 +30,11 @@ in {
         c = "commit";
         s = "status";
         d = "diff";
-        ap = "add -p";
+        ap = "add --patch";
         ds = "diff --staged";
-        rp = "restore -p";
+        rp = "restore --patch";
         rs = "restore --staged";
-        rsp = "restore --staged -p";
+        rsp = "restore --staged --patch";
         lol = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
         dw = "diff --word-diff";
         dws = "diff --word-diff --staged";
@@ -42,6 +42,38 @@ in {
     }
 
     (mkIf systemConfig.chonkos.isDesktop {
+      extraConfig = {
+        core = {
+          whitespace = "error";
+          preloadindex = true;
+        };
+
+        advice = {
+          addEmptyPathspec = false;
+          pushNonFastForward = false;
+          statusHints = false;
+        };
+
+        status = {
+          branch = true;
+          showStash = true;
+          showUntrackedFiles = "all";
+        };
+
+        diff = {
+          context = 3;
+          renames = "copies";
+          interHunkContext = 10;
+        };
+
+        url."git@github.com:".insteadOf = "gh:";
+        url."git@git.gooseman.net:".insteadOf = "fj:";
+
+        interactive.singleKey = true;
+      };
+
+      diff-so-fancy.enable = true;
+
       signing = {
         key = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
         signByDefault = true;
