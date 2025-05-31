@@ -31,6 +31,7 @@ in {
       fastfetch = pkgs.fastfetch.override {
         x11Support = isDesktop;
         waylandSupport = isDesktop;
+        xfceSupport = isDesktop;
       };
     in
       [
