@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (lib) mkConst;
@@ -16,6 +17,10 @@ in {
   config = {
     services.stirling-pdf = {
       enable = true;
+      package = pkgs.stirling-pdf.override {
+        jre = pkgs.temurin-jre-bin-21.override {gtkSupport = false;};
+      };
+
       environment = {
         SERVER_HOST = "127.0.0.1";
         SERVER_PORT = cfg.servicePort;
