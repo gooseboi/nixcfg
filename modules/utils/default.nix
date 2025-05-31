@@ -70,6 +70,7 @@ in {
         oha
         p7zip
         pandoc
+        python3.pkgs.grip
         ripgrep
         rsync
         rust-stakeholder
