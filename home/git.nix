@@ -22,8 +22,6 @@ in {
           autocrlf = "input";
           safecrlf = true;
         };
-
-        merge.tool = "nvim -d";
       };
 
       aliases = {
@@ -36,6 +34,7 @@ in {
         rs = "restore --staged";
         rsp = "restore --staged --patch";
         lol = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        l = "log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'";
         dw = "diff --word-diff";
         dws = "diff --word-diff --staged";
       };
@@ -65,6 +64,19 @@ in {
           renames = "copies";
           interHunkContext = 10;
         };
+
+        push = {
+          autoSetupRemote = true;
+          default = "current";
+          followTags = true;
+        };
+
+        pull = {
+          default = "current";
+          rebase = true;
+        };
+
+        merge.tool = "nvim -d";
 
         url."git@github.com:".insteadOf = "gh:";
         url."git@git.gooseman.net:".insteadOf = "fj:";
