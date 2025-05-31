@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: let
+  inherit (config.chonkos) isDesktop;
+
   cfg = config.chonkos.utils;
 
   ripgrep_config = "ripgrep/ripgreprc";
@@ -15,16 +17,45 @@ in {
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; let
+      # Custom packages
       mc-monitor = callPackage ./mc-monitor.nix {};
       rust-stakeholder = callPackage ./rust-stakeholder.nix {};
+
+      # Overrides to avoid duplication
+      ffmpeg-full = pkgs.ffmpeg-full.override {
+        # ffmpeg only uses sdl2 to show stuff on screen or play audio, ('Real
+        # Time Playback/Display' according to chat gpt). You only do this on a
+        # desktop, so we disable it on servers. The reason for doing this is
+        # that Sdl2 takes gtk3 as a dep, and we don't want this on a server,
+        # because it it unnecessary and also wastes space.
+        withSdl2 = isDesktop;
+
+        # Apparently, to compile ffmpeg, you need opencv, and to compile
+        # opencv, you need ffmpeg. Very nice. Opencv depends on the normal
+        # ffmpeg, so we disable that one's sdl2 support.
+        #
+        # This builds ffmpeg twice, one for the full and another for the opencv
+        # one. This is unavoidable, as otherwise you'd get an infinite
+        # recursion, using ffmpeg-full to build ffmpeg-full. I can wait the
+        # 30mins when ffmpeg is updated.
+        frei0r = pkgs.frei0r.override {
+          opencv = pkgs.opencv.override {
+            ffmpeg = pkgs.ffmpeg.override {withSdl2 = isDesktop;};
+          };
+        };
+      };
+      # This would normally use another ffmpeg. This is to avoid duplication.
       czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg-full];};
+      fastfetch = pkgs.fastfetch.override {
+        x11Support = isDesktop;
+        waylandSupport = isDesktop;
+      };
     in
       [
         asciinema
         compose2nix
         cowsay
         curl
-        czkawka-full
         dig
         doggo
         dos2unix
@@ -91,6 +122,9 @@ in {
       ++ lib.lists.optionals (config.nixpkgs.hostPlatform.system == "x86_64-linux") [
         # Hardware
         cpufrequtils
+      ]
+      ++ lib.lists.optionals isDesktop [
+        czkawka-full
       ];
 
     home-manager.sharedModules = [
