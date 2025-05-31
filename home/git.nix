@@ -78,7 +78,11 @@ in {
 
         merge.tool = "nvim -d";
 
+        # Github SSH
         url."git@github.com:".insteadOf = "gh:";
+        # Github HTTP (Cloning)
+        url."https://github.com/".insteadOf = "ghc:";
+        # My forgejo
         url."git@git.gooseman.net:".insteadOf = "fj:";
 
         interactive.singleKey = true;
