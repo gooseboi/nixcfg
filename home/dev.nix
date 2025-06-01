@@ -58,7 +58,9 @@ in {
 
         # Solo
         go
+        lean4
         odin
+        rocq-core
         zig
 
         # General
