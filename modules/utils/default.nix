@@ -51,6 +51,7 @@ in {
         gdu
         htop
         hyperfine
+        iperf3
         jq
         just
         killall
