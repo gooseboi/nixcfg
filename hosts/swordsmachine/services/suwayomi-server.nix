@@ -7,6 +7,7 @@
   cfg = config.chonkos.services.suwayomi-server;
 in {
   options.chonkos.services.suwayomi-server = {
+    enable = mkConst true;
     serviceName = mkConst "suwayomi-server";
     servicePort = mkConst 4567;
     serviceDir = mkConst "/var/lib/suwayomi-server";
@@ -15,7 +16,8 @@ in {
 
   config = {
     services.suwayomi-server = {
-      enable = true;
+      inherit (cfg) enable;
+
       dataDir = cfg.serviceDir;
       settings.server = {
         ip = "127.0.0.1";

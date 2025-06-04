@@ -3,6 +3,7 @@
   config,
   ...
 }: let
+  inherit (lib) filter mkMerge;
   inherit (config) networking;
 
   cfg = config.chonkos.services;
@@ -33,14 +34,14 @@ in {
           };
         };
     in
-      lib.mkMerge (map ({value, ...}: (reverse_proxy {
-          subdomain = value.serviceSubDomain;
-          port = value.servicePort;
-        }))
-        (
-          lib.attrsToList
-          cfg
-        ));
+      cfg
+      |> lib.attrsToList
+      |> filter ({value, ...}: value.enable)
+      |> map ({value, ...}: (reverse_proxy {
+        subdomain = value.serviceSubDomain;
+        port = value.servicePort;
+      }))
+      |> mkMerge;
   };
 
   # Hardening

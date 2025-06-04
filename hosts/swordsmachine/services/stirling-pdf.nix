@@ -8,15 +8,17 @@
   cfg = config.chonkos.services.stirling-pdf;
 in {
   options.chonkos.services.stirling-pdf = {
+    enable = mkConst true;
     serviceName = mkConst "stirling-pdf";
     servicePort = mkConst 8080;
-    serviceDir = mkConst "/var/lib/bitwarden_rs";
+    serviceDir = mkConst null;
     serviceSubDomain = mkConst "pdf";
   };
 
   config = {
     services.stirling-pdf = {
-      enable = true;
+      inherit (cfg) enable;
+
       package = pkgs.stirling-pdf.override {
         jre = pkgs.temurin-jre-bin-21.override {gtkSupport = false;};
       };

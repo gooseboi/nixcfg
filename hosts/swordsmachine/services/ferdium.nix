@@ -17,13 +17,14 @@
   systemdServiceName = "${config.virtualisation.oci-containers.backend}-${serviceName}";
 in {
   options.chonkos.services.ferdium = {
+    enable = mkConst true;
     serviceName = mkConst serviceName;
     servicePort = mkConst 3333;
     serviceDir = mkConst stateDir;
     serviceSubDomain = mkConst "ferdium";
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     systemd.services.${systemdServiceName}.serviceConfig = {
       StateDirectory = "${stateDirName}";
     };

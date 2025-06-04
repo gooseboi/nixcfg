@@ -9,6 +9,7 @@
   cfg = config.chonkos.services.vaultwarden;
 in {
   options.chonkos.services.vaultwarden = {
+    enable = mkConst true;
     serviceName = mkConst "vaultwarden";
     servicePort = mkConst 8222;
     serviceDir = mkConst "/var/lib/bitwarden_rs";
@@ -17,7 +18,8 @@ in {
 
   config = {
     services.vaultwarden = {
-      enable = true;
+      inherit (cfg) enable;
+
       dbBackend = "sqlite";
 
       environmentFile = config.age.secrets.vaultwarden-envfile.path;

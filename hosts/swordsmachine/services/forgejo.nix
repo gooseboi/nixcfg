@@ -7,22 +7,25 @@
   inherit (config.networking) domain;
   inherit (lib) mkConst;
 
-  serviceSubDomain = "git";
-  serviceDomain = "${serviceSubDomain}.${domain}";
+  cfg = config.chonkos.services.forgejo;
+  serviceDomain = "${cfg.serviceSubDomain}.${domain}";
 in {
   # TODO: Repo code indexing (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#indexer-indexer)
   # TODO: Prometheus (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#metrics-metrics)
 
   options.chonkos.services.forgejo = {
+    enable = mkConst true;
     serviceName = mkConst "forgejo";
     servicePort = mkConst 3000;
-    serviceDir = mkConst "/var/lib/bitwarden_rs";
-    serviceSubDomain = mkConst serviceSubDomain;
+    serviceDir = mkConst "/var/lib/forgejo";
+    serviceSubDomain = mkConst "git";
   };
 
   config = {
     services.forgejo = {
-      enable = true;
+      inherit (cfg) enable;
+
+      stateDir = cfg.serviceDir;
 
       package = pkgs.forgejo;
 
@@ -36,7 +39,7 @@ in {
         server = {
           DOMAIN = serviceDomain;
           SSH_DOMAIN = serviceDomain;
-          HTTP_PORT = 3000;
+          HTTP_PORT = cfg.servicePort;
           HTTP_ADDR = "127.0.0.1";
           DISABLE_SSH = false;
           ROOT_URL = "https://${serviceDomain}";
