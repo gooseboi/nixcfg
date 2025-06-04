@@ -26,6 +26,7 @@ in {
       assertion =
         cfg
         |> lib.attrValues
+        |> lib.filter (srv: srv.enableReverseProxy)
         |> map (srv: srv.servicePort)
         |> (v: v == lib.unique v);
       message = "Two services cannot share the same port";

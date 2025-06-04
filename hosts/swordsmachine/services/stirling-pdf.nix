@@ -9,6 +9,7 @@
 in {
   options.chonkos.services.stirling-pdf = {
     enable = mkConst true;
+    enableReverseProxy = mkConst true;
     serviceName = mkConst "stirling-pdf";
     servicePort = mkConst 8080;
     serviceDir = mkConst null;

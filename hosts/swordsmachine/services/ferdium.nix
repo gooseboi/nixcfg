@@ -18,6 +18,7 @@
 in {
   options.chonkos.services.ferdium = {
     enable = mkConst true;
+    enableReverseProxy = mkConst true;
     serviceName = mkConst serviceName;
     servicePort = mkConst 3333;
     serviceDir = mkConst stateDir;
