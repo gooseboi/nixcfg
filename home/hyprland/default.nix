@@ -83,6 +83,9 @@ in {
       gtk.enable = true;
     };
 
+    # TODO: Theming
+    services.dunst.enable = true;
+
     wayland.windowManager.hyprland = {
       enable = true;
 
@@ -97,7 +100,6 @@ in {
           (lib.optionalString nmEnabled "nm-applet")
           "${pkgs.blueman}/bin/blueman-applet"
           "${pkgs.util-linux}/bin/rfkill block bluetooth"
-          "${pkgs.dunst}/bin/dunst"
           (lib.optionalString cfg.enableMpd "${pkgs/mpd}/bin/mpd")
           "${pkgs.swayidle}/bin/swayidle -w before-sleep ${hyprland_before_sleep}/bin/hyprland-before-sleep.sh"
         ];
