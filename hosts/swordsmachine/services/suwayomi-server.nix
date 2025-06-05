@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (lib) mkConst;
@@ -18,6 +19,12 @@ in {
   config = {
     services.suwayomi-server = {
       inherit (cfg) enable;
+
+      package = pkgs.suwayomi-server.override {
+        jdk17_headless = pkgs.temurin-jre-bin-17.override {
+          gtkSupport = false;
+        };
+      };
 
       dataDir = cfg.serviceDir;
       settings.server = {
