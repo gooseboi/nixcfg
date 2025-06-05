@@ -28,11 +28,10 @@ in {
         else ffmpeg-headless;
       # This would normally use another ffmpeg. This is to avoid duplication.
       czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg];};
-      fastfetch = pkgs.fastfetch.override {
-        x11Support = isDesktop;
-        waylandSupport = isDesktop;
-        xfceSupport = isDesktop;
-      };
+      fastfetch =
+        if isDesktop
+        then fastfetch
+        else fastfetchMinimal;
     in
       [
         asciinema
