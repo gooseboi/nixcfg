@@ -41,7 +41,6 @@
     user = "chonk";
 
     agenix.enable = true;
-    docker.enable = true;
     i18n.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
