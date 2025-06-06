@@ -30,7 +30,7 @@ in {
       czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg];};
       fastfetch =
         if isDesktop
-        then fastfetch
+        then pkgs.fastfetch
         else fastfetchMinimal;
     in
       [
