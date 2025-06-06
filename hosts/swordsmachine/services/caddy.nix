@@ -104,7 +104,7 @@ in {
         in {
           services.anubis = {
             defaultOptions.settings = {
-              DIFFICULTY = 5;
+              DIFFICULTY = 4;
               OG_PASSTHROUGH = true;
               SERVE_ROBOTS_TXT = true;
               WEBMASTER_EMAIL = "gooseiman@protonmail.com";
