@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) attrsToList filter mkConst mkIf mkMerge;
+  inherit (lib) attrsToList filter listToAttrs mkConst mkIf mkMerge;
   inherit (builtins) toString length;
   inherit (config) networking;
 
@@ -13,7 +13,7 @@ in {
   options.chonkos.services.caddy = {
     enable = mkConst true;
     enableReverseProxy = mkConst false;
-    useAnubis = mkConst false;
+    useAnubis = mkConst true;
     anubisBasePort = mkConst 20820;
   };
 
@@ -116,14 +116,14 @@ in {
                 name = v.serviceName;
                 value = {
                   settings = {
-                    TARGET = "http://localhost:${v.origPort}";
-                    BIND = "localhost:${v.anubisPort}";
+                    TARGET = "http://localhost:${toString v.origPort}";
+                    BIND = "localhost:${toString v.anubisPort}";
                     BIND_NETWORK = "tcp";
                     # TODO: METRICS
                   };
                 };
               })
-              |> mkMerge;
+              |> listToAttrs;
           };
 
           services.caddy = {
