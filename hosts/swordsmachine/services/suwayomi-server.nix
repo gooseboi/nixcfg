@@ -10,6 +10,7 @@ in {
   options.chonkos.services.suwayomi-server = {
     enable = mkConst true;
     enableReverseProxy = mkConst true;
+    enableAnubis = mkConst true;
     serviceName = mkConst "suwayomi-server";
     servicePort = mkConst 4567;
     serviceDir = mkConst "/var/lib/suwayomi-server";

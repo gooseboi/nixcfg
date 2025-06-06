@@ -99,7 +99,7 @@ in {
               origPort = s.value.servicePort;
               anubisPort = p;
             })
-            enabledServices
+            (enabledServices |> filter ({value, ...}: value.enableAnubis))
             anubisPorts;
         in {
           services.anubis = {
@@ -127,17 +127,30 @@ in {
           };
 
           services.caddy = {
-            virtualHosts =
-              anubisCfg
-              |> map ({
-                subDomain,
-                anubisPort,
-                ...
-              }: (reverse_proxy {
-                subdomain = subDomain;
-                port = anubisPort;
-              }))
-              |> mkMerge;
+            virtualHosts = mkMerge [
+              (
+                anubisCfg
+                |> map ({
+                  subDomain,
+                  anubisPort,
+                  ...
+                }: (reverse_proxy {
+                  subdomain = subDomain;
+                  port = anubisPort;
+                }))
+                |> mkMerge
+              )
+
+              (
+                enabledServices
+                |> filter ({value, ...}: ! value.enableAnubis)
+                |> map ({value, ...}: (reverse_proxy {
+                  subdomain = value.serviceSubDomain;
+                  port = value.servicePort;
+                }))
+                |> mkMerge
+              )
+            ];
           };
         }
       ))

@@ -11,6 +11,7 @@ in {
   options.chonkos.services.vaultwarden = {
     enable = mkConst true;
     enableReverseProxy = mkConst true;
+    enableAnubis = mkConst false;
     serviceName = mkConst "vaultwarden";
     servicePort = mkConst 8222;
     serviceDir = mkConst "/var/lib/bitwarden_rs";

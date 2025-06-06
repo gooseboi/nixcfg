@@ -16,6 +16,7 @@ in {
   options.chonkos.services.forgejo = {
     enable = mkConst true;
     enableReverseProxy = mkConst true;
+    enableAnubis = mkConst true;
     serviceName = mkConst "forgejo";
     servicePort = mkConst 3000;
     serviceDir = mkConst "/var/lib/forgejo";
