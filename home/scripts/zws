@@ -1,2 +1,2 @@
-echo "​" | wl-copy
+echo -n "​" | wl-copy
 notify-send "Copied!" "Successfully copied Zero-width space to clipboard!"
