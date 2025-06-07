@@ -67,6 +67,7 @@ in {
         gh
         gnumake
         mermaid-cli
+        tracy-wayland
       ];
 
       sessionVariables = {
