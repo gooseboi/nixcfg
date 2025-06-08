@@ -68,6 +68,8 @@
           looker = mkHost "looker" "aarch64-linux" (with nixos-hardware.nixosModules; [
             raspberry-pi-4
           ]);
+
+          cowboy = mkHost "cowboy" "x86_64-linux" [];
         };
       }
     );
