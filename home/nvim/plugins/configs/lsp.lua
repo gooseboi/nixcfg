@@ -95,12 +95,13 @@ return {
 				filetypes = { 'haskell', 'lhaskell', 'cabal' },
 			},
 
-			gopls = {},
 			bashls = {},
-			pylsp = {},
 			clangd = {},
+			gopls = {},
 			jdtls = {},
+			pylsp = {},
 			tinymist = {},
+			ts_ls = {},
 		}
 
 		local lspconfig = require("lspconfig")
