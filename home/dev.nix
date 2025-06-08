@@ -64,9 +64,11 @@ in {
         zig
 
         # General
+        cloc
         gh
         gnumake
         mermaid-cli
+        tokei
         tracy-wayland
       ];
 
