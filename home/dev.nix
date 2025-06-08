@@ -28,6 +28,7 @@ in {
         # Javascript
         bun
         deno
+        nodejs
         pnpm
 
         # Python
