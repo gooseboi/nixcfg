@@ -83,9 +83,6 @@ in {
             gtk.enable = true;
           };
 
-          # TODO: Theming
-          services.dunst.enable = true;
-
           wayland.windowManager.hyprland = {
             enable = true;
 
