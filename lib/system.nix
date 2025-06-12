@@ -32,6 +32,9 @@ inputs: self: super: {
           # Secrets
           inputs.agenix.nixosModules.default
 
+          # Minecraft
+          inputs.nix-minecraft.nixosModules.minecraft-servers
+
           # Home manager configs
           ({
             config,
@@ -64,8 +67,9 @@ inputs: self: super: {
           # Overlays
           ({lib, ...}: {
             nixpkgs.overlays = [
-              inputs.fenix.overlays.default
               inputs.agenix.overlays.default
+              inputs.fenix.overlays.default
+              inputs.nix-minecraft.overlay
             ];
 
             nixpkgs.config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) ["corefonts" "vista-fonts" "discord"];
