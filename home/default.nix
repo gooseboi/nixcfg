@@ -47,7 +47,6 @@ in {
       {
         COLORTERM = "truecolor";
         OPENER = "xdg-open";
-        PAGER = "less";
       }
       //
       # Fixing paths

@@ -32,10 +32,11 @@
       user = "chonk";
 
       alacritty.enable = true;
+      bat.enable = true;
       eza.enable = true;
+      nvim.enable = true;
       tmux.enable = true;
       tmux.enableSessionizer = true;
-      nvim.enable = true;
       zathura.enable = true;
       scripts.enable = true;
       rofi.enable = true;
