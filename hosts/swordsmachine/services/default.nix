@@ -26,6 +26,7 @@ in {
       assertion =
         cfg
         |> lib.attrValues
+        |> lib.filter (srv: srv.enable)
         |> lib.filter (srv: srv.enableReverseProxy)
         |> map (srv: srv.servicePort)
         |> (v: v == lib.unique v);
