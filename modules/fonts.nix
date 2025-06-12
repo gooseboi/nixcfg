@@ -22,6 +22,7 @@ in {
           iosevka
           corefonts
           vistafonts
+          lmodern
         ])
         ++ (pkgs.nerd-fonts
           |> builtins.attrValues
