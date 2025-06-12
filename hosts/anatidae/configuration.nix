@@ -31,11 +31,6 @@
     chonkos = {
       user = "chonk";
 
-      hyprland.enable = true;
-      hyprland.monitors = [
-        "eDP-1   , 1920x1080@60, 0x0 , 1"
-        "HDMI-A-1, preferred   , auto, 1, mirror ,eDP-1"
-      ];
       alacritty.enable = true;
       eza.enable = true;
       tmux.enable = true;
@@ -70,6 +65,10 @@
     docker.enable = true;
     fonts.enable = true;
     hyprland.enable = true;
+    hyprland.monitors = [
+      "eDP-1   , 1920x1080@60, 0x0 , 1"
+      "HDMI-A-1, preferred   , auto, 1, mirror ,eDP-1"
+    ];
     i18n.enable = true;
     network-manager.enable = true;
     openssh.enable = true;

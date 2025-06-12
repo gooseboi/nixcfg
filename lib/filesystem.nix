@@ -1,11 +1,18 @@
 _: self: super: let
   inherit (super) attrsToList filter hasSuffix;
 in {
-  listFiles = dir:
+  listFilesWithNames = dir:
     builtins.readDir dir
     |> attrsToList
     |> filter ({value, ...}: value != "directory")
-    |> map ({name, ...}: dir + "/${name}");
+    |> map ({name, ...}: {
+      inherit name;
+      path = dir + "/${name}";
+    });
+
+  listFiles = dir:
+    self.listFilesWithNames dir
+    |> map ({path, ...}: path);
 
   listNix = dir:
     self.listFiles dir
