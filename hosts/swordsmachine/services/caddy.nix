@@ -12,7 +12,6 @@
 in {
   options.chonkos.services.caddy = {
     enable = mkConst true;
-    enableReverseProxy = mkConst false;
     useAnubis = mkConst true;
     anubisBasePort = mkConst 20820;
   };
@@ -45,8 +44,8 @@ in {
     enabledServices =
       serviceCfg
       |> attrsToList
-      |> filter ({value, ...}: value.enable)
-      |> filter ({value, ...}: value.enableReverseProxy);
+      |> filter ({value, ...}: value.enableReverseProxy or false)
+      |> filter ({value, ...}: value.enable);
   in
     mkMerge [
       {
