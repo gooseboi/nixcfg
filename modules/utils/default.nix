@@ -69,6 +69,7 @@ in {
         nodePackages.prettier
         oha
         p7zip
+        packwiz
         pandoc
         python3.pkgs.grip
         ripgrep
