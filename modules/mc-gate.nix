@@ -94,8 +94,8 @@ in {
     systemd.services.mc-gate = let
       # toYAML = name: data: pkgs.writeText name (lib.generators.toYAML {} data);
       config_yml =
-        pkgs.writeTextDir "config.yml"
-        (lib.generators.toYAML {} {
+        (pkgs.callPackage lib.convertToYAML {}) "config.yml"
+        {
           config = {
             bind = "${cfg.bindAddress}:${toString cfg.bindPort}";
 
@@ -111,7 +111,7 @@ in {
                 });
             };
           };
-        });
+        };
     in {
       enable = true;
       after = ["network.target"];
