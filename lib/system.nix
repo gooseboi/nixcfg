@@ -73,7 +73,11 @@ inputs: self: super: {
               inputs.nix-minecraft.overlay
             ];
 
-            nixpkgs.config.allowUnfreePredicate = pkg: lib.elem (lib.getName pkg) ["corefonts" "vista-fonts" "discord"];
+            nixpkgs.config.allowUnfreePredicate = pkg:
+              (lib.elem (lib.getName pkg) ["corefonts" "vista-fonts" "discord"])
+              || (
+                pkg |> lib.getName |> lib.strings.hasPrefix "minecraft-server"
+              );
           })
 
           # Nix/General configs
