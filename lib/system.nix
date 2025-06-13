@@ -53,6 +53,7 @@ inputs: self: super: {
 
               extraSpecialArgs = {
                 inherit inputs;
+                inherit (config.chonkos) isDesktop isServer;
                 systemConfig = config;
                 mkMyLib = hmConfig: rec {
                   stringToPath = prefix: pathStr: prefix + builtins.toPath pathStr;
