@@ -3,6 +3,7 @@
     ./disk-config.nix
     ./freedns.nix
     ./hardware-configuration.nix
+    ./minecraft.nix
     ./services
   ];
 

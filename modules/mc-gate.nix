@@ -45,6 +45,8 @@ in {
       type = types.port;
     };
 
+    openFirewall = mkEnableOption "whether to open the firewall at the port specified";
+
     user = mkOption {
       default = "mc-gate";
       type = types.str;
@@ -91,6 +93,11 @@ in {
       groups.mc-gate = mkIf (cfg.group == "mc-gate") {};
     };
 
+    networking.firewall = mkIf cfg.openFirewall {
+      allowedTCPPorts = [cfg.bindPort];
+      allowedUDPPorts = [cfg.bindPort];
+    };
+
     systemd.services.mc-gate = let
       # toYAML = name: data: pkgs.writeText name (lib.generators.toYAML {} data);
       config_yml =
@@ -105,6 +112,7 @@ in {
                 cfg.servers
                 |> attrsToList
                 |> map ({value, ...}: value)
+                |> filter (cfg: cfg.enable)
                 |> map (cfg: {
                   host = cfg.src;
                   backend = cfg.dest;

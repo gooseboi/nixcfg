@@ -80,15 +80,6 @@
     virt-manager.enable = true;
     zsh.enable = true;
     zsh.enableVimMode = true;
-
-    services.mc-gate = {
-      enable = true;
-      servers.cobblemon = {
-        enable = true;
-        src = "cobble.gooseman.net";
-        dest = "cobblemon:25565";
-      };
-    };
   };
 
   # When on the default "powersave", then the frequency is stuck on 0.8GHz,
