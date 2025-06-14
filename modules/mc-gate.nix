@@ -101,7 +101,7 @@ in {
     systemd.services.mc-gate = let
       # toYAML = name: data: pkgs.writeText name (lib.generators.toYAML {} data);
       config_yml =
-        (pkgs.callPackage lib.convertToYAML {}) "config.yml"
+        (pkgs.callPackage lib.convertToYAML {}) "mc-gate-config.yml"
         {
           config = {
             bind = "${cfg.bindAddress}:${toString cfg.bindPort}";
@@ -148,7 +148,7 @@ in {
       };
 
       environment = {
-        GATE_CONFIG = "${config_yml}/config.yml";
+        GATE_CONFIG = "${config_yml}/mc-gate-config.yml";
         GATE_DEBUG = "true";
       };
     };

@@ -6,7 +6,7 @@ inputs: self: super: {
     runCommandLocal,
     yj,
   }: fname: value:
-    runCommandLocal "gen-${fname}" {
+    runCommandLocal "${fname}" {
       nativeBuildInputs = [yj];
       json = builtins.toJSON value;
       passAsFile = ["json"];
