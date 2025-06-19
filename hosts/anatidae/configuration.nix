@@ -60,6 +60,7 @@
     type = "desktop";
     user = "chonk";
 
+    adb.enable = true;
     agenix.enable = true;
     binfmt.enable = true;
     desktop.enable = true;
