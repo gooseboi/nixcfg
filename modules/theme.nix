@@ -4,15 +4,14 @@
   lib,
   ...
 }: let
-  inherit (lib) mkConst mkDisableOption;
+  inherit (lib) mkConst mkDisableOption mkIf;
 
   cfg = config.chonkos.theme;
 in {
   options.chonkos.theme =
     {
       enable = mkDisableOption "enable automatic install of theme packages";
-    }
-    // {
+
       font.size.normal = mkConst 13;
       font.size.big = mkConst 19;
 
@@ -70,7 +69,9 @@ in {
         |> mkConst;
     });
 
-  config = {
+  # TODO: Find a way to throw an assertion when a font or icon is used without
+  # installing the package.
+  config = mkIf cfg.enable {
     environment.systemPackages = with cfg; [
       font.sans.package
       font.mono.package
