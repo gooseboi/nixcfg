@@ -15,6 +15,7 @@ in {
     ./caddy.nix
     ./ferdium.nix
     ./forgejo.nix
+    ./radicale.nix
     ./stirling-pdf.nix
     ./suwayomi-server.nix
     ./vaultwarden.nix
