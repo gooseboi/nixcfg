@@ -32,17 +32,19 @@
       user = "chonk";
 
       alacritty.enable = true;
+      alacritty.enableEnvVar = true;
       bat.enable = true;
+      dev.enable = true;
+      direnv.enable = true;
       eza.enable = true;
+      ghostty.enable = true;
+      nushell.enable = true;
       nvim.enable = true;
+      rofi.enable = true;
+      scripts.enable = true;
       tmux.enable = true;
       tmux.enableSessionizer = true;
       zathura.enable = true;
-      scripts.enable = true;
-      rofi.enable = true;
-      dev.enable = true;
-      nushell.enable = true;
-      direnv.enable = true;
     };
 
     home = {

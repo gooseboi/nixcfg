@@ -4,15 +4,17 @@
   systemConfig,
   ...
 }: let
+  inherit (lib) mkEnableOption mkIf;
   inherit (systemConfig.chonkos) theme;
 
   cfg = config.chonkos.alacritty;
 in {
   options.chonkos.alacritty = {
-    enable = lib.mkEnableOption "enables alacritty";
+    enable = mkEnableOption "enables alacritty";
+    enableEnvVar = mkEnableOption "enables setting TERMINAL environment variable";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.alacritty = {
       enable = true;
 
@@ -148,6 +150,8 @@ in {
       };
     };
 
-    home.sessionVariables.TERMINAL = "alacritty";
+    home.sessionVariables = mkIf cfg.enableEnvVar {
+      TERMINAL = "alacritty";
+    };
   };
 }
