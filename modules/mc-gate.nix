@@ -1,3 +1,4 @@
+# TODO: Prometheus: https://gate.minekube.com/guide/otel/self-hosted/grafana-stack
 {
   config,
   lib,
