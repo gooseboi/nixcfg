@@ -20,6 +20,7 @@ in {
       # Custom packages
       mc-monitor = callPackage ./mc-monitor.nix {};
       rust-stakeholder = callPackage ./rust-stakeholder.nix {};
+      what-anime-cli = callPackage ./what-anime.nix {};
 
       # Overrides to avoid duplication
       ffmpeg =
@@ -110,6 +111,7 @@ in {
       ]
       ++ lib.lists.optionals isDesktop [
         czkawka-full
+        what-anime-cli
       ];
 
     home-manager.sharedModules = [
