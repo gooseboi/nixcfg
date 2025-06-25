@@ -53,9 +53,13 @@ in {
         ])
 
         # Haskell
-        ghc
-        cabal-cli
-        stack
+        (
+          ghc.withPackages
+          (p: [
+            p.stack
+            p.cabal-install
+          ])
+        )
 
         # Solo
         go
