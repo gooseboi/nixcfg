@@ -111,6 +111,7 @@ in {
       ]
       ++ lib.lists.optionals isDesktop [
         czkawka-full
+        localsend
         what-anime-cli
       ];
 
