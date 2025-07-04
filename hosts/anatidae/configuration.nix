@@ -68,6 +68,7 @@
     desktop.enable = true;
     docker.enable = true;
     fonts.enable = true;
+    helix.enable = true;
     hyprland.enable = true;
     hyprland.monitors = [
       "eDP-1   , 1920x1080@60, 0x0 , 1"
