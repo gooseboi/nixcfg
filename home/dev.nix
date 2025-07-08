@@ -6,7 +6,9 @@
 }: let
   cfg = config.chonkos.dev;
 
-  python_rc = "python/pythonrc";
+  pythonRc = "python/pythonrc";
+  mavenSettings = "maven/settings.xml";
+  mavenRepo = "maven/repository";
 in {
   options.chonkos.dev = {
     enable = lib.mkEnableOption "enable dev tools";
@@ -88,11 +90,13 @@ in {
         GHCUP_USE_XDG_DIRS = "true";
         GOPATH = "${config.xdg.dataHome}/go";
         JUPYTER_CONFIG_DIR = "${config.xdg.configHome}/jupyter";
+        MAVEN_ARGS = "--settings ${config.xdg.configHome}/${mavenSettings}";
+        MAVEN_OPTS = "-Dmaven.repo.local=${config.xdg.dataHome}/${mavenRepo}";
         NODE_REPL_HISTORY = "${config.xdg.dataHome}/node_repl_history";
         NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
         NUGET_PACKAGES = "${config.xdg.cacheHome}/nuget";
         OPAMROOT = "${config.xdg.dataHome}/opam";
-        PYTHONSTARTUP = "${config.xdg.configHome}/" + python_rc;
+        PYTHONSTARTUP = "${config.xdg.configHome}/${pythonRc}";
         RUSTUP_HOME = "${config.xdg.dataHome}/rustup";
         VAGRANT_HOME = "${config.xdg.dataHome}/vagrant";
         _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.xdg.configHome}/java -Dswing.aatext=true -Dawt.useSystemAAFontSettings=on";
@@ -100,7 +104,14 @@ in {
     };
 
     xdg.configFile = {
-      ${python_rc}.text =
+      ${mavenSettings}.text =
+        /*
+        xml
+        */
+        ''
+          <localRepository>''${env.XDG_CACHE_HOME}/${mavenRepo}</localRepository>
+        '';
+      ${pythonRc}.text =
         /*
         python
         */
