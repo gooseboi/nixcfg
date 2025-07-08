@@ -21,6 +21,23 @@ in {
         hmConfig = hmInputs.config;
         myLib = mkMyLib hmConfig;
       in {
+        home.packages = [
+          (
+            pkgs.writeShellScriptBin "reset_env_zsh"
+            /*
+            zsh
+            */
+            ''
+              # To source all the variables from home-manager again, we have to
+              # unset these variables, as hm uses them for caching the results
+              # of evaluating the variables.
+              unset __HM_SESS_VARS_SOURCED
+              unset __HM_ZSH_SESS_VARS_SOURCED
+              source ${hmConfig.xdg.configHome}/zsh/.zshenv
+            ''
+          )
+        ];
+
         programs.zsh = lib.mkIf config.chonkos.zsh.enable {
           enable = true;
 
@@ -38,6 +55,20 @@ in {
           };
 
           defaultKeymap = lib.mkIf config.chonkos.zsh.enableVimMode "viins";
+
+          envExtra =
+            /*
+            bash
+            */
+            ''
+              # I we are a tty, then any shell we launch is probably a user
+              # shell in a display manager or something, and it probably wants
+              # to source the variables again
+              if [[ $(tty) == /dev/tty* ]]; then
+                unset __HM_SESS_VARS_SOURCED
+                unset __HM_ZSH_SESS_VARS_SOURCED
+              fi
+            '';
 
           initContent =
             /*
