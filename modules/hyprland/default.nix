@@ -78,6 +78,7 @@ in {
             size = 24;
             name = "Bibata-Original-Classic";
 
+            dotIcons.enable = false;
             hyprcursor.enable = true;
             x11.enable = true;
             gtk.enable = true;
