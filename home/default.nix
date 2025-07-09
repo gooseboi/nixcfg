@@ -55,7 +55,6 @@ in {
         ELECTRUMDIR = "${config.xdg.dataHome}/electrum";
         GNUPGHOME = "${config.xdg.dataHome}/gnupg";
         GRIPHOME = "${config.xdg.configHome}/grip";
-        GTK2_RC_FILES = "${config.xdg.configHome}/gtk-2.0/gtkrc";
         LESSHISTFILE = "${config.xdg.cacheHome}/less/history";
         MAXIMA_USERDIR = "${config.xdg.configHome}/maxima";
         SQLITE_HISTORY = "${config.xdg.cacheHome}/sqlite_history";
