@@ -35,36 +35,10 @@ in {
           };
 
           "hyprland/workspaces" = {
-            format = "{icon}";
-            format-icons = {
-              "1" = "1";
-              "2" = "2";
-              "3" = "3";
-              "4" = "4";
-              "5" = "5";
-              "6" = "6";
-              "7" = "7";
-              "8" = "8";
-              "9" = "9";
-              "10" = "10";
-            };
+            format = "{name}";
             on-click = "activate";
             all-outputs = true;
-            active-only = true;
-            ignore-workspaces = "-";
-            persistent-workspaces = {
-              eDP-1 = [1 2 3 4 5 6 7 8 9 10];
-              "1" = [""];
-              "2" = [""];
-              "3" = [""];
-              "4" = [""];
-              "5" = [""];
-              "6" = [""];
-              "7" = [""];
-              "8" = [""];
-              "9" = [""];
-              "10" = [""];
-            };
+            cursor = true;
           };
 
           network = {
@@ -185,7 +159,7 @@ in {
 
           window#waybar {
           	background-color: #1d2021;
-          	opacity: 0.75;
+          	opacity: 1;
           	border-radius: 8px;
           	color: #fbf1c7;
           	transition-property: background-color;
