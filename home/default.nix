@@ -24,14 +24,12 @@ in {
       homeDirectory = "/home/${cfg.user}";
       shellAliases = {
         # Common
-        cp = "cp -iv";
-        mv = "mv -iv";
-        rm = "rm -vI";
-        mkd = "mkdir -pv";
-        yt = "youtube-dl -f best -ic --add-metadata";
-        yta = "youtube-dl -f best -icx --add-metadata";
+        cp = "cp --interactive --verbose";
+        mv = "mv --interactive --verbose";
+        rm = "rm --verbose --interactive=once";
+        mkd = "mkdir --parents --verbose";
         ytp = "yt-dlp --download-archive ~/.config/yt/yt-dl-vid.conf";
-        ytap = "yt-dlp -icx --add-metadata";
+        ytap = "yt-dlp --ignore-errors --continue --extract-audio --add-metadata";
         ffmpeg = "ffmpeg -hide_banner";
         xclipboard = "xclip -selection clipboard";
 
