@@ -38,7 +38,6 @@
       direnv.enable = true;
       eza.enable = true;
       ghostty.enable = true;
-      nushell.enable = true;
       nvim.enable = true;
       rofi.enable = true;
       scripts.enable = true;
@@ -76,6 +75,7 @@
     ];
     i18n.enable = true;
     network-manager.enable = true;
+    nushell.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
     tlp.batMaxFreq = 60;
@@ -83,6 +83,7 @@
     utils.enable = true;
     virt-manager.enable = true;
     zsh.enable = true;
+    zsh.enableUserShell = true;
     zsh.enableVimMode = true;
   };
 

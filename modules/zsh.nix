@@ -8,13 +8,16 @@
 in {
   options.chonkos.zsh = {
     enable = lib.mkEnableOption "enable system-wide zsh support";
+    enableUserShell = lib.mkEnableOption "enable setting as default shell";
     enableVimMode = lib.mkEnableOption "enable zsh vim mode";
   };
 
   config = lib.mkIf cfg.zsh.enable {
     programs.zsh.enable = true;
     environment.pathsToLink = ["/share/zsh"];
-    users.users.${cfg.user}.shell = pkgs.zsh;
+    users.users.${cfg.user} = lib.mkIf cfg.zsh.enableUserShell {
+      shell = pkgs.zsh;
+    };
 
     home-manager.sharedModules = [
       ({mkMyLib, ...} @ hmInputs: let
