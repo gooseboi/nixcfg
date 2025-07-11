@@ -11,6 +11,8 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    chonkos.unfree.allowed = ["corefonts" "vista-fonts"];
+
     fonts = {
       fontconfig.enable = true;
       packages =

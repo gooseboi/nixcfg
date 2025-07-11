@@ -15,6 +15,8 @@ in {
   imports = listNixWithDirs ./nixos;
 
   config = lib.mkIf cfg.enable {
+    chonkos.unfree.allowed = ["discord"];
+
     services.upower.enable = true;
 
     environment.systemPackages = with pkgs; [
