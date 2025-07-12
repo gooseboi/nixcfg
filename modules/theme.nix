@@ -4,13 +4,19 @@
   lib,
   ...
 }: let
-  inherit (lib) mkConst mkDisableOption mkIf;
+  inherit (config.chonkos) isDesktop;
+
+  inherit (lib) mkConst mkIf mkOption types;
 
   cfg = config.chonkos.theme;
 in {
   options.chonkos.theme =
     {
-      enable = mkDisableOption "enable install of theme packages";
+      enable = mkOption {
+        type = types.bool;
+        description = "enable install of theme packages";
+        default = isDesktop;
+      };
     }
     // (let
       enableOrThrow = v:

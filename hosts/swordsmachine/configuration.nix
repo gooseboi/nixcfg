@@ -46,7 +46,6 @@
     tailscale.enable = true;
     tailscale.enableExitNode = true;
     tailscale.preferredInterface = "enig0";
-    theme.enable = false;
     tlp.batMaxFreq = 30;
     tlp.enable = true;
     utils.enable = true;
