@@ -51,6 +51,7 @@
     tlp.enable = true;
     utils.enable = true;
     zsh.enable = true;
+    zsh.enableUserShell = true;
     zsh.enableVimMode = true;
   };
 
