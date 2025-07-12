@@ -19,69 +19,57 @@ in {
       enable = true;
 
       settings = {
-        colors = {
-          indexed_colors = [
-            {
-              color = "#fe8019";
-              index = 16;
-            }
-
-            {
-              color = "#d65d0e";
-              index = 17;
-            }
-
-            {
-              color = "#3c3836";
-              index = 18;
-            }
-
-            {
-              color = "#504945";
-              index = 19;
-            }
-
-            {
-              color = "#bdae93";
-              index = 20;
-            }
-
-            {
-              color = "#ebdbb2";
-              index = 21;
-            }
-          ];
-
-          bright = {
-            black = "#665c54";
-            blue = "#83a598";
-            cyan = "#8ec07c";
-            green = "#b8bb26";
-            magenta = "#d3869b";
-            red = "#fb4934";
-            white = "#fbf1c7";
-            yellow = "#fabd2f";
-          };
-
-          cursor = {
-            cursor = "CellForeground";
-            text = "CellBackground";
+        colors = let
+          inherit
+            (theme.withHashtag)
+            base00
+            base01
+            base02
+            base03
+            base04
+            base05
+            base06
+            base07
+            base08
+            base09
+            base0A
+            base0B
+            base0C
+            base0D
+            base0E
+            base0F
+            ;
+        in {
+          primary = {
+            background = base00;
+            foreground = base05;
           };
 
           normal = {
-            black = "#1d2021";
-            blue = "#83a598";
-            cyan = "#8ec07c";
-            green = "#b8bb26";
-            magenta = "#d3869b";
-            red = "#fb4934";
-            white = "#d5c4a1";
-            yellow = "#fabd2f";
+            black = base00;
+            blue = base0D;
+            cyan = base0C;
+            green = base0B;
+            magenta = base0E;
+            red = base08;
+            white = base05;
+            yellow = base0A;
           };
 
-          primary = {
-            background = "#1d2021";
-            foreground = "#d5c4a1";
+          bright = {
+            black = base03;
+            blue = base04;
+            cyan = base0F;
+            green = base01;
+            magenta = base06;
+            red = base09;
+            white = base0F;
+            yellow = base02;
+          };
+
+          cursor = {
+            cursor = base05;
+            text = base00;
           };
         };
 
