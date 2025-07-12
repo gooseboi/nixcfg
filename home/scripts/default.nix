@@ -4,16 +4,18 @@
   pkgs,
   ...
 }: let
-  files = builtins.readDir ./. |> lib.attrsToList;
-  filteredFiles = files |> builtins.filter (f: f.value != "directory" && !lib.strings.hasSuffix ".nix" f.name);
+  inherit (lib) attrsToList mkEnableOption mkIf strings;
+
+  files = builtins.readDir ./. |> attrsToList;
+  filteredFiles = files |> builtins.filter (f: f.value != "directory" && !strings.hasSuffix ".nix" f.name);
   fileNames = filteredFiles |> map (f: f.name);
 in {
   options.chonkos.scripts = {
-    enable = lib.mkEnableOption "enable scripts";
+    enable = mkEnableOption "enable scripts";
   };
 
   config =
-    lib.mkIf config.chonkos.scripts.enable
+    mkIf config.chonkos.scripts.enable
     {
       chonkos.rofi.enable = true;
 

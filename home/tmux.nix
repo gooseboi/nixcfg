@@ -3,14 +3,16 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  inherit (lib) mkEnableOption mkIf optionalString;
+in {
   options.chonkos.tmux = {
-    enable = lib.mkEnableOption "enable tmux";
-    enableSessionizer = lib.mkEnableOption "enable tmux-sessionizer";
+    enable = mkEnableOption "enable tmux";
+    enableSessionizer = mkEnableOption "enable tmux-sessionizer";
   };
 
   config = {
-    programs.tmux = lib.mkIf config.chonkos.tmux.enable {
+    programs.tmux = mkIf config.chonkos.tmux.enable {
       enable = true;
 
       # TODO: Use current user shell
@@ -53,7 +55,7 @@
           bind-key -n M-x kill-pane
 
           ${
-            lib.optionalString config.chonkos.tmux.enableSessionizer ''
+            optionalString config.chonkos.tmux.enableSessionizer ''
               # Start tmux-sessionizer
               bind-key -n M-f run-shell "tmux neww tmux-sessionizer"
             ''
@@ -66,7 +68,7 @@
     };
 
     home.packages = [
-      (lib.mkIf
+      (mkIf
         config.chonkos.tmux.enableSessionizer
         (pkgs.writeShellScriptBin
           "tmux-sessionizer"

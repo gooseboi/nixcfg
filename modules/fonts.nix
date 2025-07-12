@@ -4,13 +4,15 @@
   pkgs,
   ...
 }: let
+  inherit (lib) mkEnableOption mkIf;
+
   cfg = config.chonkos.fonts;
 in {
   options.chonkos.fonts = {
-    enable = lib.mkEnableOption "enable font installation";
+    enable = mkEnableOption "enable font installation";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     chonkos.unfree.allowed = ["corefonts" "vista-fonts"];
 
     fonts = {

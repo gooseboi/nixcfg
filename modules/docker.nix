@@ -4,13 +4,15 @@
   pkgs,
   ...
 }: let
+  inherit (lib) mkEnableOption mkIf;
+
   cfg = config.chonkos.docker;
 in {
   options.chonkos.docker = {
-    enable = lib.mkEnableOption "enable docker";
+    enable = mkEnableOption "enable docker";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     virtualisation = {
       docker = {
         enable = true;

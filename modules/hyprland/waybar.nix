@@ -3,11 +3,12 @@
   systemConfig,
   ...
 }: let
+  inherit (lib) mkIf;
   inherit (systemConfig.chonkos) theme;
 
   cfg = systemConfig.chonkos.hyprland;
 in {
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.waybar = {
       enable = true;
 

@@ -3,13 +3,14 @@
   systemConfig,
   ...
 }: let
+  inherit (lib) mkIf;
   inherit (systemConfig.chonkos) theme;
 
   colours = theme.withHashtag;
 
   cfg = systemConfig.chonkos.hyprland;
 in {
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     services.dunst = {
       enable = true;
       iconTheme = {

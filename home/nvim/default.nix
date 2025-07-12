@@ -5,8 +5,8 @@ inputs @ {
   pkgs,
   ...
 }: let
-  inherit (lib) filter hasSuffix listFiles makeBinPath mkDisableOption mkEnableOption mkIf mkOption;
-  inherit (lib.lists) flatten unique;
+  inherit (lib) filter hasSuffix listFiles lists makeBinPath mkDisableOption mkEnableOption mkIf mkOption;
+  inherit (lists) flatten unique;
 
   cfg = config.chonkos.nvim;
 in {

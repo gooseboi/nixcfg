@@ -3,16 +3,18 @@
   lib,
   ...
 }: let
-  cfg = config.chonkos;
+  inherit (lib) mkEnableOption mkIf;
+
+  cfg = config.chonkos.network-manager;
 in {
   options.chonkos.network-manager = {
-    enable = lib.mkEnableOption "enable network manager";
+    enable = mkEnableOption "enable network manager";
   };
 
-  config = lib.mkIf cfg.network-manager.enable {
+  config = mkIf cfg.enable {
     networking.networkmanager.enable = true;
 
-    users.users.${cfg.user}.extraGroups = ["networkmanager"];
+    users.users.${config.chonkos.user}.extraGroups = ["networkmanager"];
 
     systemd.network.wait-online.enable = false;
 

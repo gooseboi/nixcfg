@@ -4,13 +4,15 @@
   pkgs,
   ...
 }: let
-  cfg = config.chonkos;
+  inherit (lib) mkEnableOption mkIf;
+
+  cfg = config.chonkos.openssh;
 in {
   options.chonkos.openssh = {
-    enable = lib.mkEnableOption "enable openssh server";
+    enable = mkEnableOption "enable openssh server";
   };
 
-  config = lib.mkIf cfg.openssh.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       openssh
     ];

@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption mkOption;
+  inherit (lib) mkEnableOption mkIf mkOption;
 
   cfg = config.chonkos.i18n;
 in {

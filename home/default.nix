@@ -3,15 +3,15 @@
   lib,
   ...
 }: let
-  inherit (lib) listNixWithDirs remove;
+  inherit (lib) listNixWithDirs mkOption remove types;
 
   cfg = config.chonkos;
 in {
   imports = listNixWithDirs ./. |> remove ./default.nix;
 
   options.chonkos = {
-    user = lib.mkOption {
-      type = lib.types.str;
+    user = mkOption {
+      type = types.str;
       example = "chonk";
       description = "the user to add the modules to";
       readOnly = true;

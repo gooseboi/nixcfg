@@ -6,7 +6,6 @@
 }: let
   inherit (lib) mkEnableOption mkOption types;
   cfg = config.chonkos.tailscale;
-  interfaceName = "ts0";
 in {
   options.chonkos.tailscale = {
     enable = mkEnableOption "enables tailscale";

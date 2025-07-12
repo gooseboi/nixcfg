@@ -2,12 +2,14 @@
   config,
   lib,
   ...
-}: {
+}: let
+  inherit (lib) mkEnableOption mkIf;
+in {
   options.chonkos.zathura = {
-    enable = lib.mkEnableOption "enable zathura";
+    enable = mkEnableOption "enable zathura";
   };
 
-  config.programs.zathura = lib.mkIf config.chonkos.zathura.enable {
+  config.programs.zathura = mkIf config.chonkos.zathura.enable {
     enable = true;
 
     mappings = {

@@ -4,13 +4,15 @@
   pkgs,
   ...
 }: let
+  inherit (lib) mkEnableOption mkIf;
+
   cfg = config.chonkos.virt-manager;
 in {
   options.chonkos.virt-manager = {
-    enable = lib.mkEnableOption "enable virt-manager";
+    enable = mkEnableOption "enable virt-manager";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.virt-manager.enable = true;
 
     virtualisation.libvirtd = {

@@ -4,6 +4,7 @@
   pkgs,
   ...
 }: let
+  inherit (lib) lists mkEnableOption mkIf;
   inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.utils;
@@ -12,10 +13,10 @@
   wgetrc = "wgetrc";
 in {
   options.chonkos.utils = {
-    enable = lib.mkEnableOption "enable utils";
+    enable = mkEnableOption "enable utils";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; let
       # Custom packages
       mc-monitor = callPackage ./mc-monitor.nix {};
@@ -105,11 +106,11 @@ in {
         util-linux
         zfs
       ]
-      ++ lib.lists.optionals (config.nixpkgs.hostPlatform.system == "x86_64-linux") [
+      ++ lists.optionals (config.nixpkgs.hostPlatform.system == "x86_64-linux") [
         # Hardware
         cpufrequtils
       ]
-      ++ lib.lists.optionals isDesktop [
+      ++ lists.optionals isDesktop [
         czkawka-full
         localsend
         what-anime-cli

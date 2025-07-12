@@ -2,12 +2,14 @@
   config,
   lib,
   ...
-}: {
+}: let
+  inherit (lib) mkEnableOption mkIf;
+in {
   options.chonkos.eza = {
-    enable = lib.mkEnableOption "enable eza";
+    enable = mkEnableOption "enable eza";
   };
 
-  config.programs.eza = lib.mkIf config.chonkos.eza.enable {
+  config.programs.eza = mkIf config.chonkos.eza.enable {
     enable = true;
     icons = "auto";
   };

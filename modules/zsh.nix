@@ -4,18 +4,20 @@
   pkgs,
   ...
 }: let
-  cfg = config.chonkos;
+  inherit (lib) mkEnableOption mkIf optionalString;
+
+  cfg = config.chonkos.zsh;
 in {
   options.chonkos.zsh = {
-    enable = lib.mkEnableOption "enable system-wide zsh support";
-    enableUserShell = lib.mkEnableOption "enable setting as default shell";
-    enableVimMode = lib.mkEnableOption "enable zsh vim mode";
+    enable = mkEnableOption "enable system-wide zsh support";
+    enableUserShell = mkEnableOption "enable setting as default shell";
+    enableVimMode = mkEnableOption "enable zsh vim mode";
   };
 
-  config = lib.mkIf cfg.zsh.enable {
+  config = mkIf cfg.enable {
     programs.zsh.enable = true;
     environment.pathsToLink = ["/share/zsh"];
-    users.users.${cfg.user} = lib.mkIf cfg.zsh.enableUserShell {
+    users.users.${config.chonkos.user} = mkIf cfg.enableUserShell {
       shell = pkgs.zsh;
     };
 
@@ -23,6 +25,8 @@ in {
       ({mkMyLib, ...} @ hmInputs: let
         hmConfig = hmInputs.config;
         myLib = mkMyLib hmConfig;
+
+        inherit (myLib) removeHomeDirPrefixStr;
       in {
         home.packages = [
           (
@@ -41,14 +45,14 @@ in {
           )
         ];
 
-        programs.zsh = lib.mkIf config.chonkos.zsh.enable {
+        programs.zsh = mkIf config.chonkos.zsh.enable {
           enable = true;
 
           enableCompletion = true;
 
           syntaxHighlighting.enable = true;
           autocd = true;
-          dotDir = "${myLib.removeHomeDirPrefixStr "${hmConfig.xdg.configHome}/zsh"}";
+          dotDir = "${removeHomeDirPrefixStr "${hmConfig.xdg.configHome}/zsh"}";
 
           history = {
             append = true;
@@ -57,7 +61,7 @@ in {
             save = 10000000;
           };
 
-          defaultKeymap = lib.mkIf config.chonkos.zsh.enableVimMode "viins";
+          defaultKeymap = mkIf config.chonkos.zsh.enableVimMode "viins";
 
           envExtra =
             /*
@@ -86,7 +90,7 @@ in {
               # Auto complete with case insenstivity
               zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
-              ${lib.optionalString config.chonkos.zsh.enableVimMode
+              ${optionalString config.chonkos.zsh.enableVimMode
                 /*
                 bash
                 */

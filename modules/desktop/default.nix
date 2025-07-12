@@ -4,17 +4,17 @@
   pkgs,
   ...
 }: let
-  inherit (lib) listNixWithDirs;
+  inherit (lib) listNixWithDirs mkEnableOption mkIf;
 
   cfg = config.chonkos.desktop;
 in {
   options.chonkos.desktop = {
-    enable = lib.mkEnableOption "enable desktop configurations";
+    enable = mkEnableOption "enable desktop configurations";
   };
 
   imports = listNixWithDirs ./nixos;
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     chonkos.unfree.allowed = ["discord"];
 
     services.upower.enable = true;

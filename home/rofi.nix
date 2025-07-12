@@ -5,15 +5,16 @@
   systemConfig,
   ...
 }: let
+  inherit (lib) mkEnableOption mkIf;
   inherit (systemConfig.chonkos) theme;
 
   cfg = config.chonkos.rofi;
 in {
   options.chonkos.rofi = {
-    enable = lib.mkEnableOption "enable rofi";
-    useXorg = lib.mkEnableOption "whether to use rofi-wayland or not";
+    enable = mkEnableOption "enable rofi";
+    useXorg = mkEnableOption "whether to use rofi-wayland or not";
   };
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.rofi = {
       enable = true;
       package =

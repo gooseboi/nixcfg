@@ -4,16 +4,18 @@
   pkgs,
   ...
 }: let
+  inherit (lib) mkIf strings;
+
   cfg = config.chonkos.desktop;
 in {
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     environment.etc."/brave/policies/managed/GroupPolicy.json".source = ./brave-policies.json;
 
     home-manager.sharedModules = [
       {
         programs.chromium = let
           enabledFeatures = ["TouchpadOverscrollHistoryNavigation"];
-          enabledFeaturesStr = lib.strings.concatStringsSep "," enabledFeatures;
+          enabledFeaturesStr = strings.concatStringsSep "," enabledFeatures;
         in {
           enable = true;
           package = pkgs.brave;

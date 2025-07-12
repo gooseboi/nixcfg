@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: let
+  inherit (lib) hiPrio mkEnableOption mkIf;
+
   cfg = config.chonkos.dev;
 
   pythonRc = "python/pythonrc";
@@ -11,14 +13,14 @@
   mavenRepo = "maven/repository";
 in {
   options.chonkos.dev = {
-    enable = lib.mkEnableOption "enable dev tools";
+    enable = mkEnableOption "enable dev tools";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     home = {
       packages = with pkgs; [
         # C/C++
-        (lib.hiPrio gcc) # To stop conflict with clang for c++ bin
+        (hiPrio gcc) # To stop conflict with clang for c++ bin
         clang
         clang-tools
         cmake

@@ -4,13 +4,15 @@
   pkgs,
   ...
 }: let
+  inherit (lib) mkEnableOption mkIf;
+
   cfg = config.chonkos.typesetting;
 in {
   options.chonkos.typesetting = {
-    enable = lib.mkEnableOption "enable typesetting installs";
+    enable = mkEnableOption "enable typesetting installs";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       texliveFull
       typst

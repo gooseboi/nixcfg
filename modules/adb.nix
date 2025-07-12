@@ -3,13 +3,15 @@
   lib,
   ...
 }: let
+  inherit (lib) mkEnableOption mkIf;
+
   cfg = config.chonkos.adb;
 in {
   options.chonkos.adb = {
-    enable = lib.mkEnableOption "enable adb support";
+    enable = mkEnableOption "enable adb support";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.adb.enable = true;
 
     users.users.${config.chonkos.user}.extraGroups = ["adbusers"];
