@@ -63,7 +63,7 @@ in {
             green = base01;
             magenta = base06;
             red = base09;
-            white = base0F;
+            white = base07;
             yellow = base02;
           };
 
