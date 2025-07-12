@@ -4,12 +4,17 @@
   pkgs,
   ...
 }: let
-  inherit (lib) listNixWithDirs mkEnableOption mkIf;
+  inherit (config.chonkos) isDesktop;
+  inherit (lib) listNixWithDirs mkIf mkOption types;
 
   cfg = config.chonkos.desktop;
 in {
   options.chonkos.desktop = {
-    enable = mkEnableOption "enable desktop configurations";
+    enable = mkOption {
+      type = types.bool;
+      description = "enable desktop configurations";
+      default = isDesktop;
+    };
   };
 
   imports = listNixWithDirs ./nixos;

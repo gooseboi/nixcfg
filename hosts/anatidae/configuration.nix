@@ -58,7 +58,6 @@
     adb.enable = true;
     agenix.enable = true;
     binfmt.enable = true;
-    desktop.enable = true;
     docker.enable = true;
     fonts.enable = true;
     helix.enable = true;
