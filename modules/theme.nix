@@ -10,20 +10,34 @@
 in {
   options.chonkos.theme =
     {
-      enable = mkDisableOption "enable automatic install of theme packages";
+      enable = mkDisableOption "enable install of theme packages";
+    }
+    // (let
+      enableOrThrow = v:
+        if cfg.enable
+        then v
+        else throw "must enable theme installation";
 
-      font.size.normal = mkConst 13;
-      font.size.big = mkConst 19;
+      mkThemeConst = v: mkConst (enableOrThrow v);
+    in {
+      font.size.normal = mkThemeConst 13;
+      font.size.big = mkThemeConst 19;
 
-      font.sans.name = mkConst "Lexend";
-      font.sans.package = mkConst pkgs.lexend;
+      font.sans.name = mkThemeConst "Lexend";
+      font.sans.package = mkThemeConst pkgs.lexend;
 
-      font.mono.name = mkConst "SauceCodePro Nerd Font Mono";
-      font.mono.package = mkConst pkgs.nerd-fonts.sauce-code-pro;
+      font.mono.name = mkThemeConst "SauceCodePro Nerd Font Mono";
+      font.mono.package = mkThemeConst pkgs.nerd-fonts.sauce-code-pro;
 
-      icons.name = mkConst "Gruvbox-Plus-Dark";
-      icons.package = mkConst pkgs.gruvbox-plus-icons;
-
+      icons.name = mkThemeConst "Gruvbox-Plus-Dark";
+      icons.package = mkThemeConst pkgs.gruvbox-plus-icons;
+    })
+    // (let
+      isValidColor = thing:
+        if builtins.isString thing
+        then (builtins.match "^[0-9a-fA-F]{6}" thing) != null
+        else false;
+    in {
       # name = "Gruvbox dark hard";
       # author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
       # Taken from https://github.com/RGBCube/ThemeNix/blob/1267b9132b3a9c1d6e5c92f52ea1ca780ab2ac4f/themes/gruvbox-dark-hard.nix
@@ -45,13 +59,7 @@ in {
         base0E = "D3869B";
         base0F = "D65D0E";
       };
-    }
-    // (let
-      isValidColor = thing:
-        if builtins.isString thing
-        then (builtins.match "^[0-9a-fA-F]{6}" thing) != null
-        else false;
-    in {
+
       with0x =
         builtins.mapAttrs (_: value:
           if isValidColor value
@@ -69,8 +77,6 @@ in {
         |> mkConst;
     });
 
-  # TODO: Find a way to throw an assertion when a font or icon is used without
-  # installing the package.
   config = mkIf cfg.enable {
     environment.systemPackages = with cfg; [
       font.sans.package
