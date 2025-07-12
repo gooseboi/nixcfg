@@ -48,12 +48,6 @@
 
     home = {
       stateVersion = "24.11";
-
-      packages = with pkgs; [
-        # Typesetting
-        texliveFull
-        typst
-      ];
     };
   };
 
@@ -80,6 +74,7 @@
     tailscale.enable = true;
     tlp.batMaxFreq = 60;
     tlp.enable = true;
+    typesetting.enable = true;
     utils.enable = true;
     virt-manager.enable = true;
     zsh.enable = true;
