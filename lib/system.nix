@@ -32,9 +32,6 @@ inputs: self: super: {
           # Secrets
           inputs.agenix.nixosModules.default
 
-          # Minecraft
-          inputs.nix-minecraft.nixosModules.minecraft-servers
-
           # Home manager configs
           ({
             config,
@@ -70,7 +67,6 @@ inputs: self: super: {
             nixpkgs.overlays = [
               inputs.agenix.overlays.default
               inputs.fenix.overlays.default
-              inputs.nix-minecraft.overlay
             ];
           })
 
