@@ -85,6 +85,7 @@ in {
         time
         traceroute
         tree
+        unrar-free
         unzip
         vimv-rs
         watch
