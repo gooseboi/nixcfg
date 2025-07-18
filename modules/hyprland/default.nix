@@ -84,6 +84,17 @@ in {
             gtk.enable = true;
           };
 
+          home.packages = [
+            (pkgs.writeShellScriptBin "hyprland-before-sleep.sh" (
+              with pkgs; ''
+                ${hyprland}/bin/hyprctl switchxkblayout at-translated-set-2-keyboard 0
+                ${playerctl}/bin/playerctl pause -a
+                hyprsetvol -m
+                ${swaylock}/bin/swaylock -f -i ~/.local/share/bg
+              ''
+            ))
+          ];
+
           wayland.windowManager.hyprland = {
             enable = true;
 
@@ -94,20 +105,12 @@ in {
 
               debug.disable_logs = !cfg.enableDebug;
 
-              exec-once = let
-                hyprland_before_sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" (with pkgs; ''
-                  ${hyprland}/bin/hyprctl switchxkblayout at-translated-set-2-keyboard 0
-                  ${playerctl}/bin/playerctl pause -a
-                  hyprsetvol -m
-                  ${swaylock}/bin/swaylock -f -i ~/.local/share/bg
-                '');
-              in [
+              exec-once = [
                 (optionalString nmEnabled "nm-applet")
                 "${pkgs.blueman}/bin/blueman-applet"
                 "${pkgs.util-linux}/bin/rfkill block bluetooth"
                 # TODO: use home-manager config
                 (optionalString cfg.enableMpd "${pkgs/mpd}/bin/mpd")
-                "${pkgs.swayidle}/bin/swayidle -w before-sleep ${hyprland_before_sleep}/bin/hyprland-before-sleep.sh"
               ];
             };
 
