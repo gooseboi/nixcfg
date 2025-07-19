@@ -21,15 +21,20 @@ in {
     servicePort = mkConst 3000;
     serviceDir = mkConst "/var/lib/forgejo";
     serviceSubDomain = mkConst "git";
+    servicePackage = mkConst pkgs.forgejo;
   };
 
   config = {
+    environment.systemPackages = [
+      cfg.servicePackage
+    ];
+
     services.forgejo = {
       inherit (cfg) enable;
 
       stateDir = cfg.serviceDir;
 
-      package = pkgs.forgejo;
+      package = cfg.servicePackage;
 
       lfs.enable = true;
 
@@ -87,6 +92,12 @@ in {
           MIGRATE = 7200;
           MIRROR = 7200;
           GC = 7200;
+        };
+
+        mirror = {
+          ENABLED = true;
+          DEFAULT_INTERVAL = "4h";
+          MIN_INTERVAL = "10m";
         };
 
         ui.DEFAULT_THEME = "forgejo-dark";
