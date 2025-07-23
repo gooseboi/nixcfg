@@ -80,6 +80,7 @@ in {
         simple-http-server
         socat
         speedtest-rs
+        sqlite
         strace
         tealdeer
         time
