@@ -41,7 +41,11 @@ in {
 
         # Java
         temurin-bin-21
-        maven
+        (
+          maven.override {
+            jdk_headless = temurin-bin-21.override {gtkSupport = false;};
+          }
+        )
 
         # Rust
         cargo-show-asm

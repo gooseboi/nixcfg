@@ -8,7 +8,11 @@
     fenix.rust-analyzer
     gopls
     haskell-language-server
-    jdt-language-server
+    (
+      jdt-language-server.override {
+        jdk = pkgs.temurin-bin-21.override {gtkSupport = false;};
+      }
+    )
     lua-language-server
     nixd
     ols
