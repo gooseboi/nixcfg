@@ -36,8 +36,10 @@ in {
         pnpm
 
         # Python
+        python3.pkgs.pip
         python3Full
         uv
+        virtualenv
 
         # Java
         temurin-bin-21
