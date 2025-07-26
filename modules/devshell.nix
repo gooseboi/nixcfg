@@ -17,6 +17,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # The idea from this was mainly from: https://www.reddit.com/r/NixOS/comments/p17r5f/comment/h8jrmns/
     environment = {
       pathsToLink = ["/include"];
 
