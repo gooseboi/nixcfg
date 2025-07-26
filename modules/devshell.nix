@@ -22,9 +22,9 @@ in {
 
       systemPackages = [
         (
-          pkgs.writeShellScriptBin "activate_devshell"
+          pkgs.writeShellScriptBin "activate_devshell.sh"
           /*
-          zsh
+          bash
           */
           ''
             export CPATH="/run/current-system/sw/include";
@@ -33,6 +33,10 @@ in {
           ''
         )
       ];
+
+      shellAliases = {
+        activate_devshell = ". activate_devshell.sh";
+      };
     };
 
     chonkos.devshell.packages = with pkgs; [
