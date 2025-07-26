@@ -4,7 +4,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib) filter mkEnableOption mkIf mkOption types;
+  inherit (lib.strings) concatStringsSep;
 
   cfg = config.chonkos.devshell;
 in {
@@ -23,16 +24,36 @@ in {
 
       systemPackages = [
         (
-          pkgs.writeShellScriptBin "activate_devshell.sh"
-          /*
-          bash
-          */
-          ''
-            export CPATH="/run/current-system/sw/include";
-            export LIBRARY_PATH="/run/current-system/sw/lib";
-            export LD_LIBRARY_PATH="${lib.makeLibraryPath cfg.packages}";
-          ''
+          pkgs.writeShellScriptBin "activate_devshell.sh" (
+            let
+              makeSearchPath = packages: subDir: sep:
+                packages
+                |> filter (p: p != null)
+                |> map (p: "${p}/${subDir}")
+                |> filter (p:
+                  if builtins.pathExists p
+                  then true
+                  else builtins.trace "${p} was false" false)
+                |> concatStringsSep sep;
+
+              libraryPath = makeSearchPath cfg.packages "lib" ":";
+
+              cPath = makeSearchPath cfg.packages "include" ":";
+
+              pkgConfigPath = makeSearchPath cfg.packages "lib/pkgconfig" ":";
+            in
+              /*
+              bash
+              */
+              ''
+                export CPATH="${cPath}";
+                export LIBRARY_PATH="${libraryPath}";
+                export LD_LIBRARY_PATH="${libraryPath}";
+                export PKG_CONFIG_PATH="${pkgConfigPath}";
+              ''
+          )
         )
+        pkgs.pkg-config
       ];
 
       shellAliases = {
@@ -41,13 +62,39 @@ in {
     };
 
     chonkos.devshell.packages = with pkgs; [
-      stdenv.cc.cc.lib
+      atk
+      atk.dev
+      cairo
+      cairo.dev
       gcc
-      libz
+      gdk-pixbuf
+      gdk-pixbuf.dev
+      glib.out
+      glib.dev
+      gtk3
+      gtk3.dev
+      harfbuzz
+      harfbuzz.dev
+      libsoup_2_4
+      libsoup_2_4.dev
+      libsoup_3
+      libsoup_3.dev
       libxkbcommon
+      libxkbcommon.dev
+      libz
+      libz.dev
+      pango.out
+      pango.dev
+      stdenv.cc.cc.lib
       vulkan-loader
       wayland
       wayland.dev
+      webkitgtk_4_1
+      webkitgtk_4_1.dev
+      webkitgtk_6_0
+      webkitgtk_6_0.dev
+      zlib
+      zlib.dev
     ];
   };
 }
