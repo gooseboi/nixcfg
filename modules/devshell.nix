@@ -41,6 +41,7 @@ in {
       libz
       libxkbcommon
       vulkan-loader
+      wayland
       wayland.dev
     ];
   };
