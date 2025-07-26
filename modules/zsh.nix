@@ -38,9 +38,16 @@ in {
               # To source all the variables from home-manager again, we have to
               # unset these variables, as hm uses them for caching the results
               # of evaluating the variables.
+
+              # NixOS
+              unset __ETC_PROFILE_SOURCED
+              unset __NIXOS_SET_ENVIRONMENT_DONE
+
+              # Home Manager
               unset __HM_SESS_VARS_SOURCED
               unset __HM_ZSH_SESS_VARS_SOURCED
               source ${hmConfig.xdg.configHome}/zsh/.zshenv
+              source /etc/zshenv
             ''
           )
         ];
@@ -68,10 +75,15 @@ in {
             bash
             */
             ''
-              # I we are a tty, then any shell we launch is probably a user
+              # If we are a tty, then any shell we launch is probably a user
               # shell in a display manager or something, and it probably wants
               # to source the variables again
               if [[ $(tty) == /dev/tty* ]]; then
+                # NixOS
+                unset __ETC_PROFILE_SOURCED
+                unset __NIXOS_SET_ENVIRONMENT_DONE
+
+                # Home Manager
                 unset __HM_SESS_VARS_SOURCED
                 unset __HM_ZSH_SESS_VARS_SOURCED
               fi
