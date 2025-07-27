@@ -30,10 +30,7 @@ in {
                 packages
                 |> filter (p: p != null)
                 |> map (p: "${p}/${subDir}")
-                |> filter (p:
-                  if builtins.pathExists p
-                  then true
-                  else builtins.trace "${p} was false" false)
+                |> filter builtins.pathExists
                 |> concatStringsSep sep;
 
               libraryPath = makeSearchPath cfg.packages "lib" ":";
