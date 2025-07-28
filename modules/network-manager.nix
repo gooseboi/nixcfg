@@ -12,28 +12,39 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking.networkmanager.enable = true;
+    networking.networkmanager = {
+      enable = true;
+
+      unmanaged = [
+        "type:bridge"
+
+        # Tailscale
+        "interface-name:tailscale*"
+        # Tailscale
+        "interface-name:ts*"
+
+        # Docker bridge
+        "interface-name:docker0"
+        # Docker container interfaces
+        "interface-name:veth*"
+        # Docker container interfaces
+        "interface-name:br*"
+
+        # QEMU
+        "interface-name:virbr*"
+      ];
+
+      wifi = {
+        # Random on every connection
+        macAddress = "random";
+        # Duh
+        powersave = true;
+        # Randomize MAC address when scanning
+        scanRandMacAddress = true;
+      };
+    };
 
     users.users.${config.chonkos.user}.extraGroups = ["networkmanager"];
-
-    networking.networkmanager.unmanaged = [
-      "type:bridge"
-
-      # Tailscale
-      "interface-name:tailscale*"
-      # Tailscale
-      "interface-name:ts*"
-
-      # Docker bridge
-      "interface-name:docker0"
-      # Docker container interfaces
-      "interface-name:veth*"
-      # Docker container interfaces
-      "interface-name:br*"
-
-      # QEMU
-      "interface-name:virbr*"
-    ];
 
     systemd.network.wait-online.enable = false;
 
