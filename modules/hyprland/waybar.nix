@@ -12,7 +12,10 @@ in {
     programs.waybar = {
       enable = true;
 
-      systemd.enable = true;
+      systemd = {
+        enable = true;
+        enableDebug = cfg.enableDebug;
+      };
 
       # This, and style.css, are mostly stolen from https://gitlab.com/librephoenix/nixos-config/
       # with some small changes for me
@@ -155,7 +158,7 @@ in {
           * {
           	font-family: ${theme.font.sans.name};
 
-          	font-size: ${builtins.toString theme.font.size.big};
+          	font-size: ${builtins.toString theme.font.size.big}px;
           }
 
           window#waybar {
