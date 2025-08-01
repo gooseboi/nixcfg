@@ -2,16 +2,9 @@
   services.syncthing = {
     enable = true;
 
-    user = config.chonkos.user;
     dataDir = "/home/${config.chonkos.user}";
-    overrideDevices = true;
-    overrideFolders = true;
 
     settings = {
-      gui = {
-        theme = "dark";
-      };
-
       devices = {
         "anser" = {id = "3IBIEL6-6QNWOKJ-NZ5UJHB-QNC54FV-3I7EU7G-M5NPWDH-AWGHDCB-WFXV6AE";};
         "cowboy" = {
@@ -52,8 +45,6 @@
           devices = ["anser"];
         };
       };
-
-      options.urAccepted = -1; # Disable telemetry.
     };
   };
 }

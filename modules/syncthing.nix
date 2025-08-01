@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   systemd.services.syncthing = {
     environment.STNODEFAULTFOLDER = "true";
 
@@ -15,6 +15,21 @@
       MemoryDenyWriteExecute = true;
       RestrictRealtime = true;
       RestrictSUIDSGID = true;
+    };
+  };
+
+  services.syncthing = {
+    user = config.chonkos.user;
+
+    overrideDevices = true;
+    overrideFolders = true;
+
+    settings = {
+      gui = {
+        theme = "dark";
+      };
+
+      options.urAccepted = -1; # Disable telemetry.
     };
   };
 }
