@@ -86,5 +86,7 @@
   # pretty unusable.
   services.tlp.settings.CPU_SCALING_GOVERNOR_ON_BAT = lib.mkForce "performance";
 
+  chonkos.unfree.allowed = ["postman" "cursor"];
+
   system.stateVersion = "24.05"; # This shouldn't be changed
 }

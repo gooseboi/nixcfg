@@ -71,6 +71,17 @@ in {
           ])
         )
 
+        # Reto
+        code-cursor-fhs
+        (
+          dbeaver-bin.override {
+            openjdk21 = temurin-bin-21;
+          }
+        )
+        php81
+        php81Packages.composer
+        postman
+
         # Solo
         go
         lean4
