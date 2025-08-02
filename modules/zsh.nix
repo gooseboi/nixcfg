@@ -22,11 +22,8 @@ in {
     };
 
     home-manager.sharedModules = [
-      ({mkMyLib, ...} @ hmInputs: let
+      ({...} @ hmInputs: let
         hmConfig = hmInputs.config;
-        myLib = mkMyLib hmConfig;
-
-        inherit (myLib) removeHomeDirPrefixStr;
       in {
         home.packages = [
           (
@@ -59,7 +56,7 @@ in {
 
           syntaxHighlighting.enable = true;
           autocd = true;
-          dotDir = "${removeHomeDirPrefixStr "${hmConfig.xdg.configHome}/zsh"}";
+          dotDir = "${hmConfig.xdg.configHome}/zsh";
 
           history = {
             append = true;
