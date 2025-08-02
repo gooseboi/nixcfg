@@ -72,8 +72,6 @@ in {
       gtk3.dev
       harfbuzz
       harfbuzz.dev
-      libsoup_2_4
-      libsoup_2_4.dev
       libsoup_3
       libsoup_3.dev
       libxkbcommon
