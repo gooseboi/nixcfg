@@ -66,8 +66,8 @@ in {
       gcc
       gdk-pixbuf
       gdk-pixbuf.dev
-      glib.out
       glib.dev
+      glib.out
       gtk3
       gtk3.dev
       harfbuzz
@@ -76,10 +76,13 @@ in {
       libsoup_3.dev
       libxkbcommon
       libxkbcommon.dev
+      libxml2
+      libxml2.dev
+      libxslt.dev
       libz
       libz.dev
-      pango.out
       pango.dev
+      pango.out
       stdenv.cc.cc.lib
       vulkan-loader
       wayland
