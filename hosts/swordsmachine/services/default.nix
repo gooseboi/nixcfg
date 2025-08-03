@@ -26,13 +26,22 @@ in {
       assertion =
         cfg
         |> lib.attrValues
-        |> lib.filter (srv: srv.enableReverseProxy or false)
         |> lib.filter (srv: srv.enable)
-        |> map (srv: srv.servicePort)
+        |> lib.filter (srv: builtins.hasAttr "port" srv)
+        |> map (srv: srv.port)
         |> (v: v == lib.unique v);
       message = "Two services cannot share the same port";
     }
   ];
+
+  chonkos.services = {
+    ferdium.enable = true;
+    forgejo.enable = true;
+    radicale.enable = true;
+    stirling-pdf.enable = true;
+    suwayomi-server.enable = true;
+    vaultwarden.enable = true;
+  };
 
   virtualisation.oci-containers.backend = "podman";
 

@@ -14,13 +14,14 @@ in {
     enable = mkConst true;
     useAnubis = mkConst true;
     anubisBasePort = mkConst 20820;
+    isReverseProxy = mkConst true;
   };
 
   # TODO: X-Real-IP
 
   config = let
     reverse_proxy = {
-      subdomain,
+      subDomain,
       domain ? null,
       port,
     }: (
@@ -33,7 +34,7 @@ in {
         };
       }
       else {
-        "http://${subdomain}.${networking.domain}" = {
+        "http://${subDomain}.${networking.domain}" = {
           extraConfig = ''
             reverse_proxy http://localhost:${toString port}
           '';
@@ -44,8 +45,10 @@ in {
     enabledServices =
       serviceCfg
       |> attrsToList
-      |> filter ({value, ...}: value.enableReverseProxy or false)
-      |> filter ({value, ...}: value.enable);
+      |> filter ({value, ...}: value.enable)
+      |> filter ({value, ...}: ! (value.isReverseProxy or false))
+      |> filter ({value, ...}: value.isWeb or false)
+      |> filter ({value, ...}: value.enableReverseProxy);
   in
     mkMerge [
       {
@@ -74,8 +77,7 @@ in {
           virtualHosts =
             enabledServices
             |> map ({value, ...}: (reverse_proxy {
-              subdomain = value.serviceSubDomain;
-              port = value.servicePort;
+              inherit (value) subDomain port;
             }))
             |> mkMerge;
         };
@@ -93,9 +95,9 @@ in {
 
           anubisCfg =
             lib.zipListsWith (s: p: {
-              serviceName = s.value.serviceName;
-              subDomain = s.value.serviceSubDomain;
-              origPort = s.value.servicePort;
+              name = s.value.name;
+              subDomain = s.value.subDomain;
+              origPort = s.value.port;
               anubisPort = p;
             })
             (enabledServices |> filter ({value, ...}: value.enableAnubis))
@@ -112,7 +114,7 @@ in {
             instances =
               anubisCfg
               |> map (v: {
-                name = v.serviceName;
+                name = v.name;
                 value = {
                   inherit (cfg) enable;
 
@@ -136,7 +138,7 @@ in {
                   anubisPort,
                   ...
                 }: (reverse_proxy {
-                  subdomain = subDomain;
+                  subDomain = subDomain;
                   port = anubisPort;
                 }))
                 |> mkMerge
@@ -146,8 +148,7 @@ in {
                 enabledServices
                 |> filter ({value, ...}: ! value.enableAnubis)
                 |> map ({value, ...}: (reverse_proxy {
-                  subdomain = value.serviceSubDomain;
-                  port = value.servicePort;
+                  inherit (value) subDomain port;
                 }))
                 |> mkMerge
               )

@@ -4,30 +4,32 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkConst;
+  inherit (lib) mkService;
   cfg = config.chonkos.services.stirling-pdf;
 in {
-  options.chonkos.services.stirling-pdf = {
-    enable = mkConst true;
-    enableReverseProxy = mkConst true;
-    enableAnubis = mkConst true;
-    serviceName = mkConst "stirling-pdf";
-    servicePort = mkConst 8080;
-    serviceDir = mkConst null;
-    serviceSubDomain = mkConst "pdf";
+  options.chonkos.services.stirling-pdf = mkService {
+    name = "stirling-pdf";
+    port = 8080;
+    dir = null;
+    package = pkgs.stirling-pdf.override {
+      jre = pkgs.temurin-jre-bin-21.override {gtkSupport = false;};
+    };
+
+    subDomain = "pdf";
+    isWeb = true;
+    enableReverseProxy = true;
+    enableAnubis = true;
   };
 
   config = {
     services.stirling-pdf = {
       inherit (cfg) enable;
 
-      package = pkgs.stirling-pdf.override {
-        jre = pkgs.temurin-jre-bin-21.override {gtkSupport = false;};
-      };
+      inherit (cfg) package;
 
       environment = {
         SERVER_HOST = "127.0.0.1";
-        SERVER_PORT = cfg.servicePort;
+        SERVER_PORT = cfg.port;
       };
     };
   };

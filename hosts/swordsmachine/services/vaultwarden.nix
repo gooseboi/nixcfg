@@ -1,21 +1,24 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (config.networking) domain;
-  inherit (lib) mkConst;
+  inherit (lib) mkService;
 
   cfg = config.chonkos.services.vaultwarden;
 in {
-  options.chonkos.services.vaultwarden = {
-    enable = mkConst true;
-    enableReverseProxy = mkConst true;
-    enableAnubis = mkConst false;
-    serviceName = mkConst "vaultwarden";
-    servicePort = mkConst 8222;
-    serviceDir = mkConst "/var/lib/bitwarden_rs";
-    serviceSubDomain = mkConst "pass";
+  options.chonkos.services.vaultwarden = mkService {
+    name = "vaultwarden";
+    port = 8222;
+    dir = "/var/lib/bitwarden_rs";
+    package = pkgs.vaultwarden;
+
+    subDomain = "pass";
+    isWeb = true;
+    enableReverseProxy = true;
+    enableAnubis = false;
   };
 
   config = {
@@ -26,10 +29,10 @@ in {
 
       environmentFile = config.age.secrets.vaultwarden-envfile.path;
       config = {
-        DOMAIN = "https://${cfg.serviceSubDomain}.${domain}";
-        LOG_FILE = "${cfg.serviceDir}/access.log";
+        DOMAIN = "https://${cfg.subDomain}.${domain}";
+        LOG_FILE = "${cfg.dataDir}/access.log";
         ROCKET_ADDRESS = "127.0.0.1";
-        ROCKET_PORT = cfg.servicePort;
+        ROCKET_PORT = cfg.port;
         SIGNUPS_ALLOWED = false;
       };
     };

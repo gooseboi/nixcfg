@@ -4,33 +4,36 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkConst;
+  inherit (lib) mkService;
   cfg = config.chonkos.services.suwayomi-server;
 in {
-  options.chonkos.services.suwayomi-server = {
-    enable = mkConst true;
-    enableReverseProxy = mkConst true;
-    enableAnubis = mkConst true;
-    serviceName = mkConst "suwayomi-server";
-    servicePort = mkConst 4567;
-    serviceDir = mkConst "/var/lib/suwayomi-server";
-    serviceSubDomain = mkConst "manga";
+  options.chonkos.services.suwayomi-server = mkService {
+    name = "suwayomi-server";
+    port = 4567;
+    dir = "/var/lib/suwayomi-server";
+    package = pkgs.suwayomi-server.override {
+      jdk17_headless = pkgs.temurin-jre-bin-17.override {
+        gtkSupport = false;
+      };
+    };
+
+    subDomain = "manga";
+    isWeb = true;
+    enableReverseProxy = true;
+    enableAnubis = true;
   };
 
   config = {
     services.suwayomi-server = {
       inherit (cfg) enable;
 
-      package = pkgs.suwayomi-server.override {
-        jdk17_headless = pkgs.temurin-jre-bin-17.override {
-          gtkSupport = false;
-        };
-      };
+      inherit (cfg) package;
 
-      dataDir = cfg.serviceDir;
+      dataDir = cfg.dataDir;
+
       settings.server = {
         ip = "127.0.0.1";
-        port = cfg.servicePort;
+        port = cfg.port;
 
         downloadAsCbz = false;
         systemTrayEnabled = false;

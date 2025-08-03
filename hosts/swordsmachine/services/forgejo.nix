@@ -5,36 +5,37 @@
   ...
 }: let
   inherit (config.networking) domain;
-  inherit (lib) mkConst;
+  inherit (lib) mkService;
 
   cfg = config.chonkos.services.forgejo;
-  serviceDomain = "${cfg.serviceSubDomain}.${domain}";
+  serviceDomain = "${cfg.subDomain}.${domain}";
 in {
   # TODO: Repo code indexing (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#indexer-indexer)
   # TODO: Prometheus (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#metrics-metrics)
 
-  options.chonkos.services.forgejo = {
-    enable = mkConst true;
-    enableReverseProxy = mkConst true;
-    enableAnubis = mkConst true;
-    serviceName = mkConst "forgejo";
-    servicePort = mkConst 3000;
-    serviceDir = mkConst "/var/lib/forgejo";
-    serviceSubDomain = mkConst "git";
-    servicePackage = mkConst pkgs.forgejo;
+  options.chonkos.services.forgejo = mkService {
+    name = "forgejo";
+    port = 3000;
+    dir = "/var/lib/forgejo";
+    package = pkgs.forgejo;
+
+    subDomain = "git";
+    isWeb = true;
+    enableReverseProxy = true;
+    enableAnubis = true;
   };
 
   config = {
     environment.systemPackages = [
-      cfg.servicePackage
+      cfg.package
     ];
 
     services.forgejo = {
       inherit (cfg) enable;
 
-      stateDir = cfg.serviceDir;
+      stateDir = cfg.dataDir;
 
-      package = cfg.servicePackage;
+      package = cfg.package;
 
       lfs.enable = true;
 
@@ -46,7 +47,7 @@ in {
         server = {
           DOMAIN = serviceDomain;
           SSH_DOMAIN = serviceDomain;
-          HTTP_PORT = cfg.servicePort;
+          HTTP_PORT = cfg.port;
           HTTP_ADDR = "127.0.0.1";
           DISABLE_SSH = false;
           ROOT_URL = "https://${serviceDomain}";
