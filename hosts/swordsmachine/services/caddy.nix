@@ -114,6 +114,8 @@ in {
               |> map (v: {
                 name = v.serviceName;
                 value = {
+                  inherit (cfg) enable;
+
                   settings = {
                     TARGET = "http://localhost:${toString v.origPort}";
                     BIND = "localhost:${toString v.anubisPort}";
