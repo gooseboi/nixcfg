@@ -7,7 +7,7 @@
 in {
   # TODO: Immich (https://immich.app/)
   # TODO: Radarr, Sonarr (https://wiki.servarr.com/radarr)
-  # TODO: Syncserver (https://github.com/mozilla-services/syncstorage-rs)
+  # TODO: Murmur (https://github.com/mumble-voip/mumble)
   # TODO: Prometheus, Grafana (https://github.com/rgbcube/ncc/blob/5125a31e7f613943e83696814a223b7d2a1c5191/hosts/best/grafana/default.nix)
   # TODO: Paperless-ngx (https://docs.paperless-ngx.com)
 
