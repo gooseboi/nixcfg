@@ -28,6 +28,7 @@ in {
         gf
         libgcc
         meson
+        ninja
 
         # Javascript
         bun
