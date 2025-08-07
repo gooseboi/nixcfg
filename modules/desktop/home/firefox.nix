@@ -12,6 +12,7 @@ in {
     configPath = ".librewolf";
 
     policies = {
+      # TODO: Disable translation
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
       DisableFirefoxAccounts = true;
