@@ -38,6 +38,7 @@ in {
               cPath = makeSearchPath cfg.packages "include" ":";
 
               pkgConfigPath = makeSearchPath cfg.packages "lib/pkgconfig" ":";
+              pkgConfigPath' = makeSearchPath cfg.packages "share/pkgconfig" ":";
             in
               /*
               bash
@@ -46,7 +47,7 @@ in {
                 export CPATH="${cPath}";
                 export LIBRARY_PATH="${libraryPath}";
                 export LD_LIBRARY_PATH="${libraryPath}";
-                export PKG_CONFIG_PATH="${pkgConfigPath}";
+                export PKG_CONFIG_PATH="${pkgConfigPath}:${pkgConfigPath'}";
               ''
           )
         )
@@ -63,17 +64,31 @@ in {
       atk.dev
       cairo
       cairo.dev
+      dbus
+      dbus.dev
+      ffmpeg-full.dev
+      ffmpeg-full.out
       gcc
       gdk-pixbuf
       gdk-pixbuf.dev
+      glfw2
+      glfw3
       glib.dev
       glib.out
       gtk3
       gtk3.dev
       harfbuzz
       harfbuzz.dev
+      libcap
+      libcap.dev
+      libdrm.dev
+      libdrm.out
+      libpulseaudio
+      libpulseaudio.dev
       libsoup_3
       libsoup_3.dev
+      libva
+      libva.dev
       libxkbcommon
       libxkbcommon.dev
       libxml2
@@ -83,14 +98,37 @@ in {
       libz.dev
       pango.dev
       pango.out
+      pipewire.dev
+      pipewire.out
+      raylib
+      sdl3
+      sdl3.dev
       stdenv.cc.cc.lib
+      vulkan-headers
       vulkan-loader
-      wayland
+      wayland-scanner.dev
+      wayland-scanner.out
       wayland.dev
+      wayland.out
       webkitgtk_4_1
       webkitgtk_4_1.dev
       webkitgtk_6_0
       webkitgtk_6_0.dev
+      xorg.libX11.dev
+      xorg.libX11.out
+      xorg.libXcomposite.dev
+      xorg.libXcomposite.out
+      xorg.libXdamage.dev
+      xorg.libXdamage.out
+      xorg.libXfixes.dev
+      xorg.libXfixes.out
+      xorg.libXi.dev
+      xorg.libXi.out
+      xorg.libXrandr.dev
+      xorg.libXrandr.out
+      xorg.libXrender.dev
+      xorg.libXrender.out
+      xorg.xorgproto
       zlib
       zlib.dev
     ];
