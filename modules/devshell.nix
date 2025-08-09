@@ -75,10 +75,20 @@ in {
       glfw3
       glib.dev
       glib.out
+      graphene.dev
+      graphene.out
       gtk3
       gtk3.dev
+      gtk3.dev
+      gtk3.out
+      gtk4-layer-shell.dev
+      gtk4-layer-shell.out
+      gtk4.dev
+      gtk4.out
       harfbuzz
       harfbuzz.dev
+      libadwaita.dev
+      libadwaita.out
       libcap
       libcap.dev
       libdrm.dev
@@ -105,7 +115,8 @@ in {
       sdl3.dev
       stdenv.cc.cc.lib
       vulkan-headers
-      vulkan-loader
+      vulkan-loader.dev
+      vulkan-loader.out
       wayland-scanner.dev
       wayland-scanner.out
       wayland.dev
