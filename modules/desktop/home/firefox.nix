@@ -7,21 +7,30 @@
   inherit (lib) iota listToAttrs mapAttrsToList;
 
   inherit (systemConfig.chonkos) theme;
+
+  locked = attrs: attrs // {Locked = true;};
 in {
   programs.firefox = {
     enable = true;
     package = pkgs.librewolf;
     configPath = ".librewolf";
 
+    # https://mozilla.github.io/policy-templates/#preferences
     policies = {
       # TODO: Disable translation
 
+      # No app updates
       DisableAppUpdate = true;
       AppAutoUpdate = false;
       BackgroundAppUpdate = false;
 
+      # No autofill
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
+      OfferToSaveLogins = false;
+
+      # Remove all integration with any mozilla service
+      DisableFeedbackCommands = true;
       DisableFirefoxAccounts = true;
       DisableFirefoxScreenshots = true;
       DisableFirefoxStudies = true;
@@ -30,8 +39,13 @@ in {
       DisableProfileImport = true;
       DisableProfileRefresh = true;
       DisableTelemetry = true;
-      DontCheckDefaultBrowser = true;
-      OfferToSaveLogins = false;
+      FirefoxSuggest = locked {
+        ImproveSuggest = false;
+        SponsoredSuggestions = false;
+        WebSuggestions = false;
+      };
+
+      # I don't care what you have to say
       UserMessaging = {
         ExtensionRecommendations = false;
         FeatureRecommendations = false;
@@ -39,6 +53,17 @@ in {
         MoreFromMozilla = false;
         SkipOnboarding = true;
         UrlbarInterventions = false;
+      };
+
+      # I can set this myself, thank you
+      DontCheckDefaultBrowser = true;
+
+      # I don't care
+      NoDefaultBookmarks = true;
+
+      # Yeah
+      PictureInPicture = locked {
+        Enabled = false;
       };
 
       SearchEngines = {
