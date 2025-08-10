@@ -4,6 +4,8 @@
   systemConfig,
   ...
 }: let
+  inherit (lib) iota listToAttrs mapAttrsToList;
+
   inherit (systemConfig.chonkos) theme;
 in {
   programs.firefox = {
@@ -13,6 +15,11 @@ in {
 
     policies = {
       # TODO: Disable translation
+
+      DisableAppUpdate = true;
+      AppAutoUpdate = false;
+      BackgroundAppUpdate = false;
+
       AutofillAddressEnabled = false;
       AutofillCreditCardEnabled = false;
       DisableFirefoxAccounts = true;
@@ -33,6 +40,7 @@ in {
         SkipOnboarding = true;
         UrlbarInterventions = false;
       };
+
       SearchEngines = {
         Add = [
           {
@@ -45,7 +53,8 @@ in {
         ];
         Default = "Unduck";
       };
-      Preferences = lib.listToAttrs (lib.mapAttrsToList (n: v: {
+
+      Preferences = listToAttrs (mapAttrsToList (n: v: {
           name = n;
           value = {
             Value = v;
@@ -157,48 +166,66 @@ in {
         "font.minimum-size.x-western" = fontSize;
       };
 
-      containers = {
-        personal = {
-          color = "blue";
-          icon = "fingerprint";
-          id = 1;
-        };
-        shopping = {
-          color = "pink";
-          icon = "cart";
-          id = 2;
-        };
-        google = {
-          color = "yellow";
-          icon = "fence";
-          id = 3;
-        };
-        banking = {
-          color = "green";
-          icon = "dollar";
-          id = 4;
-        };
-        anime = {
-          color = "turquoise";
-          icon = "chill";
-          id = 5;
-        };
-        social = {
-          color = "orange";
-          icon = "gift";
-          id = 6;
-        };
-        pron = {
-          color = "purple";
-          icon = "fruit";
-          id = 7;
-        };
-        games = {
-          color = "blue";
-          icon = "chill";
-          id = 8;
-        };
-      };
+      containers = let
+        containers = [
+          {
+            name = "personal";
+            color = "blue";
+            icon = "fingerprint";
+          }
+          {
+            name = "shopping";
+            color = "pink";
+            icon = "cart";
+          }
+          {
+            name = "google";
+            color = "yellow";
+            icon = "fence";
+          }
+          {
+            name = "banking";
+            color = "green";
+            icon = "dollar";
+          }
+          {
+            name = "anime";
+            color = "turquoise";
+            icon = "chill";
+          }
+          {
+            name = "social";
+            color = "orange";
+            icon = "gift";
+          }
+          {
+            name = "pron";
+            color = "purple";
+            icon = "fruit";
+          }
+          {
+            name = "games";
+            color = "blue";
+            icon = "chill";
+          }
+        ];
+      in
+        lib.zipListsWith (
+          cont: id: {
+            inherit (cont) name;
+            value = {
+              inherit (cont) color icon;
+              inherit id;
+            };
+          }
+        )
+        containers
+        (iota {
+          base = 1;
+          # Hardcoded cuz i'm like that
+          n = 100;
+        })
+        |> listToAttrs;
       containersForce = true;
     };
   };

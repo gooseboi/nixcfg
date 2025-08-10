@@ -14,4 +14,10 @@ inputs: self: super: {
       mkdir -p $out
       yj -jy < "$jsonPath" > $out/${fname}
     '';
+
+  iota = {
+    base,
+    n,
+  }:
+    builtins.genList (i: i + base) n;
 }

@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  inherit (lib) attrsToList filter listToAttrs mkConst mkIf mkMerge;
+  inherit (lib) attrsToList filter iota listToAttrs mkConst mkIf mkMerge;
   inherit (builtins) toString length;
   inherit (config) networking;
 
@@ -85,13 +85,11 @@ in {
 
       (mkIf cfg.useAnubis (
         let
-          iota = base: n:
-            if n == 0
-            then []
-            else [base] ++ (iota (base + 1) (n - 1));
-
           serviceCnt = enabledServices |> length;
-          anubisPorts = iota cfg.anubisBasePort serviceCnt;
+          anubisPorts = iota {
+            base = cfg.anubisBasePort;
+            n = serviceCnt;
+          };
 
           anubisCfg =
             lib.zipListsWith (s: p: {
