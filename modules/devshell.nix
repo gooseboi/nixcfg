@@ -44,10 +44,10 @@ in {
               bash
               */
               ''
-                export CPATH="${cPath}";
-                export LIBRARY_PATH="${libraryPath}";
-                export LD_LIBRARY_PATH="${libraryPath}";
-                export PKG_CONFIG_PATH="${pkgConfigPath}:${pkgConfigPath'}";
+                export CPATH="$CPATH:${cPath}";
+                export LIBRARY_PATH="$LIBRARY_PATH:${libraryPath}";
+                export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${libraryPath}";
+                export PKG_CONFIG_PATH="$PKG_CONFIG_PATH:${pkgConfigPath}:${pkgConfigPath'}";
               ''
           )
         )
