@@ -34,7 +34,6 @@
       alacritty.enable = true;
       alacritty.enableEnvVar = true;
       bat.enable = true;
-      dev.enable = true;
       direnv.enable = true;
       eza.enable = true;
       ghostty.enable = true;
@@ -58,6 +57,7 @@
     adb.enable = true;
     agenix.enable = true;
     binfmt.enable = true;
+    dev.enable = true;
     devshell.enable = true;
     docker.enable = true;
     fonts.enable = true;
@@ -85,8 +85,6 @@
   # When on the default "powersave", then the frequency is stuck on 0.8GHz,
   # pretty unusable.
   services.tlp.settings.CPU_SCALING_GOVERNOR_ON_BAT = lib.mkForce "performance";
-
-  chonkos.unfree.allowed = ["postman" "cursor"];
 
   system.stateVersion = "24.05"; # This shouldn't be changed
 }
