@@ -54,6 +54,10 @@
     type = "desktop";
     user = "chonk";
 
+    desktop = {
+      fcitx5.enable = true;
+    };
+
     adb.enable = true;
     agenix.enable = true;
     binfmt.enable = true;
