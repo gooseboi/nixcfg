@@ -101,6 +101,7 @@ in {
         libxml2
         libxslt
         libz
+        openssl
         pango
         pipewire
         raylib
@@ -112,6 +113,7 @@ in {
         wayland-scanner
         webkitgtk_4_1
         webkitgtk_6_0
+        xdotool
         xorg.libX11
         xorg.libXcomposite
         xorg.libXdamage
