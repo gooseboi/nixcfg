@@ -55,6 +55,10 @@ in {
     };
 
     gtk3 = {
+      bookmarks = [
+        "file://${config.xdg.configHome}/dev"
+      ];
+
       extraConfig =
         {
           gtk-application-prefer-dark-theme = true;
