@@ -99,6 +99,10 @@ in {
         gpg.format = "ssh";
       };
 
+      lfs = {
+        enable = true;
+      };
+
       includes = let
         uniConfig = {
           contents = {
