@@ -80,7 +80,6 @@
     tlp.enable = true;
     typesetting.enable = true;
     utils.enable = true;
-    virt-manager.enable = true;
     zsh.enable = true;
     zsh.enableUserShell = true;
     zsh.enableVimMode = true;
