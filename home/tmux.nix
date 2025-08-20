@@ -17,8 +17,6 @@ in {
     programs.tmux = mkIf config.chonkos.tmux.enable {
       enable = true;
 
-      # TODO: Use current user shell
-      shell = "${pkgs.zsh}/bin/zsh";
       historyLimit = 100000;
 
       terminal = "tmux-256color";
