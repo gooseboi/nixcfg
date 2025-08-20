@@ -67,6 +67,7 @@ return
 			vim.keymap.set('n', '<leader>ff', builtin.find_files, { noremap = true, silent = true })
 			vim.keymap.set('n', '<leader>pf', builtin.git_files, { noremap = true, silent = true })
 			vim.keymap.set('n', '<leader>gs', builtin.live_grep, { noremap = true, silent = true })
+			vim.keymap.set('n', '<leader>;', builtin.buffers, { noremap = true, silent = true })
 		end
 	end
 }
