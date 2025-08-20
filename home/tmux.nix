@@ -2,9 +2,11 @@
   config,
   lib,
   pkgs,
+  systemConfig,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf optionalString;
+  inherit (systemConfig.chonkos) theme;
 in {
   options.chonkos.tmux = {
     enable = mkEnableOption "enable tmux";
@@ -25,7 +27,20 @@ in {
       mouse = true;
       keyMode = "vi";
 
-      extraConfig =
+      extraConfig = let
+        inherit
+          (theme.withHashtagLower)
+          base00
+          base01
+          base02
+          base04
+          base05
+          base06
+          base08
+          base0A
+          base0D
+          ;
+      in
         /*
         tmux
         */
@@ -64,6 +79,43 @@ in {
           # Avoid date/time taking up space
           set -g status-right ""
           set -g status-right-length 0
+
+          # Theming
+
+          # default statusbar colors
+          set-option -g status-style "fg=${base04},bg=${base01}"
+
+          # default window title colors
+          set-window-option -g window-status-style "fg=${base04},bg=${base01}"
+
+          # active window title colors
+          set-window-option -g window-status-current-style "fg=${base0A},bg=${base01}"
+
+          # pane border
+          set-option -g pane-border-style "fg=${base01}"
+          set-option -g pane-active-border-style "fg=${base04}"
+
+          # message text
+          set-option -g message-style "fg=${base06},bg=${base02}"
+
+          # pane number display
+          set-option -g display-panes-active-colour "${base04}"
+          set-option -g display-panes-colour "${base01}"
+
+          # clock
+          set-window-option -g clock-mode-colour "${base0D}"
+
+          # copy mode highlight
+          set-window-option -g mode-style "fg=${base04},bg=${base02}"
+
+          # bell
+          set-window-option -g window-status-bell-style "fg=${base00},bg=${base08}"
+
+          # style for window titles with activity
+          set-window-option -g window-status-activity-style "fg=${base05},bg=${base01}"
+
+          # style for command messages
+          set-option -g message-command-style "fg=${base06},bg=${base02}"
         '';
     };
 

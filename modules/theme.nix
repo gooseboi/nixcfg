@@ -43,6 +43,20 @@ in {
         if builtins.isString thing
         then (builtins.match "^[0-9a-fA-F]{6}" thing) != null
         else false;
+
+      mkWith0x = colours:
+        builtins.mapAttrs (_: value:
+          if isValidColor value
+          then "0x" + value
+          else value)
+        colours;
+
+      mkWithHashtag = colours:
+        builtins.mapAttrs (_: value:
+          if isValidColor value
+          then "#" + value
+          else value)
+        colours;
     in {
       # name = "Gruvbox dark hard";
       # author = "Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)";
@@ -67,19 +81,31 @@ in {
       };
 
       with0x =
-        builtins.mapAttrs (_: value:
-          if isValidColor value
-          then "0x" + value
-          else value)
         cfg.colours
+        |> mkWith0x
+        |> mkConst;
+
+      with0xLower =
+        cfg.colours
+        |> builtins.mapAttrs (
+          _: value:
+            lib.toLower value
+        )
+        |> mkWith0x
         |> mkConst;
 
       withHashtag =
-        builtins.mapAttrs (_: value:
-          if isValidColor value
-          then "#" + value
-          else value)
         cfg.colours
+        |> mkWithHashtag
+        |> mkConst;
+
+      withHashtagLower =
+        cfg.colours
+        |> builtins.mapAttrs (
+          _: value:
+            lib.toLower value
+        )
+        |> mkWithHashtag
         |> mkConst;
     });
 
