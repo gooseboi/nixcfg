@@ -8,9 +8,9 @@ inputs @ {
   inherit (lib) filter hasSuffix listFiles lists makeBinPath mkDisableOption mkEnableOption mkIf mkOption;
   inherit (lists) flatten unique;
 
-  cfg = config.chonkos.nvim;
+  cfg = config.chonkos.neovim;
 in {
-  options.chonkos.nvim = {
+  options.chonkos.neovim = {
     enable = mkEnableOption "enables neovim support";
     desktopInstall = mkOption {
       description = "makes this neovim install be for a desktop (includes lsp and the like)";

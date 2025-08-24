@@ -30,7 +30,7 @@
 
       eza.enable = true;
       tmux.enable = true;
-      nvim.enable = true;
+      neovim.enable = true;
     };
 
     home.stateVersion = "24.11";

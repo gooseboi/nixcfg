@@ -37,7 +37,7 @@
       direnv.enable = true;
       eza.enable = true;
       ghostty.enable = true;
-      nvim.enable = true;
+      neovim.enable = true;
       rofi.enable = true;
       scripts.enable = true;
       tmux.enable = true;
