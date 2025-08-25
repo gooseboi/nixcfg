@@ -5,8 +5,26 @@ inputs @ {
   pkgs,
   ...
 }: let
-  inherit (lib) filter hasSuffix listFiles lists makeBinPath mkDisableOption mkEnableOption mkIf mkOption;
-  inherit (lists) flatten unique;
+  inherit
+    (lib)
+    filter
+    hasSuffix
+    listFilesWithNames
+    listToAttrs
+    lists
+    mkDisableOption
+    mkEnableOption
+    mkIf
+    mkMerge
+    mkOption
+    removeSuffix
+    ;
+
+  inherit
+    (lists)
+    flatten
+    unique
+    ;
 
   cfg = config.chonkos.neovim;
 in {
@@ -20,58 +38,69 @@ in {
     setEnvironment = mkDisableOption "set the EDITOR env variable";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable (let
+    inherit (config.xdg) configHome;
+
+    luaFiles =
+      listFilesWithNames ./lua
+      |> filter (file: hasSuffix ".lua" file.path);
+
+    pluginContents =
+      listFilesWithNames ./plugins
+      |> filter (file: hasSuffix ".nix" file.path)
+      |> map ({
+        name,
+        path,
+      }: {
+        inherit name;
+        file = import path inputs;
+      })
+      |> filter (file: (file.isDesktop or false) -> cfg.desktopInstall)
+      |> filter (file: file.enable or true);
+
+    pluginDeps =
+      pluginContents
+      |> map (p: p.file.packages or [])
+      |> flatten
+      |> unique;
+  in {
     home.sessionVariables = mkIf cfg.setEnvironment {
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
 
-    home.packages = let
-      luaFiles =
-        listFiles ./lua
-        |> filter (hasSuffix ".lua");
+    programs.neovim = {
+      enable = true;
 
-      pluginContents =
-        listFiles ./plugins
-        |> filter (hasSuffix ".nix")
-        |> map (f: import f inputs)
-        |> filter ({isDesktop ? false, ...}: isDesktop -> cfg.desktopInstall)
-        |> filter ({enable ? true, ...}: enable);
+      # We do it ourselves
+      defaultEditor = false;
+      extraPackages = pluginDeps;
+      # TODO:
+      #   viAlias = true;
+      #   vimAlias = true;
+    };
 
-      pluginDeps =
-        pluginContents
-        |> map (p: p.packages or [])
-        |> flatten
-        |> unique;
-
-      pluginSpecs =
-        pluginContents
-        |> map (p:
+    home.file = mkMerge [
+      {
+        "${configHome}/nvim/init.lua".text =
           /*
           lua
           */
           ''
-            (dofile "${p.config}"),
-          '')
-        |> builtins.concatStringsSep "\n\n";
-    in [
-      (pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
-        viAlias = true;
-        vimAlias = true;
+            ${
+              luaFiles
+              |> map (f: removeSuffix ".lua" f.name)
+              |> map (name: ''require("config.${name}")'')
+              |> builtins.concatStringsSep "\n"
+            }
 
-        plugins = with pkgs.vimPlugins; [lazy-nvim];
-        wrapperArgs = ''--prefix PATH : "${pluginDeps |> makeBinPath}"'';
-
-        luaRcContent =
-          /*
-          lua
-          */
-          ''
-            ${luaFiles |> map (f: builtins.readFile f) |> builtins.concatStringsSep "\n\n"}
+            -- Add lazy to the `runtimepath`, this allows us to `require` it.
+            ---@diagnostic disable-next-line: undefined-field
+            vim.opt.rtp:prepend("${pkgs.vimPlugins.lazy-nvim}")
 
             require("lazy").setup({
               spec = {
-                ${pluginSpecs}
+                  { import = "plugins" },
               },
               rocks = { enabled = false },
               pkg = { enabled = false },
@@ -79,7 +108,27 @@ in {
               change_detection = { enabled = false },
             })
           '';
-      })
+      }
+      (
+        luaFiles
+        |> map (f: {
+          name = "${configHome}/nvim/lua/config/${f.name}";
+          value = {source = f.path;};
+        })
+        |> listToAttrs
+      )
+      (
+        pluginContents
+        |> map (f: {
+          inherit (f) file;
+          name = "${removeSuffix ".nix" f.name}.lua";
+        })
+        |> map (f: {
+          name = "${configHome}/nvim/lua/plugins/${f.name}";
+          value = {source = f.file.config;};
+        })
+        |> listToAttrs
+      )
     ];
-  };
+  });
 }
