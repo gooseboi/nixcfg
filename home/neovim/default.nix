@@ -10,12 +10,10 @@ inputs @ {
     filter
     hasSuffix
     listFilesWithNames
-    listToAttrs
     lists
     mkDisableOption
     mkEnableOption
     mkIf
-    mkMerge
     mkOption
     removeSuffix
     ;
@@ -58,6 +56,77 @@ in {
       |> filter (file: (file.isDesktop or false) -> cfg.desktopInstall)
       |> filter (file: file.enable or true);
 
+    initContent =
+      /*
+      lua
+      */
+      ''
+        ${
+          luaFiles
+          |> map (f: removeSuffix ".lua" f.name)
+          |> map (name: ''require("config.${name}")'')
+          |> builtins.concatStringsSep "\n"
+        }
+
+        -- Add lazy to the `runtimepath`, this allows us to `require` it.
+        ---@diagnostic disable-next-line: undefined-field
+        vim.opt.rtp:prepend("${pkgs.vimPlugins.lazy-nvim}")
+
+        require("lazy").setup({
+          spec = {
+              { import = "plugins" },
+          },
+          rocks = { enabled = false },
+          pkg = { enabled = false },
+          install = { missing = false },
+          change_detection = { enabled = false },
+        })
+      '';
+
+    initFile = pkgs.writeTextFile {
+      name = "init.lua";
+      text = initContent;
+    };
+
+    filesJoin = let
+      pluginItems =
+        pluginContents
+        |> map (plugin: {
+          name = "${removeSuffix ".nix" plugin.name}.lua";
+          path = plugin.file.config;
+        });
+
+      luaItems = luaFiles;
+
+      mkCopy = items: dir:
+        items
+        |> map (item:
+          /*
+          bash
+          */
+          ''
+            cp --dereference --reflink=never ${item.path} $out/${dir}/${item.name}
+            chmod 0444 $out/${dir}/${item.name}
+          '')
+        |> builtins.concatStringsSep "\n";
+    in
+      pkgs.runCommandNoCC
+      "neovimFiles"
+      {}
+      /*
+      bash
+      */
+      ''
+        mkdir -p $out
+        cp --dereference --reflink=never ${initFile} $out/init.lua
+
+        mkdir -p $out/lua/plugins
+        ${mkCopy pluginItems "lua/plugins"}
+
+        mkdir -p $out/lua/config
+        ${mkCopy luaItems "lua/config"}
+      '';
+
     pluginDeps =
       pluginContents
       |> map (p: p.file.packages or [])
@@ -80,55 +149,9 @@ in {
       #   vimAlias = true;
     };
 
-    home.file = mkMerge [
-      {
-        "${configHome}/nvim/init.lua".text =
-          /*
-          lua
-          */
-          ''
-            ${
-              luaFiles
-              |> map (f: removeSuffix ".lua" f.name)
-              |> map (name: ''require("config.${name}")'')
-              |> builtins.concatStringsSep "\n"
-            }
-
-            -- Add lazy to the `runtimepath`, this allows us to `require` it.
-            ---@diagnostic disable-next-line: undefined-field
-            vim.opt.rtp:prepend("${pkgs.vimPlugins.lazy-nvim}")
-
-            require("lazy").setup({
-              spec = {
-                  { import = "plugins" },
-              },
-              rocks = { enabled = false },
-              pkg = { enabled = false },
-              install = { missing = false },
-              change_detection = { enabled = false },
-            })
-          '';
-      }
-      (
-        luaFiles
-        |> map (f: {
-          name = "${configHome}/nvim/lua/config/${f.name}";
-          value = {source = f.path;};
-        })
-        |> listToAttrs
-      )
-      (
-        pluginContents
-        |> map (f: {
-          inherit (f) file;
-          name = "${removeSuffix ".nix" f.name}.lua";
-        })
-        |> map (f: {
-          name = "${configHome}/nvim/lua/plugins/${f.name}";
-          value = {source = f.file.config;};
-        })
-        |> listToAttrs
-      )
-    ];
+    home.file."${configHome}/nvim" = {
+      source = filesJoin;
+      recursive = true;
+    };
   });
 }
