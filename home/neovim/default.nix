@@ -45,7 +45,7 @@ in {
 
     pluginContents =
       listFilesWithNames ./plugins
-      |> filter (file: hasSuffix ".nix" file.path)
+      |> filter (plugin: hasSuffix ".nix" plugin.path)
       |> map ({
         name,
         path,
@@ -53,8 +53,8 @@ in {
         inherit name;
         file = import path inputs;
       })
-      |> filter (file: (file.isDesktop or false) -> cfg.desktopInstall)
-      |> filter (file: file.enable or true);
+      |> filter (plugin: (plugin.file.isDesktop or false) -> cfg.desktopInstall)
+      |> filter (plugin: plugin.file.enable or true);
 
     initContent =
       /*
