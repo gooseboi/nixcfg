@@ -33,6 +33,7 @@ return {
 
 			bufmap("[d", function() vim.diagnostic.jump({ count = -1, float = true }) end)
 			bufmap("]d", function() vim.diagnostic.jump({ count = 1, float = true }) end)
+			bufmap("<leader>d", vim.diagnostic.open_float)
 
 			bufmap('K', vim.lsp.buf.hover)
 
