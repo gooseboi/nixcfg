@@ -76,6 +76,9 @@ vim.opt.showcmd = true;
 vim.opt.mouse = '';
 vim.opt.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•';
 
+-- Make the border around LSP diagnostics bigger
+vim.opt.winborder = "bold";
+
 -- no beeping
 vim.opt.vb = true;
 
