@@ -7,13 +7,8 @@ return
 		{ dir = "@telescope-fzf-native-nvim@", name = "telescope-fzf-native-nvim", },
 	},
 	config = function()
-		-- Make sure telescope is installed
-		local telescope_ok, telescope = pcall(require, "telescope")
-		if not telescope_ok then
-			vim.notify("Failed to load telescope")
-			return
-		end
-
+		local telescope = require("telescope")
+		telescope.load_extension('fzf')
 		local actions = require("telescope.actions")
 
 		-- Telescope setup
@@ -50,24 +45,22 @@ return
 			},
 			extensions = {
 				fzf = {
-					fuzzy = true,    -- false will only do exact matching
-					override_generic_sorter = true, -- override the generic sorter
-					override_file_sorter = true, -- override the file sorter
-					case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+					-- false will only do exact matching
+					fuzzy = true,
+					-- override the generic sorter
+					override_generic_sorter = true,
+					-- override the file sorter
+					override_file_sorter = true,
+					-- or "ignore_case" or "respect_case"
+					case_mode = "smart_case",
 				}
 			},
 		})
 
-		-- Load extensions
-		telescope.load_extension('fzf')
-
 		local builtin = require('telescope.builtin')
-		-- Keymaps
-		if telescope_ok then
-			vim.keymap.set('n', '<leader>ff', builtin.find_files, { noremap = true, silent = true })
-			vim.keymap.set('n', '<leader>pf', builtin.git_files, { noremap = true, silent = true })
-			vim.keymap.set('n', '<leader>gs', builtin.live_grep, { noremap = true, silent = true })
-			vim.keymap.set('n', '<leader>;', builtin.buffers, { noremap = true, silent = true })
-		end
+		vim.keymap.set('n', '<leader>ff', builtin.find_files, { noremap = true, silent = true })
+		vim.keymap.set('n', '<leader>pf', builtin.git_files, { noremap = true, silent = true })
+		vim.keymap.set('n', '<leader>gs', builtin.live_grep, { noremap = true, silent = true })
+		vim.keymap.set('n', '<leader>;', builtin.buffers, { noremap = true, silent = true })
 	end
 }
