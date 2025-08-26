@@ -1,72 +1,83 @@
 vim.cmd('language en_US.UTF8')
 
-local options = {
-	autoindent = true, -- Copy indent from previous line
-	timeoutlen = 300, -- https://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
-	encoding = 'utf-8', -- Use UTF-8
-	scrolloff = 5,   -- Keep 5 lines above and below the cursor when scrolling
-	sidescrolloff = 7, -- Keep 7 lines to both sides when scrolling
-	showmode = false, -- Don't show the editor mode as it is shown by the status bar
-	hidden = true,   -- Allow unsaved buffers to be hidden
-	wrap = false,    -- No line wrapping
-	joinspaces = false, -- Don't insert spaces between '.' after joining lines
-	colorcolumn = '80', -- Add a column 80 lines out to mark a limit
-	signcolumn = 'yes',
+-- Copy indent from previous line
+vim.opt.autoindent = true;
+-- https://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
+vim.opt.timeoutlen = 300;
+-- Use UTF-8
+vim.opt.encoding = 'utf-8';
+-- Keep 5 lines above and below the cursor when scrolling
+vim.opt.scrolloff = 5;
+-- Keep 7 lines to both sides when scrolling
+vim.opt.sidescrolloff = 7;
+-- Don't show the editor mode as it is shown by the status bar
+vim.opt.showmode = false;
+-- Allow unsaved buffers to be hidden
+vim.opt.hidden = true;
+-- No line wrapping
+vim.opt.wrap = false;
+-- Don't insert spaces between '.' after joining lines
+vim.opt.joinspaces = false;
+-- Add a column 80 lines out to mark a limit
+vim.opt.colorcolumn = '80';
+vim.opt.signcolumn = 'yes';
 
-	-- Sane splits
-	splitright = true, -- Automatically create hsplits right of the current window
-	splitbelow = true, -- Automatically create vsplits below the current window
+-- Sane splits
+-- Automatically create hsplits right of the current window
+vim.opt.splitright = true;
+-- Automatically create vsplits below the current window
+vim.opt.splitbelow = true;
 
-	-- Permanent undo
-	undofile = true, -- Permanent file for undos
+-- Permanent file for undos
+vim.opt.undofile = true;
 
-	-- Decent wildmenu
-	wildmenu = true,        -- Turn on wildmenu for completion
-	wildmode = 'list:longest', -- `list` lists all matches
-	--`longest` autocompletes to the longest common string
-	wildignore =
-	'.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor', -- Ignore files that have no use being opened in vim
+-- Turn on wildmenu for completion
+vim.opt.wildmenu = true;
+--`longest` autocompletes to the longest common string
+-- `list` lists all matches
+vim.opt.wildmode = 'list:longest';
+-- Ignore files that have no use being opened in vim
+vim.opt.wildignore =
+'.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor';
 
-	-- Wrapping options
-	formatoptions = 'tcrqnbjp',
+-- Wrapping options
+vim.opt.formatoptions = 'tcrqnbjp';
 
-	-- Tab settings
-	shiftwidth = 4,
-	softtabstop = 4,
-	tabstop = 4,
-	expandtab = false,
-	smartindent = true,
+-- Tab settings
+vim.opt.shiftwidth = 4;
+vim.opt.softtabstop = 4;
+vim.opt.tabstop = 4;
+vim.opt.expandtab = false;
+vim.opt.smartindent = true;
 
-	-- Proper search
-	incsearch = true,
-	ignorecase = true,
-	smartcase = true,
-	gdefault = true,
-	hlsearch = false,
+-- Proper search
+vim.opt.incsearch = true;
+vim.opt.ignorecase = true;
+vim.opt.smartcase = true;
+vim.opt.gdefault = true;
+vim.opt.hlsearch = false;
 
-	-- Better message display
-	cmdheight = 2,
-	-- Better experience than the default 4000
-	updatetime = 300,
-	errorbells = false, -- No more beeps
-	backspace = '2', -- Backspace over newlines
-	foldenable = false,
-	lazyredraw = true,
-	synmaxcol = 500,
-	laststatus = 2,
-	number = true,
-	relativenumber = true,
-	ruler = true,
-	showcmd = true,
-	mouse = '',
-	listchars = 'nbsp:¬,extends:»,precedes:«,trail:•',
+-- Better message display
+vim.opt.cmdheight = 2;
+-- Better experience than the default 4000
+vim.opt.updatetime = 300;
+-- No more beeps
+vim.opt.errorbells = false;
+-- Backspace over newlines
+vim.opt.backspace = '2';
+vim.opt.foldenable = false;
+vim.opt.lazyredraw = true;
+vim.opt.synmaxcol = 500;
+vim.opt.laststatus = 2;
+vim.opt.number = true;
+vim.opt.relativenumber = true;
+vim.opt.ruler = true;
+vim.opt.showcmd = true;
+vim.opt.mouse = '';
+vim.opt.listchars = 'nbsp:¬,extends:»,precedes:«,trail:•';
 
-	vb = true, -- no beeping
-}
-
-for opt, val in pairs(options) do
-	vim.opt[opt] = val
-end
+-- no beeping
+vim.opt.vb = true;
 
 vim.api.nvim_create_autocmd("TextYankPost", {
 	callback = function()
