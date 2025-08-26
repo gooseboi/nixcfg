@@ -88,6 +88,9 @@ return {
 				}
 			},
 
+			tinymist = {
+				formatterMode = "typstyle",
+			},
 
 			zls = {
 				settings = {},
@@ -106,7 +109,6 @@ return {
 			gopls = {},
 			jdtls = {},
 			pylsp = {},
-			tinymist = {},
 			ts_ls = {},
 		}
 
