@@ -28,7 +28,6 @@
       inherit
         nvim-lspconfig
         # Deps
-        neodev-nvim
         telescope-nvim
         blink-cmp
         ;

@@ -2,7 +2,6 @@ return {
 	dir = "@nvim-lspconfig@",
 	name = "nvim-lspconfig",
 	dependencies = {
-		{ dir = "@neodev-nvim@",    name = "neodev-nvim", },
 		{ dir = "@telescope-nvim@", name = "telescope-nvim", },
 		{ dir = "@blink-cmp@",      name = "blink.cmp", },
 	},
@@ -53,12 +52,13 @@ return {
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
-		require("neodev").setup()
-
 		local servers = {
 			lua_ls = {
 				Lua = {
-					workspace = { checkThirdParty = false },
+					workspace = {
+						checkThirdParty = false,
+						library = vim.api.nvim_get_runtime_file("", true),
+					},
 					telemetry = { enable = false },
 				},
 			},
@@ -110,7 +110,6 @@ return {
 			ts_ls = {},
 		}
 
-		local lspconfig = require("lspconfig")
 		for name, config in pairs(servers) do
 			if config.settings == nil then
 				config = { settings = config }
@@ -120,7 +119,8 @@ return {
 				capabilities = capabilities,
 			}, config)
 
-			lspconfig[name].setup(config)
+			vim.lsp.enable(name)
+			vim.lsp.config(name, config)
 		end
 
 		vim.api.nvim_create_autocmd("LspAttach", {
