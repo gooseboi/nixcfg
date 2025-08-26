@@ -36,12 +36,17 @@ return {
 
 			bufmap('K', vim.lsp.buf.hover)
 
+			bufmap('<leader>lf', vim.lsp.buf.format)
+
+			-- TODO: Make it so we can toggle this per LSP server
+			--[[
 			vim.api.nvim_create_autocmd('BufWritePre', {
 				buffer = bufnr,
 				callback = function(_)
-					vim.lsp.buf.format()
+						vim.lsp.buf.format()
 				end
 			})
+			--]]
 		end
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
