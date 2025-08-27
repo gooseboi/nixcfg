@@ -54,7 +54,6 @@ in {
         node = {
           enable = true;
           enabledCollectors = [
-            "boottime"
             "btrfs"
             "cpu"
             "cpu"
@@ -63,7 +62,7 @@ in {
             "ethtool"
             "filesystem"
             "hwmon"
-            "meinfo"
+            "meminfo"
             "netdev"
             "nvme"
             "powersupplyclass"
