@@ -54,7 +54,7 @@ in {
           cookie_secure = true;
           disable_gravatar = true;
 
-          disable_initial_admin_creation = true;
+          disable_initial_admin_creation = false;
         };
       };
     };
