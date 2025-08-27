@@ -52,6 +52,12 @@ in {
 
   age.secrets = {
     vaultwarden-envfile.file = ./secrets/vaultwarden-envfile.age;
-    grafana-adminpassword.file = ./secrets/grafana-adminpassword.age;
+    grafana-adminpassword = {
+      mode = "600";
+      # This isn't documented in the module options but this is the user
+      # that the service is run as.
+      owner = "grafana";
+      file = ./secrets/grafana-adminpassword.age;
+    };
   };
 }
