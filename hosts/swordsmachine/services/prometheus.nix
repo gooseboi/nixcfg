@@ -47,6 +47,9 @@ in {
 
       stateDir = lib.removePrefix "/var/lib/" cfg.dataDir;
 
+      retentionTime = "5w";
+      globalConfig.scrape_interval= "10s";
+
       exporters = {
         node = {
           enable = true;
