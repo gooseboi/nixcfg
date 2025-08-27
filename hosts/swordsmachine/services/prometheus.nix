@@ -50,16 +50,37 @@ in {
       exporters = {
         node = {
           enable = true;
-          enabledCollectors = ["processes" "systemd"];
+          enabledCollectors = [
+            "boottime"
+            "btrfs"
+            "cpu"
+            "cpu"
+            "cpufreq"
+            "diskstats"
+            "ethtool"
+            "filesystem"
+            "hwmon"
+            "meinfo"
+            "netdev"
+            "nvme"
+            "powersupplyclass"
+            "processes"
+            "systemd"
+            "tcpstat"
+            "thermal"
+            "thermal_zone"
+          ];
         };
       };
 
       scrapeConfigs = [
         {
           job_name = "node_exporter";
-          static_configs = [{
-              targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
-          }];
+          static_configs = [
+            {
+              targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];
+            }
+          ];
         }
       ];
     };
