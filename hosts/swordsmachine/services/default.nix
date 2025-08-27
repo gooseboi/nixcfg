@@ -15,6 +15,8 @@ in {
     ./caddy.nix
     ./ferdium.nix
     ./forgejo.nix
+    ./grafana.nix
+    ./prometheus.nix
     ./radicale.nix
     ./stirling-pdf.nix
     ./suwayomi-server.nix
@@ -41,9 +43,15 @@ in {
     stirling-pdf.enable = true;
     suwayomi-server.enable = true;
     vaultwarden.enable = true;
+
+    grafana.enable = true;
+    prometheus.enable = true;
   };
 
   virtualisation.oci-containers.backend = "podman";
 
-  age.secrets.vaultwarden-envfile.file = ./secrets/vaultwarden-envfile.age;
+  age.secrets = {
+    vaultwarden-envfile.file = ./secrets/vaultwarden-envfile.age;
+    grafana-adminpassword.file = ./secrets/grafana-adminpassword.age;
+  };
 }

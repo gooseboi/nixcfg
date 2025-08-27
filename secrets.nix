@@ -4,5 +4,6 @@ in {
   "modules/secrets/chonk-hashedPassword.age".publicKeys = [publicKey];
 
   "hosts/swordsmachine/services/secrets/vaultwarden-envfile.age".publicKeys = [publicKey];
+  "hosts/swordsmachine/services/secrets/grafana-adminpassword.age".publicKeys = [publicKey];
   "hosts/swordsmachine/secrets/freedns-token.age".publicKeys = [publicKey];
 }

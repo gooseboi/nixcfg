@@ -1,0 +1,51 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit (lib) mkService;
+
+  cfg = config.chonkos.services.prometheus;
+in {
+  options.chonkos.services.prometheus = mkService {
+    name = "prometheus";
+    port = 9090;
+    dir = "/var/lib/prometheus";
+    package = pkgs.prometheus;
+
+    isWeb = false;
+  };
+
+  config = {
+    services.grafana.provision.datasources.settings = {
+      datasources = [
+        {
+          name = "Prometheus";
+          type = "prometheus";
+          url = "http://127.0.0.1:${toString cfg.port}";
+          isDefault = true;
+          editable = false;
+
+          orgId = 1;
+        }
+      ];
+
+      deleteDatasources = [
+        {
+          name = "Prometheus";
+          orgId = 1;
+        }
+      ];
+    };
+
+    services.prometheus = {
+      inherit (cfg) enable package;
+
+      inherit (cfg) port;
+      listenAddress = "127.0.0.1";
+
+      stateDir = lib.removePrefix "/var/lib/" cfg.dataDir;
+    };
+  };
+}
