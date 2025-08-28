@@ -70,6 +70,10 @@
           ]);
 
           cowboy = mkHost "cowboy" "x86_64-linux" [];
+
+          printer = mkHost "printer" "x86_64-linux" (with nixos-hardware.nixosModules; [
+            common-cpu-intel
+          ]);
         };
       }
     );
