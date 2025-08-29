@@ -4,12 +4,18 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # This is not used directly, but rather to dedup inputs for other flakes (agenix and flake-utils)
+    systems.url = "github:nix-systems/default";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
+    };
 
     fenix = {
       url = "github:nix-community/fenix";
@@ -25,12 +31,21 @@
 
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
+      inputs.systems.follows = "systems";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.utils.follows = "flake-utils";
     };
   };
 
   outputs = inputs @ {
+    self,
+    deploy-rs,
     flake-utils,
     nixos-hardware,
     nixpkgs,
@@ -68,6 +83,19 @@
           printer = mkHost "printer" "x86_64-linux" (with nixos-hardware.nixosModules; [
             common-cpu-intel
           ]);
+        };
+
+        deploy.nodes.printer = {
+          hostname = "printer";
+          profiles.system = {
+            sshUser = "chonk";
+            user = "chonk";
+            interactiveSudo = true;
+            path = [
+              deploy-rs.lib.x86_64-linux.activate.nixos
+              self.nixosConfigurations.printer
+            ];
+          };
         };
       }
     );
