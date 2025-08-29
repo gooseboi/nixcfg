@@ -56,7 +56,6 @@ in {
           enabledCollectors = [
             "btrfs"
             "cpu"
-            "cpu"
             "cpufreq"
             "diskstats"
             "ethtool"
@@ -69,7 +68,6 @@ in {
             "processes"
             "systemd"
             "tcpstat"
-            "thermal"
             "thermal_zone"
           ];
         };
