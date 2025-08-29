@@ -65,12 +65,6 @@
             common-pc-laptop-ssd
           ]);
 
-          looker = mkHost "looker" "aarch64-linux" (with nixos-hardware.nixosModules; [
-            raspberry-pi-4
-          ]);
-
-          cowboy = mkHost "cowboy" "x86_64-linux" [];
-
           printer = mkHost "printer" "x86_64-linux" (with nixos-hardware.nixosModules; [
             common-cpu-intel
           ]);
