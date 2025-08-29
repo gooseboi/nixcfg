@@ -92,15 +92,33 @@
           ]);
         };
 
-        deploy.nodes.printer = {
-          hostname = "printer";
-          profiles.system = {
-            sshUser = "chonk";
-            user = "chonk";
-            interactiveSudo = true;
-            path =
-              deploy-rs.lib.x86_64-linux.activate.nixos
-              self.nixosConfigurations.printer;
+        # TODO: A nice way to auto-generate these?
+        # TODO: No interactive sudo (a `deploy` user with /bin/nologin?)
+        # TODO: Running deploy always checks every single nixos configuration, that's kinda stupid
+        deploy.nodes = {
+          swordsmachine = {
+            hostname = "swordsmachine";
+            profiles.system = {
+              sshUser = "chonk";
+              user = "chonk";
+              interactiveSudo = true;
+              remoteBuild = true;
+              path =
+                deploy-rs.lib.x86_64-linux.activate.nixos
+                self.nixosConfigurations.swordsmachine;
+            };
+          };
+
+          printer = {
+            hostname = "printer";
+            profiles.system = {
+              sshUser = "chonk";
+              user = "chonk";
+              interactiveSudo = true;
+              path =
+                deploy-rs.lib.x86_64-linux.activate.nixos
+                self.nixosConfigurations.printer;
+            };
           };
         };
       }
