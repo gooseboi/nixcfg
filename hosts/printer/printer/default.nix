@@ -5,7 +5,7 @@
 }: let
   dcpt420w-driver = pkgs.callPackage ./dcpt420w-driver.nix {};
 in {
-  chonkos.unfree.allowed = ["dcpt420w-lpr"];
+  chonkos.unfree.allowed = ["cups-brother-dcpt420w"];
 
   services = {
     printing = {
@@ -17,6 +17,7 @@ in {
       browsing = true;
       defaultShared = true;
       openFirewall = true;
+      logLevel = "debug";
     };
 
     avahi = {
@@ -36,8 +37,8 @@ in {
       {
         name = "DCPT420W";
         location = "Cuarto de Guz";
-        deviceUri = "usb://Brother";
-        model = "blah";
+        deviceUri = "usb://Brother/DCP-T420W?serial=U66052F4H760958";
+        model = "brother_dcpt420w_printer_en.ppd";
         ppdOptions = {
           pageSize = "A4";
         };

@@ -8,6 +8,7 @@
   makeWrapper,
   ghostscript,
   file,
+  perl,
   a2ps,
   coreutils,
   gnugrep,
@@ -18,7 +19,7 @@
   model = "dcpt420w";
 in
   stdenv.mkDerivation {
-    pname = "${model}-lpr";
+    pname = "cups-brother-${model}";
     inherit version;
 
     src = fetchurl {
@@ -35,29 +36,24 @@ in
       cups
       ghostscript
       a2ps
+      perl
       gawk
     ];
 
     unpackPhase = "dpkg-deb -x $src $out";
 
     installPhase = ''
-      # substituteInPlace $out/opt/brother/Printers/${model}/lpd/filter_${model} \
-      # --replace /opt "$out/opt"
+      LPDDIR=$out/opt/brother/Printers/${model}/lpd
+      WRAPPERDIR=$out/opt/brother/Printers/${model}/cupswrapper
 
-      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
-      $out/opt/brother/Printers/${model}/lpd/i686/br${model}filter
-      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
-      $out/opt/brother/Printers/${model}/lpd/i686/brprintconf_${model}
+      ln -s $LPDDIR/${stdenv.hostPlatform.linuxArch}/* $LPDDIR/
 
-      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
-      $out/opt/brother/Printers/${model}/lpd/x86_64/br${model}filter
-      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
-      $out/opt/brother/Printers/${model}/lpd/x86_64/brprintconf_${model}
+      # NOTE: The interpreter directive of this file (/usr/bin/perl) is patched
+      # by the fixup phase automagically, so we don't need to worry.
+      substituteInPlace $LPDDIR/filter_${model} \
+      --replace "/usr/bin/pdf2ps" "${ghostscript}/bin/pdf2ps"
 
-      mkdir -p $out/lib/cups/filter/
-      ln -s $out/opt/brother/Printers/${model}/lpd/filter_${model} $out/lib/cups/filter/brlpdwrapper${model}
-
-      wrapProgram $out/opt/brother/Printers/${model}/lpd/filter_${model} \
+      wrapProgram $LPDDIR/filter_${model} \
         --prefix PATH ":" ${
         lib.makeBinPath [
           gawk
@@ -70,14 +66,31 @@ in
           which
         ]
       }
+
+      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
+      $LPDDIR/br${model}filter
+      wrapProgram $LPDDIR/br${model}filter \
+        --set NIX_REDIRECTS /opt=$out/opt
+
+      patchelf --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
+      $LPDDIR/brprintconf_${model}
+      wrapProgram $LPDDIR/brprintconf_${model} \
+        --set NIX_REDIRECTS /opt=$out/opt
+
+      mkdir -p $out/lib/cups/filter/
+      ln -s $LPDDIR/filter_${model} $out/lib/cups/filter/brlpdwrapper${model}
+      ln -s $WRAPPERDIR/brother_lpdwrapper_${model} $out/lib/cups/filter/
+
+      mkdir -p $out/share/cups/model
+      ln -s $WRAPPERDIR/brother_${model}_printer_en.ppd $out/share/cups/model/
     '';
 
-    meta = with lib; {
+    meta = {
       homepage = "http://www.brother.com/";
       description = "Brother ${model} printer driver";
-      sourceProvenance = with sourceTypes; [binaryNativeCode];
-      license = licenses.unfree;
-      platforms = platforms.linux;
-      downloadPage = "https://support.brother.com/g/b/downloadlist.aspx?c=gb&lang=en&prod=${model}_all&os=128";
+      sourceProvenance = [lib.sourceTypes.binaryNativeCode];
+      license = lib.licenses.unfree;
+      platforms = ["x86_64-linux" "i686-linux"];
+      downloadPage = "https://support.brother.com/g/b/downloadtop.aspx?c=us_ot&lang=en&prod=${model}_all";
     };
   }
