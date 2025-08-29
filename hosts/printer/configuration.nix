@@ -1,8 +1,12 @@
 {config, ...}: {
-  imports = [
-    ./disk-config.nix
-    ./hardware-configuration.nix
-  ];
+  imports =
+    [
+      ./disk-config.nix
+      ./hardware-configuration.nix
+    ]
+    ++ [
+      ./printer
+    ];
 
   # Bootloader.
   boot = {
