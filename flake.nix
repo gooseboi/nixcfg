@@ -53,8 +53,15 @@
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {inherit system;};
+      deploy-rs-system = deploy-rs.packages.${system};
     in {
       formatter = pkgs.alejandra;
+      apps = {
+        deploy = {
+          type = "app";
+          program = "${deploy-rs-system.deploy-rs}/bin/deploy";
+        };
+      };
     })
     // (
       let
@@ -91,10 +98,9 @@
             sshUser = "chonk";
             user = "chonk";
             interactiveSudo = true;
-            path = [
+            path =
               deploy-rs.lib.x86_64-linux.activate.nixos
-              self.nixosConfigurations.printer
-            ];
+              self.nixosConfigurations.printer;
           };
         };
       }
