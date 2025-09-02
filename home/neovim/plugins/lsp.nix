@@ -18,7 +18,7 @@
     ols
     python3.pkgs.python-lsp-server
     tinymist
-    typescript-language-server
+    vtsls
     zls
   ];
 

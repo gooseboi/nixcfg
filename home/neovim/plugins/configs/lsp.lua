@@ -53,6 +53,18 @@ return {
 		capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
 		local servers = {
+			bashls = {},
+
+			clangd = {},
+
+			gopls = {},
+
+			hls = {
+				filetypes = { 'haskell', 'lhaskell', 'cabal' },
+			},
+
+			jdtls = {},
+
 			lua_ls = {
 				Lua = {
 					workspace = {
@@ -79,6 +91,8 @@ return {
 				},
 			},
 
+			pylsp = {},
+
 			rust_analyzer = {
 				["rust-analyzer"] = {
 					cargo = { allFeatures = true, },
@@ -92,6 +106,26 @@ return {
 				formatterMode = "typstyle",
 			},
 
+			vtsls = {
+				single_file_support = true,
+				-- This is copy pasted from nvim-lspconfig source code,
+				-- but with .git added last, to support projects with just plain
+				-- js files.
+				root_dir = function(bufnr, on_dir)
+					local root_markers = { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock', '.git' }
+
+					-- Give the root markers equal priority by wrapping them in a table
+					root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers } or root_markers
+					local project_root = vim.fs.root(bufnr, root_markers)
+					if not project_root then
+						return
+					end
+
+					on_dir(project_root)
+				end,
+				settings = {},
+			},
+
 			zls = {
 				settings = {},
 
@@ -99,17 +133,6 @@ return {
 					vim.g.zig_fmt_autosave = false
 				end,
 			},
-
-			hls = {
-				filetypes = { 'haskell', 'lhaskell', 'cabal' },
-			},
-
-			bashls = {},
-			clangd = {},
-			gopls = {},
-			jdtls = {},
-			pylsp = {},
-			ts_ls = {},
 		}
 
 		for name, config in pairs(servers) do
