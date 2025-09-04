@@ -11,7 +11,7 @@ margin = 200
 
 [scratchpads.qalc]
 animation = "fromTop"
-command = "alacritty --class qalc-scratchpad -e qalc"
+command = "alacritty --class qalc-scratchpad -e qalc --set autocalc"
 class = "qalc-scratchpad"
 size = "35% 35%"
 max_size = "75% 60%"
