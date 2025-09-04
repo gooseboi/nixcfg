@@ -48,16 +48,22 @@ in {
       )
 
       # Rust
-      cargo-show-asm
       cargo-expand
       cargo-fuzz
+      cargo-leptos
+      dart-sass
+      binaryen
       cargo-nextest
-      (fenix.complete.withComponents [
-        "cargo"
-        "clippy"
-        "rust-src"
-        "rustc"
-        "rustfmt"
+      cargo-show-asm
+      (fenix.combine [
+        (fenix.complete.withComponents [
+          "cargo"
+          "clippy"
+          "rust-src"
+          "rustc"
+          "rustfmt"
+        ])
+        fenix.targets.wasm32-unknown-unknown.latest.rust-std
       ])
 
       # Haskell
