@@ -3,6 +3,7 @@
 
   packages = with pkgs; [
     alejandra
+    basedpyright
     bash-language-server
     clang-tools
     fenix.rust-analyzer
@@ -16,7 +17,6 @@
     lua-language-server
     nixd
     ols
-    python3.pkgs.python-lsp-server
     tinymist
     vtsls
     zls

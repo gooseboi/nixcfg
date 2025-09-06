@@ -53,6 +53,8 @@ return {
 		capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
 		local servers = {
+			basedpyright = {},
+
 			bashls = {},
 
 			clangd = {},
@@ -90,8 +92,6 @@ return {
 					checker_args = "-strict-style",
 				},
 			},
-
-			pylsp = {},
 
 			rust_analyzer = {
 				["rust-analyzer"] = {
