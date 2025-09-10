@@ -5,7 +5,13 @@
   ...
 }: let
   inherit (config.chonkos) isDesktop;
-  inherit (lib) listNixWithDirs mkIf mkOption types;
+  inherit
+    (lib)
+    listNixWithDirs
+    mkIf
+    mkOption
+    types
+    ;
 
   cfg = config.chonkos.desktop;
 in {
