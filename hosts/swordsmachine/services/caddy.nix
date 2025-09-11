@@ -17,6 +17,7 @@ in {
     isReverseProxy = mkConst true;
   };
 
+  # TODO: Add metrics (https://caddyserver.com/docs/metrics)
   # TODO: X-Real-IP
 
   config = let

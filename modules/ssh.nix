@@ -12,6 +12,8 @@ in {
     enable = mkEnableOption "enable openssh server";
   };
 
+  # TODO: YubiKey SSH keys (https://github.com/drduh/YubiKey-Guide)
+
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       openssh
