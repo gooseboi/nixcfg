@@ -80,6 +80,8 @@ in {
         Default = "Unduck";
       };
 
+      # To find the `shortId`, go to the extension page on addons.mozilla.
+      # To find the `uuid`, install it imperatively and then go to "about:support#addons"
       ExtensionSettings = let
         extension = shortId: uuid: {
           name = uuid;
@@ -92,6 +94,9 @@ in {
         listToAttrs [
           (extension "ublock-origin" "uBlock0@raymondhill.net")
           (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
+          (extension "600-sound-volume" "{c4b582ec-4343-438c-bda2-2f691c16c262}")
+          (extension "ctrl-number-to-switch-tabs" "{84601290-bec9-494a-b11c-1baa897a9683}")
+          (extension "cookies-txt" "{12cf650b-1822-40aa-bff0-996df6948878}")
         ];
 
       Preferences =
@@ -124,7 +129,11 @@ in {
           "browser.uiCustomization.state" = builtins.toJSON {
             placements = {
               "widget-overflow-fixed-list" = [];
-              "unified-extensions-area" = [];
+              "unified-extensions-area" = [
+                "_c4b582ec-4343-438c-bda2-2f691c16c262_-browser-action"
+                "_12cf650b-1822-40aa-bff0-996df6948878_-browser-action"
+                "_84601290-bec9-494a-b11c-1baa897a9683_-browser-action"
+              ];
               "nav-bar" = [
                 "back-button"
                 "forward-button"
@@ -136,6 +145,8 @@ in {
                 "downloads-button"
                 "fxa-toolbar-menu-button"
                 "unified-extensions-button"
+                "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
+                "ublock0_raymondhill_net-browser-action"
               ];
               toolbar-menubar = ["menubar-items"];
               TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
@@ -150,7 +161,7 @@ in {
               "TabsToolbar"
               "PersonalToolbar"
             ];
-            currentVersion = 21;
+            currentVersion = 23;
             newElementCount = 2;
           };
 
