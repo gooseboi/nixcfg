@@ -144,9 +144,8 @@ in {
       # We do it ourselves
       defaultEditor = false;
       extraPackages = pluginDeps;
-      # TODO:
-      #   viAlias = true;
-      #   vimAlias = true;
+      viAlias = true;
+      vimAlias = true;
     };
 
     home.file."${configHome}/nvim" = {
