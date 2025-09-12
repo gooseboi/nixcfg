@@ -78,7 +78,6 @@ in {
       ++ lists.optional cfg.enableMpd pkgs.mpd;
 
     home-manager.sharedModules = [
-      # TODO: https://wiki.hyprland.org/Configuring/Window-Rules/ for file picker
       # TODO: try niri
       {
         imports = listNixWithDirs ./. |> remove ./default.nix;

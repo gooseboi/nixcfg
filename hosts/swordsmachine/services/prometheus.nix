@@ -73,6 +73,7 @@ in {
         };
       };
 
+      # TODO: Auto generate these from `config.services.prometheus.exporters`
       scrapeConfigs = [
         {
           job_name = "node_exporter";
