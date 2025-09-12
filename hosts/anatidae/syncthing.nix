@@ -1,6 +1,12 @@
 {config, ...}: {
+  age.secrets.syncthing-key.file = ./syncthing-key.age;
+  age.secrets.syncthing-cert.file = ./syncthing-cert.age;
+
   services.syncthing = {
     enable = true;
+
+    cert = config.age.secrets.syncthing-cert.path;
+    key = config.age.secrets.syncthing-key.path;
 
     dataDir = "/home/${config.chonkos.user}";
 
