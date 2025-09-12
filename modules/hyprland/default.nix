@@ -4,7 +4,19 @@
   pkgs,
   ...
 }: let
-  inherit (lib) listFilesWithNames listNixWithDirs lists mkEnableOption mkIf mkOption optionalString remove types;
+  inherit
+    (lib)
+    flatten
+    listFilesWithNames
+    listNixWithDirs
+    lists
+    mkEnableOption
+    mkIf
+    mkOption
+    optionalString
+    remove
+    types
+    ;
 
   cfg = config.chonkos.hyprland;
 in {
@@ -104,6 +116,21 @@ in {
               monitor = cfg.monitors;
 
               debug.disable_logs = !cfg.enableDebug;
+
+              windowrule = let
+                fileChooser = selector: [
+                  "float, ${selector}"
+                  "size 50% 90%, ${selector}"
+                  "center, ${selector}"
+                ];
+              in
+                [
+                  # Librewolf file picker
+                  (fileChooser "class:^(librewolf)$, title:^(Open File|Save As)$")
+                  # Cursor file picker
+                  (fileChooser "class:^(cursor)$, title:^(Open Folder|Open File)$")
+                ]
+                |> flatten;
 
               exec-once = [
                 (optionalString nmEnabled "nm-applet")
