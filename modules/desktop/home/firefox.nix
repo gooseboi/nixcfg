@@ -7,15 +7,16 @@
   inherit (lib) iota listToAttrs mapAttrsToList;
 
   inherit (systemConfig.chonkos) theme;
-
-  locked = attrs: attrs // {Locked = true;};
 in {
-  programs.firefox = {
+  programs.firefox = let
+    locked = attrs: attrs // {Locked = true;};
+  in {
     enable = true;
     package = pkgs.librewolf;
     configPath = ".librewolf";
 
     # https://mozilla.github.io/policy-templates/#preferences
+    # about:policies#documentation
     policies = {
       # TODO: Disable translation
 
@@ -79,13 +80,21 @@ in {
         Default = "Unduck";
       };
 
-      Preferences = listToAttrs (mapAttrsToList (n: v: {
-          name = n;
+      ExtensionSettings = let
+        extension = shortId: uuid: {
+          name = uuid;
           value = {
-            Value = v;
-            Status = "locked";
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/${shortId}/latest.xpi";
+            installation_mode = "normal_installed";
           };
-        })
+        };
+      in
+        listToAttrs [
+          (extension "ublock-origin" "uBlock0@raymondhill.net")
+          (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
+        ];
+
+      Preferences =
         {
           # Don't show warning when accessing about:config
           "browser.aboutConfig.showWarning" = false;
@@ -159,7 +168,15 @@ in {
 
           # Disable breach alerts
           "signon.management.page.breach-alerts.enabled" = false;
-        });
+        }
+        |> mapAttrsToList (n: v: {
+          name = n;
+          value = {
+            Value = v;
+            Status = "locked";
+          };
+        })
+        |> listToAttrs;
     };
 
     profiles.chonk = {
