@@ -129,6 +129,8 @@ in {
                   (fileChooser "class:^(librewolf)$, title:^(Open File|Save As)$")
                   # Cursor file picker
                   (fileChooser "class:^(cursor)$, title:^(Open Folder|Open File)$")
+                  # Ferdium file picker
+                  (fileChooser "class:^(ferdium)$, title:^(Open Files)$")
                 ]
                 |> flatten;
 
