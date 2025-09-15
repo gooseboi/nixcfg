@@ -124,12 +124,14 @@ in {
                 ];
               in
                 [
-                  # Librewolf file picker
+                  # Librewolf
                   (fileChooser "class:^(librewolf)$, title:^(Open File|Save As)$")
-                  # Cursor file picker
+                  # Cursor
                   (fileChooser "class:^(cursor)$, title:^(Open Folder|Open File)$")
-                  # Ferdium file picker
+                  # Ferdium
                   (fileChooser "class:^(ferdium)$, title:^(Open Files)$")
+                  # Brave
+                  (fileChooser "class:^(brave)$, title:^(Open File|Save File)$")
                 ]
                 |> flatten;
 
