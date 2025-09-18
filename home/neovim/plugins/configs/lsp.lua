@@ -59,6 +59,8 @@ return {
 
 			clangd = {},
 
+			cssls = {},
+
 			gopls = {},
 
 			hls = {

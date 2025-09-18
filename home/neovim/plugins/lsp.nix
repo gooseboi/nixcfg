@@ -18,6 +18,7 @@
     nixd
     ols
     tinymist
+    vscode-langservers-extracted
     vtsls
     zls
   ];
