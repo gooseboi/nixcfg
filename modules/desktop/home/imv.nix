@@ -1,4 +1,5 @@
 {
+  # TODO: swayimg
   programs.imv = {
     enable = true;
     settings = {
