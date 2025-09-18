@@ -107,6 +107,7 @@ in {
         raylib
         sdl3
         stdenv.cc.cc.lib
+        systemdLibs
         vulkan-headers
         vulkan-loader
         wayland
