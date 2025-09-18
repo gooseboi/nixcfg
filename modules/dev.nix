@@ -35,7 +35,7 @@ in {
 
       # Python
       python3.pkgs.pip
-      python3Full
+      python3
       uv
       virtualenv
 
