@@ -70,6 +70,7 @@ in {
         nix-tree
         nodePackages.prettier
         oha
+        opustags
         p7zip
         packwiz
         pandoc
@@ -117,6 +118,10 @@ in {
         localsend
         what-anime-cli
       ];
+
+    environment.shellAliases = {
+      opusedit = "opustags --edit --in-place";
+    };
 
     home-manager.sharedModules = [
       (homeInputs: let
