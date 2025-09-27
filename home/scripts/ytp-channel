@@ -1,1 +1,1 @@
-yt-dlp --config-location ~/.config/yt/yt-dl-channel.conf "$1"
+yt-dlp --config-location ~/.config/yt/yt-dl-channel.conf "$@"

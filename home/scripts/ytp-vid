@@ -1,1 +1,1 @@
-yt-dlp --config-location ~/.config/yt/yt-dl-vid.conf "$1"
+yt-dlp --config-location ~/.config/yt/yt-dl-vid.conf "$@"
