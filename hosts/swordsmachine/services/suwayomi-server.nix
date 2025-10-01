@@ -12,7 +12,7 @@ in {
     port = 4567;
     dir = "/var/lib/suwayomi-server";
     package = pkgs.suwayomi-server.override {
-      jdk17_headless = pkgs.temurin-jre-bin-17.override {
+      jdk21_headless = pkgs.temurin-jre-bin-21.override {
         gtkSupport = false;
       };
     };
