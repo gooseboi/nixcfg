@@ -263,11 +263,6 @@ in {
             icon = "gift";
           }
           {
-            name = "pron";
-            color = "purple";
-            icon = "fruit";
-          }
-          {
             name = "games";
             color = "blue";
             icon = "chill";
