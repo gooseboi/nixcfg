@@ -4,7 +4,18 @@
   systemConfig,
   ...
 }: let
-  inherit (lib) iota listToAttrs mapAttrsToList;
+  inherit
+    (lib)
+    strings
+    flatten
+    iota
+    listToAttrs
+    mapAttrsToList
+    ;
+  inherit
+    (strings)
+    concatStringsSep
+    ;
 
   inherit (systemConfig.chonkos) theme;
 in {
@@ -285,6 +296,7 @@ in {
         force = true;
         settings = {
           "uBlock0@raymondhill.net" = {
+            # TODO: What is this comment about?
             # Home-manager skip collision check
             settings = {
               user-filters = ''
@@ -416,6 +428,25 @@ in {
                 ! Aug 29, 2025
                 www.amazon.com##.nav-flyout-sidePanel
               '';
+
+              hostnameSwitchesString =
+                {
+                  no-large-media = "behind-the-scene false";
+                  no-csp-reports = "* true";
+                  no-scripting = [
+                    "blog.s-schoener.com true"
+                    "www.jeffgeerling.com true"
+                    "マリウス.com true"
+                  ];
+                }
+                |> mapAttrsToList (
+                  name: value:
+                    if builtins.isList value
+                    then value |> map (v: "${name}: ${v}")
+                    else "${name}: ${value}"
+                )
+                |> flatten
+                |> concatStringsSep "\n";
             };
           };
         };
