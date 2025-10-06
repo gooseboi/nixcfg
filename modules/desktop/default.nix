@@ -40,6 +40,7 @@ in {
       playerctl
       ungoogled-chromium
       xfce.thunar
+      gparted
     ];
 
     home-manager.sharedModules = [
