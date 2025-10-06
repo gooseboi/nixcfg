@@ -160,6 +160,10 @@ in {
             ];
           };
 
+          services.hyprpolkitagent = {
+            enable = true;
+          };
+
           home.sessionVariables.NIXOS_OZONE_WL = "1";
 
           xdg.configFile."hypr/pyprland.toml".source = ./pyprland.toml;
