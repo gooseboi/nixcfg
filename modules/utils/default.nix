@@ -115,6 +115,7 @@ in {
       ]
       ++ lists.optionals isDesktop [
         czkawka-full
+        imagemagickBig
         localsend
         what-anime-cli
       ];
