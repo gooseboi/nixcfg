@@ -83,6 +83,8 @@
     zsh.enable = true;
     zsh.enableUserShell = true;
     zsh.enableVimMode = true;
+
+    virt-manager.enable = true;
   };
 
   # When on the default "powersave", then the frequency is stuck on 0.8GHz,
