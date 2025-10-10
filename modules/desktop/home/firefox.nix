@@ -422,6 +422,13 @@ in {
                 www.amazon.com##.gw-desktop-herotator-ready.tall.aok-relative.a-spacing-none.a-section
                 ! Aug 29, 2025
                 www.amazon.com##.nav-flyout-sidePanel
+
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                ! https://www.google.com
+                !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                ! Oct 10, 2025
+                ! Remove AI Overview
+                www.google.com##.dRpWwb.M8OgIe.bzXtMb
               '';
 
               hostnameSwitchesString =
