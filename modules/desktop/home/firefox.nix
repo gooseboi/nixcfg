@@ -426,9 +426,13 @@ in {
                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 ! https://www.google.com
                 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                ! Oct 10, 2025
+                !!!!! Oct 10, 2025 !!!!!
                 ! Remove AI Overview
                 www.google.com##.dRpWwb.M8OgIe.bzXtMb
+                ! Remove AI Mode
+                www.google.com##.olrp5b
+                ! Remove separator after AI Mode
+                www.google.com##.fJLuUb
               '';
 
               hostnameSwitchesString =
