@@ -1,3 +1,0 @@
-num=$(tsp -l | awk -v numr=0 -v numq=0 '{if (/running/)numr++; if (/queued/)numq++} END{print numr+numq"("numq")"}')
-
-[ "$num" != "0(0)" ] && echo "$num"
