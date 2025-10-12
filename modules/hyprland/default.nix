@@ -6,6 +6,7 @@
 }: let
   inherit
     (lib)
+    filter
     flatten
     listFilesWithNames
     listNixWithDirs
@@ -51,8 +52,7 @@ in {
     programs.light.enable = true;
 
     environment.systemPackages =
-      lists.optional nmEnabled pkgs.networkmanagerapplet
-      ++ (with pkgs; [
+      (with pkgs; [
         libqalculate
         pyprland
         swaylock
@@ -135,13 +135,15 @@ in {
                 ]
                 |> flatten;
 
-              exec-once = [
-                (optionalString nmEnabled "nm-applet")
-                "${pkgs.blueman}/bin/blueman-applet"
-                "${pkgs.util-linux}/bin/rfkill block bluetooth"
-                # TODO: use home-manager config
-                (optionalString cfg.enableMpd "${pkgs/mpd}/bin/mpd")
-              ];
+              exec-once =
+                [
+                  (optionalString nmEnabled "${pkgs.networkmanagerapplet}/bin/nm-applet")
+                  "${pkgs.blueman}/bin/blueman-applet"
+                  "${pkgs.util-linux}/bin/rfkill block bluetooth"
+                  # TODO: use home-manager config
+                  (optionalString cfg.enableMpd "${pkgs/mpd}/bin/mpd")
+                ]
+                |> filter (s: s != "");
             };
 
             extraConfig = builtins.readFile ./hyprland.conf;
