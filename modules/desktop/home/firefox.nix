@@ -124,8 +124,8 @@ in {
           # Don't warn when closing multiple tabs (cuz we save them)
           "browser.tabs.warnOnClose" = false;
 
-          # Always show bookmarks bar
-          "browser.toolbars.bookmarks.visibility" = "always";
+          # Never show bookmarks bar
+          "browser.toolbars.bookmarks.visibility" = "never";
 
           # Disable safebrowsing
           "browser.safebrowsing.provider.mozilla.updateURL" = null;
