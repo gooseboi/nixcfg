@@ -138,6 +138,11 @@ in {
       VISUAL = "nvim";
     };
 
+    # TODO: Is there a way to override the final wrapped package here?
+    #
+    # Probably just not using the home-manager module, but I don't wanna do
+    # that now. The point of doing this is to disable the dependency on
+    # wl-clipboard for neovim if this module is for a server.
     programs.neovim = {
       enable = true;
 
