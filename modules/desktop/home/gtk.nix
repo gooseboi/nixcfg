@@ -57,6 +57,7 @@ in {
     gtk3 = {
       bookmarks = [
         "file://${config.home.homeDirectory}/dev"
+        "file://${config.home.homeDirectory}/pix/screenshots"
       ];
 
       extraConfig =
