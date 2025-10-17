@@ -56,7 +56,6 @@ in {
         jq
         just
         killall
-        libqalculate
         libxml2
         magic-wormhole
         man
@@ -73,7 +72,6 @@ in {
         opustags
         p7zip
         packwiz
-        pandoc
         python3.pkgs.grip
         ripgrep
         rsync
@@ -116,7 +114,9 @@ in {
       ++ lists.optionals isDesktop [
         czkawka-full
         imagemagickBig
+        libqalculate
         localsend
+        pandoc
         what-anime-cli
       ];
 
