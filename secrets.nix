@@ -1,12 +1,12 @@
 let
-  publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuUT9jJWba9PeWFpaEyypGMSk1F4hO5rYwtiruh9+uZ";
+  inherit (import ./keys.nix) chonk anatidae swordsmachine printer all;
 in {
-  "modules/secrets/chonk-hashedPassword.age".publicKeys = [publicKey];
+  "modules/secrets/chonk-hashedPassword.age".publicKeys = all;
 
-  "hosts/anatidae/syncthing-cert.age".publicKeys = [publicKey];
-  "hosts/anatidae/syncthing-key.age".publicKeys = [publicKey];
+  "hosts/anatidae/syncthing-cert.age".publicKeys = [anatidae chonk];
+  "hosts/anatidae/syncthing-key.age".publicKeys = [anatidae chonk];
 
-  "hosts/swordsmachine/services/secrets/vaultwarden-envfile.age".publicKeys = [publicKey];
-  "hosts/swordsmachine/services/secrets/grafana-adminpassword.age".publicKeys = [publicKey];
-  "hosts/swordsmachine/secrets/freedns-token.age".publicKeys = [publicKey];
+  "hosts/swordsmachine/services/secrets/vaultwarden-envfile.age".publicKeys = [swordsmachine chonk];
+  "hosts/swordsmachine/services/secrets/grafana-adminpassword.age".publicKeys = [swordsmachine chonk];
+  "hosts/swordsmachine/secrets/freedns-token.age".publicKeys = [swordsmachine chonk];
 }
