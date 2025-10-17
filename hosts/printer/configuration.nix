@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  keys,
+  ...
+}: {
   imports =
     [
       ./disk-config.nix
@@ -22,7 +26,7 @@
     extraGroups = ["wheel" "video" "audio" "dialout"];
     hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFuUT9jJWba9PeWFpaEyypGMSk1F4hO5rYwtiruh9+uZ"
+      keys.chonk
     ];
   };
   home-manager.users.chonk = {

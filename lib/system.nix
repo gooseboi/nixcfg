@@ -12,6 +12,7 @@ inputs: self: super: {
         // {
           inherit inputs;
           lib = self;
+          keys = import ../keys.nix;
         };
 
       modules =
