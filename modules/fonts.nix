@@ -27,6 +27,16 @@ in {
           corefonts
           vistafonts
           lmodern
+
+          # Japanese
+          # https://wiki.archlinux.org/title/Localization/Japanese#Fonts
+          hanazono
+          ipaexfont
+          jigmo
+          kanji-stroke-order-font
+          koruri
+          noto-fonts-cjk-sans
+          noto-fonts-cjk-serif
         ])
         ++ (pkgs.nerd-fonts
           |> builtins.attrValues
