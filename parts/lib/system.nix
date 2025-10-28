@@ -57,12 +57,15 @@ inputs: self: super: {
           })
 
           # Overlays
-          {
+          ({self, ...}: {
             nixpkgs.overlays = [
+              # This is the overlay defined in the flake parts
+              self.overlays.default
+
               inputs.agenix.overlays.default
               inputs.fenix.overlays.default
             ];
-          }
+          })
 
           # Nix/General configs
           {

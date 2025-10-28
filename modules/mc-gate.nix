@@ -7,31 +7,13 @@
 }: let
   inherit (lib) attrsToList filter mkEnableOption mkIf mkOption types;
 
-  gate = pkgs.buildGoModule (finalAttrs: {
-    pname = "gate";
-    version = "0.49.1";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "minekube";
-      repo = "gate";
-      tag = "v${finalAttrs.version}";
-      sha256 = "sha256-gDRw/YQtIpYiX3uKjvmttbVkohj2k5f+pvv+xYyY3S8=";
-    };
-
-    subPackages = ["."];
-
-    vendorHash = "sha256-4LJwb4ZXs+CUcxhvRveJy+xu7/UEjxIEwLV5Z5gBbT4=";
-
-    meta.mainProgram = "gate";
-  });
-
   cfg = config.chonkos.services.mc-gate;
 in {
   options.chonkos.services.mc-gate = {
     enable = mkEnableOption "enable mc-gate";
     package = mkOption {
       description = "the package to run";
-      default = gate;
+      default = pkgs.mc-gate;
     };
 
     bindAddress = mkOption {

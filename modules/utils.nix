@@ -18,11 +18,6 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; let
-      # Custom packages
-      mc-monitor = callPackage ./mc-monitor.nix {};
-      rust-stakeholder = callPackage ./rust-stakeholder.nix {};
-      what-anime-cli = callPackage ./what-anime.nix {};
-
       # Overrides to avoid duplication
       ffmpeg =
         if isDesktop
