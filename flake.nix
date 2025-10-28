@@ -81,7 +81,10 @@
       };
 
       imports = [
-        ./lib
+        # All of the other stuff that's not system specific
+        ./parts
+
+        # The NixOS systems and their configs
         ./hosts
       ];
     };
