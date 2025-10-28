@@ -15,12 +15,12 @@
     in {
       deploy = {
         type = "app";
-        program = "${getExe deploy-rs.packages.deploy-rs}";
+        program = getExe deploy-rs.packages.deploy-rs;
       };
 
       disko = {
         type = "app";
-        program = "${getExe disko.packages.disko}";
+        program = getExe disko.packages.disko;
       };
     };
   };
