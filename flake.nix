@@ -81,6 +81,7 @@
       };
 
       imports = [
+        ./lib
         ./hosts
       ];
     };

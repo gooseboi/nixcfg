@@ -1,16 +1,12 @@
 {
   inputs,
-  lib,
   self,
   ...
 }: let
   hw = inputs.nixos-hardware.nixosModules;
-  deploy-rs = inputs.eploy-rs;
+  deploy-rs = inputs.deploy-rs;
 
-  # TODO: Extend lib in the flake and not here
-  newLib = lib.extend (import ../lib inputs);
-
-  inherit (newLib) mkHost;
+  inherit (self.lib) mkHost;
 in {
   flake = {
     nixosConfigurations = {
