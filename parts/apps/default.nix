@@ -1,11 +1,26 @@
 {
-  perSystem = {inputs', ...}: {
+  perSystem = {
+    inputs',
+    lib,
+    ...
+  }: {
     apps = let
-      inherit (inputs') deploy-rs;
+      inherit (lib) getExe;
+
+      inherit
+        (inputs')
+        deploy-rs
+        disko
+        ;
     in {
       deploy = {
         type = "app";
-        program = "${deploy-rs.packages.deploy-rs}/bin/deploy";
+        program = "${getExe deploy-rs.packages.deploy-rs}";
+      };
+
+      disko = {
+        type = "app";
+        program = "${getExe disko.packages.disko}";
       };
     };
   };
