@@ -54,20 +54,8 @@
         "aarch64-linux"
       ];
 
-      perSystem = {
-        pkgs,
-        inputs',
-        ...
-      }: {
+      perSystem = {pkgs, ...}: {
         formatter = pkgs.alejandra;
-        apps = let
-          inherit (inputs') deploy-rs;
-        in {
-          deploy = {
-            type = "app";
-            program = "${deploy-rs.packages.deploy-rs}/bin/deploy";
-          };
-        };
       };
 
       imports = [
