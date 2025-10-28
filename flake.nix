@@ -56,12 +56,8 @@
     };
   };
 
-  outputs = inputs @ {
-    flake-parts,
-    deploy-rs,
-    ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;}
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;}
     {
       systems = [
         "x86_64-linux"
@@ -70,16 +66,16 @@
 
       perSystem = {
         pkgs,
-        system,
+        inputs',
         ...
       }: {
         formatter = pkgs.alejandra;
         apps = let
-          deploy-rs-system = deploy-rs.packages.${system};
+          inherit (inputs') deploy-rs;
         in {
           deploy = {
             type = "app";
-            program = "${deploy-rs-system.deploy-rs}/bin/deploy";
+            program = "${deploy-rs.packages.deploy-rs}/bin/deploy";
           };
         };
       };
