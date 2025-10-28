@@ -5,9 +5,6 @@
     # System packages and services
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # This is not used directly, but rather to dedup inputs for other flakes (agenix and flake-utils)
-    systems.url = "github:nix-systems/default";
-
     # Home directory configuration
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -18,11 +15,6 @@
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
-
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-      inputs.systems.follows = "systems";
     };
 
     # Rust packages
@@ -44,7 +36,6 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.home-manager.follows = "home-manager";
-      inputs.systems.follows = "systems";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -52,7 +43,6 @@
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.utils.follows = "flake-utils";
     };
   };
 
