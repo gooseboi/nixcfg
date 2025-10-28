@@ -36,7 +36,6 @@ inputs: self: super: {
           # Home manager configs
           ({
             config,
-            lib,
             self,
             ...
           }: {
@@ -53,26 +52,20 @@ inputs: self: super: {
                 inherit inputs;
                 inherit (config.chonkos) isDesktop isServer;
                 systemConfig = config;
-                mkMyLib = hmConfig: rec {
-                  stringToPath = prefix: pathStr: prefix + builtins.toPath pathStr;
-                  absoluteStringToPath = pathStr: stringToPath /. pathStr;
-                  removeHomeDirPrefix = path: lib.path.removePrefix (absoluteStringToPath hmConfig.home.homeDirectory) path;
-                  removeHomeDirPrefixStr = path: removeHomeDirPrefix (absoluteStringToPath path);
-                };
               };
             };
           })
 
           # Overlays
-          ({lib, ...}: {
+          {
             nixpkgs.overlays = [
               inputs.agenix.overlays.default
               inputs.fenix.overlays.default
             ];
-          })
+          }
 
           # Nix/General configs
-          ({self, ...}: {
+          {
             networking.hostName = hostName;
 
             nixpkgs.hostPlatform = system;
@@ -94,7 +87,7 @@ inputs: self: super: {
 
               registry.nixpkgs.flake = inputs.nixpkgs;
             };
-          })
+          }
         ]
         ++ extraModules;
     };
