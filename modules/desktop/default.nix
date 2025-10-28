@@ -10,6 +10,7 @@
     listNixWithDirs
     mkIf
     mkOption
+    remove
     types
     ;
 
@@ -23,7 +24,7 @@ in {
     };
   };
 
-  imports = listNixWithDirs ./nixos;
+  imports = listNixWithDirs ./. |> remove ./default.nix;
 
   config = mkIf cfg.enable {
     chonkos.unfree.allowed = ["discord"];
@@ -45,8 +46,6 @@ in {
 
     home-manager.sharedModules = [
       {
-        imports = listNixWithDirs ./home;
-
         config = {
           home = {
             sessionVariables =

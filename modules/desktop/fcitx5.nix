@@ -4,16 +4,24 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkIf
+    mkOption
+    types
+    ;
 
-  deskCfg = config.chonkos.desktop;
-  cfg = deskCfg.fcitx5;
+  cfg = config.chonkos.desktop.fcitx5;
 in {
   options.chonkos.desktop.fcitx5 = {
-    enable = mkEnableOption "enable fcitx5 install";
+    enable = mkOption {
+      description = "enable fcitx5 installation and config";
+      type = types.bool;
+      default = config.chonkos.desktop.enable;
+    };
   };
 
-  config = mkIf (deskCfg.enable && cfg.enable) {
+  config = mkIf cfg.enable {
     home-manager.sharedModules = [
       {
         # For systemd user service
