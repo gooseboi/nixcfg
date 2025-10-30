@@ -37,7 +37,6 @@
       direnv.enable = true;
       eza.enable = true;
       ghostty.enable = true;
-      neovim.enable = true;
       rofi.enable = true;
       scripts.enable = true;
       tmux.enable = true;
@@ -72,6 +71,7 @@
       "HDMI-A-1, preferred   , auto, 1, mirror ,eDP-1"
     ];
     i18n.enable = true;
+    neovim.enable = true;
     network-manager.enable = true;
     nushell.enable = true;
     openssh.enable = true;

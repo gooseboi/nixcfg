@@ -34,7 +34,6 @@
 
       eza.enable = true;
       tmux.enable = true;
-      neovim.enable = true;
     };
 
     home.stateVersion = "24.11";
@@ -46,6 +45,7 @@
 
     agenix.enable = true;
     i18n.enable = true;
+    neovim.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
     tailscale.enableExitNode = true;
