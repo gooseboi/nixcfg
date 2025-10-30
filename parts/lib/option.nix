@@ -14,10 +14,11 @@ in rec {
 
   mkDisableOption = s: ((mkEnableOption s) // {default = true;});
 
-  mkBoolOption = description: default: mkOption {
-    inherit default description;
-    type = super.types.bool;
-  };
+  mkBoolOption = description: default:
+    mkOption {
+      inherit default description;
+      type = super.types.bool;
+    };
 
   mkService = {
     name,
