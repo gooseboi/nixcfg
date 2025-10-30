@@ -13,7 +13,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    chonkos.unfree.allowed = ["claude-code" "cursor"];
+    chonkos.unfree.allowed = ["ngrok" "claude-code" "cursor"];
 
     environment.systemPackages = with pkgs; [
       # C/C++
@@ -98,6 +98,7 @@ in {
       gh
       gnumake
       mermaid-cli
+      ngrok
       tokei
       tracy-wayland
     ];
