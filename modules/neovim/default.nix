@@ -27,8 +27,23 @@ inputs @ {
   cfg = config.chonkos.neovim;
 
   luaFiles =
-    listFilesWithNames ./lua
-    |> filter (file: hasSuffix ".lua" file.path);
+    cfg.luaFiles
+    |> filter (file: file.enable)
+    |> map ({
+      name,
+      source,
+      text,
+      ...
+    }: {
+      inherit name;
+      path =
+        if text != null
+        then
+          pkgs.writeTextFile {
+            inherit name text;
+          }
+        else source;
+    });
 
   pluginContents =
     listFilesWithNames ./plugins
@@ -81,8 +96,6 @@ inputs @ {
         path = plugin.file.config;
       });
 
-    luaItems = luaFiles;
-
     mkCopy = items: dir:
       items
       |> map (item:
@@ -109,7 +122,7 @@ inputs @ {
       ${mkCopy pluginItems "lua/plugins"}
 
       mkdir -p $out/lua/config
-      ${mkCopy luaItems "lua/config"}
+      ${mkCopy luaFiles "lua/config"}
     '';
 
   pluginDeps =
@@ -120,16 +133,59 @@ inputs @ {
 in {
   options.chonkos.neovim = {
     enable = mkEnableOption "enables neovim support";
+
     desktopInstall = mkOption {
       description = "makes this neovim install be for a desktop (includes lsp and the like)";
       type = types.bool;
       example = true;
       default = config.chonkos.isDesktop;
     };
+
     setEnvironment = mkDisableOption "set the EDITOR env variable";
+
+    includeDefaultLuaFiles = mkDisableOption "enable including the lua files included in the module";
+
+    luaFiles = mkOption {
+      description = "list of plain lua files to include in the config";
+      type =
+        types.listOf
+        <| types.submodule {
+          options = {
+            enable = mkDisableOption "enable linking this file";
+
+            name = mkOption {
+              description = "the name of the resulting file";
+              type = types.str;
+            };
+
+            source = mkOption {
+              description = "the path of the source file";
+              type = types.path;
+            };
+
+            text = mkOption {
+              description = "the text of the resulting file. This overrides source if non-null";
+              default = null;
+              type = types.nullOr types.str;
+            };
+          };
+        };
+    };
   };
 
   config = {
+    chonkos.neovim.luaFiles = mkIf cfg.includeDefaultLuaFiles (
+      listFilesWithNames ./lua
+      |> filter (file: hasSuffix ".lua" file.path)
+      |> map ({
+        name,
+        path,
+      }: {
+        inherit name;
+        source = path;
+      })
+    );
+
     programs.neovim = {enable = true;};
 
     home-manager.sharedModules = mkIf cfg.enable [
