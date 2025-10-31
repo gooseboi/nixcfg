@@ -45,18 +45,10 @@ inputs @ {
         else source;
     });
 
-  pluginContents =
-    listFilesWithNames ./plugins
-    |> filter (plugin: hasSuffix ".nix" plugin.path)
-    |> map ({
-      name,
-      path,
-    }: {
-      inherit name;
-      file = import path inputs;
-    })
-    |> filter (plugin: (plugin.file.isDesktop or false) -> cfg.desktopInstall)
-    |> filter (plugin: plugin.file.enable or true);
+  plugins =
+    cfg.plugins
+    |> filter (plugin: plugin.enable)
+    |> filter (plugin: plugin.isDesktop -> cfg.desktopInstall);
 
   initFile = pkgs.writeTextFile {
     name = "init.lua";
@@ -90,10 +82,10 @@ inputs @ {
 
   filesJoin = let
     pluginItems =
-      pluginContents
+      plugins
       |> map (plugin: {
         name = "${removeSuffix ".nix" plugin.name}.lua";
-        path = plugin.file.config;
+        path = plugin.config;
       });
 
     mkCopy = items: dir:
@@ -125,9 +117,9 @@ inputs @ {
       ${mkCopy luaFiles "lua/config"}
     '';
 
-  pluginDeps =
-    pluginContents
-    |> map (p: p.file.packages or [])
+  pluginPackages =
+    plugins
+    |> map (p: p.packages)
     |> flatten
     |> unique;
 in {
@@ -171,20 +163,63 @@ in {
           };
         };
     };
+
+    includeDefaultPlugins = mkDisableOption "enable including the plugins included in the module";
+
+    plugins = mkOption {
+      description = "list of plugins to include in the config";
+      type =
+        types.listOf
+        <| types.submodule {
+          options = {
+            enable = mkDisableOption "enable linking this plugin";
+
+            isDesktop = mkEnableOption "make this plugin only be installed if isDesktop is set";
+
+            name = mkOption {
+              description = "the name of the resulting file";
+              type = types.str;
+            };
+
+            config = mkOption {
+              description = "the config of the plugin, as to be a file included by lazy.nvim";
+              type = types.path;
+            };
+
+            packages = mkOption {
+              description = "list of packages that should be added to neovim's path";
+              default = [];
+              type = types.listOf types.package;
+            };
+          };
+        };
+    };
   };
 
   config = {
-    chonkos.neovim.luaFiles = mkIf cfg.includeDefaultLuaFiles (
-      listFilesWithNames ./lua
-      |> filter (file: hasSuffix ".lua" file.path)
-      |> map ({
-        name,
-        path,
-      }: {
-        inherit name;
-        source = path;
-      })
-    );
+    chonkos.neovim = {
+      luaFiles = mkIf cfg.includeDefaultLuaFiles (
+        listFilesWithNames ./lua
+        |> filter (file: hasSuffix ".lua" file.path)
+        |> map ({
+          name,
+          path,
+        }: {
+          inherit name;
+          source = path;
+        })
+      );
+
+      plugins = mkIf cfg.includeDefaultPlugins (
+        listFilesWithNames ./plugins
+        |> filter (plugin: hasSuffix ".nix" plugin.path)
+        |> map ({
+          name,
+          path,
+        }:
+          (import path inputs) // {inherit name;})
+      );
+    };
 
     programs.neovim = {enable = true;};
 
@@ -207,7 +242,7 @@ in {
 
           # We do it ourselves
           defaultEditor = false;
-          extraPackages = pluginDeps;
+          extraPackages = pluginPackages;
           viAlias = true;
           vimAlias = true;
         };
