@@ -111,6 +111,7 @@ in {
         imagemagickBig
         libqalculate
         localsend
+        nbt-explorer
         pandoc
         what-anime-cli
       ];
