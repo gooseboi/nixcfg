@@ -27,7 +27,7 @@ in {
       assertion =
         cfg
         |> lib.attrValues
-        |> lib.filter (srv: srv.enable)
+        |> lib.filter (srv: srv.enable or false)
         |> lib.filter (srv: builtins.hasAttr "port" srv)
         |> map (srv: srv.port)
         |> (v: v == lib.unique v);

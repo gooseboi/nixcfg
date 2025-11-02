@@ -14,19 +14,13 @@
     mkMerge
     ;
   inherit (builtins) toString length;
-  inherit (config) networking;
 
-  serviceCfg = config.chonkos.services;
-  cfg = serviceCfg.caddy;
-
-  httpDomain = subDomain: "http://${subDomain}.${networking.domain}";
+  cfg = config.chonkos.services.caddy;
 
   enabledServices =
-    serviceCfg
+    config.chonkos.services.reverse-proxy.hosts
     |> attrsToList
-    |> filter ({value, ...}: value.enable)
-    |> filter ({value, ...}: value.isWeb or false)
-    |> filter ({value, ...}: value.enableReverseProxy);
+    |> filter ({value, ...}: value.enable);
 
   serviceCnt = enabledServices |> length;
   anubisPorts = iota {
@@ -34,14 +28,21 @@
     n = serviceCnt;
   };
   anubisCfg =
-    lib.zipListsWith (s: p: {
-      name = s.value.name;
-      subDomain = s.value.subDomain;
-      origPort = s.value.port;
-      anubisPort = p;
+    lib.zipListsWith (service: port: {
+      inherit service port;
     })
     (enabledServices |> filter ({value, ...}: value.enableAnubis))
     anubisPorts;
+
+  caddyTargetFromType = type: target: ({
+    "tcp" = target;
+    "unix" = "unix/${target}";
+  }."${type}");
+
+  anubisTargetFromType = type: target: ({
+    "tcp" = target;
+    "unix" = "unix://${target}";
+  }."${type}");
 in {
   options.chonkos.services.caddy = {
     enable = mkConst true;
@@ -73,15 +74,15 @@ in {
         RestrictSUIDSGID = true;
       };
     }
-
     (mkIf (!cfg.useAnubis) {
       services.caddy = {
         virtualHosts =
           enabledServices
           |> map ({value, ...}: {
-            "${httpDomain value.subDomain}" = {
+            "${value.remote}" = {
               extraConfig = ''
-                reverse_proxy http://localhost:${toString value.port}
+                reverse_proxy ${caddyTargetFromType value.targetType value.target}
+                ${value.extraCaddyConfig}
               '';
             };
           })
@@ -101,12 +102,12 @@ in {
         instances =
           anubisCfg
           |> map (v: {
-            name = v.name;
+            name = v.service.name;
             value = {
               inherit (cfg) enable;
 
               settings = {
-                TARGET = "http://localhost:${toString v.origPort}";
+                TARGET = anubisTargetFromType v.service.targetType v.service.target;
                 BIND = "localhost:${toString v.anubisPort}";
                 BIND_NETWORK = "tcp";
                 # TODO: METRICS
@@ -121,13 +122,14 @@ in {
           (
             anubisCfg
             |> map ({
-              subDomain,
-              anubisPort,
+              service,
+              port,
               ...
             }: {
-              "${httpDomain subDomain}" = {
+              "${service.value.remote}" = {
                 extraConfig = ''
-                  reverse_proxy http://localhost:${toString anubisPort}
+                  reverse_proxy ${caddyTargetFromType "tcp" "http://localhost:${toString port}"}
+                  ${service.value.extraCaddyConfig}
                 '';
               };
             })
@@ -138,9 +140,10 @@ in {
             enabledServices
             |> filter ({value, ...}: !value.enableAnubis)
             |> map ({value, ...}: {
-              "${httpDomain value.subDomain}" = {
+              "${value.remote}" = {
                 extraConfig = ''
-                  reverse_proxy http://localhost:${toString value.port}
+                  reverse_proxy ${caddyTargetFromType value.targetType value.target}
+                  ${value.extraCaddyConfig}
                 '';
               };
             })
