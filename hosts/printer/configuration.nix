@@ -50,7 +50,6 @@
     openssh.enable = true;
     tailscale.enable = true;
     tailscale.enableExitNode = true;
-    tailscale.preferredInterface = "enig0";
     utils.enable = true;
     zsh.enable = true;
     zsh.enableUserShell = true;

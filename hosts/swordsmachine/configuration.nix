@@ -49,7 +49,6 @@
     openssh.enable = true;
     tailscale.enable = true;
     tailscale.enableExitNode = true;
-    tailscale.preferredInterface = "enig0";
     tlp.batMaxFreq = 30;
     tlp.enable = true;
     utils.enable = true;

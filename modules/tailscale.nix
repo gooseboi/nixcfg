@@ -4,20 +4,19 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkOption types;
+  inherit
+    (lib)
+    getExe
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.chonkos.tailscale;
 in {
   options.chonkos.tailscale = {
     enable = mkEnableOption "enables tailscale";
 
     enableExitNode = mkEnableOption "enables support to make this device an exit node";
-
-    preferredInterface = mkOption {
-      type = types.str;
-      description = "Interface to use for tailscale (used to enable UDP gro forwarding";
-      example = "eth0";
-      readOnly = true;
-    };
 
     interfaceName = mkOption {
       type = types.str;
@@ -75,7 +74,18 @@ in {
       after = ["network.target"];
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.ethtool}/bin/ethtool -K ${cfg.preferredInterface} rx-udp-gro-forwarding on rx-gro-list off";
+        ExecStart =
+          pkgs.writeShellScriptBin "tailscale-transport-layer-offloads"
+          /*
+          bash
+          */
+          ''
+            set -eu
+            netdev=$(${pkgs.iproute2}/bin/ip -o route get 8.8.8.8 | ${pkgs.coreutils}/bin/cut -f 5 -d " ")
+            echo "Turning on UDP transport layer offloads on $netdev"
+            ${pkgs.ethtool}/bin/ethtool -K $netdev rx-udp-gro-forwarding on rx-gro-list off
+          ''
+          |> getExe;
       };
       wantedBy = ["default.target"];
     };
