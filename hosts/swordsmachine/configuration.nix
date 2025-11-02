@@ -61,7 +61,7 @@
     enable = true;
     links = {
       "10-enig0" = {
-        matchConfig.MACAddress = "40:ae:30:b2:d7:fe";
+        matchConfig.MACAddress = "c8:a3:62:04:20:44";
         linkConfig.Name = "enig0";
       };
     };
