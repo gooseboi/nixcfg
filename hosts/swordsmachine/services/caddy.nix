@@ -3,7 +3,16 @@
   config,
   ...
 }: let
-  inherit (lib) attrsToList filter iota listToAttrs mkConst mkIf mkMerge;
+  inherit
+    (lib)
+    attrsToList
+    filter
+    iota
+    listToAttrs
+    mkConst
+    mkIf
+    mkMerge
+    ;
   inherit (builtins) toString length;
   inherit (config) networking;
 
@@ -18,6 +27,21 @@
     |> filter ({value, ...}: value.enable)
     |> filter ({value, ...}: value.isWeb or false)
     |> filter ({value, ...}: value.enableReverseProxy);
+
+  serviceCnt = enabledServices |> length;
+  anubisPorts = iota {
+    base = cfg.anubisBasePort;
+    n = serviceCnt;
+  };
+  anubisCfg =
+    lib.zipListsWith (s: p: {
+      name = s.value.name;
+      subDomain = s.value.subDomain;
+      origPort = s.value.port;
+      anubisPort = p;
+    })
+    (enabledServices |> filter ({value, ...}: value.enableAnubis))
+    anubisPorts;
 in {
   options.chonkos.services.caddy = {
     enable = mkConst true;
@@ -65,83 +89,65 @@ in {
       };
     })
 
-    (mkIf cfg.useAnubis (
-      let
-        serviceCnt = enabledServices |> length;
-        anubisPorts = iota {
-          base = cfg.anubisBasePort;
-          n = serviceCnt;
+    (mkIf cfg.useAnubis {
+      services.anubis = {
+        defaultOptions.settings = {
+          DIFFICULTY = 4;
+          OG_PASSTHROUGH = true;
+          SERVE_ROBOTS_TXT = true;
+          WEBMASTER_EMAIL = "gooseiman@protonmail.com";
         };
 
-        anubisCfg =
-          lib.zipListsWith (s: p: {
-            name = s.value.name;
-            subDomain = s.value.subDomain;
-            origPort = s.value.port;
-            anubisPort = p;
+        instances =
+          anubisCfg
+          |> map (v: {
+            name = v.name;
+            value = {
+              inherit (cfg) enable;
+
+              settings = {
+                TARGET = "http://localhost:${toString v.origPort}";
+                BIND = "localhost:${toString v.anubisPort}";
+                BIND_NETWORK = "tcp";
+                # TODO: METRICS
+              };
+            };
           })
-          (enabledServices |> filter ({value, ...}: value.enableAnubis))
-          anubisPorts;
-      in {
-        services.anubis = {
-          defaultOptions.settings = {
-            DIFFICULTY = 4;
-            OG_PASSTHROUGH = true;
-            SERVE_ROBOTS_TXT = true;
-            WEBMASTER_EMAIL = "gooseiman@protonmail.com";
-          };
+          |> listToAttrs;
+      };
 
-          instances =
+      services.caddy = {
+        virtualHosts = mkMerge [
+          (
             anubisCfg
-            |> map (v: {
-              name = v.name;
-              value = {
-                inherit (cfg) enable;
-
-                settings = {
-                  TARGET = "http://localhost:${toString v.origPort}";
-                  BIND = "localhost:${toString v.anubisPort}";
-                  BIND_NETWORK = "tcp";
-                  # TODO: METRICS
-                };
+            |> map ({
+              subDomain,
+              anubisPort,
+              ...
+            }: {
+              "${httpDomain subDomain}" = {
+                extraConfig = ''
+                  reverse_proxy http://localhost:${toString anubisPort}
+                '';
               };
             })
-            |> listToAttrs;
-        };
+            |> mkMerge
+          )
 
-        services.caddy = {
-          virtualHosts = mkMerge [
-            (
-              anubisCfg
-              |> map ({
-                subDomain,
-                anubisPort,
-                ...
-              }: {
-                "${httpDomain subDomain}" = {
-                  extraConfig = ''
-                    reverse_proxy http://localhost:${toString anubisPort}
-                  '';
-                };
-              })
-              |> mkMerge
-            )
-
-            (
-              enabledServices
-              |> filter ({value, ...}: !value.enableAnubis)
-              |> map ({value, ...}: {
-                "${httpDomain value.subDomain}" = {
-                  extraConfig = ''
-                    reverse_proxy http://localhost:${toString value.port}
-                  '';
-                };
-              })
-              |> mkMerge
-            )
-          ];
-        };
-      }
-    ))
+          (
+            enabledServices
+            |> filter ({value, ...}: !value.enableAnubis)
+            |> map ({value, ...}: {
+              "${httpDomain value.subDomain}" = {
+                extraConfig = ''
+                  reverse_proxy http://localhost:${toString value.port}
+                '';
+              };
+            })
+            |> mkMerge
+          )
+        ];
+      };
+    })
   ];
 }
