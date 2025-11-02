@@ -25,10 +25,7 @@ in rec {
     port,
     dir,
     package,
-    isWeb,
     subDomain ? throw "Missing argument subDomain for web service",
-    enableReverseProxy ? throw "Missing argument enableReverseProxy for web service",
-    enableAnubis ? throw "Missing argument enableAnubis for web service",
     extraOpts ? {},
   }:
     {
@@ -50,28 +47,6 @@ in rec {
         description = "The subDomain to use for ${name}. Also used for reverse proxying";
       };
     }
-    // (
-      if isWeb
-      then {
-        isWeb = mkOption {
-          type = types.bool;
-          default = enableReverseProxy;
-          description = "whether this service is a web service";
-        };
-
-        enableReverseProxy = mkOption {
-          type = types.bool;
-          default = enableReverseProxy;
-          description = "whether to enable http reverse proxying";
-        };
-        enableAnubis = mkOption {
-          type = types.bool;
-          default = enableAnubis;
-          description = "whether to enable proxying through anubis before the reverse proxy";
-        };
-      }
-      else {}
-    )
     // (
       if package != null
       then {

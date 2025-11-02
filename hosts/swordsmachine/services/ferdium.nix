@@ -8,6 +8,8 @@
 
   cfg = config.chonkos.services.ferdium;
 
+  fqdn = "${cfg.subDomain}.${domain}";
+
   serviceName = "ferdium-server";
 
   stateDirName = serviceName;
@@ -21,11 +23,7 @@ in {
     port = 3333;
     dir = stateDir;
     package = null;
-
     subDomain = "ferdium";
-    isWeb = true;
-    enableReverseProxy = true;
-    enableAnubis = false;
   };
 
   config = lib.mkIf cfg.enable {
@@ -50,7 +48,7 @@ in {
         ports = ["127.0.0.1:${builtins.toString cfg.port}:3333"];
         environment = {
           NODE_ENV = "production";
-          APP_URL = "https://${cfg.subDomain}.${domain}";
+          APP_URL = "https://${fqdn}";
           DB_CONNECTION = "sqlite";
           IS_CREATION_ENABLED = "true";
           IS_DASHBOARD_ENABLED = "true";
@@ -60,6 +58,13 @@ in {
           JWT_USE_PEM = "true";
         };
       };
+    };
+
+    chonkos.services.reverse-proxy.hosts.ferdium = {
+      target = "http://127.0.0.1:${toString cfg.port}";
+      targetType = "tcp";
+      remote = "http://${fqdn}";
+      enableAnubis = true;
     };
   };
 }

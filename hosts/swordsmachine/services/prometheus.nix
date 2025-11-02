@@ -13,8 +13,6 @@ in {
     port = 9090;
     dir = "/var/lib/prometheus";
     package = pkgs.prometheus;
-
-    isWeb = false;
   };
 
   config = {

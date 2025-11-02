@@ -18,11 +18,7 @@ in {
     port = 3000;
     dir = "/var/lib/forgejo";
     package = pkgs.forgejo;
-
     subDomain = "git";
-    isWeb = true;
-    enableReverseProxy = true;
-    enableAnubis = true;
   };
 
   config = {
@@ -105,6 +101,13 @@ in {
 
         actions.ENABLED = false;
       };
+    };
+
+    chonkos.services.reverse-proxy.hosts.forgejo = {
+      target = "http://127.0.0.1:${toString cfg.port}";
+      targetType = "tcp";
+      remote = "http://${serviceDomain}";
+      enableAnubis = true;
     };
   };
 }

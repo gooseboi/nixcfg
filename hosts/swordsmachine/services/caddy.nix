@@ -107,8 +107,8 @@ in {
               inherit (cfg) enable;
 
               settings = {
-                TARGET = anubisTargetFromType v.service.targetType v.service.target;
-                BIND = "localhost:${toString v.anubisPort}";
+                TARGET = anubisTargetFromType v.service.value.targetType v.service.value.target;
+                BIND = "localhost:${toString v.port}";
                 BIND_NETWORK = "tcp";
                 # TODO: METRICS
               };

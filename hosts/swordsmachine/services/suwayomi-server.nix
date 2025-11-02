@@ -5,6 +5,7 @@
   ...
 }: let
   inherit (lib) mkService;
+  inherit (config.networking) domain;
   cfg = config.chonkos.services.suwayomi-server;
 in {
   options.chonkos.services.suwayomi-server = mkService {
@@ -16,11 +17,6 @@ in {
         gtkSupport = false;
       };
     };
-
-    subDomain = "manga";
-    isWeb = true;
-    enableReverseProxy = true;
-    enableAnubis = true;
   };
 
   config = {
@@ -42,6 +38,12 @@ in {
           "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"
         ];
       };
+    };
+
+    chonkos.services.reverse-proxy.hosts.suwayomi-server = {
+      target = "http://127.0.0.1:${toString cfg.port}";
+      targetType = "tcp";
+      remote = "http://manga.${domain}";
     };
   };
 }

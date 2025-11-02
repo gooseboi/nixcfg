@@ -15,11 +15,7 @@ in {
     port = 8021;
     dir = "/var/lib/grafana";
     package = pkgs.grafana;
-
     subDomain = "metrics";
-    isWeb = true;
-    enableReverseProxy = true;
-    enableAnubis = true;
   };
 
   config = {
@@ -57,6 +53,13 @@ in {
           disable_initial_admin_creation = false;
         };
       };
+    };
+
+    chonkos.services.reverse-proxy.hosts.grafana = {
+      target = "http://127.0.0.1:${toString cfg.port}";
+      targetType = "tcp";
+      remote = "http://${fqdn}";
+      enableAnubis = true;
     };
   };
 }
