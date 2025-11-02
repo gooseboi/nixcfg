@@ -9,151 +9,139 @@
 
   serviceCfg = config.chonkos.services;
   cfg = serviceCfg.caddy;
+
+  httpDomain = subDomain: "http://${subDomain}.${networking.domain}";
+
+  enabledServices =
+    serviceCfg
+    |> attrsToList
+    |> filter ({value, ...}: value.enable)
+    |> filter ({value, ...}: value.isWeb or false)
+    |> filter ({value, ...}: value.enableReverseProxy);
 in {
   options.chonkos.services.caddy = {
     enable = mkConst true;
     useAnubis = mkConst true;
     anubisBasePort = mkConst 20820;
-    isReverseProxy = mkConst true;
   };
 
   # TODO: Add metrics (https://caddyserver.com/docs/metrics)
   # TODO: X-Real-IP
 
-  config = let
-    reverse_proxy = {
-      subDomain,
-      domain ? null,
-      port,
-    }: (
-      if domain != null
-      then {
-        "http://${domain}" = {
-          extraConfig = ''
-            reverse_proxy http://localhost:${toString port}
-          '';
-        };
-      }
-      else {
-        "http://${subDomain}.${networking.domain}" = {
-          extraConfig = ''
-            reverse_proxy http://localhost:${toString port}
-          '';
-        };
-      }
-    );
+  config = mkMerge [
+    {
+      services.caddy = {
+        inherit (cfg) enable;
+      };
 
-    enabledServices =
-      serviceCfg
-      |> attrsToList
-      |> filter ({value, ...}: value.enable)
-      |> filter ({value, ...}: ! (value.isReverseProxy or false))
-      |> filter ({value, ...}: value.isWeb or false)
-      |> filter ({value, ...}: value.enableReverseProxy);
-  in
-    mkMerge [
-      {
-        services.caddy = {
-          inherit (cfg) enable;
+      # Hardening
+      systemd.services.caddy.serviceConfig = {
+        ProtectClock = true;
+        ProtectKernelTunables = true;
+        ProtectKernelModules = true;
+        ProtectKernelLogs = true;
+        SystemCallFilter = "~@clock @cpu-emulation @debug @obsolete @module @mount @raw-io @reboot @swap";
+        ProtectControlGroups = true;
+        RestrictNamespaces = true;
+        LockPersonality = true;
+        MemoryDenyWriteExecute = true;
+        RestrictRealtime = true;
+        RestrictSUIDSGID = true;
+      };
+    }
+
+    (mkIf (!cfg.useAnubis) {
+      services.caddy = {
+        virtualHosts =
+          enabledServices
+          |> map ({value, ...}: {
+            "${httpDomain value.subDomain}" = {
+              extraConfig = ''
+                reverse_proxy http://localhost:${toString value.port}
+              '';
+            };
+          })
+          |> mkMerge;
+      };
+    })
+
+    (mkIf cfg.useAnubis (
+      let
+        serviceCnt = enabledServices |> length;
+        anubisPorts = iota {
+          base = cfg.anubisBasePort;
+          n = serviceCnt;
         };
 
-        # Hardening
-        systemd.services.caddy.serviceConfig = {
-          ProtectClock = true;
-          ProtectKernelTunables = true;
-          ProtectKernelModules = true;
-          ProtectKernelLogs = true;
-          SystemCallFilter = "~@clock @cpu-emulation @debug @obsolete @module @mount @raw-io @reboot @swap";
-          ProtectControlGroups = true;
-          RestrictNamespaces = true;
-          LockPersonality = true;
-          MemoryDenyWriteExecute = true;
-          RestrictRealtime = true;
-          RestrictSUIDSGID = true;
-        };
-      }
-
-      (mkIf (!cfg.useAnubis) {
-        services.caddy = {
-          virtualHosts =
-            enabledServices
-            |> map ({value, ...}: (reverse_proxy {
-              inherit (value) subDomain port;
-            }))
-            |> mkMerge;
-        };
-      })
-
-      (mkIf cfg.useAnubis (
-        let
-          serviceCnt = enabledServices |> length;
-          anubisPorts = iota {
-            base = cfg.anubisBasePort;
-            n = serviceCnt;
+        anubisCfg =
+          lib.zipListsWith (s: p: {
+            name = s.value.name;
+            subDomain = s.value.subDomain;
+            origPort = s.value.port;
+            anubisPort = p;
+          })
+          (enabledServices |> filter ({value, ...}: value.enableAnubis))
+          anubisPorts;
+      in {
+        services.anubis = {
+          defaultOptions.settings = {
+            DIFFICULTY = 4;
+            OG_PASSTHROUGH = true;
+            SERVE_ROBOTS_TXT = true;
+            WEBMASTER_EMAIL = "gooseiman@protonmail.com";
           };
 
-          anubisCfg =
-            lib.zipListsWith (s: p: {
-              name = s.value.name;
-              subDomain = s.value.subDomain;
-              origPort = s.value.port;
-              anubisPort = p;
+          instances =
+            anubisCfg
+            |> map (v: {
+              name = v.name;
+              value = {
+                inherit (cfg) enable;
+
+                settings = {
+                  TARGET = "http://localhost:${toString v.origPort}";
+                  BIND = "localhost:${toString v.anubisPort}";
+                  BIND_NETWORK = "tcp";
+                  # TODO: METRICS
+                };
+              };
             })
-            (enabledServices |> filter ({value, ...}: value.enableAnubis))
-            anubisPorts;
-        in {
-          services.anubis = {
-            defaultOptions.settings = {
-              DIFFICULTY = 4;
-              OG_PASSTHROUGH = true;
-              SERVE_ROBOTS_TXT = true;
-              WEBMASTER_EMAIL = "gooseiman@protonmail.com";
-            };
+            |> listToAttrs;
+        };
 
-            instances =
+        services.caddy = {
+          virtualHosts = mkMerge [
+            (
               anubisCfg
-              |> map (v: {
-                name = v.name;
-                value = {
-                  inherit (cfg) enable;
-
-                  settings = {
-                    TARGET = "http://localhost:${toString v.origPort}";
-                    BIND = "localhost:${toString v.anubisPort}";
-                    BIND_NETWORK = "tcp";
-                    # TODO: METRICS
-                  };
+              |> map ({
+                subDomain,
+                anubisPort,
+                ...
+              }: {
+                "${httpDomain subDomain}" = {
+                  extraConfig = ''
+                    reverse_proxy http://localhost:${toString anubisPort}
+                  '';
                 };
               })
-              |> listToAttrs;
-          };
+              |> mkMerge
+            )
 
-          services.caddy = {
-            virtualHosts = mkMerge [
-              (
-                anubisCfg
-                |> map ({
-                  subDomain,
-                  anubisPort,
-                  ...
-                }: (reverse_proxy {
-                  subDomain = subDomain;
-                  port = anubisPort;
-                }))
-                |> mkMerge
-              )
-
-              (
-                enabledServices
-                |> filter ({value, ...}: ! value.enableAnubis)
-                |> map ({value, ...}: (reverse_proxy {
-                  inherit (value) subDomain port;
-                }))
-                |> mkMerge
-              )
-            ];
-          };
-        }
-      ))
-    ];
+            (
+              enabledServices
+              |> filter ({value, ...}: !value.enableAnubis)
+              |> map ({value, ...}: {
+                "${httpDomain value.subDomain}" = {
+                  extraConfig = ''
+                    reverse_proxy http://localhost:${toString value.port}
+                  '';
+                };
+              })
+              |> mkMerge
+            )
+          ];
+        };
+      }
+    ))
+  ];
 }
