@@ -64,7 +64,6 @@ in {
       target = "http://127.0.0.1:${toString cfg.port}";
       targetType = "tcp";
       remote = "http://${fqdn}";
-      enableAnubis = true;
     };
   };
 }
