@@ -1,3 +1,4 @@
+# TODO: https://tonsky.me/blog/syntax-highlighting/
 inputs @ {
   config,
   lib,
