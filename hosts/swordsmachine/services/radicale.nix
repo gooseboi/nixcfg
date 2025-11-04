@@ -1,48 +1,44 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
-  inherit (lib) mkService;
+  inherit
+    (lib)
+    mkIf
+    ;
   inherit (config.networking) domain;
 
-  cfg = config.chonkos.services.radicale;
+  enable = true;
+
+  port = 5232;
+  dataDir = "/var/lib/radicale";
+  subDomain = "cal";
 in {
-  options.chonkos.services.radicale = mkService {
-    name = "radicale";
-    port = 5232;
-    dir = "/var/lib/radicale";
-    package = pkgs.radicale;
-    subDomain = "cal";
-  };
-
-  config = {
+  config = mkIf enable {
     services.radicale = {
-      inherit (cfg) enable;
-
-      package = cfg.package;
+      inherit enable;
 
       settings = {
         server = {
-          hosts = ["127.0.0.1:${toString cfg.port}" "[::1]:${toString cfg.port}"];
+          hosts = ["127.0.0.1:${toString port}" "[::1]:${toString port}"];
         };
 
         auth = {
           type = "htpasswd";
-          htpasswd_filename = "${cfg.dataDir}/users";
+          htpasswd_filename = "${dataDir}/users";
           htpasswd_encryption = "bcrypt";
         };
         storage = {
-          filesystem_folder = "${cfg.dataDir}/collections";
+          filesystem_folder = "${dataDir}/collections";
         };
       };
     };
 
     chonkos.services.reverse-proxy.hosts.radicale = {
-      target = "http://127.0.0.1:${toString cfg.port}";
+      target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
-      remote = "http://${cfg.subDomain}.${domain}";
+      remote = "http://${subDomain}.${domain}";
     };
   };
 }

@@ -4,35 +4,35 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkService;
+  inherit
+    (lib)
+    mkIf
+    ;
   inherit (config.networking) domain;
-  cfg = config.chonkos.services.stirling-pdf;
-in {
-  options.chonkos.services.stirling-pdf = mkService {
-    name = "stirling-pdf";
-    port = 8080;
-    dir = null;
-    package = pkgs.stirling-pdf.override {
-      jre = pkgs.temurin-jre-bin-21.override {gtkSupport = false;};
-    };
+
+  enable = true;
+
+  port = 8080;
+  package = pkgs.stirling-pdf.override {
+    jre = pkgs.temurin-jre-bin-21.override {gtkSupport = false;};
   };
-
-  config = {
+in {
+  config = mkIf enable {
     services.stirling-pdf = {
-      inherit (cfg) enable;
+      inherit enable;
 
-      inherit (cfg) package;
+      inherit package;
 
       environment = {
-        SERVER_HOST ="127.0.0.1";
-        SERVER_PORT = cfg.port;
+        SERVER_HOST = "127.0.0.1";
+        SERVER_PORT = port;
       };
     };
 
     chonkos.services.reverse-proxy.hosts.stirling-pdf = {
-      target = "http://127.0.0.1:${toString cfg.port}";
+      target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
-      remote = "http://manga.${domain}";
+      remote = "http://pdf.${domain}";
       enableAnubis = true;
     };
   };

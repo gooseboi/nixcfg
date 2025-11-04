@@ -1,45 +1,42 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
-  inherit (config.networking) domain;
   inherit
     (lib)
-    mkService
+    mkIf
     ;
+  inherit (config.networking) domain;
 
-  cfg = config.chonkos.services.vaultwarden;
+  enable = true;
 
-  remoteDomain = "${cfg.subDomain}.${domain}";
+  port = 8222;
+  dataDir = "/var/lib/bitwarden_rs";
+  subDomain = "pass";
+
+  remoteDomain = "${subDomain}.${domain}";
 in {
-  options.chonkos.services.vaultwarden = mkService {
-    name = "vaultwarden";
-    port = 8222;
-    dir = "/var/lib/bitwarden_rs";
-    package = pkgs.vaultwarden;
-    subDomain = "pass";
-  };
+  config = mkIf enable {
+    age.secrets.vaultwarden-envfile.file = ./secrets/vaultwarden-envfile.age;
 
-  config = {
     services.vaultwarden = {
-      inherit (cfg) enable;
+      inherit enable;
 
       dbBackend = "sqlite";
 
       environmentFile = config.age.secrets.vaultwarden-envfile.path;
       config = {
         DOMAIN = "https://${remoteDomain}";
-        LOG_FILE = "${cfg.dataDir}/access.log";
+        LOG_FILE = "${dataDir}/access.log";
         ROCKET_ADDRESS = "127.0.0.1";
-        ROCKET_PORT = cfg.port;
+        ROCKET_PORT = port;
         SIGNUPS_ALLOWED = false;
       };
     };
 
     chonkos.services.reverse-proxy.hosts.vaultwarden = {
-      target = "http://127.0.0.1:${toString cfg.port}";
+      target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       remote = "http://${remoteDomain}";
     };

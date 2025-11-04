@@ -3,12 +3,18 @@
   lib,
   ...
 }: let
+  inherit
+    (lib)
+    mkIf
+    ;
   inherit (config.networking) domain;
-  inherit (lib) mkService;
 
-  cfg = config.chonkos.services.ferdium;
+  enable = true;
 
-  fqdn = "${cfg.subDomain}.${domain}";
+  port = 3333;
+  subDomain = "ferdium";
+
+  fqdn = "${subDomain}.${domain}";
 
   serviceName = "ferdium-server";
 
@@ -18,15 +24,7 @@
   recipesDir = "${stateDir}/recipes";
   systemdServiceName = "${config.virtualisation.oci-containers.backend}-${serviceName}";
 in {
-  options.chonkos.services.ferdium = mkService {
-    name = serviceName;
-    port = 3333;
-    dir = stateDir;
-    package = null;
-    subDomain = "ferdium";
-  };
-
-  config = lib.mkIf cfg.enable {
+  config = mkIf enable {
     systemd.services.${systemdServiceName}.serviceConfig = {
       StateDirectory = "${stateDirName}";
     };
@@ -45,7 +43,7 @@ in {
           "${dataDir}:/data"
           "${recipesDir}:/app/recipes"
         ];
-        ports = ["127.0.0.1:${builtins.toString cfg.port}:3333"];
+        ports = ["127.0.0.1:${builtins.toString port}:3333"];
         environment = {
           NODE_ENV = "production";
           APP_URL = "https://${fqdn}";
@@ -61,7 +59,7 @@ in {
     };
 
     chonkos.services.reverse-proxy.hosts.ferdium = {
-      target = "http://127.0.0.1:${toString cfg.port}";
+      target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       remote = "http://${fqdn}";
     };

@@ -4,31 +4,40 @@
   pkgs,
   ...
 }: let
+  inherit
+    (lib)
+    mkIf
+    ;
   inherit (config.networking) domain;
-  inherit (lib) mkService;
 
-  cfg = config.chonkos.services.grafana;
-  fqdn = "${cfg.subDomain}.${domain}";
+  enable = true;
+
+  port = 8021;
+  dataDir = "/var/lib/grafana";
+  package = pkgs.grafana;
+  subDomain = "metrics";
+
+  fqdn = "${subDomain}.${domain}";
 in {
-  options.chonkos.services.grafana = mkService {
-    name = "grafana";
-    port = 8021;
-    dir = "/var/lib/grafana";
-    package = pkgs.grafana;
-    subDomain = "metrics";
-  };
+  config = mkIf enable {
+    age.secrets.grafana-adminpassword = {
+      mode = "600";
+      # This isn't documented in the module options but this is the user
+      # that the service is run as.
+      owner = "grafana";
+      file = ./secrets/grafana-adminpassword.age;
+    };
 
-  config = {
     services.grafana = {
-      inherit (cfg) enable;
-      inherit (cfg) package;
+      inherit enable;
+      inherit package;
 
-      dataDir = cfg.dataDir;
+      inherit dataDir;
 
       settings = {
         server = {
           http_addr = "127.0.0.1";
-          http_port = cfg.port;
+          http_port = port;
           enforce_domain = false;
           enable_gzip = true;
           domain = fqdn;
@@ -43,7 +52,7 @@ in {
         analytics.reporting_enabled = false;
 
         security = {
-          admin_email = "${cfg.subDomain}@${domain}";
+          admin_email = "${subDomain}@${domain}";
           admin_password = "$__file{${config.age.secrets.grafana-adminpassword.path}}";
           admin_user = "admin";
 
@@ -56,7 +65,7 @@ in {
     };
 
     chonkos.services.reverse-proxy.hosts.grafana = {
-      target = "http://127.0.0.1:${toString cfg.port}";
+      target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       remote = "http://${fqdn}";
       enableAnubis = true;

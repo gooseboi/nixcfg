@@ -1,27 +1,25 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
-  inherit (lib) mkService;
+  inherit
+    (lib)
+    mkIf
+    ;
 
-  cfg = config.chonkos.services.prometheus;
+  enable = true;
+
+  port = 9090;
+  dataDir = "/var/lib/prometheus";
 in {
-  options.chonkos.services.prometheus = mkService {
-    name = "prometheus";
-    port = 9090;
-    dir = "/var/lib/prometheus";
-    package = pkgs.prometheus;
-  };
-
-  config = {
+  config = mkIf enable {
     services.grafana.provision.datasources.settings = {
       datasources = [
         {
           name = "Prometheus";
           type = "prometheus";
-          url = "http://127.0.0.1:${toString cfg.port}";
+          url = "http://127.0.0.1:${toString port}";
           isDefault = true;
           editable = false;
 
@@ -38,12 +36,12 @@ in {
     };
 
     services.prometheus = {
-      inherit (cfg) enable package;
+      inherit enable;
 
-      inherit (cfg) port;
+      inherit port;
       listenAddress = "127.0.0.1";
 
-      stateDir = lib.removePrefix "/var/lib/" cfg.dataDir;
+      stateDir = lib.removePrefix "/var/lib/" dataDir;
 
       retentionTime = "5w";
       globalConfig.scrape_interval = "10s";

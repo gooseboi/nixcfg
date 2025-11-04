@@ -4,32 +4,33 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkService;
+  inherit
+    (lib)
+    mkIf
+    ;
   inherit (config.networking) domain;
-  cfg = config.chonkos.services.suwayomi-server;
-in {
-  options.chonkos.services.suwayomi-server = mkService {
-    name = "suwayomi-server";
-    port = 4567;
-    dir = "/var/lib/suwayomi-server";
-    package = pkgs.suwayomi-server.override {
-      jdk21_headless = pkgs.temurin-jre-bin-21.override {
-        gtkSupport = false;
-      };
+
+  enable = true;
+
+  port = 4567;
+  dataDir = "/var/lib/suwayomi-server";
+  package = pkgs.suwayomi-server.override {
+    jdk21_headless = pkgs.temurin-jre-bin-21.override {
+      gtkSupport = false;
     };
   };
-
-  config = {
+in {
+  config = mkIf enable {
     services.suwayomi-server = {
-      inherit (cfg) enable;
+      inherit enable;
 
-      inherit (cfg) package;
+      inherit package;
 
-      dataDir = cfg.dataDir;
+      dataDir = dataDir;
 
       settings.server = {
         ip = "127.0.0.1";
-        port = cfg.port;
+        port = port;
 
         downloadAsCbz = false;
         systemTrayEnabled = false;
@@ -41,7 +42,7 @@ in {
     };
 
     chonkos.services.reverse-proxy.hosts.suwayomi-server = {
-      target = "http://127.0.0.1:${toString cfg.port}";
+      target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       remote = "http://manga.${domain}";
     };
