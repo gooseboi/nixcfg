@@ -11,6 +11,7 @@ in {
   # TODO: Paperless-ngx (https://docs.paperless-ngx.com)
 
   imports = [
+    ./anki-sync-server.nix
     ./caddy.nix
     ./ferdium.nix
     ./forgejo.nix
