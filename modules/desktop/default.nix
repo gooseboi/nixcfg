@@ -32,16 +32,17 @@ in {
     services.upower.enable = true;
 
     environment.systemPackages = with pkgs; [
+      anki
       discord
       ferdium
       gimp
+      gparted
       libreoffice-fresh
       mpv
       onlyoffice-bin
       playerctl
       ungoogled-chromium
       xfce.thunar
-      gparted
     ];
 
     home-manager.sharedModules = [
