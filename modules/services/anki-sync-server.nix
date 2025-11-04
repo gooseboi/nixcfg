@@ -163,6 +163,8 @@ in {
           cfg.stateDir
         ];
 
+        # FIXME: The service doesn't restart if the passwordfile's
+        # contents changes?
         ExecStart = pkgs.writeShellScript "anki-sync-server-run" ''
           # When passwordFile is set, each password file's path is passed in a
           # systemd credential. Here we read the passwords from the credential
