@@ -28,6 +28,10 @@ in {
           vistafonts
           lmodern
 
+          # Joke
+          miracode
+          monocraft
+
           # Japanese
           # https://wiki.archlinux.org/title/Localization/Japanese#Fonts
           hanazono
