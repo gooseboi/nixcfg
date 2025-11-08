@@ -1,5 +1,27 @@
-inputs: self: super: {
-  traceVal = v: builtins.trace v v;
+inputs: self: super: let
+  inherit
+    (builtins)
+    deepSeq
+    genList
+    isBool
+    toJSON
+    toString
+    trace
+    ;
+in {
+  traceVal = v: trace v v;
+
+  traceValMsg = msg: val: let
+    new =
+      if isBool val
+      then
+        (
+          if val
+          then "true"
+          else "false"
+        )
+      else (deepSeq val val |> toString);
+  in (trace "${msg}: `${new}`" val);
 
   # https://kokada.dev/blog/generating-yaml-files-with-nix/
   convertToYAML = {
@@ -8,7 +30,7 @@ inputs: self: super: {
   }: fname: value:
     runCommandLocal "${fname}" {
       nativeBuildInputs = [yj];
-      json = builtins.toJSON value;
+      json = toJSON value;
       passAsFile = ["json"];
     } ''
       mkdir -p $out
@@ -19,5 +41,5 @@ inputs: self: super: {
     base,
     n,
   }:
-    builtins.genList (i: i + base) n;
+    genList (i: i + base) n;
 }
