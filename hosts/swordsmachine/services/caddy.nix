@@ -7,13 +7,11 @@
     (lib)
     attrsToList
     filter
-    iota
     listToAttrs
     mkConst
     mkIf
     mkMerge
     ;
-  inherit (builtins) toString length;
 
   cfg = config.chonkos.services.caddy;
 
@@ -22,17 +20,12 @@
     |> attrsToList
     |> filter ({value, ...}: value.enable);
 
-  serviceCnt = enabledServices |> length;
-  anubisPorts = iota {
-    base = cfg.anubisBasePort;
-    n = serviceCnt;
-  };
-  anubisCfg =
-    lib.zipListsWith (service: port: {
-      inherit service port;
-    })
-    (enabledServices |> filter ({value, ...}: value.enableAnubis))
-    anubisPorts;
+  anubisServices =
+    enabledServices
+    |> filter ({value, ...}: value.enableAnubis);
+
+  anubisMetricsSocketName = name: "/run/anubis/anubis-${name}/anubis-${name}-metrics.sock";
+  anubisInstanceSocketName = name: "/run/anubis/anubis-${name}/anubis-${name}.sock";
 
   caddyTargetFromType = type: target: ({
     "tcp" = target;
@@ -47,7 +40,6 @@ in {
   options.chonkos.services.caddy = {
     enable = mkConst true;
     useAnubis = mkConst true;
-    anubisBasePort = mkConst 20820;
   };
 
   # TODO: Add metrics (https://caddyserver.com/docs/metrics)
@@ -91,6 +83,12 @@ in {
     })
 
     (mkIf cfg.useAnubis {
+      # Anubis (by default) makes the unix socket's permissions 0770, and
+      # therefore you either make them world-readable, or put the reverse proxy
+      # service's user in the service's group so it can access it. The latter
+      # is more restrictive so we do that.
+      users.groups.anubis.members = ["caddy"];
+
       services.anubis = {
         defaultOptions.settings = {
           DIFFICULTY = 4;
@@ -100,21 +98,22 @@ in {
         };
 
         instances =
-          anubisCfg
-          |> map (v: {
-            name = v.service.name;
+          anubisServices
+          |> map (service: {
+            name = service.name;
             value = {
               inherit (cfg) enable;
 
               settings = {
-                TARGET = anubisTargetFromType v.service.value.targetType v.service.value.target;
-                BIND = "localhost:${toString v.port}";
-                BIND_NETWORK = "tcp";
+                TARGET = anubisTargetFromType service.value.targetType service.value.target;
+                BIND = anubisInstanceSocketName service.name;
+                BIND_NETWORK = "unix";
 
                 # TODO: METRICS
                 # This is actually to fix an evaluation warning in the nix module,
                 # not because metrics is actually set up.
-                METRICS_BIND = "/run/anubis/anubis-${v.service.name}/";
+                METRICS_BIND = anubisMetricsSocketName service.name;
+                METRICS_BIND_NETWORK = "unix";
               };
             };
           })
@@ -124,15 +123,11 @@ in {
       services.caddy = {
         virtualHosts = mkMerge [
           (
-            anubisCfg
-            |> map ({
-              service,
-              port,
-              ...
-            }: {
+            anubisServices
+            |> map (service: {
               "${service.value.remote}" = {
                 extraConfig = ''
-                  reverse_proxy ${caddyTargetFromType "tcp" "http://localhost:${toString port}"}
+                  reverse_proxy ${anubisInstanceSocketName service.name |> caddyTargetFromType "unix"}
                   ${service.value.extraCaddyConfig}
                 '';
               };
