@@ -4,15 +4,16 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption mkIf;
+  inherit
+    (lib)
+    mkEnableOption
+    mkIf
+    ;
 
   cfg = config.chonkos.desktop.qmk;
 in {
   options.chonkos.desktop.qmk = {
-    enable = mkOption {
-      description = "enable polkit installation";
-      default = config.chonkos.desktop.enable;
-    };
+    enable = mkEnableOption "enable qmk installation";
   };
 
   config = mkIf cfg.enable {
