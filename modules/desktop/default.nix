@@ -39,7 +39,7 @@ in {
       gparted
       libreoffice-fresh
       mpv
-      onlyoffice-bin
+      onlyoffice-desktopeditors
       playerctl
       ungoogled-chromium
       xfce.thunar

@@ -101,7 +101,7 @@ inputs @ {
         '')
       |> builtins.concatStringsSep "\n";
   in
-    pkgs.runCommandNoCC
+    pkgs.runCommand
     "neovimFiles"
     {}
     /*

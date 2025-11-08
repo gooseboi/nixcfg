@@ -25,7 +25,7 @@ in {
           jetbrains-mono
           iosevka
           corefonts
-          vistafonts
+          vista-fonts
           lmodern
 
           # Joke

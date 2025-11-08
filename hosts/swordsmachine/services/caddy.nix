@@ -110,7 +110,11 @@ in {
                 TARGET = anubisTargetFromType v.service.value.targetType v.service.value.target;
                 BIND = "localhost:${toString v.port}";
                 BIND_NETWORK = "tcp";
+
                 # TODO: METRICS
+                # This is actually to fix an evaluation warning in the nix module,
+                # not because metrics is actually set up.
+                METRICS_BIND = "/run/anubis/anubis-${v.service.name}/";
               };
             };
           })
