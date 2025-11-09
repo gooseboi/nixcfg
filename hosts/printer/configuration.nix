@@ -3,14 +3,11 @@
   keys,
   ...
 }: {
-  imports =
-    [
-      ./disk-config.nix
-      ./hardware-configuration.nix
-    ]
-    ++ [
-      ./printer
-    ];
+  imports = [
+    ./disk-config.nix
+    ./hardware-configuration.nix
+    ./printer.nix
+  ];
 
   # Bootloader.
   boot = {

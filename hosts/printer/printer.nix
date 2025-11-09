@@ -2,15 +2,13 @@
   pkgs,
   lib,
   ...
-}: let
-  dcpt420w-driver = pkgs.callPackage ./dcpt420w-driver.nix {};
-in {
+}: {
   chonkos.unfree.allowed = ["cups-brother-dcpt420w"];
 
   services = {
     printing = {
       enable = true;
-      drivers = [dcpt420w-driver];
+      drivers = [pkgs.dcpt420w-driver];
 
       listenAddresses = ["*:631"];
       allowFrom = ["all"];
