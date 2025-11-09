@@ -195,6 +195,9 @@ in {
           );
 
         # Hardening
+        NoNewPrivileges = true;
+        CapabilityBoundingSet = [""];
+        RemoveIPC = true;
         ProtectClock = true;
         ProtectKernelTunables = true;
         ProtectKernelModules = true;
