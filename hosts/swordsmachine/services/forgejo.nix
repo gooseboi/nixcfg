@@ -28,7 +28,7 @@ in {
     ];
 
     services.forgejo = {
-      inherit  enable;
+      inherit enable;
 
       stateDir = dataDir;
 
