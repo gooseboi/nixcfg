@@ -21,7 +21,7 @@
 in {
   config = mkIf enable {
     age.secrets.grafana-adminpassword = {
-      mode = "600";
+      mode = "400";
       # This isn't documented in the module options but this is the user
       # that the service is run as.
       owner = "grafana";

@@ -1,7 +1,7 @@
 {config, ...}: {
   age.secrets = {
     anki-chonkpassword = {
-      mode = "600";
+      mode = "400";
       owner = "anki-sync-server";
       file = ./secrets/anki-chonkpassword.age;
     };
