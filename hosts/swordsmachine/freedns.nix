@@ -21,7 +21,7 @@
       set -eux
 
       ${pkgs.curl}/bin/curl \
-        -sS \
+        --silent --show-error \
         --get \
         --retry 3 --retry-delay 5 --max-time 10 \
         --data-urlencode "@${config.age.secrets.freedns-token.path}" \
