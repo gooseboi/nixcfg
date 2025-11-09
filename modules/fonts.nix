@@ -29,6 +29,7 @@ in {
           lmodern
 
           # Joke
+          minecraftia
           miracode
           monocraft
 
