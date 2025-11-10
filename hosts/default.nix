@@ -9,27 +9,27 @@
   inherit (self.lib) mkHost;
 in {
   flake = {
-    nixosConfigurations = {
-      anatidae = mkHost "anatidae" "x86_64-linux" (with hw; [
+    nixosConfigurations = with hw; {
+      anatidae = mkHost "anatidae" "x86_64-linux" [
         common-cpu-intel
         common-gpu-intel
         common-pc-laptop-ssd
         {
           hardware.intelgpu.enableHybridCodec = true;
         }
-      ]);
+      ];
 
-      swordsmachine = mkHost "swordsmachine" "x86_64-linux" (with hw; [
+      swordsmachine = mkHost "swordsmachine" "x86_64-linux" [
         common-cpu-amd
         common-cpu-amd-pstate
         common-cpu-amd-zenpower
         common-gpu-amd
         common-pc-laptop-ssd
-      ]);
+      ];
 
-      printer = mkHost "printer" "x86_64-linux" (with hw; [
+      printer = mkHost "printer" "x86_64-linux" [
         common-cpu-intel
-      ]);
+      ];
     };
 
     # TODO: A nice way to auto-generate these?
