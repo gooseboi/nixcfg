@@ -62,6 +62,18 @@ in {
             self.nixosConfigurations.printer;
         };
       };
+
+      cowboy = {
+        hostname = "cowboy";
+        profiles.system = {
+          sshUser = "chonk";
+          user = "chonk";
+          interactiveSudo = true;
+          path =
+            deploy-rs.lib.x86_64-linux.activate.nixos
+            self.nixosConfigurations.cowboy;
+        };
+      };
     };
   };
 }
