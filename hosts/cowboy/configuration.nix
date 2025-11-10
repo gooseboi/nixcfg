@@ -1,4 +1,8 @@
-{keys, ...}: {
+{
+  config,
+  keys,
+  ...
+}: {
   imports = [
     ./disk-config.nix
     ./hardware-configuration.nix
@@ -16,7 +20,7 @@
     isNormalUser = true;
     description = "chonk";
     extraGroups = ["wheel"];
-    password = "1234";
+    hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
     openssh.authorizedKeys.keys = [
       keys.chonk
     ];
