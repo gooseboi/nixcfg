@@ -106,6 +106,7 @@ in {
       ]
       ++ lists.optionals isDesktop [
         czkawka-full
+        graphviz
         imagemagickBig
         libqalculate
         localsend
