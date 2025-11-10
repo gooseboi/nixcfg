@@ -30,6 +30,8 @@ in {
       printer = mkHost "printer" "x86_64-linux" [
         common-cpu-intel
       ];
+
+      cowboy = mkHost "cowboy" "x86_64-linux" [];
     };
 
     # TODO: A nice way to auto-generate these?
