@@ -70,7 +70,6 @@ in {
         python3.pkgs.grip
         ripgrep
         rsync
-        rust-stakeholder
         simple-http-server
         socat
         speedtest-rs
@@ -113,6 +112,7 @@ in {
         localsend
         nbt-explorer
         pandoc
+        rust-stakeholder
         what-anime-cli
       ];
 
