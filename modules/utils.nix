@@ -67,7 +67,6 @@ in {
         opustags
         p7zip
         packwiz
-        python3.pkgs.grip
         ripgrep
         rsync
         simple-http-server
@@ -112,6 +111,7 @@ in {
         localsend
         nbt-explorer
         pandoc
+        python3.pkgs.grip
         rust-stakeholder
         what-anime-cli
       ];
