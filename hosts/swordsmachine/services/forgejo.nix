@@ -107,7 +107,7 @@ in {
     chonkos.services.reverse-proxy.hosts.forgejo = {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
-      remote = "http://${serviceDomain}";
+      domain = "${serviceDomain}";
       enableAnubis = true;
     };
   };

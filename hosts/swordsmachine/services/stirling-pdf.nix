@@ -32,7 +32,7 @@ in {
     chonkos.services.reverse-proxy.hosts.stirling-pdf = {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
-      remote = "http://pdf.${domain}";
+      domain = "pdf.${domain}";
       enableAnubis = true;
     };
   };

@@ -71,7 +71,7 @@ in {
         virtualHosts =
           enabledServices
           |> map ({value, ...}: {
-            "${value.remote}" = {
+            "http://${value.domain}" = {
               extraConfig = ''
                 reverse_proxy ${caddyTargetFromType value.targetType value.target}
                 ${value.extraCaddyConfig}
@@ -125,7 +125,7 @@ in {
           (
             anubisServices
             |> map (service: {
-              "${service.value.remote}" = {
+              "http://${service.value.domain}" = {
                 extraConfig = ''
                   reverse_proxy ${anubisInstanceSocketName service.name |> caddyTargetFromType "unix"}
                   ${service.value.extraCaddyConfig}
@@ -139,7 +139,7 @@ in {
             enabledServices
             |> filter ({value, ...}: !value.enableAnubis)
             |> map ({value, ...}: {
-              "${value.remote}" = {
+              "http://${value.domain}" = {
                 extraConfig = ''
                   reverse_proxy ${caddyTargetFromType value.targetType value.target}
                   ${value.extraCaddyConfig}

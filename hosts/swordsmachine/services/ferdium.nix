@@ -61,7 +61,7 @@ in {
     chonkos.services.reverse-proxy.hosts.ferdium = {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
-      remote = "http://${fqdn}";
+      domain = "${fqdn}";
     };
   };
 }

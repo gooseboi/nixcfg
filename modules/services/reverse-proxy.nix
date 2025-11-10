@@ -27,8 +27,8 @@ in {
               type = types.enum ["tcp" "unix"];
             };
 
-            remote = mkOption {
-              description = "address to accept requests from";
+            domain = mkOption {
+              description = "domain to match incoming requests from";
               type = types.str;
             };
 

@@ -44,7 +44,7 @@ in {
     chonkos.services.reverse-proxy.hosts.suwayomi-server = {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
-      remote = "http://manga.${domain}";
+      domain = "manga.${domain}";
     };
   };
 }

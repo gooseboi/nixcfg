@@ -38,7 +38,7 @@ in {
     chonkos.services.reverse-proxy.hosts.vaultwarden = {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
-      remote = "http://${remoteDomain}";
+      domain = "${remoteDomain}";
     };
   };
 }

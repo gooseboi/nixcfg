@@ -217,7 +217,7 @@ in {
 
       target = "http://${cfg.bindAddress}:${toString cfg.bindPort}";
       targetType = "tcp";
-      remote = "http://anki.${domain}";
+      domain = "anki.${domain}";
     };
   };
 }
