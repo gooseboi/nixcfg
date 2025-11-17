@@ -72,6 +72,7 @@
     ];
     i18n.enable = true;
     neovim.enable = true;
+    neovim.setEnvironment = true;
     network-manager.enable = true;
     nushell.enable = true;
     openssh.enable = true;

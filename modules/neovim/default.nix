@@ -156,7 +156,7 @@ in {
       default = config.chonkos.isDesktop;
     };
 
-    setEnvironment = mkDisableOption "set the EDITOR env variable";
+    setEnvironment = mkEnableOption "set the EDITOR env variable";
 
     includeDefaultLuaFiles = mkDisableOption "enable including the lua files included in the module";
 

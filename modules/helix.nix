@@ -4,13 +4,13 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkDisableOption mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf;
 
   cfg = config.chonkos.helix;
 in {
   options.chonkos.helix = {
     enable = mkEnableOption "enable helix";
-    setEnvironment = mkDisableOption "set the EDITOR env variable";
+    setEnvironment = mkEnableOption "set the EDITOR env variable";
   };
 
   config = mkIf cfg.enable {
