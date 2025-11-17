@@ -11,10 +11,12 @@ inputs @ {
     hasSuffix
     listFilesWithNames
     lists
+    makeBinPath
     mkDisableOption
     mkEnableOption
     mkIf
     mkOption
+    optionalString
     removeSuffix
     types
     ;
@@ -123,6 +125,26 @@ inputs @ {
     |> map (p: p.packages)
     |> flatten
     |> unique;
+
+  pkg = pkgs.wrapNeovimUnstable pkgs.neovim-unwrapped {
+    viAlias = true;
+    vimAlias = true;
+
+    # I don't actually know what having these accomplishes, but I assume that
+    # only NixOS bundles these with the package, so it should probably be fine,
+    # I guess.
+    withNodeJs = false;
+    withPerl = false;
+    withPython3 = false;
+    withRuby = false;
+
+    # Enabling this adds wl-clipboard, which doesn't really make sense if this
+    # is a server.
+    waylandSupport = cfg.desktopInstall;
+
+    wrapRc = false;
+    configure = {};
+  };
 in {
   options.chonkos.neovim = {
     enable = mkEnableOption "enables neovim support";
@@ -222,37 +244,36 @@ in {
       );
     };
 
-    programs.neovim = {enable = true;};
+    environment.systemPackages = [
+      pkg
+    ];
+
+    environment.variables = mkIf cfg.setEnvironment {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
 
     home-manager.sharedModules = mkIf cfg.enable [
-      (hmInputs: let
-        hmConfig = hmInputs.config;
-      in {
+      {
         home.sessionVariables = mkIf cfg.setEnvironment {
           EDITOR = "nvim";
           VISUAL = "nvim";
         };
 
-        # TODO: Is there a way to override the final wrapped package here?
-        #
-        # Probably just not using the home-manager module, but I don't wanna do
-        # that now. The point of doing this is to disable the dependency on
-        # wl-clipboard for neovim if this module is for a server.
-        programs.neovim = {
-          enable = true;
+        home.packages = [
+          (pkg.override {
+            wrapperArgs =
+              optionalString
+              (pluginPackages != [])
+              ''--suffix PATH : "${makeBinPath pluginPackages}"'';
+          })
+        ];
 
-          # We do it ourselves
-          defaultEditor = false;
-          extraPackages = pluginPackages;
-          viAlias = true;
-          vimAlias = true;
-        };
-
-        home.file."${hmConfig.xdg.configHome}/nvim" = {
+        xdg.configFile."nvim" = {
           source = filesJoin;
           recursive = true;
         };
-      })
+      }
     ];
   };
 }
