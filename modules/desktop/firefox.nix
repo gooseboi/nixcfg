@@ -391,6 +391,11 @@ in {
                       www.youtube.com##ytd-mini-guide-renderer.ytd-app.style-scope
                       www.youtube.com###guide-button
 
+                      !!!!! Nov 16, 2025 !!!!!
+                      ! Hide category bar in homepage
+                      www.youtube.com###scroll-container > .ytd-feed-filter-chip-bar-renderer.style-scope
+
+
 
 
 
