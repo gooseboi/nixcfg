@@ -5,6 +5,7 @@
 }: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
   # TODO: lanzaboote (https://github.com/nix-community/lanzaboote)
+  # TODO: https://github.com/mrusme/usbec
 
   imports = [
     ./hardware-configuration.nix
