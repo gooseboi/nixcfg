@@ -76,8 +76,10 @@ in {
       )
 
       # AI Slop
-      code-cursor-fhs
       claude-code
+      code-cursor-fhs
+      gemini-cli
+      opencode
 
       # Web Dev
       (
