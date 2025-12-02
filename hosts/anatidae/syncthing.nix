@@ -9,6 +9,8 @@
     key = config.age.secrets.syncthing-key.path;
 
     dataDir = "/home/${config.chonkos.user}";
+    configDir = "/home/${config.chonkos.user}/.config/syncthing";
+    databaseDir = "/home/${config.chonkos.user}/.local/share/syncthing";
 
     settings = {
       devices = {
