@@ -12,6 +12,7 @@
     ./grafana.nix
     ./prometheus.nix
     ./radicale.nix
+    ./rss-proxy.nix
     ./stirling-pdf.nix
     ./suwayomi-server.nix
     ./vaultwarden.nix
