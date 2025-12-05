@@ -13,7 +13,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    chonkos.unfree.allowed = ["ngrok" "claude-code" "cursor"];
+    chonkos.unfree.allowed = [
+      "antigravity"
+      "claude-code"
+      "cursor"
+      "ngrok"
+    ];
 
     environment.systemPackages = with pkgs; [
       # C/C++
@@ -76,6 +81,7 @@ in {
       )
 
       # AI Slop
+      antigravity-fhs
       claude-code
       code-cursor-fhs
       gemini-cli
