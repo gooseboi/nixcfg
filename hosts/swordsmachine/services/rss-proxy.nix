@@ -36,8 +36,8 @@ in {
       environment = {
         RSS_PROXY_ADDR = "127.0.0.1";
         RSS_PROXY_PORT = toString port;
-        RSS_PROXY_DEVIANTART_WAITING_TIME = "10";
-        RSS_PROXY_DEVIANTART_CACHE_TTL = "30";
+        RSS_PROXY_DEVIANTART_WAITING_TIME = "12";
+        RSS_PROXY_DEVIANTART_CACHE_TTL = "60";
         RSS_PROXY_DEVIANTART_MAX_ENTRIES = "300";
       };
 
