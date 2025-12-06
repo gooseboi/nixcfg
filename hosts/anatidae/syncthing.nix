@@ -16,10 +16,6 @@
       devices = {
         "anser" = {id = "3IBIEL6-6QNWOKJ-NZ5UJHB-QNC54FV-3I7EU7G-M5NPWDH-AWGHDCB-WFXV6AE";};
         "pixel7" = {id = "4TQ7FPC-3CE33Y6-Q27XXAY-URCGU7S-A7AUGT4-LX77I3Z-AS5RGZ6-MWWSRAU";};
-        "cowboy" = {
-          id = "RD7VJNX-HFZE4BB-E45QICM-TPSRK6P-CRU3VRM-ANT7GUZ-LJZ3N3S-UZFIHA3";
-          addresses = ["tcp://gooseman.net"];
-        };
       };
 
       folders = {
