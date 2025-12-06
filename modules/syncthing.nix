@@ -5,11 +5,18 @@
 }: let
   inherit
     (lib)
+    mkForce
     mkIf
     ;
 in {
   config = mkIf config.services.syncthing.enable {
     systemd.services = {
+      syncthing-init = {
+        wantedBy = mkForce ["syncthing.service"];
+        after = ["syncthing.service"];
+        partOf = ["syncthing.service"];
+      };
+
       syncthing = {
         environment.STNODEFAULTFOLDER = "true";
 
