@@ -18,6 +18,7 @@ in {
         enable = true;
 
         storageDriver = "btrfs";
+        enableOnBoot = false;
       };
     };
 
