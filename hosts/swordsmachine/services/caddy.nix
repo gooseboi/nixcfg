@@ -11,6 +11,7 @@
     mkConst
     mkIf
     mkMerge
+    strings
     ;
 
   cfg = config.chonkos.services.caddy;
@@ -108,12 +109,24 @@ in {
         virtualHosts = mkMerge [
           (
             anubisServices
-            |> map (service: {
-              "http://${service.value.domain}" = {
-                extraConfig = ''
-                  reverse_proxy ${anubisInstanceSocketName service.name |> caddyTargetFromType "unix"}
-                  ${service.value.extraCaddyConfig}
-                '';
+            |> map ({
+              name,
+              value,
+            }: {
+              "http://${value.domain}" = {
+                extraConfig = mkMerge [
+                  ''
+                    reverse_proxy ${anubisInstanceSocketName name |> caddyTargetFromType "unix"}
+                  ''
+
+                  (mkIf value.enableCompression ''
+                    encode ${strings.concatStringsSep " " value.enabledCompressionAlgorithms}
+                  '')
+
+                  ''
+                    ${value.extraCaddyConfig}
+                  ''
+                ];
               };
             })
             |> mkMerge
@@ -124,10 +137,19 @@ in {
             |> filter ({value, ...}: !value.enableAnubis)
             |> map ({value, ...}: {
               "http://${value.domain}" = {
-                extraConfig = ''
-                  reverse_proxy ${caddyTargetFromType value.targetType value.target}
-                  ${value.extraCaddyConfig}
-                '';
+                extraConfig = mkMerge [
+                  ''
+                    reverse_proxy ${caddyTargetFromType value.targetType value.target}
+                  ''
+
+                  (mkIf value.enableCompression ''
+                    encode ${strings.concatStringsSep " " value.enabledCompressionAlgorithms}
+                  '')
+
+                  ''
+                    ${value.extraCaddyConfig}
+                  ''
+                ];
               };
             })
             |> mkMerge

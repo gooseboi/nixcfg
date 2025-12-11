@@ -34,6 +34,16 @@ in {
 
             enableAnubis = mkEnableOption "enable also proxying this host behind anubis";
 
+            enableCompression = mkEnableOption "whether to enable compression for this host";
+
+            enabledCompressionAlgorithms = mkOption {
+              default = [];
+              description = "List of compression algorithms to offer for this host. Empty list chooses proxy default";
+              type =
+                types.listOf
+                <| types.enum ["gzip" "zstd"];
+            };
+
             extraCaddyConfig = mkOption {
               description = "extra config to pass to caddy";
               default = "";

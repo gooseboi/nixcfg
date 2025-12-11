@@ -70,6 +70,7 @@ in {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       domain = "${subDomain}.${domain}";
+      enableCompression = true;
     };
   };
 }
