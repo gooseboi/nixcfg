@@ -53,13 +53,14 @@ in {
       )
 
       # Rust
+      binaryen
       cargo-expand
+      cargo-flamegraph
       cargo-fuzz
       cargo-leptos
-      dart-sass
-      binaryen
       cargo-nextest
       cargo-show-asm
+      dart-sass
       (fenix.combine [
         (fenix.complete.withComponents [
           "cargo"
