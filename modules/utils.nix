@@ -111,6 +111,7 @@ in {
         imagemagickBig
         libqalculate
         localsend
+        losslesscut-bin
         nbt-explorer
         pandoc
         python3.pkgs.grip
