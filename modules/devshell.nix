@@ -101,6 +101,8 @@ in {
         libxml2
         libxslt
         libz
+        nspr
+        nss
         openssl
         pango
         pipewire
