@@ -12,27 +12,17 @@
     types
     ;
 
-  cfg = config.chonkos.desktop.brave;
+  cfg = config.chonkos.desktop.helium;
 in {
-  options.chonkos.desktop.brave = {
+  options.chonkos.desktop.helium = {
     enable = mkOption {
-      description = "enable brave installation";
+      description = "enable helium installation";
       type = types.bool;
       default = config.chonkos.desktop.enable;
     };
   };
 
   config = mkIf cfg.enable {
-    environment.etc."/brave/policies/managed/GroupPolicy.json".text =
-      builtins.toJSON
-      {
-        BraveAIChatEnabled = false;
-        BraveRewardsDisabled = true;
-        BraveWalletDisabled = true;
-        BraveVPNDisabled = true;
-        AutoplayAllowed = false;
-      };
-
     home-manager.sharedModules = [
       {
         programs.chromium = let
@@ -43,7 +33,7 @@ in {
           enabledFeaturesStr = strings.concatStringsSep "," enabledFeatures;
         in {
           enable = true;
-          package = pkgs.brave;
+          package = pkgs.helium;
           commandLineArgs = [
             "--password-store=basic"
             "--enable-features=${enabledFeaturesStr}"
