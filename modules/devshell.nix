@@ -27,7 +27,11 @@ in {
 
     withDevAndOut = packages:
       packages
-      |> map (p: [p.out] ++ (optional (p ? dev) p.dev))
+      |> map (p: [
+        p.out
+        (optional (p ? dev) p.dev)
+        (optional (p ? lib) p.lib)
+      ])
       |> flatten;
 
     packages = withDevAndOut cfg.packages;
@@ -75,10 +79,14 @@ in {
       };
 
       chonkos.devshell.packages = with pkgs; [
+        alsa-lib
         atk
         cairo
         dbus
         ffmpeg-full
+        flite
+        fontconfig
+        freetype
         gcc
         gdk-pixbuf
         glfw2
@@ -97,6 +105,7 @@ in {
         libpulseaudio
         libsoup_3
         libva
+        libxcb
         libxkbcommon
         libxml2
         libxslt
@@ -119,7 +128,9 @@ in {
         xdotool
         xorg.libX11
         xorg.libXcomposite
+        xorg.libXcursor
         xorg.libXdamage
+        xorg.libXext
         xorg.libXfixes
         xorg.libXi
         xorg.libXrandr
