@@ -17,8 +17,6 @@
       deploy = {
         type = "app";
         program =
-          # TODO: Add this to the system closure on desktop systems so it
-          # doesn't need to be rebuilt if garbage collection is ran
           pkgs.writeShellScriptBin "deploy"
           /*
           bash
