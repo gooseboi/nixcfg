@@ -60,8 +60,6 @@ in {
         mc-monitor
         mcrcon
         moreutils
-        nh
-        nix-tree
         nodePackages.prettier
         oha
         opustags
