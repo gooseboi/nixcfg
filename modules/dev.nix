@@ -134,6 +134,9 @@ in {
           MAVEN_ARGS = "--settings ${hmConfig.xdg.configHome}/${mavenSettings}";
           MAVEN_OPTS = "-Dmaven.repo.local=${hmConfig.xdg.dataHome}/${mavenRepo}";
           NODE_REPL_HISTORY = "${hmConfig.xdg.dataHome}/node_repl_history";
+          NPM_CONFIG_CACHE = "${hmConfig.xdg.cacheHome}/npm";
+          NPM_CONFIG_INIT_MODULE = "${hmConfig.xdg.configHome}/npm/config/npm-init.js";
+          NPM_CONFIG_TMP = ''''${XDG_RUNTIME_DIR:-"/run/user/$(id -u)"}/npm'';
           NPM_CONFIG_USERCONFIG = "${hmConfig.xdg.configHome}/npm/npmrc";
           NUGET_PACKAGES = "${hmConfig.xdg.cacheHome}/nuget";
           OPAMROOT = "${hmConfig.xdg.dataHome}/opam";
