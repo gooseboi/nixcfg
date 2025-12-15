@@ -19,14 +19,15 @@ in {
       fontconfig.enable = true;
       packages =
         (with pkgs; [
+          corefonts
+          googlesans-code
+          iosevka
+          jetbrains-mono
           libertinus
+          lmodern
           noto-fonts
           noto-fonts-color-emoji
-          jetbrains-mono
-          iosevka
-          corefonts
           vista-fonts
-          lmodern
 
           # Joke
           minecraftia
