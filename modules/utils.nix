@@ -31,6 +31,7 @@ in {
         else fastfetchMinimal;
     in
       [
+        appimage-run
         asciinema
         compose2nix
         cowsay
