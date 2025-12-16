@@ -49,8 +49,8 @@ in {
     font.sans.name = mkThemeConst "Lexend";
     font.sans.package = mkThemeConst pkgs.lexend;
 
-    font.mono.name = mkThemeConst "SauceCodePro Nerd Font Mono";
-    font.mono.package = mkThemeConst pkgs.nerd-fonts.sauce-code-pro;
+    font.mono.name = mkThemeConst "Google Sans Code";
+    font.mono.package = mkThemeConst pkgs.googlesans-code;
 
     icons.name = mkThemeConst "Gruvbox-Plus-Dark";
     icons.package = mkThemeConst pkgs.gruvbox-plus-icons;
