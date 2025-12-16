@@ -43,6 +43,9 @@ in {
       playerctl
       ungoogled-chromium
       xfce.thunar
+
+      zen-browser
+      helium
     ];
 
     home-manager.sharedModules = [
