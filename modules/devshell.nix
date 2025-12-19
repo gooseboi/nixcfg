@@ -82,7 +82,9 @@ in {
         alsa-lib
         atk
         cairo
+        cups
         dbus
+        expat
         ffmpeg-full
         flite
         fontconfig
@@ -101,6 +103,7 @@ in {
         libadwaita
         libcap
         libdrm
+        libgbm
         libglvnd
         libpulseaudio
         libsoup_3
