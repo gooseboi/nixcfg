@@ -17,6 +17,7 @@ in {
       gimp
       gparted
       libreoffice-fresh
+      obs-studio
       onlyoffice-desktopeditors
       playerctl
       ungoogled-chromium
