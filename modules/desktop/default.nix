@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
   inherit (config.chonkos) isDesktop;
@@ -27,44 +26,18 @@ in {
   imports = listNixWithDirs ./. |> remove ./default.nix;
 
   config = mkIf cfg.enable {
-    chonkos.unfree.allowed = ["discord"];
-
     services.upower.enable = true;
-
-    environment.systemPackages = with pkgs; [
-      anki
-      discord
-      ferdium
-      gimp
-      gparted
-      libreoffice-fresh
-      mpv
-      onlyoffice-desktopeditors
-      playerctl
-      ungoogled-chromium
-      xfce.thunar
-
-      zen-browser
-      helium
-    ];
 
     home-manager.sharedModules = [
       {
         config = {
-          home = {
-            sessionVariables =
-              {
-                VIDEO = "mpv";
-              }
-              //
-              # Scaling
-              {
-                QT_AUTO_SCREEN_SCALE_FACTOR = 0;
-                QT_SCALE_FACTOR = 1;
-                QT_SCREEN_SCALE_FACTORS = "1;1;1";
-                GDK_SCALE = 1;
-                GDK_DPI_SCALE = 1;
-              };
+          home.sessionVariables = {
+            # Scaling
+            QT_AUTO_SCREEN_SCALE_FACTOR = 0;
+            QT_SCALE_FACTOR = 1;
+            QT_SCREEN_SCALE_FACTORS = "1;1;1";
+            GDK_SCALE = 1;
+            GDK_DPI_SCALE = 1;
           };
         };
       }
