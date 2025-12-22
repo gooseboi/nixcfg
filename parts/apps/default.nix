@@ -13,6 +13,8 @@
         deploy-rs
         disko
         ;
+
+      deploy-rs-exe = getExe deploy-rs.packages.deploy-rs;
     in {
       deploy = {
         type = "app";
@@ -26,13 +28,13 @@
             system=$1;
 
             echo "Deploying to $system..."
-            ${getExe deploy-rs.packages.deploy-rs} --skip-checks .#$system
+            ${deploy-rs-exe} --skip-checks .#$system
           '';
       };
 
       rawDeploy = {
         type = "app";
-        program = getExe deploy-rs.packages.deploy-rs;
+        program = deploy-rs-exe;
       };
 
       disko = {
