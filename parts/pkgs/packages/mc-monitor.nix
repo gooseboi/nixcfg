@@ -3,7 +3,7 @@
   fetchFromGitHub,
   ...
 }: let
-  version = "0.15.4";
+  version = "0.16.0";
 in
   buildGoModule {
     pname = "mc-monitor";
@@ -13,8 +13,8 @@ in
       owner = "itzg";
       repo = "mc-monitor";
       tag = version;
-      sha256 = "sha256-0bCESzH77Ajdsp3LAc0GLHr1a3TrObdy1qBEksBuGkU=";
+      sha256 = "sha256-6koSgAPSeN5WnBhWAdO/s7AhJOG3vELFwycnNuvoRmo=";
     };
 
-    vendorHash = "sha256-q56mlGz6Qx+S3YRcYMI2a412Y0VeziUFvhQZOz3ifg4=";
+    vendorHash = "sha256-WecUZMX85mWc+qv+Mf/ey3dcm3GlwbdA5eC3utF8zEI=";
   }
