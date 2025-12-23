@@ -16,7 +16,7 @@ buildGoModule (finalAttrs: {
 
   subPackages = ["."];
 
-  vendorHash = "sha256-WecUZMX85mWc+qv+Mf/ey3dcm3GlwbdA5eC3utF8zEI=";
+  vendorHash = "sha256-4LJwb4ZXs+CUcxhvRveJy+xu7/UEjxIEwLV5Z5gBbT4=";
 
   meta.mainProgram = "gate";
 })
