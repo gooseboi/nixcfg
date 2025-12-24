@@ -59,7 +59,7 @@ in {
 
     bindAddress = mkOption {
       description = "the address to bind to";
-      default = "0.0.0.0";
+      default = "127.0.0.1";
       type = types.str;
     };
 
