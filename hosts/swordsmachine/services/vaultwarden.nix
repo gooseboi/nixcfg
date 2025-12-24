@@ -23,17 +23,22 @@ in {
     services.vaultwarden = {
       inherit enable;
 
-      dbBackend = "sqlite";
+      dbBackend = "postgresql";
 
       environmentFile = config.age.secrets.vaultwarden-envfile.path;
       config = {
         DOMAIN = "https://${remoteDomain}";
         LOG_FILE = "${dataDir}/access.log";
+
+        DATABASE_URL = "postgresql://vaultwarden@%2Frun%2Fpostgresql/vaultwarden";
         ROCKET_ADDRESS = "127.0.0.1";
         ROCKET_PORT = port;
+
         SIGNUPS_ALLOWED = false;
       };
     };
+
+    chonkos.services.postgresql.ensure = ["vaultwarden"];
 
     chonkos.services.reverse-proxy.hosts.vaultwarden = {
       target = "http://127.0.0.1:${toString port}";
