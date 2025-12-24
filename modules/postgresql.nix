@@ -31,6 +31,12 @@ in {
   };
 
   config = mkIf cfg.enable {
+    chonkos.services.postgresql.ensure = ["root" "postgresql"];
+
+    environment.systemPackages = with pkgs; [
+      pgloader
+    ];
+
     services.postgresql = {
       inherit (cfg) enable;
       package = pkgs."postgresql_${toString cfg.version}";
