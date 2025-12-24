@@ -9,6 +9,7 @@ in {
   "hosts/swordsmachine/secrets/freedns-token.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/anki-chonkpassword.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/grafana-adminpassword.age".publicKeys = [swordsmachine chonk];
+  "hosts/swordsmachine/services/secrets/miniflux-admincredentials.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/readeck-envfile.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/vaultwarden-envfile.age".publicKeys = [swordsmachine chonk];
 }
