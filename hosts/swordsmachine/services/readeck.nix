@@ -32,10 +32,19 @@ in {
           host = "127.0.0.1";
           inherit port;
         };
+
+        database.source = "postgres://readeck@/readeck?host=/run/postgresql";
       };
 
       environmentFile = config.age.secrets.readeck-envfile.path;
     };
+
+    systemd.services.readeck = {
+      after = ["postgresql.service"];
+      requires = ["postgresql.service"];
+    };
+
+    chonkos.services.postgresql.ensure = ["readeck"];
 
     chonkos.services.reverse-proxy.hosts.readeck = {
       target = "http://127.0.0.1:${toString port}";
