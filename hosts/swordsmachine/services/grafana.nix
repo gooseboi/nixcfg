@@ -44,7 +44,11 @@ in {
         };
 
         database = {
-          type = "sqlite3";
+          type = "postgres";
+
+          host = "/run/postgresql";
+          user = "grafana";
+          name = "grafana";
         };
 
         users.default_theme = "dark";
@@ -63,6 +67,8 @@ in {
         };
       };
     };
+
+    chonkos.services.postgresql.ensure = ["grafana"];
 
     chonkos.services.reverse-proxy.hosts.grafana = {
       target = "http://127.0.0.1:${toString port}";
