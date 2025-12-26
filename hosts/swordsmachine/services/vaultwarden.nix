@@ -39,10 +39,6 @@ in {
     };
 
     chonkos.services.postgresql.ensure = ["vaultwarden"];
-    systemd.services.vaultwarden = {
-      after = ["postgresql.service"];
-      requires = ["postgresql.service"];
-    };
 
     chonkos.services.reverse-proxy.hosts.vaultwarden = {
       target = "http://127.0.0.1:${toString port}";
