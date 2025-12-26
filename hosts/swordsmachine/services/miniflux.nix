@@ -35,8 +35,8 @@ in {
     chonkos.services.postgresql.ensure = ["miniflux"];
 
     systemd.services.miniflux = {
-      after = ["postgresql.service"];
-      requires = ["postgresql.service"];
+      after = ["postgresql.target"];
+      requires = ["postgresql.target"];
     };
 
     chonkos.services.reverse-proxy.hosts.miniflux = {

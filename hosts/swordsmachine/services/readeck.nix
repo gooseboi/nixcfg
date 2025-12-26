@@ -40,8 +40,8 @@ in {
     };
 
     systemd.services.readeck = {
-      after = ["postgresql.service"];
-      requires = ["postgresql.service"];
+      after = ["postgresql.target"];
+      requires = ["postgresql.target"];
     };
 
     chonkos.services.postgresql.ensure = ["readeck"];
