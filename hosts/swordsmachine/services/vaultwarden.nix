@@ -29,7 +29,6 @@ in {
       environmentFile = config.age.secrets.vaultwarden-envfile.path;
       config = {
         DOMAIN = "https://${remoteDomain}";
-        LOG_FILE = "${dataDir}/access.log";
 
         DATABASE_URL = "postgresql://vaultwarden@%2Frun%2Fpostgresql/vaultwarden";
         ROCKET_ADDRESS = "127.0.0.1";
