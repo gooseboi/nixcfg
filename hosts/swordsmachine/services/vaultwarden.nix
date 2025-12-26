@@ -24,6 +24,7 @@ in {
       inherit enable;
 
       dbBackend = "postgresql";
+      configurePostgres = false;
 
       environmentFile = config.age.secrets.vaultwarden-envfile.path;
       config = {
@@ -39,6 +40,10 @@ in {
     };
 
     chonkos.services.postgresql.ensure = ["vaultwarden"];
+    systemd.services.vaultwarden = {
+      after = ["postgresql.target"];
+      requires = ["postgresql.target"];
+    };
 
     chonkos.services.reverse-proxy.hosts.vaultwarden = {
       target = "http://127.0.0.1:${toString port}";
