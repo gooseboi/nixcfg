@@ -31,7 +31,6 @@ in {
         else fastfetchMinimal;
     in
       [
-        appimage-run
         asciinema
         compose2nix
         cowsay
@@ -104,6 +103,7 @@ in {
         cpufrequtils
       ]
       ++ lists.optionals isDesktop [
+        appimage-run
         czkawka-full
         graphviz
         handbrake
