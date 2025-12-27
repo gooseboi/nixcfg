@@ -86,6 +86,15 @@ in {
           NOTICE_ON_SUCCESS = true;
         };
 
+        "cron.delete_old_actions" = {
+          ENABLED = true;
+          RUN_AT_START = false;
+          NOTICE_ON_SUCCESS = true;
+          SCHEDULE = "@midnight";
+          # 1 year
+          OLDER_THAN = "8760h";
+        };
+
         "git.timeout" = {
           MIGRATE = 7200;
           MIRROR = 7200;
