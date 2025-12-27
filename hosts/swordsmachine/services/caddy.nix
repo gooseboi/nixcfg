@@ -100,6 +100,24 @@ in {
                 METRICS_BIND = anubisMetricsSocketName service.name;
                 METRICS_BIND_NETWORK = "unix";
               };
+
+              botPolicy = let
+                bots =
+                  service.value.anubisAllowedPaths
+                  |> map ({
+                    name,
+                    regex,
+                  }: {
+                    inherit name;
+                    path_regex = regex;
+                    action = "ALLOW";
+                  });
+              in
+                if builtins.length bots != 0
+                then {
+                  inherit bots;
+                }
+                else null;
             };
           })
           |> listToAttrs;

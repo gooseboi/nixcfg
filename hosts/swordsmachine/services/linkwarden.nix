@@ -53,6 +53,16 @@ in {
       targetType = "tcp";
       domain = "${serviceDomain}";
       enableAnubis = true;
+      anubisAllowedPaths = [
+        {
+          name = "api-v1";
+          regex = "^/api/v1.*$";
+        }
+        {
+          name = "api-v2";
+          regex = "^/api/v2.*$";
+        }
+      ];
     };
   };
 }
