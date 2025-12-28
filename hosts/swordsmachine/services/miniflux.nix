@@ -27,6 +27,9 @@ in {
         LISTEN_ADDR = "127.0.0.1:${toString port}";
         BASE_URL = "https://${serviceDomain}";
         DATABASE_URL = "user=miniflux host=/run/postgresql dbname=miniflux";
+
+        FETCH_YOUTUBE_WATCH_TIME = "1";
+        POLLING_LIMIT_PER_HOST = "5";
       };
 
       adminCredentialsFile = config.age.secrets.miniflux-admincredentials.path;
