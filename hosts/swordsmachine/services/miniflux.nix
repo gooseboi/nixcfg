@@ -29,7 +29,8 @@ in {
         DATABASE_URL = "user=miniflux host=/run/postgresql dbname=miniflux";
 
         FETCH_YOUTUBE_WATCH_TIME = "1";
-        POLLING_LIMIT_PER_HOST = "5";
+        BATCH_SIZE = "200";
+        POLLING_FREQUENCY = "30";
       };
 
       adminCredentialsFile = config.age.secrets.miniflux-admincredentials.path;
