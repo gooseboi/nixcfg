@@ -307,8 +307,6 @@ in {
               force = true;
               settings = {
                 "uBlock0@raymondhill.net" = {
-                  # TODO: What is this comment about?
-                  # Home-manager skip collision check
                   settings = {
                     user-filters = ''
                       !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

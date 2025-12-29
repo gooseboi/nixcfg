@@ -43,8 +43,6 @@ in {
     useAnubis = mkConst true;
   };
 
-  # TODO: X-Real-IP
-
   config = mkMerge [
     {
       services.caddy = {

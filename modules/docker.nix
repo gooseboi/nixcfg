@@ -16,6 +16,10 @@ in {
     virtualisation = {
       docker = {
         enable = true;
+        package = pkgs.docker.override {
+          buildxSupport = true;
+          composeSupport = true;
+        };
 
         storageDriver = "btrfs";
         enableOnBoot = false;
@@ -26,12 +30,8 @@ in {
 
     environment.shellAliases.docc = "docker compose";
 
-    # TODO: Docker compose can't find buildx (problem with nixpkgs:
-    # https://github.com/nixos/nixpkgs/issues/424333)
     environment.systemPackages = with pkgs; [
       dive
-      docker-buildx
-      docker-compose
     ];
   };
 }

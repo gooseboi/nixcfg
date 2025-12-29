@@ -12,10 +12,5 @@ in {
 
   imports = listNix ./. |> remove ./default.nix;
 
-  chonkos.services.postgresql = {
-    enable = true;
-    version = 17;
-  };
-
   virtualisation.oci-containers.backend = "podman";
 }
