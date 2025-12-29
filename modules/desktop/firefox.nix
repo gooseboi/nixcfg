@@ -122,6 +122,7 @@ in {
                 (extension "600-sound-volume" "{c4b582ec-4343-438c-bda2-2f691c16c262}")
                 (extension "ctrl-number-to-switch-tabs" "{84601290-bec9-494a-b11c-1baa897a9683}")
                 (extension "cookies-txt" "{12cf650b-1822-40aa-bff0-996df6948878}")
+                (extension "linkwarden" "jordanlinkwarden@gmail.com")
               ];
 
             Preferences =
@@ -171,6 +172,7 @@ in {
                       "fxa-toolbar-menu-button"
                       "unified-extensions-button"
                       "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
+                      "jordanlinkwarden_gmail_com-browser-action"
                       "ublock0_raymondhill_net-browser-action"
                     ];
                     toolbar-menubar = ["menubar-items"];
