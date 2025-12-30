@@ -45,6 +45,10 @@ in {
 
   config = mkMerge [
     {
+      chonkos.services.prometheus.exporters.caddy = {
+        inherit (cfg) enable;
+      };
+
       services.caddy = {
         inherit (cfg) enable;
       };

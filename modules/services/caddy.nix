@@ -5,14 +5,40 @@
 }: let
   inherit
     (lib)
+    mkEnableOption
     mkIf
+    types
+    mkOption
     ;
-  cfg = config.services.caddy;
 in {
-  # TODO: Add metrics (https://caddyserver.com/docs/metrics)
-  config = mkIf cfg.enable {
+  options.chonkos.services.prometheus.exporters.caddy = {
+    enable = mkEnableOption "enable caddy exporting metrics";
+
+    listenAddress = mkOption {
+      default = "127.0.0.1";
+      type = types.str;
+    };
+
+    port = mkOption {
+      default = 2019;
+      type = types.port;
+    };
+  };
+
+  config = {
+    services.caddy = let
+      cfg = config.chonkos.services.prometheus.exporters.caddy;
+    in {
+      # TODO: Set port from options
+      globalConfig = mkIf cfg.enable ''
+        metrics {
+          per_host
+        }
+      '';
+    };
+
     # Hardening
-    systemd.services.caddy.serviceConfig = {
+    systemd.services.caddy.serviceConfig = mkIf config.services.caddy.enable {
       ProtectClock = true;
       ProtectKernelTunables = true;
       ProtectKernelModules = true;
