@@ -11,6 +11,8 @@ in {
   "hosts/swordsmachine/services/secrets/grafana-adminpassword.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/linkwarden-envfile.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/miniflux-admincredentials.age".publicKeys = [swordsmachine chonk];
+  "hosts/swordsmachine/services/secrets/miniflux-metricspassword.age".publicKeys = [swordsmachine chonk];
+  "hosts/swordsmachine/services/secrets/miniflux-metricsusername.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/readeck-envfile.age".publicKeys = [swordsmachine chonk];
   "hosts/swordsmachine/services/secrets/vaultwarden-envfile.age".publicKeys = [swordsmachine chonk];
 }
