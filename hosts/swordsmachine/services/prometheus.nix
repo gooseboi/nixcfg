@@ -5,6 +5,8 @@
 }: let
   inherit
     (lib)
+    filterAttrs
+    mapAttrsToList
     mkIf
     ;
 
@@ -69,17 +71,30 @@ in {
         };
       };
 
-      # TODO: Auto generate these from `config.services.prometheus.exporters`
-      scrapeConfigs = [
-        {
-          job_name = "node_exporter";
+      scrapeConfigs =
+        (config.services.prometheus.exporters
+          // config.chonkos.services.prometheus.exporters)
+        |> filterAttrs (exporterName: exporterConfig:
+          !(builtins.elem exporterName [
+            # Removed modules
+            "minio"
+            "tor"
+            "unifi-poller"
+
+            # Don't have config
+            "assertions"
+            "warnings"
+          ])
+          && exporterConfig.enable)
+        |> mapAttrsToList (exporterName: exporterConfig: {
+          job_name = exporterName;
+
           static_configs = [
             {
-              targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];
+              targets = ["127.0.0.1:${toString exporterConfig.port}"];
             }
           ];
-        }
-      ];
+        });
     };
   };
 }
