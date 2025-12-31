@@ -73,6 +73,14 @@ in {
           name = "metrics";
           regex = "^/metrics.*$";
         }
+        {
+          name = "api-v1";
+          regex = "^/v1.*$";
+        }
+        {
+          name = "api-v2";
+          regex = "^/v2.*$";
+        }
       ];
     };
   };
