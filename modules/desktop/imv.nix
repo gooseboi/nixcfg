@@ -21,7 +21,6 @@ in {
   config = mkIf cfg.enable {
     home-manager.sharedModules = [
       {
-        # TODO: swayimg
         programs.imv = {
           enable = true;
           settings = {
