@@ -19,7 +19,6 @@
 
   serviceDomain = "${subDomain}.${domain}";
 in {
-  # TODO: Repo code indexing (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#indexer-indexer)
   # TODO: Prometheus (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#metrics-metrics)
 
   config = mkIf enable {
@@ -96,15 +95,22 @@ in {
         };
 
         "git.timeout" = {
-          MIGRATE = 7200;
-          MIRROR = 7200;
-          GC = 7200;
+          MIGRATE = 2 * 60 * 60;
+          MIRROR = 2 * 60 * 60;
+          GC = 2 * 60 * 60;
         };
 
         mirror = {
           ENABLED = true;
           DEFAULT_INTERVAL = "4h";
           MIN_INTERVAL = "10m";
+        };
+
+        indexer = {
+          REPO_INDEXER_ENABLED = true;
+          REPO_INDEXER_TYPE = "bleve";
+          REPO_INDEXER_PATH = "indexers/repos.bleve";
+          MAX_FILE_SIZE = 100 * 1024 * 1024;
         };
 
         ui.DEFAULT_THEME = "forgejo-dark";
