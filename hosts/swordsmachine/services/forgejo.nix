@@ -106,13 +106,6 @@ in {
           MIN_INTERVAL = "10m";
         };
 
-        indexer = {
-          REPO_INDEXER_ENABLED = true;
-          REPO_INDEXER_TYPE = "bleve";
-          REPO_INDEXER_PATH = "indexers/repos.bleve";
-          MAX_FILE_SIZE = 100 * 1024 * 1024;
-        };
-
         ui.DEFAULT_THEME = "forgejo-dark";
 
         actions.ENABLED = false;
