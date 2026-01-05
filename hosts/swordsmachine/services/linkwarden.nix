@@ -22,6 +22,10 @@ in {
   config = mkIf enable {
     age.secrets.linkwarden-envfile.file = ./secrets/linkwarden-envfile.age;
 
+    services.restic.backups.computer = {
+      paths = [dataDir];
+    };
+
     services.linkwarden = {
       inherit enable package;
 

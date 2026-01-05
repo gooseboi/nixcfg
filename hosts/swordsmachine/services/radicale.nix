@@ -14,8 +14,15 @@
   port = 5232;
   dataDir = "/var/lib/radicale";
   subDomain = "cal";
+
+  collectionPath = "${dataDir}/collections";
 in {
   config = mkIf enable {
+    # I don't really care about the passwords
+    services.restic.backups.computer = {
+      paths = [collectionPath];
+    };
+
     services.radicale = {
       inherit enable;
 
@@ -30,7 +37,7 @@ in {
           htpasswd_encryption = "bcrypt";
         };
         storage = {
-          filesystem_folder = "${dataDir}/collections";
+          filesystem_folder = collectionPath;
         };
       };
     };

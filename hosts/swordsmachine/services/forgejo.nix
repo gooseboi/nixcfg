@@ -20,6 +20,7 @@
   serviceDomain = "${subDomain}.${domain}";
 in {
   # TODO: Prometheus (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#metrics-metrics)
+  # TODO: Add backups
 
   config = mkIf enable {
     environment.systemPackages = [
