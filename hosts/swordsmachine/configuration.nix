@@ -8,6 +8,7 @@
     ./freedns.nix
     ./hardware-configuration.nix
     ./minecraft.nix
+    ./restic
     ./services
   ];
 
