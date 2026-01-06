@@ -114,6 +114,7 @@ in {
         nbt-explorer
         pandoc
         python3.pkgs.grip
+        restic
         rust-stakeholder
         what-anime-cli
       ];
