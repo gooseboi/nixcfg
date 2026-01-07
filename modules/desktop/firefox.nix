@@ -123,6 +123,7 @@ in {
                 (extension "ctrl-number-to-switch-tabs" "{84601290-bec9-494a-b11c-1baa897a9683}")
                 (extension "cookies-txt" "{12cf650b-1822-40aa-bff0-996df6948878}")
                 (extension "linkwarden" "jordanlinkwarden@gmail.com")
+                (extension "wappalyzer" "wappalyzer@crunchlabz.com")
               ];
 
             Preferences =
