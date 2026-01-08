@@ -16,15 +16,14 @@ in {
       ferdium
       gimp
       gparted
+      helium
       libreoffice-fresh
       obs-studio
       onlyoffice-desktopeditors
       playerctl
+      thunar
       ungoogled-chromium
-      xfce.thunar
-
       zen-browser
-      helium
     ];
   };
 }
