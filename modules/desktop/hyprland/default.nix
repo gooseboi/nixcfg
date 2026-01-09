@@ -116,25 +116,6 @@ in {
 
               debug.disable_logs = !cfg.enableDebug;
 
-              windowrule = let
-                fileChooser = selector: [
-                  "float, ${selector}"
-                  "size 50% 90%, ${selector}"
-                  "center, ${selector}"
-                ];
-              in
-                [
-                  # Librewolf
-                  (fileChooser "class:^(librewolf)$, title:^(Open File|Save As)$")
-                  # Cursor
-                  (fileChooser "class:^(cursor)$, title:^(Open Folder|Open File)$")
-                  # Ferdium
-                  (fileChooser "class:^(ferdium)$, title:^(Open Files)$")
-                  # Brave
-                  (fileChooser "class:^(brave)$, title:^(Open File|Save File)$")
-                ]
-                |> flatten;
-
               exec-once =
                 [
                   (optionalString nmEnabled "${pkgs.networkmanagerapplet}/bin/nm-applet")
