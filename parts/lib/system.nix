@@ -46,7 +46,12 @@ inputs: self: super: {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              sharedModules = [(self + /home)];
+              sharedModules = [
+                (self + /home)
+
+                # Packages
+                inputs.tailray.homeManagerModules.default
+              ];
 
               extraSpecialArgs = {
                 inherit inputs;

@@ -147,6 +147,10 @@ in {
             enable = true;
           };
 
+          services.tailray = {
+            enable = true;
+          };
+
           home.sessionVariables.NIXOS_OZONE_WL = "1";
 
           xdg.configFile."hypr/pyprland.toml".source = ./pyprland.toml;
