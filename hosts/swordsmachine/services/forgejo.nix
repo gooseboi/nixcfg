@@ -19,13 +19,35 @@
 
   serviceDomain = "${subDomain}.${domain}";
 in {
-  # TODO: Prometheus (https://forgejo.org/docs/latest/admin/config-cheat-sheet/#metrics-metrics)
-  # TODO: Add backups
+  # TODO: Prometheus (https://forgejo.org/docs/v13.0/admin/config-cheat-sheet/#metrics-metrics)
 
   config = mkIf enable {
     environment.systemPackages = [
       package
     ];
+
+    services.restic.backups.computer = {
+      paths = [dataDir];
+      exclude = [
+        # This directory stores archives created when clicking "Download as
+        # ZIP" or related api. These files are generated and therefore don't
+        # need backing up
+        "${dataDir}/data/repo-archive"
+
+        # All files in these directories are symlinked from the nix store
+        "${dataDir}/conf"
+
+        # These are because the forgejo user's home directory is in the data
+        # directory
+        "${dataDir}/.bash_history"
+        "${dataDir}/.psql_history"
+
+        # I don't care about whatever could be here
+        "${dataDir}/dump"
+        "${dataDir}/indexers"
+        "${dataDir}/log"
+      ];
+    };
 
     services.forgejo = {
       inherit enable;
@@ -38,6 +60,7 @@ in {
 
       database.type = "sqlite3";
 
+      # https://forgejo.org/docs/v13.0/admin/config-cheat-sheet/
       settings = {
         DEFAULT.APP_NAME = "Chonk's terrible git repos";
 
