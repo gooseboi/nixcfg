@@ -5,18 +5,18 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "gate";
-  version = "0.62.0";
+  version = "0.62.2";
 
   src = fetchFromGitHub {
     owner = "minekube";
     repo = "gate";
     tag = "v${finalAttrs.version}";
-    sha256 = "sha256-gDRw/YQtIpYiX3uKjvmttbVkohj2k5f+pvv+xYyY3S8=";
+    sha256 = "sha256-WxR2VKlvDFOzIiDPuJLoBa5U9afMrYJ9QTDl0yTgSu4=";
   };
 
   subPackages = ["."];
 
-  vendorHash = "sha256-4LJwb4ZXs+CUcxhvRveJy+xu7/UEjxIEwLV5Z5gBbT4=";
+  vendorHash = "sha256-f7SkECS80Lwkd0xSzHq+x05ZBjBYKXsA4rPidyIAYak=";
 
   meta.mainProgram = "gate";
 })
