@@ -21,6 +21,10 @@ in {
     # I don't really care about the passwords
     services.restic.backups.computer = {
       paths = [collectionPath];
+      exclude = [
+        "${collectionPath}/**/.Radicale.cache"
+        "${collectionPath}/.Radicale.lock"
+      ];
     };
 
     services.radicale = {
