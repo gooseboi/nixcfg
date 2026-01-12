@@ -113,6 +113,7 @@ in {
         libxml2
         libxslt
         libz
+        ncurses
         nspr
         nss
         openssl
