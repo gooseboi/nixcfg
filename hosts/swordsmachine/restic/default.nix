@@ -16,6 +16,17 @@
       backupCleanupCommand
       ;
 
+    # 1 / fps = seconds per update
+    progressFps = 0.1;
+
+    extraBackupArgs = [
+      # Speed in KB.
+      # This limit is to not overwhelm my home network when performing the
+      # backup because sometimes I'm a little naughty and stay up late and I
+      # don't want the internet to be interrupted for like 20 minutes.
+      "--limit-upload=2048"
+    ];
+
     pruneOpts = [
       "--keep-daily 7"
       "--keep-weekly 4"
