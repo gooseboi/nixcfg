@@ -7,7 +7,6 @@
   pkgs,
   ...
 }: let
-  inherit (config.networking) domain;
   inherit
     (lib)
     attrsToList
@@ -152,6 +151,7 @@ in {
         SYNC_PORT = toString cfg.bindPort;
         PASSWORDS_HASHED = mkIf cfg.hashPasswords "1";
       };
+      restartIfChanged = true;
 
       serviceConfig = {
         User = cfg.user;
@@ -212,12 +212,15 @@ in {
       };
     };
 
-    chonkos.services.reverse-proxy.hosts.anki = {
-      inherit (cfg) enable;
-
-      target = "http://${cfg.bindAddress}:${toString cfg.bindPort}";
-      targetType = "tcp";
-      domain = "anki.${domain}";
+    # TODO: I don't think this works
+    systemd.paths.${name} = {
+      description = "Watch config for ${name}";
+      wantedBy = ["multi-user.target"];
+      pathConfig = {
+        PathChanged =
+          usersWithIndexesFile
+          |> map ({user, ...}: user.passwordFile);
+      };
     };
   };
 }
