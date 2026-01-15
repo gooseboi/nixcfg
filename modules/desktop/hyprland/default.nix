@@ -7,7 +7,6 @@
   inherit
     (lib)
     filter
-    flatten
     listFilesWithNames
     listNixWithDirs
     lists
@@ -20,6 +19,19 @@
     ;
 
   cfg = config.chonkos.hyprland;
+
+  networkManagerEnabled = config.chonkos.network-manager.enable;
+  tailscaleEnabled = config.chonkos.tailscale.enable;
+
+  scripts =
+    listFilesWithNames ./scripts
+    |> map (
+      {
+        name,
+        path,
+      }:
+        pkgs.writeShellScriptBin name (builtins.readFile path)
+    );
 in {
   options.chonkos.hyprland = {
     enable = mkEnableOption "enable hyprland";
@@ -31,19 +43,7 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (let
-    nmEnabled = config.chonkos.network-manager.enable;
-
-    scripts =
-      listFilesWithNames ./scripts
-      |> map (
-        {
-          name,
-          path,
-        }:
-          pkgs.writeShellScriptBin name (builtins.readFile path)
-      );
-  in {
+  config = mkIf cfg.enable {
     programs.hyprland.enable = true;
     hardware = {
       graphics.enable = true;
@@ -118,7 +118,6 @@ in {
 
               exec-once =
                 [
-                  (optionalString nmEnabled "${pkgs.networkmanagerapplet}/bin/nm-applet")
                   "${pkgs.blueman}/bin/blueman-applet"
                   "${pkgs.util-linux}/bin/rfkill block bluetooth"
                   # TODO: use home-manager config
@@ -143,12 +142,24 @@ in {
             ];
           };
 
-          services.hyprpolkitagent = {
-            enable = true;
-          };
-
-          services.tailray = {
-            enable = true;
+          services = {
+            hyprpolkitagent.enable = true;
+            network-manager-applet.enable = networkManagerEnabled;
+            # FIXME: This doesn't work because:
+            # ''
+            # Found ordering cycle:
+            # tailray.service/start after
+            # tray.target/start after
+            # waybar.service/start after
+            # graphical-session.target/start -
+            # after tailray.service
+            # ''
+            # however, the service file for nm-applet works fine, and it's
+            # mostly the same. The difference is it's
+            # After=graphical-session.target instead of
+            # graphical-session-pre.target, maybe that's the problem, but I
+            # don't know how to remove the value and then add the new one.
+            tailray.enable = tailscaleEnabled;
           };
 
           home.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -157,5 +168,5 @@ in {
         };
       }
     ];
-  });
+  };
 }
