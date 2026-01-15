@@ -3,7 +3,7 @@
   fetchFromSourcehut,
   ...
 }: let
-  name =  "pbkdf2-password-hash";
+  name = "pbkdf2-password-hash";
   rev = "9dfc0fd353bda7a6ccffbf681efc9a26dcc29a90";
 in
   rustPlatform.buildRustPackage {
