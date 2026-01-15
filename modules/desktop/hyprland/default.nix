@@ -54,7 +54,6 @@ in {
     environment.systemPackages =
       (with pkgs; [
         libqalculate
-        pyprland
         swaylock
         swayidle
       ])
@@ -163,8 +162,6 @@ in {
           };
 
           home.sessionVariables.NIXOS_OZONE_WL = "1";
-
-          xdg.configFile."hypr/pyprland.toml".source = ./pyprland.toml;
         };
       }
     ];
