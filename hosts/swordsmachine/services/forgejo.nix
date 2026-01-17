@@ -46,6 +46,9 @@ in {
         "${dataDir}/dump"
         "${dataDir}/indexers"
         "${dataDir}/log"
+
+        # Tempfiles for git gc
+        "${dataDir}/repositories/**/*.git/objects/pack/.tmp*pack"
       ];
     };
 
