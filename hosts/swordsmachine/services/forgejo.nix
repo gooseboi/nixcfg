@@ -107,8 +107,8 @@ in {
         "cron.git_gc_repos" = {
           ENABLED = true;
           RUN_AT_START = false;
-          SCHEDULE = "@every ${toString (3 * 24)}h";
-          TIMEOUT = "${toString (5 * 60)}s";
+          SCHEDULE = "@weekly";
+          TIMEOUT = "${toString (10 * 60)}s";
           NOTICE_ON_SUCCESS = true;
         };
 
