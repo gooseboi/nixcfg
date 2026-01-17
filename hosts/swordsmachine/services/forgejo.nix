@@ -107,8 +107,8 @@ in {
         "cron.git_gc_repos" = {
           ENABLED = true;
           RUN_AT_START = false;
-          SCHEDULE = "@midnight";
-          TIMEOUT = "180s";
+          SCHEDULE = "@every ${toString (3 * 24)}h";
+          TIMEOUT = "${toString (5 * 60)}s";
           NOTICE_ON_SUCCESS = true;
         };
 
@@ -118,7 +118,7 @@ in {
           NOTICE_ON_SUCCESS = true;
           SCHEDULE = "@midnight";
           # 1 year
-          OLDER_THAN = "8760h";
+          OLDER_THAN = "${toString (365 * 24)}h";
         };
 
         "git.timeout" = {
