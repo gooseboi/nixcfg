@@ -10,11 +10,11 @@ rustPlatform.buildRustPackage {
   src = fetchFromGitHub {
     owner = "gooseboi";
     repo = "rss-proxy";
-    rev = "b3a610bb0190bbc41bca31975bbd4a3ab3d20697";
-    hash = "sha256-jQHxPc/vBQFWryFMEFiii305z1LzAtIOR4OYto9/PmM=";
+    rev = "bd123e546b715fd8b9e0d2146a88b1c000cc4ac9";
+    hash = "sha256-S2aeLdVtunGJgcsw2r28PHa2Dm6WnRWa8bZ/cdMZDzE=";
   };
 
-  cargoHash = "sha256-6rZhBsqjPnDq+hx0vdu0vcKWUXyQEAgyPwExrWrRNhE=";
+  cargoHash = "sha256-cgt2d7Ik8OZMpxUGnH3UcANgcInIxb9cJIt5Qzhcfqk=";
 
   meta = {
     mainProgram = "rss-proxy";
