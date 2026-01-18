@@ -21,6 +21,7 @@ in {
         (with pkgs; [
           corefonts
           googlesans-code
+          intel-one-mono
           iosevka
           jetbrains-mono
           libertinus
