@@ -32,6 +32,8 @@ in {
       ];
 
       albifrons = mkHost "albifrons" "x86_64-linux" [];
+
+      erythropus = mkHost "erythropus" "x86_64-linux" [];
     };
 
     # TODO: A nice way to auto-generate these?
