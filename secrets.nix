@@ -1,10 +1,10 @@
 let
-  inherit (import ./keys.nix) chonk anatidae canagicus printer all;
+  inherit (import ./keys.nix) chonk indicus canagicus printer all;
 in {
   "modules/secrets/chonk-hashedPassword.age".publicKeys = all;
 
-  "hosts/anatidae/syncthing-cert.age".publicKeys = [anatidae chonk];
-  "hosts/anatidae/syncthing-key.age".publicKeys = [anatidae chonk];
+  "hosts/indicus/syncthing-cert.age".publicKeys = [indicus chonk];
+  "hosts/indicus/syncthing-key.age".publicKeys = [indicus chonk];
 
   "hosts/canagicus/restic/restic-password.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/restic/restic-envfile.age".publicKeys = [canagicus chonk];

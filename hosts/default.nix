@@ -10,7 +10,7 @@
 in {
   flake = {
     nixosConfigurations = with hw; {
-      anatidae = mkHost "anatidae" "x86_64-linux" [
+      indicus = mkHost "indicus" "x86_64-linux" [
         common-cpu-intel
         common-gpu-intel
         common-pc-laptop-ssd
