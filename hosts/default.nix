@@ -19,7 +19,7 @@ in {
         }
       ];
 
-      swordsmachine = mkHost "swordsmachine" "x86_64-linux" [
+      canagicus = mkHost "canagicus" "x86_64-linux" [
         common-cpu-amd
         common-cpu-amd-pstate
         common-cpu-amd-zenpower
@@ -38,8 +38,8 @@ in {
     # TODO: No interactive sudo (a `deploy` user with /bin/nologin?)
     # TODO: Running deploy always checks every single nixos configuration, that's kinda stupid
     deploy.nodes = {
-      swordsmachine = {
-        hostname = "swordsmachine";
+      canagicus = {
+        hostname = "canagicus";
         profiles.system = {
           sshUser = "chonk";
           user = "chonk";
@@ -47,7 +47,7 @@ in {
           remoteBuild = true;
           path =
             deploy-rs.lib.x86_64-linux.activate.nixos
-            self.nixosConfigurations.swordsmachine;
+            self.nixosConfigurations.canagicus;
         };
       };
 

@@ -1,20 +1,20 @@
 let
-  inherit (import ./keys.nix) chonk anatidae swordsmachine printer all;
+  inherit (import ./keys.nix) chonk anatidae canagicus printer all;
 in {
   "modules/secrets/chonk-hashedPassword.age".publicKeys = all;
 
   "hosts/anatidae/syncthing-cert.age".publicKeys = [anatidae chonk];
   "hosts/anatidae/syncthing-key.age".publicKeys = [anatidae chonk];
 
-  "hosts/swordsmachine/restic/restic-password.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/restic/restic-envfile.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/secrets/freedns-token.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/anki-chonkpassword.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/grafana-adminpassword.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/linkwarden-envfile.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/miniflux-admincredentials.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/miniflux-metricspassword.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/miniflux-metricsusername.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/readeck-envfile.age".publicKeys = [swordsmachine chonk];
-  "hosts/swordsmachine/services/secrets/vaultwarden-envfile.age".publicKeys = [swordsmachine chonk];
+  "hosts/canagicus/restic/restic-password.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/restic/restic-envfile.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/secrets/freedns-token.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/anki-chonkpassword.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/grafana-adminpassword.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/linkwarden-envfile.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/miniflux-admincredentials.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/miniflux-metricspassword.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/miniflux-metricsusername.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/readeck-envfile.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/vaultwarden-envfile.age".publicKeys = [canagicus chonk];
 }

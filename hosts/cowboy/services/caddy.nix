@@ -21,13 +21,13 @@ in {
       inherit enable;
 
       virtualHosts =
-        self.nixosConfigurations.swordsmachine.config.chonkos.services.reverse-proxy.hosts
+        self.nixosConfigurations.canagicus.config.chonkos.services.reverse-proxy.hosts
         |> attrsToList
         |> map ({value, ...}: {
           "https://${value.domain}" = {
             extraConfig = ''
               # Using tailscale
-              reverse_proxy http://swordsmachine {
+              reverse_proxy http://canagicus {
                 header_up X-Real-IP {remote_host}
               }
             '';
