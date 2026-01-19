@@ -31,7 +31,7 @@ in {
         common-cpu-intel
       ];
 
-      cowboy = mkHost "cowboy" "x86_64-linux" [];
+      albifrons = mkHost "albifrons" "x86_64-linux" [];
     };
 
     # TODO: A nice way to auto-generate these?
@@ -63,15 +63,15 @@ in {
         };
       };
 
-      cowboy = {
-        hostname = "cowboy";
+      albifrons = {
+        hostname = "albifrons";
         profiles.system = {
           sshUser = "chonk";
           user = "chonk";
           interactiveSudo = true;
           path =
             deploy-rs.lib.x86_64-linux.activate.nixos
-            self.nixosConfigurations.cowboy;
+            self.nixosConfigurations.albifrons;
         };
       };
     };
