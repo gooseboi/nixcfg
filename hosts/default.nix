@@ -76,6 +76,18 @@ in {
             self.nixosConfigurations.albifrons;
         };
       };
+
+      erythropus = {
+        hostname = "erythropus";
+        profiles.system = {
+          sshUser = "chonk";
+          user = "chonk";
+          interactiveSudo = true;
+          path =
+            deploy-rs.lib.x86_64-linux.activate.nixos
+            self.nixosConfigurations.erythropus;
+        };
+      };
     };
   };
 }
