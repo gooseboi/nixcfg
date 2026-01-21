@@ -21,8 +21,7 @@
     isNormalUser = true;
     description = "chonk";
     extraGroups = ["wheel"];
-    password = "chonk";
-    # hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
+    hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
     openssh.authorizedKeys.keys = [
       keys.chonk
     ];
