@@ -5,6 +5,7 @@ let
     albifrons = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHm3UweR+NM95TBsYQ237BX9y1jvT6wSGgnUjaFkewlP";
     printer = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPbJtMv8Tr6XODoIfoTq89ytU+9DTmU1X1h+T7vU0Fiy";
     canagicus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAYB1t65P81JR8kY60KKiKqwtGzvhWbjIk9uDzMETlue";
+    erythropus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFRcKG4QalQEsDCE96/mGfmYOZolrDcg3mN5KmupwEo8";
   };
 in
   keys
