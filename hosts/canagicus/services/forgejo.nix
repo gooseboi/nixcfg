@@ -52,6 +52,12 @@ in {
       ];
     };
 
+    chonkos.services.postgresql.ensure = ["forgejo"];
+    systemd.services.forgejo = {
+      after = ["postgresql.target"];
+      requires = ["postgresql.target"];
+    };
+
     services.forgejo = {
       inherit enable;
 
@@ -61,7 +67,11 @@ in {
 
       lfs.enable = true;
 
-      database.type = "sqlite3";
+      database = {
+        socket = "/run/postgresql";
+        type = "postgres";
+        createDatabase = false;
+      };
 
       # https://forgejo.org/docs/v13.0/admin/config-cheat-sheet/
       settings = {
