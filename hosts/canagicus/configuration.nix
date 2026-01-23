@@ -34,6 +34,7 @@
       user = "chonk";
 
       eza.enable = true;
+      bat.enable = true;
       tmux.enable = true;
     };
 
