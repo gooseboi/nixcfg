@@ -60,7 +60,7 @@ in {
 
           history = {
             append = true;
-            path = "${hmConfig.xdg.cacheHome}/zsh_history";
+            path = "${hmConfig.xdg.dataHome}/zsh_history";
             size = 10000000;
             save = 10000000;
           };
