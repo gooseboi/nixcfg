@@ -22,7 +22,7 @@
         # somewhat hard to setup outside of nix and those we just do here.
         config.vim = {
           additionalRuntimePaths = [
-            "~/.config/nvim"
+            ./configs
           ];
 
           startPlugins = mkMerge (with pkgs.vimPlugins; [
@@ -87,7 +87,7 @@
           # packages (ha) from a path instead of dynamically installing them
           # which is the default behaviour of the plugin).
           treesitter = {
-            enable = true;
+            enable = isDesktop;
             grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
 
             context.enable = false;
@@ -100,13 +100,5 @@ in {
   config = {
     environment.systemPackages = [nvim.neovim];
     programs.nvf.enableManpages = true;
-    home-manager.sharedModules = [
-      {
-        xdg.configFile."nvim" = {
-          source = ./configs;
-          recursive = true;
-        };
-      }
-    ];
   };
 }
