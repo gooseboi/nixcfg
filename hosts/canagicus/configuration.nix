@@ -47,8 +47,6 @@
 
     agenix.enable = true;
     i18n.enable = true;
-    neovim.enable = true;
-    neovim.setEnvironment = true;
     openssh.enable = true;
     tailscale.enable = true;
     tailscale.enableExitNode = true;
