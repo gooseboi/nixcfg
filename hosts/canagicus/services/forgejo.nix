@@ -114,12 +114,9 @@ in {
           NOTICE_ON_SUCCESS = true;
         };
 
+        # TODO: Repack things more efficiently
         "cron.git_gc_repos" = {
-          ENABLED = true;
-          RUN_AT_START = false;
-          SCHEDULE = "@weekly";
-          TIMEOUT = "${toString (10 * 60)}s";
-          NOTICE_ON_SUCCESS = true;
+          ENABLED = false;
         };
 
         "cron.delete_old_actions" = {
