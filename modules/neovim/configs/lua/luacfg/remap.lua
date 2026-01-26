@@ -75,4 +75,4 @@ cnoremap('<C-k>', '<Up>')
 nnoremap('<leader>cd', ':cd %:p:h<CR>')
 
 -- swap to previous file by double tapping leader
-nnoremap("<leader><leader>", "<C-^>") 
+nnoremap("<leader><leader>", "<C-^>")

@@ -1,9 +1,18 @@
 # TODO: https://tonsky.me/blog/syntax-highlighting/
 {
-  pkgs,
+  config,
+  lib,
   nvf,
+  pkgs,
   ...
 }: let
+  inherit
+    (lib)
+    mkIf
+    mkMerge
+    ;
+  inherit (config.chonkos) isDesktop;
+
   nvim = nvf.lib.neovimConfiguration {
     inherit pkgs;
     modules = [
@@ -16,25 +25,28 @@
             "~/.config/nvim"
           ];
 
-          # TODO: Some of these shouldn't go on servers
-          startPlugins = with pkgs.vimPlugins; [
-            comment-nvim
-            blink-cmp
-            easymotion
-            gruvbox-material
-            harpoon2
-            lualine-nvim
-            nvim-lspconfig
-            nvim-web-devicons
-            oil-nvim
-            plenary-nvim
-            telescope-fzf-native-nvim
-            telescope-nvim
-            telescope-ui-select-nvim
-            vimwiki
-          ];
+          startPlugins = mkMerge (with pkgs.vimPlugins; [
+            (mkIf isDesktop [
+              blink-cmp
+              easymotion
+              harpoon2
+              nvim-lspconfig
+              telescope-fzf-native-nvim
+              telescope-nvim
+              telescope-ui-select-nvim
+              vimwiki
+            ])
+            [
+              comment-nvim
+              gruvbox-material
+              lualine-nvim
+              nvim-web-devicons
+              oil-nvim
+              plenary-nvim
+            ]
+          ]);
 
-          extraPackages = with pkgs; [
+          extraPackages = mkIf isDesktop (with pkgs; [
             alejandra
             basedpyright
             bash-language-server
@@ -54,13 +66,18 @@
             vscode-langservers-extracted
             vtsls
             zls
-          ];
+          ]);
 
           luaConfigPost =
             /*
             lua
             */
             ''
+              vim.g.chonkos_desktop = ${
+                if isDesktop
+                then "true"
+                else "false"
+              };
               -- Require the manual config we define in lua
               require('luacfg');
             '';
