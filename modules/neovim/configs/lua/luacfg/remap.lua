@@ -73,3 +73,6 @@ cnoremap('<C-k>', '<Up>')
 
 -- cd to directory of current file
 nnoremap('<leader>cd', ':cd %:p:h<CR>')
+
+-- swap to previous file by double tapping leader
+nnoremap("<leader><leader>", "<C-^>") 

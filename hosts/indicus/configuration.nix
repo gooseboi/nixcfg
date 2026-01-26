@@ -72,8 +72,6 @@
       "HDMI-A-1, preferred   , auto, 1, mirror ,eDP-1"
     ];
     i18n.enable = true;
-    neovim.enable = true;
-    neovim.setEnvironment = true;
     network-manager.enable = true;
     nushell.enable = true;
     openssh.enable = true;

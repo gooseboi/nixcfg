@@ -33,6 +33,8 @@ inputs: self: super: {
           # Secrets
           inputs.agenix.nixosModules.default
 
+          inputs.nvf.nixosModules.default
+
           # Home manager configs
           ({
             config,
