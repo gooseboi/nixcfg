@@ -73,8 +73,8 @@
 
   services.logind.settings.Login.HandleLidSwitch = "ignore";
 
-  boot.kernelParams = ["amd_pstate=guided"];
   powerManagement.enable = true;
+  powerManagement.cpuFreqGovernor = "performance";
 
   system.stateVersion = "24.05"; # This shouldn't be changed
 }
