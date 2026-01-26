@@ -52,8 +52,6 @@
     openssh.enable = true;
     tailscale.enable = true;
     tailscale.enableExitNode = true;
-    tlp.batMaxFreq = 30;
-    tlp.enable = true;
     utils.enable = true;
     zsh.enable = true;
     zsh.enableUserShell = true;
@@ -77,11 +75,8 @@
 
   services.logind.settings.Login.HandleLidSwitch = "ignore";
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  boot.kernelParams = ["amd_pstate=guided"];
+  powerManagement.enable = true;
 
   system.stateVersion = "24.05"; # This shouldn't be changed
 }
