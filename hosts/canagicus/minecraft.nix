@@ -10,9 +10,9 @@
         dest = "localhost:25566";
       };
 
-      servers.deceased = {
+      servers.ciscorpg = {
         enable = true;
-        src = "deceased.gooseman.net";
+        src = "ciscorpg.gooseman.net";
         dest = "localhost:25567";
       };
     };
