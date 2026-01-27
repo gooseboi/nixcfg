@@ -8,6 +8,7 @@
     ./freedns.nix
     ./hardware-configuration.nix
     ./minecraft.nix
+    ./power.nix
     ./restic
     ./services
   ];
@@ -72,9 +73,6 @@
   };
 
   services.logind.settings.Login.HandleLidSwitch = "ignore";
-
-  powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = "performance";
 
   system.stateVersion = "24.05"; # This shouldn't be changed
 }
