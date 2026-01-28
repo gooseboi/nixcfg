@@ -23,6 +23,7 @@ in {
     environment.systemPackages = with pkgs; [
       # C/C++
       (hiPrio gcc) # To stop conflict with clang for c++ bin
+      cdecl
       clang
       clang-tools
       cmake
