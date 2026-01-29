@@ -34,7 +34,7 @@ in {
   # because the laptop shouldn't get that hot, but I have not made its cooling
   # good, and therefore it gets really hot.
   systemd.services."thermal-throttle" = let
-    maxTemp = 60;
+    maxTemp = 85;
     hotFreq = 1.8;
     coldFreq = 3.2;
 
@@ -65,15 +65,18 @@ in {
             if (( temp > ${toString (maxTemp * 1000)} )); then
                 if [ "$last_check_was_hot" = true ]; then
                   setfreq "${toString hotFreq}"
+                  echo "Was hot, lowering frequency and cooling off"
 
                   # Give it some more time to cool down
                   sleep 5
                 else
                   last_check_was_hot=true
                   setfreq "${toString coldFreq}"
+                  echo "Was hot, giving it some time until throttling"
                 fi
             else
                 last_check_was_hot=false
+                echo "It's cold"
                 setfreq "${toString coldFreq}"
             fi
 
