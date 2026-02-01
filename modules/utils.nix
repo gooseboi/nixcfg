@@ -107,7 +107,7 @@ in {
         calibre # For ebook-convert
         czkawka-full
         graphviz
-        handbrake
+        # handbrake (FIXME: https://github.com/NixOS/nixpkgs/issues/484121)
         imagemagickBig
         libqalculate
         localsend

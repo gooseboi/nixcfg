@@ -34,7 +34,7 @@ in {
     chonkos.services.postgresql.ensure = ["root" "postgresql"];
 
     environment.systemPackages = with pkgs; [
-      pgloader
+      # pgloader (FIXME: This stopped building)
     ];
 
     services.postgresql = {

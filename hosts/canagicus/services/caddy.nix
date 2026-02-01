@@ -103,7 +103,7 @@ in {
                 METRICS_BIND_NETWORK = "unix";
               };
 
-              botPolicy = let
+              policy = let
                 bots =
                   service.value.anubisAllowedPaths
                   |> map ({
@@ -117,9 +117,9 @@ in {
               in
                 if builtins.length bots != 0
                 then {
-                  inherit bots;
+                  extraBots =  bots;
                 }
-                else null;
+                else {};
             };
           })
           |> listToAttrs;
