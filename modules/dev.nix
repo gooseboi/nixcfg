@@ -54,6 +54,7 @@ in {
       )
 
       # Rust
+      bacon
       binaryen
       cargo-expand
       cargo-flamegraph
@@ -97,8 +98,11 @@ in {
         }
       )
 
-      # Solo
+      # Golang
+      air
       go
+
+      # Solo
       lean4
       odin
       rocq-core
