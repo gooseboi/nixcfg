@@ -98,7 +98,13 @@
   };
 in {
   config = {
-    environment.systemPackages = [nvim.neovim];
+    environment = {
+      variables = {
+        EDITOR = "nvim";
+        VISUAL = "nvim";
+      };
+      systemPackages = [nvim.neovim];
+    };
     programs.nvf.enableManpages = true;
   };
 }
