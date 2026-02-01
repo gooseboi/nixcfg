@@ -117,6 +117,7 @@ in {
         python3.pkgs.grip
         restic
         rust-stakeholder
+        scrcpy
         what-anime-cli
       ];
 
