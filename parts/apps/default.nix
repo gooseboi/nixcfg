@@ -41,6 +41,11 @@
         type = "app";
         program = getExe disko.packages.disko;
       };
+
+      htpasswd = {
+        type = "app";
+        program = "${pkgs.apacheHttpd}/bin/htpasswd";
+      };
     };
   };
 }
