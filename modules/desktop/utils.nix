@@ -22,6 +22,7 @@ in {
       onlyoffice-desktopeditors
       playerctl
       thunar
+      thunderbird
       ungoogled-chromium
       zen-browser
     ];
