@@ -7,8 +7,9 @@
         content = {
           type = "gpt";
           partitions = {
-            ESP = {
-              size = "500M";
+            esp = {
+              name = "ESP";
+              size = "512M";
               type = "EF00";
               content = {
                 type = "filesystem";
@@ -17,53 +18,21 @@
                 mountOptions = ["umask=0077"];
               };
             };
+            swap = {
+              size = "4G";
+              content = {
+                type = "swap";
+              };
+            };
             primary = {
               size = "100%";
               content = {
-                type = "lvm_pv";
-                vg = "rootvol";
-              };
-            };
-          };
-        };
-      };
-    };
-    lvm_vg = {
-      rootvol = {
-        type = "lvm_vg";
-        lvs = {
-          swap = {
-            size = "8G";
-            content = {
-              type = "swap";
-              resumeDevice = true;
-            };
-          };
-          root = {
-            size = "100%";
-            content = {
-              type = "btrfs";
-              extraArgs = ["-f"];
-              subvolumes = {
-                "/root" = {
-                  mountpoint = "/";
-                  mountOptions = [
-                    "noatime"
-                  ];
-                };
-                "/home" = {
-                  mountpoint = "/home";
-                  mountOptions = [
-                    "noatime"
-                  ];
-                };
-                "/nix" = {
-                  mountpoint = "/nix";
-                  mountOptions = [
-                    "noatime"
-                    "compress=zstd:3"
-                  ];
-                };
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+                mountOptions = [
+                  "defaults"
+                ];
               };
             };
           };
