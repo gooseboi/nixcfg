@@ -14,7 +14,7 @@ in {
 
   config = mkIf cfg.enable {
     programs.wireshark = {
-      package = pkgs.wireshark-qt;
+      package = pkgs.wireshark;
       enable = true;
     };
 
