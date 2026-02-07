@@ -65,6 +65,7 @@ in {
         gawk
         gnused
         grim
+        hypr-zoom
         libnotify
         light
         mpc
