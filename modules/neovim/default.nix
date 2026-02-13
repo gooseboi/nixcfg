@@ -28,7 +28,7 @@
           startPlugins = mkMerge (with pkgs.vimPlugins; [
             (mkIf isDesktop [
               blink-cmp
-              easymotion
+              vim-easymotion
               harpoon2
               nvim-lspconfig
               telescope-fzf-native-nvim

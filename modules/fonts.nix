@@ -20,7 +20,7 @@ in {
       packages =
         (with pkgs; [
           corefonts
-          etBook
+          et-book
           googlesans-code
           intel-one-mono
           iosevka
