@@ -12,6 +12,7 @@
     listNixWithDirs
     lists
     mkEnableOption
+    mkForce
     mkIf
     mkOption
     optionalString
@@ -152,21 +153,15 @@ in {
           services = {
             hyprpolkitagent.enable = true;
             network-manager-applet.enable = networkManagerEnabled;
-            # FIXME: This doesn't work because:
-            # ''
-            # Found ordering cycle:
-            # tailray.service/start after
-            # tray.target/start after
-            # waybar.service/start after
-            # graphical-session.target/start -
-            # after tailray.service
-            # ''
-            # however, the service file for nm-applet works fine, and it's
-            # mostly the same. The difference is it's
-            # After=graphical-session.target instead of
-            # graphical-session-pre.target, maybe that's the problem, but I
-            # don't know how to remove the value and then add the new one.
             tailray.enable = tailscaleEnabled;
+          };
+
+          systemd.user.services.tailray = {
+            # This is to set "graphical-session.target" instead of
+            # "graphical-session-pre.target" Why exactly this is necessary is
+            # beyond me, but it fixes the problem. The reason I set it to be
+            # this is because network-manager-applet has it done like this.
+            Unit.After = mkForce ["graphical-session.target" "tray.target"];
           };
 
           home.sessionVariables.NIXOS_OZONE_WL = "1";
