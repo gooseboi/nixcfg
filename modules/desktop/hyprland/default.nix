@@ -6,10 +6,13 @@
 }: let
   inherit
     (lib)
+    attrValues
     filter
     getExe
+    getExe'
     listFilesWithNames
     listNixWithDirs
+    listToAttrs
     lists
     mkEnableOption
     mkForce
@@ -31,9 +34,39 @@
       {
         name,
         path,
-      }:
-        pkgs.writeShellScriptBin name (builtins.readFile path)
-    );
+      }: {
+        inherit name;
+        value = pkgs.writeShellApplication {
+          inherit name;
+          text = builtins.readFile path;
+          runtimeInputs = with pkgs; [
+            acpi
+            coreutils
+            gawk
+            gnused
+            grim
+            hypr-zoom
+            libnotify
+            light
+            mpc
+            pamixer
+            pulseaudioFull
+            slurp
+            wl-clipboard
+            zbar
+          ];
+        };
+      }
+    )
+    |> listToAttrs;
+
+  hyprland-before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
+    ${getExe' pkgs.hyprland "hyprctl"} switchxkblayout at-translated-set-2-keyboard 0
+    ${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on
+    ${getExe pkgs.playerctl} pause -a
+    ${getExe scripts.hyprsetvol} -m
+    ${getExe pkgs.swaylock} -f -i ~/.local/share/bg
+  '';
 in {
   options.chonkos.hyprland = {
     enable = mkEnableOption "enable hyprland";
@@ -57,24 +90,7 @@ in {
       (with pkgs; [
         libqalculate
       ])
-      ++ scripts
-      ++ (with pkgs; [
-        # Script deps
-        acpi
-        coreutils
-        gawk
-        gnused
-        grim
-        hypr-zoom
-        libnotify
-        light
-        mpc
-        pamixer
-        pulseaudioFull
-        slurp
-        wl-clipboard
-        zbar
-      ])
+      ++ (attrValues scripts)
       ++ lists.optional cfg.enableMpd pkgs.mpd;
 
     home-manager.sharedModules = [
@@ -94,25 +110,6 @@ in {
             x11.enable = true;
             gtk.enable = true;
           };
-
-          home.packages = [
-            (pkgs.writeShellScriptBin "hyprland-before-sleep.sh" (
-              with pkgs; ''
-                ${getExe hyprland} switchxkblayout at-translated-set-2-keyboard 0
-                ${getExe playerctl} pause -a
-                hyprsetvol -m
-                ${getExe swaylock} -f -i ~/.local/share/bg
-              ''
-            ))
-            (pkgs.writeShellScriptBin "hyprland-swayidle.sh" (
-              with pkgs; ''
-                ${getExe swayidle} -w \
-                  before-sleep hyprland-before-sleep.sh \
-                  timeout 300 'hyprctl dispatch dpms off' \
-                  resume 'hyprctl dispatch dpms on'
-              ''
-            ))
-          ];
 
           wayland.windowManager.hyprland = {
             enable = true;
@@ -154,6 +151,19 @@ in {
             hyprpolkitagent.enable = true;
             network-manager-applet.enable = networkManagerEnabled;
             tailray.enable = tailscaleEnabled;
+            swayidle = {
+              enable = true;
+              events = {
+                "before-sleep" = getExe hyprland-before-sleep;
+              };
+              timeouts = [
+                {
+                  timeout = 300;
+                  command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
+                  resumeCommand = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on";
+                }
+              ];
+            };
           };
 
           systemd.user.services.tailray = {
