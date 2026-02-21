@@ -55,6 +55,7 @@
             wl-clipboard
             zbar
           ];
+          bashOptions = [];
         };
       }
     )
