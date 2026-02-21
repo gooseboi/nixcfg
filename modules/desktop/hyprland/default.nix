@@ -7,6 +7,7 @@
   inherit
     (lib)
     filter
+    getExe
     listFilesWithNames
     listNixWithDirs
     lists
@@ -54,8 +55,6 @@ in {
     environment.systemPackages =
       (with pkgs; [
         libqalculate
-        swaylock
-        swayidle
       ])
       ++ scripts
       ++ (with pkgs; [
@@ -98,10 +97,18 @@ in {
           home.packages = [
             (pkgs.writeShellScriptBin "hyprland-before-sleep.sh" (
               with pkgs; ''
-                ${hyprland}/bin/hyprctl switchxkblayout at-translated-set-2-keyboard 0
-                ${playerctl}/bin/playerctl pause -a
+                ${getExe hyprland} switchxkblayout at-translated-set-2-keyboard 0
+                ${getExe playerctl} pause -a
                 hyprsetvol -m
-                ${swaylock}/bin/swaylock -f -i ~/.local/share/bg
+                ${getExe swaylock} -f -i ~/.local/share/bg
+              ''
+            ))
+            (pkgs.writeShellScriptBin "hyprland-swayidle.sh" (
+              with pkgs; ''
+                ${getExe swayidle} -w \
+                  before-sleep hyprland-before-sleep.sh \
+                  timeout 300 'hyprctl dispatch dpms off' \
+                  resume 'hyprctl dispatch dpms on'
               ''
             ))
           ];
