@@ -90,6 +90,7 @@ in {
     environment.systemPackages =
       (with pkgs; [
         libqalculate
+        hypr-zoom
       ])
       ++ (attrValues scripts)
       ++ lists.optional cfg.enableMpd pkgs.mpd;
