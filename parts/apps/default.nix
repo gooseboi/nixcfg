@@ -6,7 +6,11 @@
     ...
   }: {
     apps = let
-      inherit (lib) getExe;
+      inherit
+        (lib)
+        getExe
+        getExe'
+        ;
 
       inherit
         (inputs')
@@ -44,7 +48,7 @@
 
       htpasswd = {
         type = "app";
-        program = "${pkgs.apacheHttpd}/bin/htpasswd";
+        program = "${getExe' pkgs.apacheHttpd "htpasswd"}";
       };
     };
   };

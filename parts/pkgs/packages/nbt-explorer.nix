@@ -46,7 +46,7 @@ stdenv.mkDerivation rec {
       $src/NBTModel.dll \
       $src/Substrate.dll
 
-    makeWrapper "${mono}/bin/mono" $out/bin/${pname} \
+    makeWrapper "${lib.getExe mono}" $out/bin/${pname} \
       --add-flags "$out/lib/NBTExplorer.exe" \
       --suffix LD_LIBRARY_PATH : ${gtk2-x11}/lib
 

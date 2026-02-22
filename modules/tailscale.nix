@@ -7,6 +7,7 @@
   inherit
     (lib)
     getExe
+    getExe'
     mkEnableOption
     mkOption
     types
@@ -81,9 +82,9 @@ in {
           */
           ''
             set -eu
-            netdev=$(${pkgs.iproute2}/bin/ip -o route get 8.8.8.8 | ${pkgs.coreutils}/bin/cut -f 5 -d " ")
+            netdev=$(${getExe' pkgs.iproute2 "ip"} -o route get 8.8.8.8 | ${getExe' pkgs.coreutils "cut"} -f 5 -d " ")
             echo "Turning on UDP transport layer offloads on $netdev"
-            ${pkgs.ethtool}/bin/ethtool -K $netdev rx-udp-gro-forwarding on rx-gro-list off
+            ${getExe pkgs.ethtool} -K $netdev rx-udp-gro-forwarding on rx-gro-list off
           ''
           |> getExe;
       };

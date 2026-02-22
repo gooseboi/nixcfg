@@ -7,6 +7,7 @@
   inherit
     (lib)
     getExe
+    getExe'
     ;
 in {
   powerManagement.enable = true;
@@ -58,8 +59,8 @@ in {
           last_check_was_hot=false
           while true; do
             temp=$(cat /sys/class/hwmon/hwmon*/temp1_input \
-                | ${pkgs.coreutils}/bin/sort --numeric-sort --reverse \
-                | ${pkgs.coreutils}/bin/head -n1)
+                | ${getExe' pkgs.coreutils "sort"} --numeric-sort --reverse \
+                | ${getExe' pkgs.coreutils "head"} -n1)
 
             echo "Got $temp"
             if (( temp > ${toString (maxTemp * 1000)} )); then

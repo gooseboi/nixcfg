@@ -7,6 +7,7 @@
   inherit
     (lib)
     getExe
+    getExe'
     ;
 
   backupPath = "/tmp/postgresql-dump.sql.zst";
@@ -26,7 +27,7 @@ in {
       sh
       */
       ''
-        ${config.services.postgresql.package}/bin/pg_dumpall --clean \
+        ${getExe' config.services.postgresql.package "pg_dumpall"} --clean \
         | ${getExe pkgs.zstd} --rsyncable \
         > ${backupPath}
       '';

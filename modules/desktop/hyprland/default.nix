@@ -126,10 +126,10 @@ in {
 
               exec-once =
                 [
-                  "${pkgs.blueman}/bin/blueman-applet"
-                  "${pkgs.util-linux}/bin/rfkill block bluetooth"
+                  (getExe' pkgs.blueman "blueman-applet")
+                  "${getExe' pkgs.util-linux "rfkill"}rblock bluetooth"
                   # TODO: use home-manager config
-                  (optionalString cfg.enableMpd "${pkgs/mpd}/bin/mpd")
+                  (optionalString cfg.enableMpd "${getExe pkgs.mpd}")
                 ]
                 |> filter (s: s != "");
             };

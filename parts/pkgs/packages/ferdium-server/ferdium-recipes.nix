@@ -2,6 +2,7 @@
   fetchFromGitHub,
   fetchPnpmDeps,
   git,
+  lib,
   jq,
   nodejs_22,
   pnpmConfigHook,
@@ -32,7 +33,7 @@ in
     # We do this because there is no way (that I know of) to tell pnpm to
     # ignore the engines field and so we just take it out manually.
     postPatch = ''
-      cat package.json | ${jq}/bin/jq 'del(.engines) | del(."engine-strict")' > package.json.tmp
+      cat package.json | ${lib.getExe jq} 'del(.engines) | del(."engine-strict")' > package.json.tmp
       mv package.json.tmp package.json
     '';
 

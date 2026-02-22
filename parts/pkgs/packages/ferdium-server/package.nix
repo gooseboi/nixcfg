@@ -69,7 +69,7 @@ in
     # We do this because there is no way (that I know of) to tell pnpm to
     # ignore the engines field and so we just take it out manually.
     postPatch = ''
-      ${jq}/bin/jq 'del(.engines) | del(."engine-strict")' package.json > package.json.tmp
+      ${lib.getExe jq} 'del(.engines) | del(."engine-strict")' package.json > package.json.tmp
       mv package.json.tmp package.json
     '';
 
@@ -105,7 +105,7 @@ in
       ln -s ${ferdium-recipes}/share/ferdium-recipes/recipes $out/lib/ferdium-server/recipes
 
       mkdir -p $out/bin
-      makeWrapper ${nodejs_22}/bin/node $out/bin/ferdium-server \
+      makeWrapper ${lib.getExe nodejs_22} $out/bin/ferdium-server \
         --add-flags "$out/lib/ferdium-server/build/server.js" \
         --set NODE_ENV "production" \
         --prefix PATH : ${
@@ -120,7 +120,7 @@ in
       cat > $out/bin/ferdium-server-migrate <<EOF
       #!/usr/bin/env bash
       cd $out/lib/ferdium-server
-      exec ${nodejs_22}/bin/node ace migration:run --force "\$@"
+      exec ${lib.getExe nodejs_22} ace migration:run --force "\$@"
       EOF
       chmod +x $out/bin/ferdium-server-migrate
 

@@ -4,7 +4,13 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkPackageOption;
+  inherit
+    (lib)
+    getExe
+    mkEnableOption
+    mkIf
+    mkPackageOption
+    ;
 
   cfg = config.chonkos.nushell;
 in {
@@ -18,7 +24,7 @@ in {
     environment = {
       shells = [
         "/run/current-system/sw/bin/nu"
-        "${cfg.package}/bin/nu"
+        "${getExe cfg.package}"
       ];
 
       systemPackages = [cfg.package];

@@ -1,8 +1,14 @@
 {
   config,
+  lib,
   pkgs,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    getExe
+    ;
+in {
   age.secrets.freedns-token.file = ./secrets/freedns-token.age;
 
   systemd.timers."freedns-update" = {
@@ -20,7 +26,7 @@
     script = ''
       set -eux
 
-      ${pkgs.curl}/bin/curl \
+      ${getExe pkgs.curl} \
         --silent --show-error \
         --get \
         --retry 3 --retry-delay 5 --max-time 10 \
