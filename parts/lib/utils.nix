@@ -42,4 +42,7 @@ in {
     n,
   }:
     genList (i: i + base) n;
+
+  minsToSecs = mins: mins * 60;
+  hoursToSecs = hours: self.minsToSecs (hours * 24);
 }
