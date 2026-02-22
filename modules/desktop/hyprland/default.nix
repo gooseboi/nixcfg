@@ -20,6 +20,7 @@
     mkOption
     optionalString
     remove
+    minsToSecs
     types
     ;
 
@@ -61,7 +62,7 @@
     )
     |> listToAttrs;
 
-  hyprland-before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
+  before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
     ${getExe' pkgs.hyprland "hyprctl"} switchxkblayout at-translated-set-2-keyboard 0
     ${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on
     ${getExe pkgs.playerctl} pause -a
@@ -156,13 +157,17 @@ in {
             swayidle = {
               enable = true;
               events = {
-                "before-sleep" = getExe hyprland-before-sleep;
+                "before-sleep" = getExe before-sleep;
               };
               timeouts = [
                 {
-                  timeout = 300;
-                  command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off";
-                  resumeCommand = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on";
+                  timeout = minsToSecs 5;
+                  command = "${getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
+                  resumeCommand = "${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on";
+                }
+                {
+                  timeout = minsToSecs 15;
+                  command = getExe before-sleep;
                 }
               ];
             };
