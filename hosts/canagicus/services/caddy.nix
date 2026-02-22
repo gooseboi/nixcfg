@@ -117,7 +117,7 @@ in {
               in
                 if builtins.length bots != 0
                 then {
-                  extraBots =  bots;
+                  extraBots = bots;
                 }
                 else {};
             };
