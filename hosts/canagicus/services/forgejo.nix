@@ -6,6 +6,8 @@
 }: let
   inherit
     (lib)
+    daysToHours
+    hoursToSecs
     mkIf
     ;
   inherit (config.networking) domain;
@@ -125,13 +127,13 @@ in {
           NOTICE_ON_SUCCESS = true;
           SCHEDULE = "@midnight";
           # 1 year
-          OLDER_THAN = "${toString (365 * 24)}h";
+          OLDER_THAN = "${daysToHours 365 |> toString}h";
         };
 
         "git.timeout" = {
-          MIGRATE = 2 * 60 * 60;
-          MIRROR = 2 * 60 * 60;
-          GC = 2 * 60 * 60;
+          MIGRATE = hoursToSecs 2;
+          MIRROR = hoursToSecs 2;
+          GC = hoursToSecs 2;
         };
 
         mirror = {

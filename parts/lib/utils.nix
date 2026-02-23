@@ -44,5 +44,6 @@ in {
     genList (i: i + base) n;
 
   minsToSecs = mins: mins * 60;
-  hoursToSecs = hours: self.minsToSecs (hours * 24);
+  hoursToSecs = hours: self.minsToSecs (hours * 60);
+  daysToHours = days: days * 24;
 }
