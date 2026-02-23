@@ -110,6 +110,7 @@ in {
 
       # General
       cloc
+      codespelunker
       gh
       gnumake
       mermaid-cli
