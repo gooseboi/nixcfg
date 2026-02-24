@@ -117,6 +117,18 @@ in {
         };
 
         # TODO: Repack things more efficiently
+        # These are some commands that *could* work, but I don't know
+        # ```
+        # git -c pack.packSizeLimit=1g \
+        #   repack -a -d -f \
+        #   --write-midx --write-bitmap-index
+        # ```
+        #
+        # ```
+        # git -c pack.packSizeLimit=1g \
+        #   repack -d --geometric=2 \
+        #   --write-midx --write-bitmap-index
+        # ```
         "cron.git_gc_repos" = {
           ENABLED = false;
         };
