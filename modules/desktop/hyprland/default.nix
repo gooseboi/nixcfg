@@ -62,12 +62,15 @@
     )
     |> listToAttrs;
 
-  before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
+  lock = pkgs.writeShellScriptBin "hyprland-before-lock.sh" ''
     ${getExe' pkgs.hyprland "hyprctl"} switchxkblayout at-translated-set-2-keyboard 0
-    ${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on
     ${getExe pkgs.playerctl} pause -a
     ${getExe scripts.hyprsetvol} -m
     ${getExe pkgs.swaylock} -f -i ~/.local/share/bg
+  '';
+  before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
+    ${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on
+    ${lock}
   '';
 in {
   options.chonkos.hyprland = {
@@ -167,7 +170,7 @@ in {
                 }
                 {
                   timeout = minsToSecs 15;
-                  command = getExe before-sleep;
+                  command = getExe lock;
                 }
               ];
             };
