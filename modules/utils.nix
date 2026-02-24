@@ -119,6 +119,7 @@ in {
         rust-stakeholder
         scrcpy
         what-anime-cli
+        xdg-ninja
       ];
 
     environment.shellAliases = {
