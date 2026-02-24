@@ -4,6 +4,9 @@ build:
 switch:
 	nh os switch .
 
+update:
+	nix flake update
+
 deploy system:
 	nix run .#deploy {{system}}
 
