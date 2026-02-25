@@ -70,7 +70,7 @@
   '';
   before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
     ${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on
-    ${lock}
+    ${getExe lock}
   '';
 in {
   options.chonkos.hyprland = {
