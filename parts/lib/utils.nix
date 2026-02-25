@@ -4,9 +4,13 @@ inputs: self: super: let
     deepSeq
     genList
     isBool
+    isList
+    isString
+    replaceStrings
     toJSON
     toString
     trace
+    typeOf
     ;
 in {
   traceVal = v: trace v v;
@@ -46,4 +50,13 @@ in {
   minsToSecs = mins: mins * 60;
   hoursToSecs = hours: self.minsToSecs (hours * 60);
   daysToHours = days: days * 24;
+
+  replaceStringsWith = patterns: to: string:
+    assert super.assertMsg (isList patterns)
+    "replaceStringsWith: first argument is ${typeOf patterns}, but should be list";
+    assert super.assertMsg (isString to)
+    "replaceStringsWith: second argument is ${typeOf to}, but should be string";
+    assert super.assertMsg (isString string)
+    "replaceStringsWith: third argument is ${typeOf string}, but should be string";
+      replaceStrings patterns (genList (_: to) <| builtins.length patterns) string;
 }
