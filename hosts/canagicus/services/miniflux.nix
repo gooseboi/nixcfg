@@ -48,6 +48,8 @@ in {
         FETCH_YOUTUBE_WATCH_TIME = "1";
         BATCH_SIZE = "200";
         POLLING_FREQUENCY = "30";
+        CLEANUP_ARCHIVE_READ_DAYS = "-1";
+        CLEANUP_ARCHIVE_UNREAD_DAYS = "-1";
 
         METRICS_USERNAME_FILE = config.age.secrets.miniflux-metricsusername.path;
         METRICS_PASSWORD_FILE = config.age.secrets.miniflux-metricspassword.path;
