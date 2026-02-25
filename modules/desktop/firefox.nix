@@ -12,6 +12,7 @@
     mapAttrsToList
     mkIf
     mkOption
+    replaceStringsWith
     strings
     ;
   inherit
@@ -22,6 +23,56 @@
   inherit (config.chonkos) theme;
 
   cfg = config.chonkos.desktop.firefox;
+
+  # To find the `shortId`, go to the extension page on addons.mozilla.
+  # To find the `uuid`, install it imperatively and then go to "about:support#addons"
+  #
+  # The order of declarations determines the order they appear in the browser
+  extensions = {
+    pinned = [
+      {
+        shortId = "bitwarden-password-manager";
+        uuid = "{446900e4-71c2-419f-a6a7-df9c091e268b}";
+      }
+      {
+        shortId = "linkwarden";
+        uuid = "jordanlinkwarden@gmail.com";
+      }
+      {
+        shortId = "ublock-origin";
+        uuid = "uBlock0@raymondhill.net";
+      }
+    ];
+    unpinned = [
+      {
+        shortId = "600-sound-volume";
+        uuid = "{c4b582ec-4343-438c-bda2-2f691c16c262}";
+      }
+      {
+        shortId = "cookies-txt";
+        uuid = "{12cf650b-1822-40aa-bff0-996df6948878}";
+      }
+      {
+        shortId = "wappalyzer";
+        uuid = "wappalyzer@crunchlabz.com";
+      }
+      {
+        shortId = "youtube-no-translation";
+        uuid = "{9a3104a2-02c2-464c-b069-82344e5ed4ec}";
+      }
+      {
+        shortId = "ctrl-number-to-switch-tabs";
+        uuid = "{84601290-bec9-494a-b11c-1baa897a9683}";
+      }
+    ];
+  };
+  extensionUUIDToAction = uuid: "${replaceStringsWith [
+      "@"
+      "{"
+      "}"
+      "."
+    ] "_"
+    uuid}-browser-action";
 in {
   options.chonkos.desktop.firefox = {
     enable = mkOption {
@@ -105,8 +156,6 @@ in {
               Default = "Unduck";
             };
 
-            # To find the `shortId`, go to the extension page on addons.mozilla.
-            # To find the `uuid`, install it imperatively and then go to "about:support#addons"
             ExtensionSettings = let
               extension = shortId: uuid: {
                 name = uuid;
@@ -116,15 +165,12 @@ in {
                 };
               };
             in
-              listToAttrs [
-                (extension "ublock-origin" "uBlock0@raymondhill.net")
-                (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
-                (extension "600-sound-volume" "{c4b582ec-4343-438c-bda2-2f691c16c262}")
-                (extension "ctrl-number-to-switch-tabs" "{84601290-bec9-494a-b11c-1baa897a9683}")
-                (extension "cookies-txt" "{12cf650b-1822-40aa-bff0-996df6948878}")
-                (extension "linkwarden" "jordanlinkwarden@gmail.com")
-                (extension "wappalyzer" "wappalyzer@crunchlabz.com")
-              ];
+              (extensions.pinned ++ extensions.unpinned)
+              |> map ({
+                shortId,
+                uuid,
+              }:
+                extension shortId uuid);
 
             Preferences =
               {
@@ -156,26 +202,24 @@ in {
                 "browser.uiCustomization.state" = builtins.toJSON {
                   placements = {
                     "widget-overflow-fixed-list" = [];
-                    "unified-extensions-area" = [
-                      "_c4b582ec-4343-438c-bda2-2f691c16c262_-browser-action"
-                      "_12cf650b-1822-40aa-bff0-996df6948878_-browser-action"
-                      "_84601290-bec9-494a-b11c-1baa897a9683_-browser-action"
-                    ];
-                    "nav-bar" = [
-                      "back-button"
-                      "forward-button"
-                      "stop-reload-button"
-                      "customizableui-special-spring1"
-                      "vertical-spacer"
-                      "urlbar-container"
-                      "customizableui-special-spring2"
-                      "downloads-button"
-                      "fxa-toolbar-menu-button"
-                      "unified-extensions-button"
-                      "_446900e4-71c2-419f-a6a7-df9c091e268b_-browser-action"
-                      "jordanlinkwarden_gmail_com-browser-action"
-                      "ublock0_raymondhill_net-browser-action"
-                    ];
+                    "unified-extensions-area" =
+                      extensions.unpinned
+                      |> map ({uuid, ...}: extensionUUIDToAction uuid);
+                    "nav-bar" =
+                      [
+                        "back-button"
+                        "forward-button"
+                        "stop-reload-button"
+                        "customizableui-special-spring1"
+                        "vertical-spacer"
+                        "urlbar-container"
+                        "customizableui-special-spring2"
+                        "downloads-button"
+                        "fxa-toolbar-menu-button"
+                        "unified-extensions-button"
+                      ]
+                      ++ (extensions.pinned
+                        |> map ({uuid, ...}: extensionUUIDToAction uuid));
                     toolbar-menubar = ["menubar-items"];
                     TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
                     vertical-tabs = [];
