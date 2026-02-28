@@ -8,6 +8,7 @@
 }: let
   inherit
     (lib)
+    lists
     mkIf
     mkMerge
     ;
@@ -46,27 +47,35 @@
             ]
           ]);
 
-          extraPackages = mkIf isDesktop (with pkgs; [
-            alejandra
-            basedpyright
-            bash-language-server
-            clang-tools
-            fenix.rust-analyzer
-            gopls
-            haskell-language-server
-            (
-              jdt-language-server.override {
-                jdk = pkgs.temurin-bin-21.override {gtkSupport = false;};
-              }
+          extraPackages = with pkgs; (
+            [
+              # Lualine doesn't work without it, for some reason
+              git
+            ]
+            ++ (
+              lists.optionals isDesktop [
+                alejandra
+                basedpyright
+                bash-language-server
+                clang-tools
+                fenix.rust-analyzer
+                gopls
+                haskell-language-server
+                (
+                  jdt-language-server.override {
+                    jdk = pkgs.temurin-bin-21.override {gtkSupport = false;};
+                  }
+                )
+                lua-language-server
+                nixd
+                ols
+                tinymist
+                vscode-langservers-extracted
+                vtsls
+                zls
+              ]
             )
-            lua-language-server
-            nixd
-            ols
-            tinymist
-            vscode-langservers-extracted
-            vtsls
-            zls
-          ]);
+          );
 
           luaConfigPost =
             /*
