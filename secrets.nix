@@ -17,5 +17,6 @@ in {
   "hosts/canagicus/services/secrets/miniflux-metricsusername.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/radicale-htpasswd.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/readeck-envfile.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/suwayomi-server-passwordfile.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/vaultwarden-envfile.age".publicKeys = [canagicus chonk];
 }
