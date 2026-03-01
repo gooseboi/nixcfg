@@ -104,7 +104,7 @@ in {
       ]
       ++ lists.optionals isDesktop [
         appimage-run
-        calibre # For ebook-convert
+        # calibre # For ebook-convert (FIXME: This stopped building)
         czkawka-full
         graphviz
         handbrake

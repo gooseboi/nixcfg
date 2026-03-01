@@ -10,7 +10,8 @@
     ;
   inherit (config.networking) domain;
 
-  enable = true;
+  # FIXME: The service stopped working
+  enable = false;
 
   port = 8080;
   package = pkgs.stirling-pdf.override {

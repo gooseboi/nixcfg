@@ -11,6 +11,7 @@ in {
   "hosts/canagicus/secrets/freedns-token.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/anki-chonkpassword.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/grafana-adminpassword.age".publicKeys = [canagicus chonk];
+  "hosts/canagicus/services/secrets/grafana-secretkey.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/linkwarden-envfile.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/miniflux-admincredentials.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/miniflux-metricspassword.age".publicKeys = [canagicus chonk];

@@ -20,12 +20,19 @@
   fqdn = "${subDomain}.${domain}";
 in {
   config = mkIf enable {
-    age.secrets.grafana-adminpassword = {
-      mode = "400";
-      # This isn't documented in the module options but this is the user
-      # that the service is run as.
-      owner = "grafana";
-      file = ./secrets/grafana-adminpassword.age;
+    # This isn't documented in the module options but the service is ran as the
+    # user `grafana`.
+    age.secrets = {
+      grafana-adminpassword = {
+        mode = "400";
+        owner = "grafana";
+        file = ./secrets/grafana-adminpassword.age;
+      };
+      grafana-secretkey = {
+        mode = "400";
+        owner = "grafana";
+        file = ./secrets/grafana-secretkey.age;
+      };
     };
 
     services.grafana = {
@@ -59,6 +66,8 @@ in {
           admin_email = "${subDomain}@${domain}";
           admin_password = "$__file{${config.age.secrets.grafana-adminpassword.path}}";
           admin_user = "admin";
+
+          secret_key = "$__file{${config.age.secrets.grafana-secretkey.path}}";
 
           cookie_secure = true;
           disable_gravatar = true;
