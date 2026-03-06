@@ -61,6 +61,10 @@
         uuid = "{9a3104a2-02c2-464c-b069-82344e5ed4ec}";
       }
       {
+        shortId = "indie-wiki-buddy";
+        uuid = "{cb31ec5d-c49a-4e5a-b240-16c767444f62}";
+      }
+      {
         shortId = "ctrl-number-to-switch-tabs";
         uuid = "{84601290-bec9-494a-b11c-1baa897a9683}";
       }
