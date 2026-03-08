@@ -48,7 +48,6 @@
             grim
             hypr-zoom
             libnotify
-            light
             mpc
             pamixer
             pulseaudioFull
@@ -89,12 +88,11 @@ in {
       graphics.enable = true;
     };
 
-    programs.light.enable = true;
-
     environment.systemPackages =
       (with pkgs; [
-        libqalculate
+        brightnessctl
         hypr-zoom
+        libqalculate
       ])
       ++ (attrValues scripts)
       ++ lists.optional cfg.enableMpd pkgs.mpd;
