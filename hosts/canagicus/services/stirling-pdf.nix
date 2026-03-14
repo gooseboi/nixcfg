@@ -10,12 +10,11 @@
     ;
   inherit (config.networking) domain;
 
-  # FIXME: The service stopped working
   enable = true;
 
   port = 8080;
   package = pkgs.stirling-pdf.override {
-    jre = pkgs.temurin-jre-bin-21.override {gtkSupport = false;};
+    jdk25 = pkgs.temurin-bin-25.override {gtkSupport = false;};
   };
 in {
   config = mkIf enable {

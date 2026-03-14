@@ -116,7 +116,7 @@ in {
       mermaid-cli
       ngrok
       tokei
-      tracy-wayland
+      tracy
     ];
 
     home-manager.sharedModules = [
