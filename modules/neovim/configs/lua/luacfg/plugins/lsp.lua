@@ -43,6 +43,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
+---@type table<string, vim.lsp.Config>
 local servers = {
 	basedpyright = {},
 
@@ -61,12 +62,14 @@ local servers = {
 	jdtls = {},
 
 	lua_ls = {
-		Lua = {
-			workspace = {
-				checkThirdParty = false,
-				library = vim.api.nvim_get_runtime_file("", true),
+		settings = {
+			Lua = {
+				workspace = {
+					checkThirdParty = false,
+					library = vim.api.nvim_get_runtime_file("", true),
+				},
+				telemetry = { enable = false },
 			},
-			telemetry = { enable = false },
 		},
 	},
 
@@ -87,16 +90,20 @@ local servers = {
 	},
 
 	rust_analyzer = {
-		["rust-analyzer"] = {
-			cargo = { allFeatures = true, },
-			imports = { group = { enable = false, }, },
-			completion = { postfix = { enable = false, }, },
-			check = { command = "clippy" }
-		}
+		settings = {
+			["rust-analyzer"] = {
+				cargo = { allFeatures = true, },
+				imports = { group = { enable = false, }, },
+				completion = { postfix = { enable = false, }, },
+				check = { command = "clippy" }
+			}
+		},
 	},
 
 	tinymist = {
-		formatterMode = "typstyle",
+		settings = {
+			formatterMode = "typstyle",
+		},
 	},
 
 	vtsls = {
@@ -116,12 +123,9 @@ local servers = {
 
 			on_dir(project_root)
 		end,
-		settings = {},
 	},
 
 	zls = {
-		settings = {},
-
 		on_attach = function(_)
 			vim.g.zig_fmt_autosave = false
 		end,
@@ -129,13 +133,7 @@ local servers = {
 }
 
 for name, config in pairs(servers) do
-	if config.settings == nil then
-		config = { settings = config }
-	end
-
-	config = vim.tbl_deep_extend("force", {}, {
-		capabilities = capabilities,
-	}, config)
+	config.capabilities = capabilities
 
 	vim.lsp.enable(name)
 	vim.lsp.config(name, config)
