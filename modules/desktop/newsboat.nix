@@ -29,6 +29,7 @@ in {
             miniflux-url "https://mf.gooseman.net"
             miniflux-login "chonk"
             miniflux-passwordfile "~/.local/share/newsboat/miniflux-password"
+            cleanup-on-quit yes
 
             bind-key j down
             bind-key k up
