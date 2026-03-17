@@ -66,6 +66,7 @@
     ${getExe pkgs.playerctl} pause -a
     ${getExe scripts.hyprsetvol} -m
     ${getExe pkgs.swaylock} -f -i ~/.local/share/bg
+    ${getExe' pkgs.dunst "dunstctl"} set-paused false
   '';
   before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
     ${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on
