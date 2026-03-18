@@ -45,8 +45,8 @@
     ];
     unpinned = [
       {
-        shortId = "600-sound-volume";
-        uuid = "{c4b582ec-4343-438c-bda2-2f691c16c262}";
+        shortId = "soundfixer";
+        uuid = "soundfixer@unrelenting.technology";
       }
       {
         shortId = "cookies-txt";
