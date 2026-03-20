@@ -134,6 +134,10 @@ in {
                   (optionalString cfg.enableMpd "${getExe pkgs.mpd}")
                 ]
                 |> filter (s: s != "");
+
+              bind = [
+                "SUPERSHIFT, E, exec, ${getExe lock}"
+              ];
             };
 
             extraConfig = builtins.readFile ./hyprland.conf;
