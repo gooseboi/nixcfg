@@ -26,6 +26,14 @@ in {
       environment = {
         SERVER_HOST = "127.0.0.1";
         SERVER_PORT = port;
+
+        # I don't know exactly which of these do anything, but the more the
+        # merrier
+        SYSTEM_ENABLEANALYTICS = "false";
+        SYSTEM_ENABLEPOSTHOG = "false";
+        SYSTEM_ENABLESCARF = "false";
+        SYSTEM_SHOWUPDATE = "false";
+        DISABLE_PIXEL = "true";
       };
     };
 
