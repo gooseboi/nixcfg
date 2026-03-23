@@ -57,6 +57,7 @@ in {
           userDirs = {
             enable = true;
             createDirectories = true;
+            setSessionVariables = true;
 
             documents = "${homeConfig.home.homeDirectory}/dox";
             download = "${homeConfig.home.homeDirectory}/down";

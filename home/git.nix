@@ -98,6 +98,7 @@ in {
 
         signing = {
           key = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+          format = "ssh";
           signByDefault = true;
         };
 
