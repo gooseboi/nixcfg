@@ -32,25 +32,33 @@ in {
               type = types.str;
             };
 
-            enableAnubis = mkEnableOption "enable also proxying this host behind anubis";
+            anubis = mkOption {
+              default = {};
+              description = "anubis configuration";
+              type = types.submodule {
+                options = {
+                  enable = mkEnableOption "enable proxying this host behind anubis";
 
-            anubisAllowedPaths = mkOption {
-              default = [];
-              description = "List of regexes for paths that should be automatically allowed by Anubis (APIs, usually)";
-              type =
-                types.listOf
-                <| types.submodule {
-                  options = {
-                    name = mkOption {
-                      description = "the name of the rule in anubis";
-                      type = types.str;
-                    };
-                    regex = mkOption {
-                      description = "the regex to match the path with";
-                      type = types.str;
-                    };
+                  allowedPaths = mkOption {
+                    default = [];
+                    description = "List of regexes for paths that should be automatically allowed by Anubis (APIs, usually)";
+                    type =
+                      types.listOf
+                      <| types.submodule {
+                        options = {
+                          name = mkOption {
+                            description = "the name of the rule in anubis";
+                            type = types.str;
+                          };
+                          regex = mkOption {
+                            description = "the regex to match the path with";
+                            type = types.str;
+                          };
+                        };
+                      };
                   };
                 };
+              };
             };
 
             enableCompression = mkEnableOption "whether to enable compression for this host";

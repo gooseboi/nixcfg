@@ -23,7 +23,7 @@
 
   anubisServices =
     enabledServices
-    |> filter ({value, ...}: value.enableAnubis);
+    |> filter ({value, ...}: value.anubis.enable);
 
   anubisMetricsSocketName = name: "/run/anubis/anubis-${name}/anubis-${name}-metrics.sock";
   anubisInstanceSocketName = name: "/run/anubis/anubis-${name}/anubis-${name}.sock";
@@ -105,7 +105,7 @@ in {
 
               policy = let
                 bots =
-                  service.value.anubisAllowedPaths
+                  service.value.anubis.allowedPaths
                   |> map ({
                     name,
                     regex,
@@ -154,7 +154,7 @@ in {
 
           (
             enabledServices
-            |> filter ({value, ...}: !value.enableAnubis)
+            |> filter ({value, ...}: !value.anubis.enable)
             |> map ({value, ...}: {
               "http://${value.domain}" = {
                 extraConfig = mkMerge [

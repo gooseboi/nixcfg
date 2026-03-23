@@ -164,7 +164,10 @@ in {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       domain = "${serviceDomain}";
-      enableAnubis = true;
+
+      anubis = {
+        enable = true;
+      };
     };
   };
 }

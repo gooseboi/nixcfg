@@ -48,12 +48,16 @@ in {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       domain = "${remoteDomain}";
-      anubisAllowedPaths = [
-        {
-          name = "api";
-          regex = "^/api.*$";
-        }
-      ];
+
+      anubis = {
+        enable = true;
+        allowedPaths = [
+          {
+            name = "api";
+            regex = "^/api.*$";
+          }
+        ];
+      };
     };
   };
 }

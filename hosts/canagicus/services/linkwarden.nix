@@ -56,17 +56,20 @@ in {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       domain = "${serviceDomain}";
-      enableAnubis = true;
-      anubisAllowedPaths = [
-        {
-          name = "api-v1";
-          regex = "^/api/v1.*$";
-        }
-        {
-          name = "api-v2";
-          regex = "^/api/v2.*$";
-        }
-      ];
+
+      anubis = {
+        enable = true;
+        allowedPaths = [
+          {
+            name = "api-v1";
+            regex = "^/api/v1.*$";
+          }
+          {
+            name = "api-v2";
+            regex = "^/api/v2.*$";
+          }
+        ];
+      };
     };
   };
 }

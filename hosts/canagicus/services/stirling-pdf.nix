@@ -33,7 +33,16 @@ in {
       target = "http://127.0.0.1:${toString port}";
       targetType = "tcp";
       domain = "pdf.${domain}";
-      enableAnubis = true;
+
+      anubis = {
+        enable = true;
+        allowedPaths = [
+          {
+            name = "api";
+            regex = "^/api/.*$";
+          }
+        ];
+      };
     };
   };
 }
