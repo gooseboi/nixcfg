@@ -15,7 +15,6 @@
     listToAttrs
     lists
     mkEnableOption
-    mkForce
     mkIf
     mkOption
     optionalString
@@ -27,7 +26,6 @@
   cfg = config.chonkos.hyprland;
 
   networkManagerEnabled = config.chonkos.network-manager.enable;
-  tailscaleEnabled = config.chonkos.tailscale.enable;
 
   scripts =
     listFilesWithNames ./scripts
@@ -104,18 +102,6 @@ in {
         imports = listNixWithDirs ./. |> remove ./default.nix;
 
         config = mkIf cfg.enable {
-          home.pointerCursor = {
-            enable = true;
-            package = pkgs.bibata-cursors;
-            size = 24;
-            name = "Bibata-Original-Classic";
-
-            dotIcons.enable = false;
-            hyprcursor.enable = true;
-            x11.enable = true;
-            gtk.enable = true;
-          };
-
           wayland.windowManager.hyprland = {
             enable = true;
 
@@ -159,7 +145,6 @@ in {
           services = {
             hyprpolkitagent.enable = true;
             network-manager-applet.enable = networkManagerEnabled;
-            tailray.enable = tailscaleEnabled;
             swayidle = {
               enable = true;
               events = {
@@ -177,14 +162,6 @@ in {
                 }
               ];
             };
-          };
-
-          systemd.user.services.tailray = {
-            # This is to set "graphical-session.target" instead of
-            # "graphical-session-pre.target" Why exactly this is necessary is
-            # beyond me, but it fixes the problem. The reason I set it to be
-            # this is because network-manager-applet has it done like this.
-            Unit.After = mkForce ["graphical-session.target" "tray.target"];
           };
 
           home.sessionVariables.NIXOS_OZONE_WL = "1";
