@@ -6,19 +6,20 @@
   inherit
     (lib)
     attrsToList
+    mkIf
     mkMerge
     ;
 
   enable = true;
 in {
-  config = {
+  config = mkIf enable {
     networking.firewall = {
       allowedTCPPorts = [80 443];
       allowedUDPPorts = [80 443];
     };
 
     services.caddy = {
-      inherit enable;
+      enable = true;
 
       virtualHosts =
         self.nixosConfigurations.canagicus.config.chonkos.services.reverse-proxy.hosts
