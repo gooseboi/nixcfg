@@ -29,6 +29,9 @@ in {
         programs.git = {
           enable = true;
 
+          # This is to fix an evaluation warning with a new HM version
+          signing.format = mkIf isServer null;
+
           settings = {
             user = {
               name = "Guzman Zugnoni";
