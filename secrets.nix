@@ -1,10 +1,14 @@
 let
-  inherit (import ./keys.nix) chonk indicus canagicus printer all;
+  inherit
+    (import ./keys.nix)
+    chonk
+    canagicus
+    erythropus
+    indicus
+    all
+    ;
 in {
   "modules/secrets/chonk-hashedPassword.age".publicKeys = all;
-
-  "hosts/indicus/syncthing-cert.age".publicKeys = [indicus chonk];
-  "hosts/indicus/syncthing-key.age".publicKeys = [indicus chonk];
 
   "hosts/canagicus/restic/restic-envfile.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/restic/restic-password.age".publicKeys = [canagicus chonk];
@@ -20,4 +24,10 @@ in {
   "hosts/canagicus/services/secrets/readeck-envfile.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/suwayomi-server-passwordfile.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/services/secrets/vaultwarden-envfile.age".publicKeys = [canagicus chonk];
+
+  "hosts/erythropus/services/mumble-server/murmur-envfile.age".publicKeys = [erythropus chonk];
+
+  "hosts/indicus/syncthing-cert.age".publicKeys = [indicus chonk];
+  "hosts/indicus/syncthing-key.age".publicKeys = [indicus chonk];
+
 }
