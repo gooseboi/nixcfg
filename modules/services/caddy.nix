@@ -11,33 +11,50 @@
     mkOption
     types
     ;
-in {
-  options.chonkos.services.prometheus.exporters.caddy = {
-    enable = mkEnableOption "enable caddy exporting metrics";
 
-    listenAddress = mkOption {
-      default = "127.0.0.1";
-      type = types.str;
+  prometheusCfg = config.chonkos.services.prometheus.exporters.caddy;
+in {
+  options.chonkos.services = {
+    prometheus.exporters.caddy = {
+      enable = mkEnableOption "enable caddy exporting metrics";
+
+      listenAddress = mkOption {
+        default = "127.0.0.1";
+        type = types.str;
+      };
+
+      port = mkOption {
+        default = 2019;
+        type = types.port;
+      };
     };
 
-    port = mkOption {
-      default = 2019;
-      type = types.port;
+    caddy = {
+      debug = mkEnableOption "enable caddy debug logs";
     };
   };
 
   config = mkMerge [
     {
-      services.caddy = let
-        cfg = config.chonkos.services.prometheus.exporters.caddy;
-      in {
-        # TODO: Set port from options
-        globalConfig = mkIf cfg.enable ''
-          metrics {
-            per_host
-          }
-        '';
-      };
+      services.caddy = mkMerge [
+        (mkIf config.chonkos.services.caddy.debug {
+          logFormat = ''
+            level DEBUG
+          '';
+          globalConfig = ''
+            debug
+          '';
+        })
+
+        (mkIf prometheusCfg.enable {
+          # TODO: Set port from options
+          globalConfig = ''
+            metrics {
+              per_host
+            }
+          '';
+        })
+      ];
     }
 
     (mkIf config.services.caddy.enable {
