@@ -29,6 +29,7 @@ in {
         if isDesktop
         then pkgs.fastfetch
         else fastfetchMinimal;
+      fortune = pkgs.fortune.override {withOffensive = true;};
     in
       [
         asciinema
@@ -43,6 +44,7 @@ in {
         fd
         ffmpeg
         file
+        fortune
         fzf
         gdu
         htop
@@ -76,6 +78,7 @@ in {
         time
         traceroute
         tree
+        typos
         unrar-free
         unzip
         vimv-rs
