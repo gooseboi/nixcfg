@@ -5,9 +5,7 @@
     execWheelOnly = true;
 
     extraConfig =
-      /*
-      sudo
-      */
+      # sudo
       ''
         Defaults lecture = never
         Defaults pwfeedback

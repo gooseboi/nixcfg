@@ -24,9 +24,7 @@
         type = "app";
         program =
           pkgs.writeShellScriptBin "deploy"
-          /*
-          bash
-          */
+          # bash
           ''
             set -eu
             system=$1;

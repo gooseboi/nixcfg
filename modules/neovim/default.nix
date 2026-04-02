@@ -78,9 +78,7 @@
           );
 
           luaConfigPost =
-            /*
-            lua
-            */
+            # lua
             ''
               vim.g.chonkos_desktop = ${
                 if isDesktop

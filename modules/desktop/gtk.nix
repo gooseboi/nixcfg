@@ -90,9 +90,7 @@ in {
               }
               // commonConfig;
             extraCss =
-              /*
-              css
-              */
+              # css
               ''
                 .deadd-noti-center {
                     font-family: Roboto;

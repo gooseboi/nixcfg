@@ -155,17 +155,13 @@ in {
 
         xdg.configFile = {
           ${mavenSettings}.text =
-            /*
-            xml
-            */
+            # xml
             ''
               <localRepository>''${env.XDG_CACHE_HOME}/${mavenRepo}</localRepository>
             '';
 
           ${pythonRc}.text =
-            /*
-            python
-            */
+            # python
             ''
               def is_vanilla() -> bool:
                   import sys

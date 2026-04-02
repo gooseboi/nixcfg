@@ -23,9 +23,7 @@ in {
 
   chonkos.services.restic.backups.computer = {
     backupPrepareCommand =
-      /*
-      sh
-      */
+      # sh
       ''
         ${getExe' config.services.postgresql.package "pg_dumpall"} --clean \
         | ${getExe pkgs.zstd} --rsyncable \
@@ -33,9 +31,7 @@ in {
       '';
 
     backupCleanupCommand =
-      /*
-      sh
-      */
+      # sh
       ''
         rm ${backupPath}
       '';

@@ -47,9 +47,7 @@ in {
     serviceConfig = {
       ExecStart =
         pkgs.writeShellScriptBin "thermal-throttle"
-        /*
-        bash
-        */
+        # bash
         ''
           setfreq() {
             echo "Setting freq to $1"

@@ -39,9 +39,7 @@ in {
           base0D
           ;
       in
-        /*
-        tmux
-        */
+        # tmux
         ''
           # Fixing colors
           set -ga terminal-overrides ",alacritty:Tc"

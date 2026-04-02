@@ -145,9 +145,7 @@ in {
     ];
 
     style =
-      /*
-      css
-      */
+      # css
       ''
         * {
         	font-family: ${theme.font.sans.name};

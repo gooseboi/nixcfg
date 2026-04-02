@@ -28,9 +28,7 @@ in {
         home.packages = [
           (
             pkgs.writeShellScriptBin "reset_env_zsh"
-            /*
-            zsh
-            */
+            # zsh
             ''
               # To source all the variables from home-manager again, we have to
               # unset these variables, as hm uses them for caching the results
@@ -68,9 +66,7 @@ in {
           defaultKeymap = mkIf config.chonkos.zsh.enableVimMode "viins";
 
           envExtra =
-            /*
-            bash
-            */
+            # bash
             ''
               # If we are a tty, then any shell we launch is probably a user
               # shell in a display manager or something, and it probably wants
@@ -87,9 +83,7 @@ in {
             '';
 
           initContent =
-            /*
-            bash
-            */
+            # bash
             ''
               autoload -U colors && colors
 
@@ -100,9 +94,7 @@ in {
               zstyle ':completion:*' matcher-list ''' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
               ${optionalString config.chonkos.zsh.enableVimMode
-                /*
-                bash
-                */
+                # bash
                 ''
                   # Fix backspace bug when switching modes
                   bindkey "^?" backward-delete-char

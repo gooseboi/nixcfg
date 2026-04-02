@@ -77,9 +77,7 @@ in {
         Type = "oneshot";
         ExecStart =
           pkgs.writeShellScriptBin "tailscale-transport-layer-offloads"
-          /*
-          bash
-          */
+          # bash
           ''
             set -eu
             netdev=$(${getExe' pkgs.iproute2 "ip"} -o route get 8.8.8.8 | ${getExe' pkgs.coreutils "cut"} -f 5 -d " ")

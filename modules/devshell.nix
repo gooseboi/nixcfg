@@ -44,9 +44,7 @@ in {
     pkgConfigPath' = makeSearchPath packages "share/pkgconfig" ":";
 
     activationText =
-      /*
-      bash
-      */
+      # bash
       ''
         export CPATH="$CPATH:${cPath}";
         export LIBRARY_PATH="$LIBRARY_PATH:${libraryPath}";
@@ -59,17 +57,13 @@ in {
       environment = {
         systemPackages = [
           (pkgs.writeShellScriptBin "devsh_activate"
-            /*
-            bash
-            */
+            # bash
             ''
               ${activationText}
               $SHELL
             '')
           (pkgs.writeShellScriptBin "devsh_run"
-            /*
-            bash
-            */
+            # bash
             ''
               ${activationText}
               $@

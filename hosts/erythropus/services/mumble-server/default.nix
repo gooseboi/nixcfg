@@ -27,9 +27,7 @@ in {
       openFirewall = true;
 
       welcometext =
-        /*
-        html
-        */
+        # html
         "<b>Miau</b>";
       bandwidth = 1 * 1000 * 1000;
 
