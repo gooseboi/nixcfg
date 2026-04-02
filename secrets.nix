@@ -29,5 +29,4 @@ in {
 
   "hosts/indicus/syncthing-cert.age".publicKeys = [indicus chonk];
   "hosts/indicus/syncthing-key.age".publicKeys = [indicus chonk];
-
 }
