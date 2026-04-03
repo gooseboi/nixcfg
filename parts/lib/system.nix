@@ -19,58 +19,9 @@ inputs: self: super: {
         [
           # System config
           ({self, ...}: {
-            imports = [(self + /hosts/${hostName}/configuration.nix)];
-          })
-
-          # Load system modules
-          ({self, ...}: {
-            imports = [(self + /modules)];
-          })
-
-          # Disko
-          inputs.disko.nixosModules.disko
-
-          # Secrets
-          inputs.agenix.nixosModules.default
-
-          inputs.nvf.nixosModules.default
-
-          # Home manager configs
-          ({
-            config,
-            self,
-            ...
-          }: {
             imports = [
-              inputs.home-manager.nixosModules.home-manager
-            ];
-
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              sharedModules = [
-                (self + /home)
-
-                # Packages
-                inputs.tailray.homeManagerModules.default
-              ];
-
-              extraSpecialArgs = {
-                inherit inputs;
-                inherit (config.chonkos) isDesktop isServer;
-                systemConfig = config;
-              };
-            };
-          })
-
-          # Overlays
-          ({self, ...}: {
-            nixpkgs.overlays = [
-              # This is the overlay defined in the flake parts
-              self.overlays.default
-
-              inputs.agenix.overlays.default
-              inputs.fenix.overlays.default
+              (self + /hosts/${hostName}/configuration.nix)
+              (self + /modules)
             ];
           })
 
@@ -79,24 +30,6 @@ inputs: self: super: {
             networking.hostName = hostName;
 
             nixpkgs.hostPlatform = system;
-
-            nix = {
-              settings = {
-                experimental-features = [
-                  "cgroups"
-                  "flakes"
-                  "nix-command"
-                  "pipe-operators"
-                ];
-
-                trusted-users = ["root" "@build" "@wheel" "@admin"];
-                warn-dirty = false;
-                use-cgroups = true;
-                use-xdg-base-directories = true;
-              };
-
-              registry.nixpkgs.flake = inputs.nixpkgs;
-            };
           }
         ]
         ++ extraModules;

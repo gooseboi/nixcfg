@@ -24,6 +24,20 @@ in {
   environment.etc.".system-inputs.json".text = builtins.toJSON inputFlakes;
 
   nix = {
+    settings = {
+      experimental-features = [
+        "cgroups"
+        "flakes"
+        "nix-command"
+        "pipe-operators"
+      ];
+
+      trusted-users = ["root" "@build" "@wheel" "@admin"];
+      warn-dirty = false;
+      use-cgroups = true;
+      use-xdg-base-directories = true;
+    };
+
     channel = {enable = false;};
 
     optimise = {
