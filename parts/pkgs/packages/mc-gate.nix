@@ -5,7 +5,7 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "gate";
-  version = "0.62.4";
+  version = "0.64.0";
 
   src = fetchFromGitHub {
     owner = "minekube";

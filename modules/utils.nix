@@ -62,7 +62,7 @@ in {
         mc-monitor
         mcrcon
         moreutils
-        nodePackages.prettier
+        prettier
         oha
         opustags
         p7zip

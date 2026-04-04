@@ -15,7 +15,6 @@ in {
   config = mkIf cfg.enable {
     chonkos.unfree.allowed = [
       "antigravity"
-      "claude-code"
       "cursor"
       "ngrok"
     ];
@@ -86,7 +85,6 @@ in {
 
       # AI Slop
       antigravity-fhs
-      claude-code
       code-cursor-fhs
       gemini-cli
       opencode
