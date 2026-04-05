@@ -1,0 +1,129 @@
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit
+    (lib)
+    attrsToList
+    mkEnableOption
+    mkIf
+    strings
+    ;
+
+  files = builtins.readDir ./. |> attrsToList;
+  filteredFiles = files |> builtins.filter (f: f.value != "directory" && !strings.hasSuffix ".nix" f.name);
+  fileNames = filteredFiles |> map (f: f.name);
+
+  cfg = config.chonkos.scripts;
+in {
+  options.chonkos.scripts = {
+    enable = mkEnableOption "enable scripts";
+  };
+
+  config = mkIf cfg.enable {
+    # chonkos.rofi.enable = true;
+
+    home-manager.sharedModules = [
+      {
+        home.packages =
+          (fileNames
+            |> map (
+              f: pkgs.writeShellScriptBin f (builtins.readFile (./. + "/${f}"))
+            ))
+          ++ (with pkgs; [
+            curl
+            ffmpeg-full
+            file
+            hyprpicker
+            libnotify
+            mpv
+            simple-mtpfs
+            swaybg
+            wl-clipboard
+            yt-dlp
+          ]);
+
+        xdg.configFile = {
+          "yt/yt-dl-channel.conf".text = ''
+            -i
+            -c
+            -o "%(uploader)s/%(playlist_title)s/%(upload_date)s - %(title)s - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
+
+            # Cookies
+            --cookies ~/.local/share/youtube_cookies.txt
+
+            # Uniform Format
+            --merge-output-format mkv
+
+            # Get All Subs to SRT
+            --convert-subs srt
+            --all-subs
+            --embed-subs
+
+            # Get metadata
+            --add-metadata
+            --write-description
+            --embed-chapters
+            --write-thumbnail
+
+            # Debug
+            -v
+          '';
+
+          "yt/yt-dl-playlist.conf".text = ''
+            -i
+            -c
+            -o "%(playlist_title)s/%(playlist_index)s - %(uploader)s - %(upload_date)s - %(title)s - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
+
+            # Cookies
+            --cookies ~/.local/share/youtube_cookies.txt
+
+            # Uniform Format
+            --merge-output-format mkv
+
+            # Get All Subs to SRT
+            --convert-subs srt
+            --all-subs
+            --embed-subs
+
+            # Get metadata
+            --add-metadata
+            --write-description
+            --write-thumbnail
+            --embed-chapters
+
+            # Debug
+            -v
+          '';
+
+          "yt/yt-dl-vid.conf".text = ''
+            -i
+            -c
+            -o "%(uploader)s - %(upload_date)s - %(title)s - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
+
+            # Cookies
+            --cookies ~/.local/share/youtube_cookies.txt
+
+            # Uniform Format
+            --merge-output-format mkv
+
+            # Get All Subs to SRT
+            --convert-subs srt
+            --all-subs
+            --embed-subs
+
+            # Get metadata
+            --add-metadata
+            --embed-chapters
+            --embed-thumbnail
+
+            # Debug
+            -v
+          '';
+        };
+      }
+    ];
+  };
+}

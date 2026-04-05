@@ -19,11 +19,32 @@ in {
       (homeArgs: let
         homeConfig = homeArgs.config;
       in {
-        home.shellAliases = {
-          open = "xdg-open";
+        home = {
+          sessionVariables = {
+            ANDROID_HOME = "${homeConfig.xdg.dataHome}/android";
+            DOCKER_CONFIG = "${homeConfig.xdg.configHome}/docker";
+            DOT_SAGE = "${homeConfig.xdg.configHome}/sage";
+            ELECTRUMDIR = "${homeConfig.xdg.dataHome}/electrum";
+            GNUPGHOME = "${homeConfig.xdg.dataHome}/gnupg";
+            GRIPHOME = "${homeConfig.xdg.configHome}/grip";
+            LESSHISTFILE = "${homeConfig.xdg.cacheHome}/less/history";
+            MAXIMA_USERDIR = "${homeConfig.xdg.configHome}/maxima";
+            SQLITE_HISTORY = "${homeConfig.xdg.cacheHome}/sqlite_history";
+            STACK_ROOT = "${homeConfig.xdg.dataHome}/stack";
+            TEXMFVAR = "${homeConfig.xdg.cacheHome}/texlive/texmf-var";
+            WINEPREFIX = "${homeConfig.xdg.dataHome}/wine";
+          };
+
+          shellAliases = {
+            open = "xdg-open";
+          };
+
+          preferXdgDirectories = true;
         };
 
         xdg = {
+          enable = true;
+
           mime.enable = true;
           mimeApps = {
             enable = true;
@@ -70,7 +91,6 @@ in {
             templates = null;
           };
         };
-        home.preferXdgDirectories = true;
       })
     ];
   };

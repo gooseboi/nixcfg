@@ -31,18 +31,8 @@
   home-manager.users.chonk = {pkgs, ...}: {
     chonkos = {
       user = "chonk";
-
-      alacritty.enable = true;
-      alacritty.enableEnvVar = true;
-      bat.enable = true;
-      direnv.enable = true;
-      eza.enable = true;
-      ghostty.enable = true;
-      rofi.enable = true;
-      scripts.enable = true;
       tmux.enable = true;
       tmux.enableSessionizer = true;
-      zathura.enable = true;
     };
 
     home = {
@@ -60,11 +50,17 @@
 
     adb.enable = true;
     agenix.enable = true;
+    alacritty.enable = true;
+    alacritty.enableEnvVar = true;
+    bat.enable = true;
     binfmt.enable = true;
     dev.enable = true;
     devshell.enable = true;
+    direnv.enable = true;
     docker.enable = true;
+    eza.enable = true;
     fonts.enable = true;
+    ghostty.enable = true;
     helix.enable = true;
     hyprland.enable = true;
     hyprland.monitors = [
@@ -75,12 +71,15 @@
     network-manager.enable = true;
     nushell.enable = true;
     openssh.enable = true;
+    rofi.enable = true;
+    scripts.enable = true;
     tailscale.enable = true;
     tlp.batMaxFreq = 60;
     tlp.enable = true;
     typesetting.enable = true;
     utils.enable = true;
     wireshark.enable = true;
+    zathura.enable = true;
     zsh.enable = true;
     zsh.enableUserShell = true;
     zsh.enableVimMode = true;

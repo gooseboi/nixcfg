@@ -16,6 +16,11 @@
 
       # Packages
       inputs.tailray.homeManagerModules.default
+
+      {
+        # Let Home Manager install and manage itself.
+        programs.home-manager.enable = true;
+      }
     ];
 
     extraSpecialArgs = {
