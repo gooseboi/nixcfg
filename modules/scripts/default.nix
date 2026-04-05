@@ -23,6 +23,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # FIXME: Rofi should probably be bundled
     # chonkos.rofi.enable = true;
 
     home-manager.sharedModules = [

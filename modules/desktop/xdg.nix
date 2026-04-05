@@ -33,6 +33,8 @@ in {
             STACK_ROOT = "${homeConfig.xdg.dataHome}/stack";
             TEXMFVAR = "${homeConfig.xdg.cacheHome}/texlive/texmf-var";
             WINEPREFIX = "${homeConfig.xdg.dataHome}/wine";
+
+            OPENER = "xdg-open";
           };
 
           shellAliases = {

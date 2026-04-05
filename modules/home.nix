@@ -1,9 +1,16 @@
 {
   config,
   inputs,
+  lib,
   self,
   ...
-}: {
+}: let
+  inherit
+    (lib)
+    mkOption
+    types
+    ;
+in {
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
@@ -12,15 +19,29 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     sharedModules = [
-      (self + /home)
-
       # Packages
       inputs.tailray.homeManagerModules.default
 
-      {
-        # Let Home Manager install and manage itself.
-        programs.home-manager.enable = true;
-      }
+      (homeArgs: {
+        options.chonkos.user = mkOption {
+          type = types.str;
+          example = "chonk";
+          description = "the name of the user";
+          readOnly = true;
+        };
+
+        config = let
+          user = homeArgs.config.chonkos.user;
+        in {
+          home = {
+            username = user;
+            homeDirectory = "/home/${user}";
+          };
+
+          # Let Home Manager install and manage itself.
+          programs.home-manager.enable = true;
+        };
+      })
     ];
 
     extraSpecialArgs = {

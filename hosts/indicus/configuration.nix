@@ -28,16 +28,9 @@
     hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
   };
 
-  home-manager.users.chonk = {pkgs, ...}: {
-    chonkos = {
-      user = "chonk";
-      tmux.enable = true;
-      tmux.enableSessionizer = true;
-    };
-
-    home = {
-      stateVersion = "24.11";
-    };
+  home-manager.users.chonk = {
+    chonkos.user = "chonk";
+    home.stateVersion = "24.11";
   };
 
   chonkos = {
@@ -76,6 +69,8 @@
     tailscale.enable = true;
     tlp.batMaxFreq = 60;
     tlp.enable = true;
+    tmux.enable = true;
+    tmux.enableSessionizer = true;
     typesetting.enable = true;
     utils.enable = true;
     wireshark.enable = true;

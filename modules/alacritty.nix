@@ -139,8 +139,9 @@ in {
           };
         };
 
-        home.sessionVariables = mkIf cfg.enableEnvVar {
-          TERMINAL = "alacritty";
+        home.sessionVariables = {
+          COLORTERM = "truecolor";
+          TERMINAL = mkIf cfg.enableEnvVar "alacritty";
         };
       }
     ];

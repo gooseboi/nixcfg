@@ -32,13 +32,7 @@
     ];
   };
   home-manager.users.chonk = {
-    chonkos = {
-      user = "chonk";
-
-      eza.enable = true;
-      bat.enable = true;
-      tmux.enable = true;
-    };
+    chonkos.user = "chonk";
 
     home.stateVersion = "24.11";
   };
@@ -48,10 +42,13 @@
     user = "chonk";
 
     agenix.enable = true;
+    bat.enable = true;
+    eza.enable = true;
     i18n.enable = true;
     openssh.enable = true;
     tailscale.enable = true;
     tailscale.enableExitNode = true;
+    tmux.enable = true;
     utils.enable = true;
     zsh.enable = true;
     zsh.enableUserShell = true;
