@@ -4,14 +4,24 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf optionalString;
-  inherit (config.chonkos) theme;
+  inherit
+    (lib)
+    mkBoolOption
+    mkDisableOption
+    mkIf
+    optionalString
+    ;
+  inherit
+    (config.chonkos)
+    isDesktop
+    theme
+    ;
 
   cfg = config.chonkos.tmux;
 in {
   options.chonkos.tmux = {
-    enable = mkEnableOption "enable tmux";
-    enableSessionizer = mkEnableOption "enable tmux-sessionizer";
+    enable = mkDisableOption "enable tmux";
+    enableSessionizer = mkBoolOption "enable tmux-sessionizer" isDesktop;
   };
 
   config = mkIf cfg.enable {

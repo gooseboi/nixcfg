@@ -4,12 +4,18 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.fonts;
 in {
   options.chonkos.fonts = {
-    enable = mkEnableOption "enable font installation";
+    enable = mkBoolOption "enable font installation" isDesktop;
   };
 
   config = mkIf cfg.enable {

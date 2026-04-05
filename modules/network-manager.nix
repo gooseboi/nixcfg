@@ -3,12 +3,18 @@
   lib,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.network-manager;
 in {
   options.chonkos.network-manager = {
-    enable = mkEnableOption "enable network manager";
+    enable = mkBoolOption "enable network manager" isDesktop;
   };
 
   config = mkIf cfg.enable {

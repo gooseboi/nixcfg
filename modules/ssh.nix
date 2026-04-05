@@ -4,12 +4,16 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkDisableOption
+    mkIf
+    ;
 
   cfg = config.chonkos.openssh;
 in {
   options.chonkos.openssh = {
-    enable = mkEnableOption "enable openssh server";
+    enable = mkDisableOption "enable openssh server";
   };
 
   # TODO: YubiKey SSH keys (https://github.com/drduh/YubiKey-Guide)

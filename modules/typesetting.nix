@@ -4,12 +4,18 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.typesetting;
 in {
   options.chonkos.typesetting = {
-    enable = mkEnableOption "enable typesetting installs";
+    enable = mkBoolOption "enable typesetting installs" isDesktop;
   };
 
   config = mkIf cfg.enable {

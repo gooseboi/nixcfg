@@ -42,42 +42,18 @@
     };
 
     adb.enable = true;
-    agenix.enable = true;
-    alacritty.enable = true;
     alacritty.enableEnvVar = true;
-    bat.enable = true;
-    binfmt.enable = true;
-    dev.enable = true;
-    devshell.enable = true;
-    direnv.enable = true;
     docker.enable = true;
-    eza.enable = true;
-    fonts.enable = true;
-    ghostty.enable = true;
     helix.enable = true;
     hyprland.enable = true;
     hyprland.monitors = [
       "eDP-1   , 1920x1080@60, 0x0 , 1"
       "HDMI-A-1, preferred   , auto, 1, mirror ,eDP-1"
     ];
-    i18n.enable = true;
-    network-manager.enable = true;
     nushell.enable = true;
-    openssh.enable = true;
-    rofi.enable = true;
-    scripts.enable = true;
-    tailscale.enable = true;
     tlp.batMaxFreq = 60;
     tlp.enable = true;
-    tmux.enable = true;
-    tmux.enableSessionizer = true;
-    typesetting.enable = true;
-    utils.enable = true;
-    wireshark.enable = true;
-    zathura.enable = true;
-    zsh.enable = true;
     zsh.enableUserShell = true;
-    zsh.enableVimMode = true;
   };
 
   # When on the default "powersave", then the frequency is stuck on 0.8GHz,

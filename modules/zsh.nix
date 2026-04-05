@@ -4,14 +4,20 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf optionalString;
+  inherit
+    (lib)
+    mkDisableOption
+    mkEnableOption
+    mkIf
+    optionalString
+    ;
 
   cfg = config.chonkos.zsh;
 in {
   options.chonkos.zsh = {
-    enable = mkEnableOption "enable system-wide zsh support";
+    enable = mkDisableOption "enable system-wide zsh support";
     enableUserShell = mkEnableOption "enable setting as default shell";
-    enableVimMode = mkEnableOption "enable zsh vim mode";
+    enableVimMode = mkDisableOption "enable zsh vim mode";
   };
 
   config = mkIf cfg.enable {

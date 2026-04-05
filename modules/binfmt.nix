@@ -3,12 +3,19 @@
   lib,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf remove;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    remove
+    ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.binfmt;
 in {
   options.chonkos.binfmt = {
-    enable = mkEnableOption "enable binfmt registrations";
+    enable = mkBoolOption "enable binfmt registrations" isDesktop;
   };
 
   config = mkIf cfg.enable {

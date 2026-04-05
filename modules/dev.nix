@@ -4,12 +4,19 @@
   pkgs,
   ...
 }: let
-  inherit (lib) hiPrio mkEnableOption mkIf;
+  inherit
+    (lib)
+    hiPrio
+    mkBoolOption
+    mkIf
+    ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.dev;
 in {
   options.chonkos.dev = {
-    enable = mkEnableOption "enable dev tools";
+    enable = mkBoolOption "enable dev tools" isDesktop;
   };
 
   config = mkIf cfg.enable {

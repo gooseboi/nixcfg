@@ -4,12 +4,16 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkDisableOption
+    mkIf
+    ;
 
   cfg = config.chonkos.agenix;
 in {
   options.chonkos.agenix = {
-    enable = mkEnableOption "enable agenix support";
+    enable = mkDisableOption "enable agenix support";
   };
 
   config = mkIf cfg.enable {

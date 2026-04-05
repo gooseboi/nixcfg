@@ -3,12 +3,17 @@
   lib,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption;
+  inherit
+    (lib)
+    mkDisableOption
+    mkIf
+    mkOption
+    ;
 
   cfg = config.chonkos.i18n;
 in {
   options.chonkos.i18n = {
-    enable = mkEnableOption "enable i18n";
+    enable = mkDisableOption "enable i18n";
     defaultLocale = mkOption {
       type = lib.types.str;
       default = "en_US.UTF-8";

@@ -7,10 +7,12 @@
   inherit
     (lib)
     attrsToList
-    mkEnableOption
+    mkBoolOption
     mkIf
     strings
     ;
+
+  inherit (config.chonkos) isDesktop;
 
   files = builtins.readDir ./. |> attrsToList;
   filteredFiles = files |> builtins.filter (f: f.value != "directory" && !strings.hasSuffix ".nix" f.name);
@@ -19,7 +21,7 @@
   cfg = config.chonkos.scripts;
 in {
   options.chonkos.scripts = {
-    enable = mkEnableOption "enable scripts";
+    enable = mkBoolOption "enable scripts" isDesktop;
   };
 
   config = mkIf cfg.enable {

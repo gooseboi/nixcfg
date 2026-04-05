@@ -5,14 +5,16 @@
 }: let
   inherit
     (lib)
-    mkEnableOption
+    mkBoolOption
     mkIf
     ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.direnv;
 in {
   options.chonkos.direnv = {
-    enable = mkEnableOption "enable direnv";
+    enable = mkBoolOption "enable direnv" isDesktop;
   };
 
   config = mkIf cfg.enable {

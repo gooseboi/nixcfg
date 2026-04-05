@@ -4,7 +4,12 @@
   pkgs,
   ...
 }: let
-  inherit (lib) lists mkEnableOption mkIf;
+  inherit
+    (lib)
+    lists
+    mkDisableOption
+    mkIf
+    ;
   inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.utils;
@@ -13,7 +18,7 @@
   wgetrc = "wgetrc";
 in {
   options.chonkos.utils = {
-    enable = mkEnableOption "enable utils";
+    enable = mkDisableOption "enable utils";
   };
 
   config = mkIf cfg.enable {

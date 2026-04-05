@@ -4,13 +4,27 @@
   pkgs,
   ...
 }: let
-  inherit (lib) filter flatten mkEnableOption mkIf mkOption optional types;
-  inherit (lib.strings) concatStringsSep;
+  inherit
+    (lib)
+    filter
+    flatten
+    mkBoolOption
+    mkIf
+    mkOption
+    optional
+    types
+    ;
+  inherit
+    (lib.strings)
+    concatStringsSep
+    ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.devshell;
 in {
   options.chonkos.devshell = {
-    enable = mkEnableOption "enable devshell install";
+    enable = mkBoolOption "enable devshell install" isDesktop;
     packages = mkOption {
       type = types.listOf types.package;
       description = "list of packages to link globally";

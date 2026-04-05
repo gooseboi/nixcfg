@@ -4,12 +4,18 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.wireshark;
 in {
   options.chonkos.wireshark = {
-    enable = mkEnableOption "enable wireshark";
+    enable = mkBoolOption "enable wireshark" isDesktop;
   };
 
   config = mkIf cfg.enable {

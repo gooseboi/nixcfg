@@ -7,14 +7,19 @@
     (lib)
     mapAttrsToList
     mkEnableOption
+    mkBoolOption
     mkIf
     ;
-  inherit (config.chonkos) theme;
+  inherit
+    (config.chonkos)
+    isDesktop
+    theme
+    ;
 
   cfg = config.chonkos.ghostty;
 in {
   options.chonkos.ghostty = {
-    enable = mkEnableOption "enables ghostty";
+    enable = mkBoolOption "enables ghostty" isDesktop;
     enableEnvVar = mkEnableOption "enables setting TERMINAL environment variable";
   };
 

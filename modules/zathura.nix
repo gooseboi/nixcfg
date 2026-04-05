@@ -5,14 +5,16 @@
 }: let
   inherit
     (lib)
-    mkEnableOption
+    mkBoolOption
     mkIf
     ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.zathura;
 in {
   options.chonkos.zathura = {
-    enable = mkEnableOption "enable zathura";
+    enable = mkBoolOption "enable zathura" isDesktop;
   };
 
   config = mkIf cfg.enable {

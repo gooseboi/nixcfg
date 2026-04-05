@@ -4,13 +4,22 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  inherit (config.chonkos) theme;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    ;
+
+  inherit
+    (config.chonkos)
+    isDesktop
+    theme
+    ;
 
   cfg = config.chonkos.rofi;
 in {
   options.chonkos.rofi = {
-    enable = mkEnableOption "enable rofi";
+    enable = mkBoolOption "enable rofi" isDesktop;
   };
 
   config = mkIf cfg.enable {

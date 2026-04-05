@@ -8,6 +8,7 @@
     (lib)
     getExe
     getExe'
+    mkDisableOption
     mkEnableOption
     mkOption
     types
@@ -15,7 +16,7 @@
   cfg = config.chonkos.tailscale;
 in {
   options.chonkos.tailscale = {
-    enable = mkEnableOption "enables tailscale";
+    enable = mkDisableOption "enables tailscale";
 
     enableExitNode = mkEnableOption "enables support to make this device an exit node";
 

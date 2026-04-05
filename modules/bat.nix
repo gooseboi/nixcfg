@@ -5,14 +5,14 @@
 }: let
   inherit
     (lib)
-    mkEnableOption
+    mkDisableOption
     mkIf
     ;
 
   cfg = config.chonkos.bat;
 in {
   options.chonkos.bat = {
-    enable = mkEnableOption "enable bat";
+    enable = mkDisableOption "enable bat";
   };
 
   config = mkIf cfg.enable {

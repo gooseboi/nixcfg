@@ -3,13 +3,22 @@
   lib,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  inherit (config.chonkos) theme;
+  inherit
+    (lib)
+    mkBoolOption
+    mkEnableOption
+    mkIf
+    ;
+  inherit
+    (config.chonkos)
+    isDesktop
+    theme
+    ;
 
   cfg = config.chonkos.alacritty;
 in {
   options.chonkos.alacritty = {
-    enable = mkEnableOption "enables alacritty";
+    enable = mkBoolOption "enables alacritty" isDesktop;
     enableEnvVar = mkEnableOption "enables setting TERMINAL environment variable";
   };
 

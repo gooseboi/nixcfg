@@ -3,13 +3,19 @@
   lib,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    mkDisableOption
+    mkIf
+    ;
+
+  cfg = config.chonkos.eza;
 in {
   options.chonkos.eza = {
-    enable = mkEnableOption "enable eza";
+    enable = mkDisableOption "enable eza";
   };
 
-  config = mkIf config.chonkos.eza.enable {
+  config = mkIf cfg.enable {
     home-manager.sharedModules = [
       {
         programs.eza = {

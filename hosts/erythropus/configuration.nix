@@ -37,18 +37,8 @@
     type = "server";
     user = "chonk";
 
-    agenix.enable = true;
-    bat.enable = true;
-    eza.enable = true;
-    i18n.enable = true;
-    openssh.enable = true;
-    tailscale.enable = true;
     tailscale.enableExitNode = true;
-    tmux.enable = true;
-    utils.enable = true;
-    zsh.enable = true;
     zsh.enableUserShell = true;
-    zsh.enableVimMode = true;
   };
 
   networking = {
