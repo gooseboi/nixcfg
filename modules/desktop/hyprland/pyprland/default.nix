@@ -8,7 +8,7 @@
     getExe
     ;
 in {
-  xdg.configFile."pypr/pyprland.toml".source = ./pyprland.toml;
+  xdg.configFile."pypr/config.toml".source = ./pyprland.toml;
 
   home.packages = [
     # Just in case, if you're naughty
