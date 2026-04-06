@@ -22,6 +22,10 @@ in {
   };
 
   config = mkIf cfg.enable {
+    chonkos.unfree.allowed = [
+      "drawio"
+    ];
+
     environment.systemPackages = with pkgs; let
       # Overrides to avoid duplication
       ffmpeg =
@@ -114,6 +118,7 @@ in {
         appimage-run
         calibre # For ebook-convert
         czkawka-full
+        drawio
         graphviz
         handbrake
         imagemagickBig
