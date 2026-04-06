@@ -11,6 +11,8 @@
     types
     ;
 in {
+  # TODO: https://github.com/snugnug/hjem-rum/
+  # TODO: https://github.com/feel-co/hjem
   imports = [
     inputs.home-manager.nixosModules.home-manager
   ];
