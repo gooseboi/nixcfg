@@ -14,6 +14,7 @@
     ;
   inputFlakes =
     inputs
+    |> filterAttrs (name: value: name != "self")
     |> filterAttrs (isType "flake" |> const);
 in {
   # Some of these are stolen from here:
