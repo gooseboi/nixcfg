@@ -7,19 +7,31 @@
     (lib)
     getExe
     ;
+
+  pyprland = pkgs.pyprland;
+
+  hyprlandTarget = "hyprland-session.target";
 in {
   xdg.configFile."pypr/config.toml".source = ./pyprland.toml;
 
-  home.packages = [
-    # Just in case, if you're naughty
-    pkgs.pyprland
-  ];
+  systemd.user.services.pyprland = {
+    Unit = {
+      Description = "Pyprland Service";
+      PartOf = [hyprlandTarget];
+      Requires = [hyprlandTarget];
+    };
 
-  wayland.windowManager.hyprland = {
-    settings = {
-      exec-once = [
-        "${getExe pkgs.pyprland}"
-      ];
+    Install.WantedBy = [hyprlandTarget];
+
+    Service = {
+      Type = "simple";
+      Restart = "always";
+      ExecStart = "${getExe pyprland}";
+      RestartSec = "1";
     };
   };
+
+  home.packages = [
+    pyprland
+  ];
 }
