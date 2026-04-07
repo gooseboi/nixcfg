@@ -3,15 +3,18 @@
   lib,
   ...
 }: let
-  inherit (lib) mkOption mkIf;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    ;
 
-  cfg = config.chonkos.desktop.xdg;
+  inherit (config.chonkos) isDesktop;
+
+  cfg = config.chonkos.xdg;
 in {
-  options.chonkos.desktop.xdg = {
-    enable = mkOption {
-      description = "enable polkit installation";
-      default = config.chonkos.desktop.enable;
-    };
+  options.chonkos.xdg = {
+    enable = mkBoolOption "enable polkit installation" isDesktop;
   };
 
   config = mkIf cfg.enable {

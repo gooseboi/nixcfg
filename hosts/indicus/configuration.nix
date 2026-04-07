@@ -37,10 +37,6 @@
     type = "desktop";
     user = "chonk";
 
-    desktop = {
-      fcitx5.enable = true;
-    };
-
     adb.enable = true;
     alacritty.enableEnvVar = true;
     docker.enable = true;

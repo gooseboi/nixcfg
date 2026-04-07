@@ -5,17 +5,16 @@
 }: let
   inherit
     (lib)
+    mkBoolOption
     mkIf
-    mkOption
     ;
 
-  cfg = config.chonkos.desktop.imv;
+  inherit (config.chonkos) isDesktop;
+
+  cfg = config.chonkos.imv;
 in {
-  options.chonkos.desktop.imv = {
-    enable = mkOption {
-      description = "enable imv installation and config";
-      default = config.chonkos.desktop.enable;
-    };
+  options.chonkos.imv = {
+    enable = mkBoolOption "enable imv installation and config" isDesktop;
   };
 
   config = mkIf cfg.enable {

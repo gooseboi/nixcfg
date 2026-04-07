@@ -4,10 +4,20 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit
+    (lib)
+    mkBoolOption
+    mkIf
+    ;
 
-  cfg = config.chonkos.desktop;
+  inherit (config.chonkos) isDesktop;
+
+  cfg = config.chonkos.cursor;
 in {
+  options.chonkos.cursor = {
+    enable = mkBoolOption "enable cursor config" isDesktop;
+  };
+
   config = mkIf cfg.enable {
     home-manager.sharedModules = [
       {

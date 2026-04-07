@@ -6,16 +6,15 @@
   inherit
     (lib)
     mkIf
-    mkOption
+    mkBoolOption
     ;
 
-  cfg = config.chonkos.desktop.newsboat;
+  inherit (config.chonkos) isDesktop;
+
+  cfg = config.chonkos.newsboat;
 in {
-  options.chonkos.desktop.newsboat = {
-    enable = mkOption {
-      description = "enable newsboat installation and config";
-      default = config.chonkos.desktop.enable;
-    };
+  options.chonkos.newsboat = {
+    enable = mkBoolOption "enable newsboat installation and config" isDesktop;
   };
 
   config = mkIf cfg.enable {

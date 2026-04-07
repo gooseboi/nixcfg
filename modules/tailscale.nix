@@ -8,11 +8,17 @@
     (lib)
     getExe
     getExe'
+    mkBoolOption
     mkDisableOption
     mkEnableOption
+    mkForce
+    mkIf
     mkOption
     types
     ;
+
+  inherit (config.chonkos) isDesktop;
+
   cfg = config.chonkos.tailscale;
 in {
   options.chonkos.tailscale = {
@@ -26,9 +32,18 @@ in {
       example = "ts0";
       default = "ts0";
     };
+
+    tailray = mkOption {
+      default = {};
+      type = types.submodule {
+        options = {
+          enable = mkBoolOption "enable installing and enabling tailray service" isDesktop;
+        };
+      };
+    };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     environment.systemPackages = [config.services.tailscale.package];
 
     services.tailscale = {
@@ -65,13 +80,13 @@ in {
     };
 
     # https://tailscale.com/kb/1019/subnets#enable-ip-forwarding
-    boot.kernel.sysctl = lib.mkIf cfg.enableExitNode {
+    boot.kernel.sysctl = mkIf cfg.enableExitNode {
       "net.ipv4.ip_forward" = "1";
       "net.ipv6.conf.all.forwarding" = "1";
     };
 
     # https://tailscale.com/kb/1320/performance-best-practice#linux-optimizations-for-subnet-routers-and-exit-nodes
-    systemd.services.tailscale-transport-layer-offloads = lib.mkIf cfg.enableExitNode {
+    systemd.services.tailscale-transport-layer-offloads = mkIf cfg.enableExitNode {
       description = "better performance for tailscale exit nodes";
       after = ["network.target"];
       serviceConfig = {
@@ -89,5 +104,20 @@ in {
       };
       wantedBy = ["default.target"];
     };
+
+    home-manager.sharedModules = mkIf cfg.tailray.enable [
+      {
+        services.tailray.enable = true;
+
+        systemd.user.services.tailray = {
+          # This is to replace the value "graphical-session-pre.target" from
+          # upstream with "graphical-session.target". Why exactly this is
+          # necessary is beyond me, but it fixes the problem. The reason I
+          # tried setting it to be this is because network-manager-applet has
+          # it done like this.
+          Unit.After = mkForce ["graphical-session.target" "tray.target"];
+        };
+      }
+    ];
   };
 }

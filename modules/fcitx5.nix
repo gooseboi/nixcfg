@@ -6,25 +6,21 @@
 }: let
   inherit
     (lib)
+    mkBoolOption
     mkIf
-    mkOption
-    types
     ;
 
-  cfg = config.chonkos.desktop.fcitx5;
+  inherit (config.chonkos) isDesktop;
+
+  cfg = config.chonkos.fcitx5;
 in {
-  options.chonkos.desktop.fcitx5 = {
-    enable = mkOption {
-      description = "enable fcitx5 installation and config";
-      type = types.bool;
-      default = config.chonkos.desktop.enable;
-    };
+  options.chonkos.fcitx5 = {
+    enable = mkBoolOption "enable fcitx5 installation and config" isDesktop;
   };
 
   config = mkIf cfg.enable {
     home-manager.sharedModules = [
       {
-        # For systemd user service
         i18n.inputMethod = {
           enable = true;
 

@@ -7,6 +7,7 @@
   inherit
     (lib)
     lists
+    mkBoolOption
     mkDisableOption
     mkIf
     ;
@@ -19,23 +20,29 @@
 in {
   options.chonkos.utils = {
     enable = mkDisableOption "enable utils";
+
+    desktopInstall = mkBoolOption "install utils for desktop" isDesktop;
   };
 
   config = mkIf cfg.enable {
-    chonkos.unfree.allowed = [
-      "drawio"
-    ];
+    chonkos.unfree.allowed =
+      [
+        "drawio"
+      ]
+      ++ (lists.optionals cfg.desktopInstall [
+        "discord"
+      ]);
 
     environment.systemPackages = with pkgs; let
       # Overrides to avoid duplication
       ffmpeg =
-        if isDesktop
+        if cfg.desktopInstall
         then ffmpeg-full
         else ffmpeg-headless;
       # This would normally use another ffmpeg. This is to avoid duplication.
       czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg];};
       fastfetch =
-        if isDesktop
+        if cfg.desktopInstall
         then pkgs.fastfetch
         else fastfetchMinimal;
       fortune = pkgs.fortune.override {withOffensive = true;};
@@ -114,25 +121,39 @@ in {
         # Hardware
         cpufrequtils
       ]
-      ++ lists.optionals isDesktop [
+      ++ lists.optionals cfg.desktopInstall [
+        anki
         appimage-run
         calibre # For ebook-convert
         czkawka-full
+        discord
         drawio
+        ferdium
+        gimp
+        gparted
         graphviz
         handbrake
+        helium
         imagemagickBig
         libqalculate
+        libreoffice-fresh
         localsend
         losslesscut-bin
         nbt-explorer
+        obs-studio
+        onlyoffice-desktopeditors
         pandoc
+        playerctl
         python3.pkgs.grip
         restic
         rust-stakeholder
         scrcpy
+        thunar
+        thunderbird
+        ungoogled-chromium
         what-anime-cli
         xdg-ninja
+        zen-browser
       ];
 
     environment.shellAliases = {

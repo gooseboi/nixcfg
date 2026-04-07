@@ -6,24 +6,22 @@
   inherit
     (lib)
     mkIf
-    mkOption
+    mkBoolOption
     ;
 
-  inherit (config.chonkos) theme;
+  inherit (config.chonkos) isDesktop theme;
 
-  cfg = config.chonkos.desktop.swayimg;
+  cfg = config.chonkos.swayimg;
 in {
-  options.chonkos.desktop.swayimg = {
-    enable = mkOption {
-      description = "enable swayimg installation and config";
-      default = config.chonkos.desktop.enable;
-    };
+  options.chonkos.swayimg = {
+    enable = mkBoolOption "enable swayimg installation and config" isDesktop;
   };
+
   config = mkIf cfg.enable {
     home-manager.sharedModules = [
       {
         programs.swayimg = {
-          inherit (cfg) enable;
+          enable = true;
 
           # https://github.com/artemsen/swayimg/blob/master/extra/swayimgrc
           settings = {

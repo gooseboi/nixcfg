@@ -10,8 +10,8 @@
     iota
     listToAttrs
     mapAttrsToList
+    mkBoolOption
     mkIf
-    mkOption
     replaceStringsWith
     strings
     ;
@@ -20,9 +20,13 @@
     concatStringsSep
     ;
 
-  inherit (config.chonkos) theme;
+  inherit
+    (config.chonkos)
+    isDesktop
+    theme
+    ;
 
-  cfg = config.chonkos.desktop.firefox;
+  cfg = config.chonkos.firefox;
 
   # To find the `shortId`, go to the extension page on addons.mozilla.
   # To find the `uuid`, install it imperatively and then go to "about:support#addons"
@@ -78,11 +82,8 @@
     ] "_"
     uuid}-browser-action";
 in {
-  options.chonkos.desktop.firefox = {
-    enable = mkOption {
-      description = "enable firefox installation and config";
-      default = config.chonkos.desktop.enable;
-    };
+  options.chonkos.firefox = {
+    enable = mkBoolOption "enable firefox installation and config" isDesktop;
   };
 
   config = mkIf cfg.enable {

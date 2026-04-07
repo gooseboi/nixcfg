@@ -7,18 +7,19 @@
   inherit
     (lib)
     mkIf
-    mkOption
+    mkBoolOption
     ;
 
-  inherit (config.chonkos) theme;
+  inherit
+    (config.chonkos)
+    isDesktop
+    theme
+    ;
 
-  cfg = config.chonkos.desktop.gtk;
+  cfg = config.chonkos.gtk;
 in {
-  options.chonkos.desktop.gtk = {
-    enable = mkOption {
-      description = "enable gtk config";
-      default = config.chonkos.desktop.enable;
-    };
+  options.chonkos.gtk = {
+    enable = mkBoolOption "enable gtk config" isDesktop;
   };
 
   config = mkIf cfg.enable {
@@ -43,7 +44,7 @@ in {
             |> map ({
               name,
               value,
-            }: "${name} = ${builtins.toString value}")
+            }: "${name} = ${toString value}")
             |> lib.concatStringsSep "\n";
         in {
           enable = true;
