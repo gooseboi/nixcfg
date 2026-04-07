@@ -6,14 +6,16 @@
 }: let
   inherit
     (lib)
-    mkEnableOption
+    mkBoolOption
     mkIf
     ;
 
-  cfg = config.chonkos.desktop.qmk;
+  inherit (config.chonkos) isDesktop;
+
+  cfg = config.chonkos.qmk;
 in {
-  options.chonkos.desktop.qmk = {
-    enable = mkEnableOption "enable qmk installation";
+  options.chonkos.qmk = {
+    enable = mkBoolOption "enable qmk installation" isDesktop;
   };
 
   config = mkIf cfg.enable {
