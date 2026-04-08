@@ -28,9 +28,8 @@
     hashedPasswordFile = config.age.secrets.chonk-hashedPassword.path;
   };
 
-  home-manager.users.chonk = {
-    chonkos.user = "chonk";
-    home.stateVersion = "24.11";
+  home-manager.users = {
+    chonk.home.stateVersion = "24.11";
   };
 
   chonkos = {
