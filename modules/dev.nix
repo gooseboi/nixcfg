@@ -128,7 +128,6 @@ in {
       (hmInputs: let
         hmConfig = hmInputs.config;
 
-        pythonRc = "python/pythonrc";
         mavenSettings = "maven/settings.xml";
         mavenRepo = "maven/repository";
       in {
@@ -152,49 +151,19 @@ in {
           NPM_CONFIG_USERCONFIG = "${hmConfig.xdg.configHome}/npm/npmrc";
           NUGET_PACKAGES = "${hmConfig.xdg.cacheHome}/nuget";
           OPAMROOT = "${hmConfig.xdg.dataHome}/opam";
-          PYTHONSTARTUP = "${hmConfig.xdg.configHome}/${pythonRc}";
+          PYTHON_HISTORY = "${hmConfig.xdg.stateHome}/python/history";
           RUSTUP_HOME = "${hmConfig.xdg.dataHome}/rustup";
           VAGRANT_HOME = "${hmConfig.xdg.dataHome}/vagrant";
           _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${hmConfig.xdg.configHome}/java -Dswing.aatext=true -Dawt.useSystemAAFontSettings=on";
         };
 
-        xdg.configFile = {
-          ${mavenSettings}.text =
-            # xml
-            ''
-              <localRepository>''${env.XDG_CACHE_HOME}/${mavenRepo}</localRepository>
-            '';
+        xdg.stateFile."python/.keep".text = "";
 
-          ${pythonRc}.text =
-            # python
-            ''
-              def is_vanilla() -> bool:
-                  import sys
-                  return not hasattr(__builtins__, '__IPYTHON__') and 'bpython' not in sys.argv[0]
-
-
-              def setup_history():
-                  import os
-                  import atexit
-                  import readline
-                  from pathlib import Path
-
-                  if state_home := os.environ.get('XDG_STATE_HOME'):
-                      state_home = Path(state_home)
-                  else:
-                      state_home = Path.home() / '.local' / 'state'
-
-                  history: Path = state_home / 'python_history'
-
-                  history.touch(exist_ok=True)
-                  readline.read_history_file(str(history))
-                  atexit.register(readline.write_history_file, str(history))
-
-
-              if is_vanilla():
-                  setup_history()
-            '';
-        };
+        xdg.configFile.${mavenSettings}.text =
+          # xml
+          ''
+            <localRepository>''${env.XDG_CACHE_HOME}/${mavenRepo}</localRepository>
+          '';
       })
     ];
   };
