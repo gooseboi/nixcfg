@@ -124,6 +124,7 @@ in {
       ++ lists.optionals cfg.desktopInstall [
         anki
         appimage-run
+        blender
         calibre # For ebook-convert
         czkawka-full
         discord
