@@ -7,6 +7,12 @@
   hw = inputs.nixos-hardware.nixosModules;
   deploy-rs = inputs.deploy-rs;
 
+  inherit
+    (self.lib)
+    mapAttrs
+    filterAttrs
+    ;
+
   mkHost = hostName: system: extraModules:
     lib.nixosSystem {
       inherit system;
@@ -71,62 +77,30 @@ in {
       erythropus = mkHost "erythropus" "x86_64-linux" [];
     };
 
-    # TODO: A nice way to auto-generate these?
-    # TODO: No interactive sudo (a `deploy` user with /bin/nologin?)
-    # TODO: Running deploy always checks every single nixos configuration, that's kinda stupid
-    deploy.nodes = {
-      canagicus = {
-        hostname = "canagicus";
+    deploy.nodes =
+      self.nixosConfigurations
+      |> filterAttrs (name: value: value.config.chonkos.deploy.enable)
+      |> mapAttrs (name: value: let
+        systemCfg = value.config;
+        deployCfg = systemCfg.chonkos.deploy;
+      in {
+        # Tailscale
+        hostname = name;
         profiles.system = {
-          sshUser = "chonk";
-          user = "chonk";
-          interactiveSudo = true;
-          remoteBuild = true;
-          path =
-            deploy-rs.lib.x86_64-linux.activate.nixos
-            inputs.self.nixosConfigurations.canagicus;
-          profilePath = "/nix/var/nix/profiles/system";
-        };
-      };
+          inherit
+            (deployCfg)
+            sshUser
+            user
+            interactiveSudo
+            remoteBuild
+            ;
 
-      printer = {
-        hostname = "printer";
-        profiles.system = {
-          sshUser = "chonk";
-          user = "chonk";
-          interactiveSudo = true;
           path =
-            deploy-rs.lib.x86_64-linux.activate.nixos
-            inputs.self.nixosConfigurations.printer;
-          profilePath = "/nix/var/nix/profiles/system";
-        };
-      };
+            deploy-rs.lib.${systemCfg.nixpkgs.hostPlatform.system}.activate.nixos
+            self.nixosConfigurations.${name};
 
-      albifrons = {
-        hostname = "albifrons";
-        profiles.system = {
-          sshUser = "chonk";
-          user = "chonk";
-          interactiveSudo = true;
-          path =
-            deploy-rs.lib.x86_64-linux.activate.nixos
-            inputs.self.nixosConfigurations.albifrons;
           profilePath = "/nix/var/nix/profiles/system";
         };
-      };
-
-      erythropus = {
-        hostname = "erythropus";
-        profiles.system = {
-          sshUser = "chonk";
-          user = "chonk";
-          interactiveSudo = true;
-          path =
-            deploy-rs.lib.x86_64-linux.activate.nixos
-            inputs.self.nixosConfigurations.erythropus;
-          profilePath = "/nix/var/nix/profiles/system";
-        };
-      };
-    };
+      });
   };
 }

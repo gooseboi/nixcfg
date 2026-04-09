@@ -34,6 +34,8 @@
     type = "server";
     user = "chonk";
 
+    deploy.enable = true;
+
     zsh.enableUserShell = true;
   };
 

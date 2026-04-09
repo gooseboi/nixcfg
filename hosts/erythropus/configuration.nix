@@ -35,6 +35,8 @@
     type = "server";
     user = "chonk";
 
+    deploy.enable = true;
+
     tailscale.enableExitNode = true;
     zsh.enableUserShell = true;
   };
