@@ -85,6 +85,7 @@ in {
           path =
             deploy-rs.lib.x86_64-linux.activate.nixos
             inputs.self.nixosConfigurations.canagicus;
+          profilePath = "/nix/var/nix/profiles/system";
         };
       };
 
@@ -97,6 +98,7 @@ in {
           path =
             deploy-rs.lib.x86_64-linux.activate.nixos
             inputs.self.nixosConfigurations.printer;
+          profilePath = "/nix/var/nix/profiles/system";
         };
       };
 
@@ -109,6 +111,7 @@ in {
           path =
             deploy-rs.lib.x86_64-linux.activate.nixos
             inputs.self.nixosConfigurations.albifrons;
+          profilePath = "/nix/var/nix/profiles/system";
         };
       };
 
@@ -121,6 +124,7 @@ in {
           path =
             deploy-rs.lib.x86_64-linux.activate.nixos
             inputs.self.nixosConfigurations.erythropus;
+          profilePath = "/nix/var/nix/profiles/system";
         };
       };
     };
