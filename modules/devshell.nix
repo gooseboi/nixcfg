@@ -104,7 +104,6 @@ in {
         glib
         graphene
         gtk3
-        gtk3
         gtk4
         gtk4-layer-shell
         harfbuzz
@@ -116,9 +115,18 @@ in {
         libpulseaudio
         libsoup_3
         libva
+        libx11
         libxcb
+        libxcomposite
+        libxcursor
+        libxdamage
+        libxext
+        libxfixes
+        libxi
         libxkbcommon
         libxml2
+        libxrandr
+        libxrender
         libxslt
         libz
         ncurses
@@ -138,15 +146,6 @@ in {
         webkitgtk_4_1
         webkitgtk_6_0
         xdotool
-        libx11
-        libxcomposite
-        libxcursor
-        libxdamage
-        libxext
-        libxfixes
-        libxi
-        libxrandr
-        libxrender
         xorgproto
         zlib
       ];

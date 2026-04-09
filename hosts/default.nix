@@ -26,7 +26,7 @@
         // {
           inherit inputs;
           lib = self.lib;
-          keys = import (inputs.self + /keys.nix);
+          keys = import (self + /keys.nix);
         };
 
       modules =
