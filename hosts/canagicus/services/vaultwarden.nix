@@ -51,11 +51,17 @@ in {
 
       anubis = {
         enable = true;
-        allowedPaths = [
-          {
-            name = "api";
-            regex = "^/api.*$";
-          }
+        allowedPaths = let
+          mkAllow = path: {
+            name = path;
+            regex = "^/${path}.*$";
+          };
+        in [
+          (mkAllow "api")
+          (mkAllow "events")
+          (mkAllow "identity")
+          (mkAllow "icons")
+          (mkAllow "notifications")
         ];
       };
     };
