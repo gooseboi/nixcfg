@@ -19,18 +19,20 @@
   serviceDomain = "${subDomain}.${domain}";
 in {
   config = mkIf enable {
-    age.secrets.miniflux-admincredentials.file = ./secrets/miniflux-admincredentials.age;
-    age.secrets.miniflux-metricsusername = {
-      owner = "miniflux";
-      group = "miniflux";
-      mode = "440";
-      file = ./secrets/miniflux-metricsusername.age;
-    };
-    age.secrets.miniflux-metricspassword = {
-      owner = "miniflux";
-      group = "miniflux";
-      mode = "440";
-      file = ./secrets/miniflux-metricspassword.age;
+    age.secrets = {
+      miniflux-admincredentials.file = ./secrets/miniflux-admincredentials.age;
+      miniflux-metricsusername = {
+        owner = "miniflux";
+        group = "miniflux";
+        mode = "440";
+        file = ./secrets/miniflux-metricsusername.age;
+      };
+      miniflux-metricspassword = {
+        owner = "miniflux";
+        group = "miniflux";
+        mode = "440";
+        file = ./secrets/miniflux-metricspassword.age;
+      };
     };
 
     # TODO: This doesn't work because it needs to use the username and password above
@@ -48,6 +50,7 @@ in {
         FETCH_YOUTUBE_WATCH_TIME = "1";
         BATCH_SIZE = "200";
         POLLING_FREQUENCY = "30";
+        POLLING_LIMIT_PER_HOST = "50";
         CLEANUP_ARCHIVE_READ_DAYS = "-1";
         CLEANUP_ARCHIVE_UNREAD_DAYS = "-1";
 
