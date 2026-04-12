@@ -68,7 +68,7 @@
                 )
                 lua-language-server
                 nixd
-                ols
+                # ols FIXME: Readd when builds again
                 tinymist
                 vscode-langservers-extracted
                 vtsls

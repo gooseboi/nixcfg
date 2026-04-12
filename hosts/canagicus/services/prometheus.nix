@@ -78,6 +78,7 @@ in {
           !(builtins.elem exporterName [
             # Removed modules
             "minio"
+            "rspamd"
             "tor"
             "unifi-poller"
 
