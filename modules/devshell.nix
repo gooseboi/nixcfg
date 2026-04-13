@@ -90,6 +90,7 @@ in {
         alsa-lib
         atk
         cairo
+        clang
         cups
         dbus
         expat
