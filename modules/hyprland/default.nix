@@ -48,7 +48,7 @@
             libnotify
             mpc
             pamixer
-            pulseaudioFull
+            wireplumber
             slurp
             wl-clipboard
             zbar

@@ -2,11 +2,11 @@
 
 if [ "$1" = "-i" ] && [ -n "$2" ]
 then
-	pactl set-sink-volume @DEFAULT_SINK@ "$2"
+	wpctl set-volume @DEFAULT_SINK@ "$2"
 elif [ "$1" = "-t" ]
 then
-	pactl set-sink-mute @DEFAULT_SINK@ toggle
+	wpctl set-mute @DEFAULT_SINK@ toggle
 elif [ "$1" = "-m" ]
 then
-	pactl set-sink-mute @DEFAULT_SINK@ true
+	wpctl set-mute @DEFAULT_SINK@ 1
 fi
