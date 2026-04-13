@@ -44,21 +44,33 @@ in {
   config.wayland.windowManager.hyprland = {
     settings = {
       bind = let
+        youSureSubMenu = cmd: [
+          {
+            key = "y";
+            desc = "Yes";
+            inherit cmd;
+          }
+          {
+            key = "n";
+            desc = "No";
+            cmd = "";
+          }
+        ];
         menuShutdown = mkMenu "shutdown" [
           {
             key = "s";
             desc = "Sleep";
-            cmd = "${lib.getExe' pkgs.systemd "systemctl"} suspend";
+            submenu = youSureSubMenu "${lib.getExe' pkgs.systemd "systemctl"} suspend";
           }
           {
             key = "r";
             desc = "Reboot";
-            cmd = "${lib.getExe' pkgs.systemd "reboot"}";
+            submenu = youSureSubMenu "${lib.getExe' pkgs.systemd "reboot"}";
           }
           {
             key = "p";
             desc = "Poweroff";
-            cmd = "${lib.getExe' pkgs.systemd "poweroff"}";
+            submenu = youSureSubMenu "${lib.getExe' pkgs.systemd "poweroff"}";
           }
         ];
         menuUtils = mkMenu "utils" [
