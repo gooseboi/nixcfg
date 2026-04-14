@@ -52,4 +52,19 @@ in {
       };
     };
   };
+
+  # TODO: I'd like the gui to listen on a unix domain socket to avoid using a
+  # port,but syncthing-init breaks because of bad quoting and I cannot be
+  # bothered to open the issue, and therefore I will leave a sample config here
+  # so I can check back on this someday.
+
+  # services.syncthing.guiAddress = "/run/syncthing/syncthing.sock";
+  # # Ensure the runtime directory ("/run/syncthing") exists and
+  # # has correct perms.
+  # systemd.services.syncthing.serviceConfig = {
+  #   StateDirectory = "syncthing";
+  #   StateDirectoryMode = "0700";
+  #   RuntimeDirectory = "syncthing";
+  #   RuntimeDirectoryMode = "0750";
+  # };
 }
