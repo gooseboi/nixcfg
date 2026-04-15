@@ -4,7 +4,6 @@
   lib,
   ...
 }: let
-  hw = inputs.nixos-hardware.nixosModules;
   deploy-rs = inputs.deploy-rs;
 
   inherit
@@ -13,7 +12,7 @@
     filterAttrs
     ;
 
-  mkHost = hostName: system: extraModules:
+  mkHost = hostName: system:
     lib.nixosSystem {
       inherit system;
       specialArgs =
@@ -29,52 +28,35 @@
           keys = import (self + /keys.nix);
         };
 
-      modules =
-        [
-          # System config
-          ({self, ...}: {
-            imports = [
-              ./${hostName}/configuration.nix
-              (self + /modules)
-            ];
-          })
+      modules = [
+        # System config
+        ({self, ...}: {
+          imports = [
+            ./${hostName}/configuration.nix
+            (self + /modules)
+          ];
+        })
 
-          # Nix/General configs
-          {
-            networking.hostName = hostName;
+        # Nix/General configs
+        {
+          networking.hostName = hostName;
 
-            nixpkgs.hostPlatform = system;
-          }
-        ]
-        ++ extraModules;
+          nixpkgs.hostPlatform = system;
+        }
+      ];
     };
 in {
   flake = {
-    nixosConfigurations = with hw; {
-      indicus = mkHost "indicus" "x86_64-linux" [
-        common-cpu-intel
-        common-gpu-intel
-        common-pc-laptop-ssd
-        {
-          hardware.intelgpu.enableHybridCodec = true;
-        }
-      ];
+    nixosConfigurations = {
+      indicus = mkHost "indicus" "x86_64-linux";
 
-      canagicus = mkHost "canagicus" "x86_64-linux" [
-        common-cpu-amd
-        common-cpu-amd-pstate
-        common-cpu-amd-zenpower
-        common-gpu-amd
-        common-pc-laptop-ssd
-      ];
+      canagicus = mkHost "canagicus" "x86_64-linux";
 
-      printer = mkHost "printer" "x86_64-linux" [
-        common-cpu-intel
-      ];
+      printer = mkHost "printer" "x86_64-linux";
 
-      albifrons = mkHost "albifrons" "x86_64-linux" [];
+      albifrons = mkHost "albifrons" "x86_64-linux";
 
-      erythropus = mkHost "erythropus" "x86_64-linux" [];
+      erythropus = mkHost "erythropus" "x86_64-linux";
     };
 
     deploy.nodes =

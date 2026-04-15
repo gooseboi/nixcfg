@@ -1,6 +1,13 @@
-{modulesPath, ...}: {
+{
+  modulesPath,
+  inputs,
+  ...
+}: let
+  hw = inputs.nixos-hardware.nixosModules;
+in {
   imports = [
     "${modulesPath}/installer/scan/not-detected.nix"
+    hw.common-cpu-intel
   ];
 
   boot = {
