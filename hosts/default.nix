@@ -30,17 +30,12 @@
 
       modules = [
         # System config
-        ({self, ...}: {
-          imports = [
-            ./${hostName}/configuration.nix
-            (self + /modules)
-          ];
-        })
+        ./${hostName}/configuration.nix
+        (self + /modules)
 
         # Nix/General configs
         {
           networking.hostName = hostName;
-
           nixpkgs.hostPlatform = system;
         }
       ];
