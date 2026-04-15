@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit
@@ -15,19 +16,15 @@
     ;
 in {
   config = {
-    nixpkgs.overlays = mkIf isServer [
-      (final: prev: {
-        git = prev.git.override {
-          pythonSupport = false;
-          perlSupport = false;
-        };
-      })
-    ];
-
     home-manager.sharedModules = [
       {
         programs.git = {
           enable = true;
+          package = pkgs.git.override {
+            pythonSupport = isDesktop;
+            perlSupport = isDesktop;
+            svnSupport = isDesktop;
+          };
 
           # This is to fix an evaluation warning with a new HM version
           signing.format = mkIf isServer null;
