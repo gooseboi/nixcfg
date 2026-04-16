@@ -116,7 +116,6 @@ in {
                 [
                   (getExe' pkgs.blueman "blueman-applet")
                   "${getExe' pkgs.util-linux "rfkill"}rblock bluetooth"
-                  # TODO: use home-manager config
                   (optionalString cfg.enableMpd "${getExe pkgs.mpd}")
                 ]
                 |> filter (s: s != "");

@@ -211,16 +211,5 @@ in {
         RestrictSUIDSGID = true;
       };
     };
-
-    # TODO: I don't think this works
-    systemd.paths.${name} = {
-      description = "Watch config for ${name}";
-      wantedBy = ["multi-user.target"];
-      pathConfig = {
-        PathChanged =
-          usersWithIndexesFile
-          |> map ({user, ...}: user.passwordFile);
-      };
-    };
   };
 }
