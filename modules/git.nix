@@ -58,6 +58,8 @@ in {
               l = "log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an  %ar%C(auto)  %D%n%s%n'";
               dw = "diff --word-diff";
               dws = "diff --word-diff --staged";
+
+              reporoot = "rev-parse --show-toplevel";
             };
           };
         };
