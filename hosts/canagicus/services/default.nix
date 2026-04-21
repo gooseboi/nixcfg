@@ -1,7 +1,7 @@
 {lib, ...}: let
   inherit
     (lib)
-    listNix
+    listNixWithDirs
     remove
     ;
 in {
@@ -9,7 +9,7 @@ in {
   # TODO: Radarr, Sonarr (https://wiki.servarr.com/radarr)
   # TODO: Paperless-ngx (https://docs.paperless-ngx.com)
 
-  imports = listNix ./. |> remove ./default.nix;
+  imports = listNixWithDirs ./. |> remove ./default.nix;
 
   virtualisation.oci-containers.backend = "podman";
 }

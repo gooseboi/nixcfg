@@ -7,6 +7,7 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nvf.nixosModules.default
+    inputs.flux.nixosModules.default
   ];
 
   nixpkgs.overlays = [
@@ -14,5 +15,6 @@
     self.overlays.default
     inputs.agenix.overlays.default
     inputs.fenix.overlays.default
+    inputs.flux.overlays.default
   ];
 }

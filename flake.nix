@@ -56,6 +56,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
     };
+
+    flux = {
+      url = "github:IogaMaster/flux";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.mcman.inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs:
