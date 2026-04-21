@@ -140,6 +140,7 @@ in {
         libreoffice-fresh
         localsend
         losslesscut-bin
+        mcman
         nbt-explorer
         obs-studio
         onlyoffice-desktopeditors
