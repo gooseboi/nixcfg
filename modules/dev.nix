@@ -93,8 +93,10 @@ in {
       # AI Slop
       antigravity-fhs
       code-cursor-fhs
+      codex
       gemini-cli
       opencode
+      t3code
 
       # Web Dev
       (
