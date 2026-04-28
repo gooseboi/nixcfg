@@ -71,6 +71,12 @@
                     "compress=zstd:3"
                   ];
                 };
+                "/games" = {
+                  mountpoint = "/games";
+                  mountOptions = [
+                    "noatime"
+                  ];
+                };
               };
             };
           };

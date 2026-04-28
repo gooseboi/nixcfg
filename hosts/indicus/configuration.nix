@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./disk-config.nix
     ./syncthing.nix
+    ./games.nix
   ];
 
   # Bootloader.
