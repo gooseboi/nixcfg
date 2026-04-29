@@ -42,6 +42,8 @@ in {
 
     services.miniflux = {
       inherit enable package;
+
+      # https://miniflux.app/docs/configuration.html
       config = {
         LISTEN_ADDR = "127.0.0.1:${toString port}";
         BASE_URL = "https://${serviceDomain}";
