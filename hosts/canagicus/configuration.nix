@@ -7,8 +7,6 @@
     ./disk-config.nix
     ./freedns.nix
     ./hardware-configuration.nix
-    ./minecraft.nix
-    ./hytale.nix
     ./power.nix
     ./restic
     ./services
