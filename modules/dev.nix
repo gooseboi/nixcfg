@@ -79,6 +79,7 @@ in {
           "rustfmt"
         ])
         fenix.targets.wasm32-unknown-unknown.latest.rust-std
+        fenix.targets.thumbv6m-none-eabi.latest.rust-std
       ])
 
       # Haskell
