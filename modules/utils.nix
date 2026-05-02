@@ -138,6 +138,7 @@ in {
         imagemagickBig
         libqalculate
         libreoffice-fresh
+        librsvg
         localsend
         losslesscut-bin
         mcman
