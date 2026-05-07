@@ -52,29 +52,27 @@
               # Lualine doesn't work without it, for some reason
               git
             ]
-            ++ (
-              lists.optionals isDesktop [
-                alejandra
-                basedpyright
-                bash-language-server
-                clang-tools
-                fenix.rust-analyzer
-                gopls
-                haskell-language-server
-                (
-                  jdt-language-server.override {
-                    jdk = pkgs.temurin-bin-21.override {gtkSupport = false;};
-                  }
-                )
-                lua-language-server
-                nixd
-                ols
-                tinymist
-                vscode-langservers-extracted
-                vtsls
-                zls
-              ]
-            )
+            ++ lists.optionals isDesktop [
+              alejandra
+              basedpyright
+              bash-language-server
+              clang-tools
+              fenix.rust-analyzer
+              gopls
+              haskell-language-server
+              (
+                jdt-language-server.override {
+                  jdk = pkgs.temurin-bin-21.override {gtkSupport = false;};
+                }
+              )
+              lua-language-server
+              nixd
+              ols
+              tinymist
+              vscode-langservers-extracted
+              vtsls
+              zls
+            ]
           );
 
           luaConfigPost =
