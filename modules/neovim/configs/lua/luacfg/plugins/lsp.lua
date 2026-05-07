@@ -43,6 +43,7 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
+--- https://github.com/neovim/nvim-lspconfig/tree/master/lsp/
 ---@type table<string, vim.lsp.Config>
 local servers = {
 	basedpyright = {},
