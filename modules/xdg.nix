@@ -21,21 +21,33 @@ in {
     home-manager.sharedModules = [
       (homeArgs: let
         homeConfig = homeArgs.config;
+
+        inherit
+          (homeConfig.xdg)
+          cacheHome
+          configHome
+          dataHome
+          ;
+
+        inherit
+          (homeConfig.home)
+          homeDirectory
+          ;
       in {
         home = {
           sessionVariables = {
-            ANDROID_HOME = "${homeConfig.xdg.dataHome}/android";
-            DOCKER_CONFIG = "${homeConfig.xdg.configHome}/docker";
-            DOT_SAGE = "${homeConfig.xdg.configHome}/sage";
-            ELECTRUMDIR = "${homeConfig.xdg.dataHome}/electrum";
-            GNUPGHOME = "${homeConfig.xdg.dataHome}/gnupg";
-            GRIPHOME = "${homeConfig.xdg.configHome}/grip";
-            LESSHISTFILE = "${homeConfig.xdg.cacheHome}/less/history";
-            MAXIMA_USERDIR = "${homeConfig.xdg.configHome}/maxima";
-            SQLITE_HISTORY = "${homeConfig.xdg.cacheHome}/sqlite_history";
-            STACK_ROOT = "${homeConfig.xdg.dataHome}/stack";
-            TEXMFVAR = "${homeConfig.xdg.cacheHome}/texlive/texmf-var";
-            WINEPREFIX = "${homeConfig.xdg.dataHome}/wine";
+            ANDROID_HOME = "${dataHome}/android";
+            DOCKER_CONFIG = "${configHome}/docker";
+            DOT_SAGE = "${configHome}/sage";
+            ELECTRUMDIR = "${dataHome}/electrum";
+            GNUPGHOME = "${dataHome}/gnupg";
+            GRIPHOME = "${configHome}/grip";
+            LESSHISTFILE = "${cacheHome}/less/history";
+            MAXIMA_USERDIR = "${configHome}/maxima";
+            SQLITE_HISTORY = "${cacheHome}/sqlite_history";
+            STACK_ROOT = "${dataHome}/stack";
+            TEXMFVAR = "${cacheHome}/texlive/texmf-var";
+            WINEPREFIX = "${dataHome}/wine";
 
             OPENER = "xdg-open";
           };
@@ -85,11 +97,12 @@ in {
             createDirectories = true;
             setSessionVariables = true;
 
-            documents = "${homeConfig.home.homeDirectory}/dox";
-            download = "${homeConfig.home.homeDirectory}/down";
-            music = "${homeConfig.home.homeDirectory}/music";
-            pictures = "${homeConfig.home.homeDirectory}/pix";
-            videos = "${homeConfig.home.homeDirectory}/vids";
+            documents = "${homeDirectory}/dox";
+            download = "${homeDirectory}/down";
+            music = "${homeDirectory}/music";
+            pictures = "${homeDirectory}/pix";
+            projects = "${homeDirectory}/dev";
+            videos = "${homeDirectory}/vids";
 
             desktop = null;
             publicShare = null;
