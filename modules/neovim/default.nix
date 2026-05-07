@@ -68,6 +68,7 @@
               lua-language-server
               nixd
               ols
+              openscad-lsp
               tinymist
               vscode-langservers-extracted
               vtsls

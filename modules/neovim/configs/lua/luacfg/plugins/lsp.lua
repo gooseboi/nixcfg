@@ -56,6 +56,8 @@ local servers = {
 
 	gopls = {},
 
+	openscad_lsp = {},
+
 	hls = {
 		filetypes = { 'haskell', 'lhaskell', 'cabal' },
 	},

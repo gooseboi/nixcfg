@@ -145,6 +145,7 @@ in {
         nbt-explorer
         obs-studio
         onlyoffice-desktopeditors
+        openscad
         pandoc
         playerctl
         python3.pkgs.grip
