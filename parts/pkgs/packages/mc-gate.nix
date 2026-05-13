@@ -11,12 +11,12 @@ buildGoModule (finalAttrs: {
     owner = "minekube";
     repo = "gate";
     tag = "v${finalAttrs.version}";
-    sha256 = "sha256-25XroGctY1Oe/OPD/WRQMKKmNz4DtlFBjzOghzTq4tw=";
+    sha256 = "sha256-C+XKDFzsCgZpTS2fEpAKOExPyO9WOjdmHKvVpmNyDRo=";
   };
 
   subPackages = ["."];
 
-  vendorHash = "sha256-aPlAZHMJ8LYBuaaLw+ZT0V8rB+ktrf6rjuaztzZFYDQ=";
+  vendorHash = "sha256-7tDEtZyV4upFG/DGg1rbJbO8XV7MSAzFSs/3NmH4qI4=";
 
   meta.mainProgram = "gate";
 })
