@@ -16,7 +16,7 @@ in {
     servers = {
       satisfactory = {
         package = let
-          hash = "sha256-NUeoBC3SVjl7+o5u5HqKCTn1Zsmj+kzhj3yOu05x/FI=";
+          hash = "sha256-GHP2/my6A85l8Wm9TK+AQD0/+03wZ2qqcmXIxqTlQtU=";
         in
           pkgs.mkSteamServer {
             inherit name;
