@@ -143,6 +143,7 @@ in {
         losslesscut-bin
         mcman
         nbt-explorer
+        nix-update
         obs-studio
         onlyoffice-desktopeditors
         openscad
