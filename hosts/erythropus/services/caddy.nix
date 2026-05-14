@@ -28,7 +28,7 @@ in {
           "https://${value.domain}" = {
             extraConfig = ''
               # Using tailscale
-              reverse_proxy http://canagicus {
+              reverse_proxy http://100.80.110.17 {
                 header_up X-Real-IP {remote_host}
               }
             '';
