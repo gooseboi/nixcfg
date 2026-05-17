@@ -16,7 +16,7 @@ in {
     servers = {
       satisfactory = {
         package = let
-          hash = "sha256-GHP2/my6A85l8Wm9TK+AQD0/+03wZ2qqcmXIxqTlQtU=";
+          hash = "sha256-RkF0Sm8xkTU+2Gy932vj+4rR6+1rlx+yUnJXmo5CdN4=";
         in
           pkgs.mkSteamServer {
             inherit name;
@@ -29,7 +29,7 @@ in {
 
             startCmd = "FactoryServer.sh";
 
-            # You need to pass the same has twice, because of course
+            # You need to pass the same hash twice, because of course
             inherit hash;
           };
       };
