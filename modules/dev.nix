@@ -36,6 +36,8 @@ in {
       gdb
       gf
       libgcc
+      llvmPackages.lld
+      llvmPackages.llvm
       meson
       ninja
 
