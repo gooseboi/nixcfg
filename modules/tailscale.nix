@@ -66,25 +66,6 @@ in {
       RestrictSUIDSGID = true;
     };
 
-    # https://github.com/tailscale/tailscale/issues/10688
-    systemd.services.restart-tailscale = {
-      wantedBy = ["suspend.target"];
-      after = ["suspend.target"];
-      description = "Restart Tailscale after waking up";
-
-      serviceConfig = {
-        ExecStart =
-          pkgs.writeShellScriptBin "restart-tailscale"
-          # bash
-          ''
-            echo "Restarting tailscale"
-
-            ${getExe' pkgs.systemd "systemctl"} restart tailscaled.service
-          ''
-          |> getExe;
-      };
-    };
-
     services.resolved = {
       enable = true;
       settings.Resolve.DNSSEC = "false";
