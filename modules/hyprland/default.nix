@@ -107,6 +107,8 @@ in {
 
             systemd.enable = true;
 
+            configType = "hyprlang";
+
             settings = {
               monitor = cfg.monitors;
 
