@@ -37,7 +37,7 @@ in {
 
             color.ui = true;
 
-            init.defaultBranch = "master";
+            init.defaultBranch = "main";
 
             core = {
               editor = "nvim";
