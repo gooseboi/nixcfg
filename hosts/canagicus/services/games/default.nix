@@ -6,4 +6,6 @@
     ;
 in {
   imports = listNixWithDirs ./. |> remove ./default.nix;
+
+  flux.enable = true;
 }
