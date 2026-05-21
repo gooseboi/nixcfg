@@ -31,6 +31,10 @@ in {
               reverse_proxy http://100.80.110.17 {
                 header_up X-Real-IP {remote_host}
               }
+
+              handle_errors 502 {
+                respond "canagicus is dead" 502
+              }
             '';
           };
         })
