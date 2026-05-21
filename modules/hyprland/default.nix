@@ -23,6 +23,11 @@
     types
     ;
 
+  inherit
+    (lib.generators)
+    mkLuaInline
+    ;
+
   cfg = config.chonkos.hyprland;
 
   networkManagerEnabled = config.chonkos.network-manager.enable;
@@ -76,8 +81,9 @@ in {
     enableMpd = mkEnableOption "enable mpd support";
     enableDebug = mkEnableOption "enable debug logs";
     monitors = mkOption {
-      type = types.listOf types.str;
+      description = "monitor config";
       readOnly = true;
+      type = types.listOf <| types.submodule { freeformType = types.attrsOf types.anything; };
     };
   };
 
@@ -101,33 +107,40 @@ in {
       {
         imports = listNixWithDirs ./. |> remove ./default.nix;
 
+        # TODO: Autolaunch blueman applet
         config = mkIf cfg.enable {
           wayland.windowManager.hyprland = {
             enable = true;
 
             systemd.enable = true;
 
-            configType = "hyprlang";
+            configType = "lua";
 
             settings = {
+              config = {
+                debug.disable_logs = !cfg.enableDebug;
+              };
+
               monitor = cfg.monitors;
 
-              debug.disable_logs = !cfg.enableDebug;
-
-              exec-once =
-                [
-                  (getExe' pkgs.blueman "blueman-applet")
-                  "${getExe' pkgs.util-linux "rfkill"}rblock bluetooth"
-                  (optionalString cfg.enableMpd "${getExe pkgs.mpd}")
-                ]
-                |> filter (s: s != "");
+              # exec-once =
+              #   [
+              #     (optionalString cfg.enableMpd "${getExe pkgs.mpd}")
+              #   ]
+              #   |> filter (s: s != "");
+              #
 
               bind = [
-                "SUPERSHIFT, E, exec, ${getExe lock}"
+                {
+                  _args = [
+                    "SUPER + SHIFT + E"
+                    (mkLuaInline ''hl.dsp.exec_cmd("${getExe lock}")'')
+                  ];
+                }
               ];
             };
 
-            extraConfig = builtins.readFile ./hyprland.conf;
+            extraConfig = builtins.readFile ./hyprland.lua;
           };
 
           xdg.portal = {

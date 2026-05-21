@@ -4,6 +4,17 @@
   systemConfig,
   ...
 }: let
+  inherit
+    (lib)
+    getExe
+    getExe'
+    ;
+
+  inherit
+    (lib.generators)
+    mkLuaInline
+    ;
+
   inherit (systemConfig.chonkos) theme;
 
   mkMenu = name: menu: let
@@ -38,7 +49,7 @@
       });
   in
     pkgs.writeShellScriptBin "my-menu" ''
-      exec ${lib.getExe pkgs.wlr-which-key} ${configFile}
+      exec ${getExe pkgs.wlr-which-key} ${configFile}
     '';
 in {
   config.wayland.windowManager.hyprland = {
@@ -60,29 +71,41 @@ in {
           {
             key = "s";
             desc = "Sleep";
-            submenu = youSureSubMenu "${lib.getExe' pkgs.systemd "systemctl"} suspend";
+            submenu = youSureSubMenu "${getExe' pkgs.systemd "systemctl"} suspend";
           }
           {
             key = "r";
             desc = "Reboot";
-            submenu = youSureSubMenu "${lib.getExe' pkgs.systemd "reboot"}";
+            submenu = youSureSubMenu "${getExe' pkgs.systemd "reboot"}";
           }
           {
             key = "p";
             desc = "Poweroff";
-            submenu = youSureSubMenu "${lib.getExe' pkgs.systemd "poweroff"}";
+            submenu = youSureSubMenu "${getExe' pkgs.systemd "poweroff"}";
           }
         ];
         menuUtils = mkMenu "utils" [
           {
             key = "n";
             desc = "Toggle notifications";
-            cmd = "${lib.getExe' pkgs.dunst "dunstctl"} set-paused toggle";
+            cmd = "${getExe' pkgs.dunst "dunstctl"} set-paused toggle";
           }
         ];
       in [
-        "SHIFTSUPER, S, exec, ${lib.getExe menuShutdown}"
-        "SHIFTSUPER, U, exec, ${lib.getExe menuUtils}"
+        # I don't think the home manager people could have come up with a worse
+        # syntax if they tried
+        {
+          _args = [
+            "SUPER + SHIFT + S"
+            (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuShutdown}")'')
+          ];
+        }
+        {
+          _args = [
+            "SUPER + SHIFT + U"
+            (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuUtils}")'')
+          ];
+        }
       ];
     };
   };

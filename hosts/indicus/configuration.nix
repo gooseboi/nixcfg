@@ -43,9 +43,21 @@
     helix.enable = true;
     hyprland.enable = true;
     hyprland.monitors = [
-      "eDP-1   , 1920x1080@60, 0x0 , 1"
-      "HDMI-A-1, preferred   , auto, 1, mirror ,eDP-1"
+      {
+        output = "eDP-1";
+        mode = "1920x1080@60";
+        position = "0x0";
+        scale = 1;
+      }
+      {
+        output = "HDMI-A-1";
+        mode = "preferred";
+        position = "auto";
+        scale = 1;
+        mirror = "eDP-1";
+      }
     ];
+
     nushell.enable = true;
     tlp.batMaxFreq = 60;
     tlp.enable = true;
