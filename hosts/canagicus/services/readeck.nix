@@ -19,6 +19,10 @@ in {
   config = mkIf enable {
     age.secrets.readeck-envfile.file = ./secrets/readeck-envfile.age;
 
+    services.restic.backups.computer = {
+      paths = [dataDir];
+    };
+
     services.readeck = {
       inherit enable;
 
