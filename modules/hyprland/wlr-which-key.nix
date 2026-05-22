@@ -15,6 +15,11 @@
     mkLuaInline
     ;
 
+  inherit
+    (lib.strings)
+    escapeShellArg
+    ;
+
   inherit (systemConfig.chonkos) theme;
 
   mkMenu = name: menu: let
@@ -91,6 +96,28 @@ in {
             cmd = "${getExe' pkgs.dunst "dunstctl"} set-paused toggle";
           }
         ];
+        menuConfig = let
+          toggleCmd = value: escapeShellArg "hl.config({input = { touchpad = { disable_while_typing = ${value} } } })";
+        in
+          mkMenu "config"
+          [
+            {
+              key = "t";
+              desc = "Toggle touchpad while typing";
+              cmd =
+                pkgs.writeShellScriptBin "toggle_touchpad_typing"
+                # bash
+                ''
+                  val=$(${getExe' pkgs.hyprland "hyprctl"} getoption input.touchpad.disable_while_typing -j | ${getExe pkgs.jq} .bool)
+                  if [ "$val" = "true" ]; then
+                    hyprctl eval ${toggleCmd "false"}
+                  else
+                    hyprctl eval ${toggleCmd "true"}
+                  fi
+                ''
+                |> getExe;
+            }
+          ];
       in [
         # I don't think the home manager people could have come up with a worse
         # syntax if they tried
@@ -104,6 +131,12 @@ in {
           _args = [
             "SUPER + SHIFT + U"
             (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuUtils}")'')
+          ];
+        }
+        {
+          _args = [
+            "SUPER + SHIFT + O"
+            (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuConfig}")'')
           ];
         }
       ];
