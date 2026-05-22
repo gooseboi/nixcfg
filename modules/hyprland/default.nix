@@ -7,7 +7,6 @@
   inherit
     (lib)
     attrValues
-    filter
     getExe
     getExe'
     listFilesWithNames
@@ -17,10 +16,14 @@
     mkEnableOption
     mkIf
     mkOption
-    optionalString
     remove
     minsToSecs
     types
+    ;
+
+  inherit
+    (lib.strings)
+    escapeShellArg
     ;
 
   inherit
@@ -83,7 +86,7 @@ in {
     monitors = mkOption {
       description = "monitor config";
       readOnly = true;
-      type = types.listOf <| types.submodule { freeformType = types.attrsOf types.anything; };
+      type = types.listOf <| types.submodule {freeformType = types.attrsOf types.anything;};
     };
   };
 
@@ -167,8 +170,8 @@ in {
               timeouts = [
                 {
                   timeout = minsToSecs 5;
-                  command = "${getExe' pkgs.hyprland "hyprctl"} dispatch dpms off";
-                  resumeCommand = "${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on";
+                  command = "${getExe' pkgs.hyprland "hyprctl"} dispatch ${escapeShellArg ''hl.dsp.dpms({action="off"})''}";
+                  resumeCommand = "${getExe' pkgs.hyprland "hyprctl"} dispatch ${escapeShellArg ''hl.dsp.dpms({action="on"})''}";
                 }
                 {
                   timeout = minsToSecs 15;
