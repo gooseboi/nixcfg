@@ -161,7 +161,7 @@ hl.bind("F9", hl.dsp.exec_cmd("mountprompt"))
 hl.bind("F10", hl.dsp.exec_cmd("umountprompt"))
 
 -- Change keyboard layouts
-for i, _ in pairs({ 0, 1, 2 }) do
+for i = 0, 2 do
 	local cmd = "hyprctl switchxkblayout at-translated-set-2-keyboard " .. i
 	hl.bind("SHIFT + ALT + " .. (i + 1), hl.dsp.exec_cmd(cmd))
 end
