@@ -140,6 +140,7 @@ in {
           CABAL_CONFIG = "${hmConfig.xdg.configHome}/cabal/config";
           CABAL_DIR = "${hmConfig.xdg.dataHome}/cabal";
           CARGO_HOME = "${hmConfig.xdg.dataHome}/cargo";
+          CODEX_HOME = "${hmConfig.xdg.configHome}/codex";
           DOTNET_CLI_HOME = "${hmConfig.xdg.dataHome}/dotnet";
           ELAN_HOME = "${hmConfig.xdg.dataHome}/elan";
           GEM_PATH = "${hmConfig.xdg.dataHome}/ruby/gems";
