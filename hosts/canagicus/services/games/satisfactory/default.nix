@@ -15,7 +15,7 @@
       name = "${name}-src";
       inherit appId depotId manifestId;
       builder = ./builder.sh;
-      buildInputs = [
+      nativeBuildInputs = [
         depotdownloader
       ];
 
