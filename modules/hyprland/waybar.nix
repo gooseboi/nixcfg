@@ -1,324 +1,328 @@
-{systemConfig, ...}: let
-  inherit (systemConfig.chonkos) theme;
+{config, ...}: let
+  inherit (config.chonkos) theme;
 
-  cfg = systemConfig.chonkos.hyprland;
+  cfg = config.chonkos.hyprland;
 in {
-  config.programs.waybar = {
-    enable = true;
+  home-manager.sharedModules = [
+    {
+      programs.waybar = {
+        enable = true;
 
-    systemd = {
-      enable = true;
-      enableDebug = cfg.enableDebug;
-    };
-
-    # This, and style.css, are mostly stolen from https://gitlab.com/librephoenix/nixos-config/
-    # with some small changes for me
-    #
-    # Cool dude
-    settings = [
-      {
-        layer = "top";
-        position = "top";
-        height = 30;
-        margin = "7 7 3 7";
-        spacing = 1;
-
-        modules-left = ["pulseaudio" "cpu" "memory" "backlight" "mpd"];
-        modules-center = ["hyprland/workspaces"];
-        modules-right = ["disk" "network" "sway/language" "clock" "battery" "tray"];
-
-        disk = {
-          interval = 30;
-          format = "({path}):{free}";
+        systemd = {
+          enable = true;
+          enableDebug = cfg.enableDebug;
         };
 
-        "hyprland/workspaces" = {
-          format = "{name}";
-          on-click = "activate";
-          all-outputs = true;
-          cursor = true;
-        };
+        # This, and style.css, are mostly stolen from https://gitlab.com/librephoenix/nixos-config/
+        # with some small changes for me
+        #
+        # Cool dude
+        settings = [
+          {
+            layer = "top";
+            position = "top";
+            height = 30;
+            margin = "7 7 3 7";
+            spacing = 1;
 
-        network = {
-          format-wifi = "{essid} {ipaddr}({signalStrength}%) ";
-          format-ethernet = "{ipaddr}/{cidr} ";
-          tooltip-format = "{ifname} via {gwaddr} ";
-          format-linked = "{ifname} (No IP) ";
-          format-disconnected = "Disconnected ⚠";
-          format-alt = "{ifname}: {ipaddr}/{cidr}";
-        };
+            modules-left = ["pulseaudio" "cpu" "memory" "backlight" "mpd"];
+            modules-center = ["hyprland/workspaces"];
+            modules-right = ["disk" "network" "sway/language" "clock" "battery" "tray"];
 
-        "sway/language" = {
-          format = "{short} {variant}";
-        };
+            disk = {
+              interval = 30;
+              format = "({path}):{free}";
+            };
 
-        tray = {
-          icon-size = 22;
-          spacing = 10;
-        };
+            "hyprland/workspaces" = {
+              format = "{name}";
+              on-click = "activate";
+              all-outputs = true;
+              cursor = true;
+            };
 
-        clock = {
-          interval = 1;
-          format = "{:%a %Y-%m-%d %H:%M:%S}";
-          tooltip-format = "<tt><small>{calendar}</small></tt>";
-        };
+            network = {
+              format-wifi = "{essid} {ipaddr}({signalStrength}%) ";
+              format-ethernet = "{ipaddr}/{cidr} ";
+              tooltip-format = "{ifname} via {gwaddr} ";
+              format-linked = "{ifname} (No IP) ";
+              format-disconnected = "Disconnected ⚠";
+              format-alt = "{ifname}: {ipaddr}/{cidr}";
+            };
 
-        cpu = {
-          interval = 1;
-          format = "{usage}%  - {avg_frequency}GHz";
-        };
+            "sway/language" = {
+              format = "{short} {variant}";
+            };
 
-        memory = {
-          interval = 1;
-          format = "{}% ";
-        };
+            tray = {
+              icon-size = 22;
+              spacing = 10;
+            };
 
-        backlight = {
-          format = "{percent}% {icon}";
-          format-icons = ["" "" "" "" "" "" "" "" ""];
-        };
+            clock = {
+              interval = 1;
+              format = "{:%a %Y-%m-%d %H:%M:%S}";
+              tooltip-format = "<tt><small>{calendar}</small></tt>";
+            };
 
-        battery = {
-          states = {
-            good = 95;
-            warning = 30;
-            critical = 15;
-          };
-          interval = 1;
-          format = "{capacity}% {icon}";
-          format-charging = "{capacity}% ";
-          format-plugged = "{capacity}% ";
-          # format-good = ""; # An empty format will hide the module
-          # format-full = "";
-          format-icons = ["" "" "" "" ""];
-        };
+            cpu = {
+              interval = 1;
+              format = "{usage}%  - {avg_frequency}GHz";
+            };
 
-        pulseaudio = {
-          scroll-step = 1;
-          format = "{volume}% {icon}   {format_source}";
-          format-bluetooth = "{volume}% {icon}   {format_source}";
-          format-bluetooth-muted = "󰸈 {icon}   {format_source}";
-          format-muted = "󰸈 {format_source}";
-          format-source = "{volume}% ";
-          format-source-muted = " ";
-          format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = ["" "" ""];
-          };
-          on-click = "pypr toggle pavucontrol && hyprctl dispatch bringactivetotop";
-        };
+            memory = {
+              interval = 1;
+              format = "{}% ";
+            };
 
-        mpd = {
-          format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ";
-          format-disconnected = "Disconnected ";
-          format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
-          interval = 10;
-          max-length = 30;
-          consume-icons = {
-            # Icon shows only when "consume" is on
-            on = " ";
-          };
-          random-icons = {
-            # Icon grayed out when "random" is off
-            off = "<span color=\"#f53c3c\"></span>";
-            on = " ";
-          };
-          repeat-icons = {
-            on = " ";
-          };
-          single-icons = {
-            on = "1 ";
-          };
-          state-icons = {
-            paused = "";
-            playing = "";
-          };
-          tooltip-format = "MPD (connected)";
-          tooltip-format-disconnected = "MPD (disconnected)";
-        };
-      }
-    ];
+            backlight = {
+              format = "{percent}% {icon}";
+              format-icons = ["" "" "" "" "" "" "" "" ""];
+            };
 
-    style =
-      # css
-      ''
-        * {
-        	font-family: ${theme.font.sans.name};
+            battery = {
+              states = {
+                good = 95;
+                warning = 30;
+                critical = 15;
+              };
+              interval = 1;
+              format = "{capacity}% {icon}";
+              format-charging = "{capacity}% ";
+              format-plugged = "{capacity}% ";
+              # format-good = ""; # An empty format will hide the module
+              # format-full = "";
+              format-icons = ["" "" "" "" ""];
+            };
 
-        	font-size: ${builtins.toString theme.font.size.big}px;
-        }
+            pulseaudio = {
+              scroll-step = 1;
+              format = "{volume}% {icon}   {format_source}";
+              format-bluetooth = "{volume}% {icon}   {format_source}";
+              format-bluetooth-muted = "󰸈 {icon}   {format_source}";
+              format-muted = "󰸈 {format_source}";
+              format-source = "{volume}% ";
+              format-source-muted = " ";
+              format-icons = {
+                headphone = "";
+                hands-free = "";
+                headset = "";
+                phone = "";
+                portable = "";
+                car = "";
+                default = ["" "" ""];
+              };
+              on-click = "pypr toggle pavucontrol && hyprctl dispatch bringactivetotop";
+            };
 
-        window#waybar {
-        	background-color: #1d2021;
-        	opacity: 1;
-        	border-radius: 8px;
-        	color: #fbf1c7;
-        	transition-property: background-color;
-        	transition-duration: .2s;
-        }
+            mpd = {
+              format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ";
+              format-disconnected = "Disconnected ";
+              format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
+              interval = 10;
+              max-length = 30;
+              consume-icons = {
+                # Icon shows only when "consume" is on
+                on = " ";
+              };
+              random-icons = {
+                # Icon grayed out when "random" is off
+                off = "<span color=\"#f53c3c\"></span>";
+                on = " ";
+              };
+              repeat-icons = {
+                on = " ";
+              };
+              single-icons = {
+                on = "1 ";
+              };
+              state-icons = {
+                paused = "";
+                playing = "";
+              };
+              tooltip-format = "MPD (connected)";
+              tooltip-format-disconnected = "MPD (disconnected)";
+            };
+          }
+        ];
 
-        window > box {
-        	border-radius: 8px;
-        	opacity: 0.94;
-        }
+        style =
+          # css
+          ''
+            * {
+            	font-family: ${theme.font.sans.name};
 
-        window#waybar.hidden {
-        	opacity: 0.2;
-        }
+            	font-size: ${toString theme.font.size.big}px;
+            }
 
-        button {
-        	border: none;
-        }
+            window#waybar {
+            	background-color: #1d2021;
+            	opacity: 1;
+            	border-radius: 8px;
+            	color: #fbf1c7;
+            	transition-property: background-color;
+            	transition-duration: .2s;
+            }
 
-        #custom-hyprprofile {
-        	color: #83a598;
-        }
+            window > box {
+            	border-radius: 8px;
+            	opacity: 0.94;
+            }
 
-        /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-        button:hover {
-        	background: inherit;
-        }
+            window#waybar.hidden {
+            	opacity: 0.2;
+            }
 
-        #workspaces button {
-        	padding: 0 7px;
-        	background-color: transparent;
-        	color: #bdae93;
-        }
+            button {
+            	border: none;
+            }
 
-        #workspaces button:hover {
-        	color: #fbf1c7;
-        }
+            #custom-hyprprofile {
+            	color: #83a598;
+            }
 
-        #workspaces button.active {
-        	color: #fb4934;
-        }
+            /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+            button:hover {
+            	background: inherit;
+            }
 
-        #workspaces button.focused {
-        	color: #fabd2f;
-        }
+            #workspaces button {
+            	padding: 0 7px;
+            	background-color: transparent;
+            	color: #bdae93;
+            }
 
-        #workspaces button.visible {
-        	color: #d04e20;
-        }
+            #workspaces button:hover {
+            	color: #fbf1c7;
+            }
 
-        #workspaces button.urgent {
-        	color: #fe8019;
-        }
+            #workspaces button.active {
+            	color: #fb4934;
+            }
 
-        #clock,
-        #battery,
-        #cpu,
-        #memory,
-        #disk,
-        #temperature,
-        #backlight,
-        #network,
-        #pulseaudio,
-        #wireplumber,
-        #custom-media,
-        #tray,
-        #mode,
-        #idle_inhibitor,
-        #scratchpad,
-        #mpd {
-        	padding: 0 10px;
-        	color: #fbf1c7;
-        	border: none;
-        	border-radius: 8px;
-        }
+            #workspaces button.focused {
+            	color: #fabd2f;
+            }
 
-        #window,
-        #workspaces {
-        	margin: 0 4px;
-        }
+            #workspaces button.visible {
+            	color: #d04e20;
+            }
 
-        /* If workspaces is the leftmost module, omit left margin */
-        .modules-left > widget:first-child > #workspaces {
-        	margin-left: 0;
-        }
+            #workspaces button.urgent {
+            	color: #fe8019;
+            }
 
-        /* If workspaces is the rightmost module, omit right margin */
-        .modules-right > widget:last-child > #workspaces {
-        	margin-right: 0;
-        }
+            #clock,
+            #battery,
+            #cpu,
+            #memory,
+            #disk,
+            #temperature,
+            #backlight,
+            #network,
+            #pulseaudio,
+            #wireplumber,
+            #custom-media,
+            #tray,
+            #mode,
+            #idle_inhibitor,
+            #scratchpad,
+            #mpd {
+            	padding: 0 10px;
+            	color: #fbf1c7;
+            	border: none;
+            	border-radius: 8px;
+            }
 
-        #clock {
-        	color: #83a598;
-        }
+            #window,
+            #workspaces {
+            	margin: 0 4px;
+            }
 
-        #battery {
-        	color: #b8bb26;
-        }
+            /* If workspaces is the leftmost module, omit left margin */
+            .modules-left > widget:first-child > #workspaces {
+            	margin-left: 0;
+            }
 
-        #battery.charging, #battery.plugged {
-        	color: #8ec07c;
-        }
+            /* If workspaces is the rightmost module, omit right margin */
+            .modules-right > widget:last-child > #workspaces {
+            	margin-right: 0;
+            }
 
-        @keyframes blink {
-        	to {
-        		background-color: #fbf1c7;
-        		color: #1d2021;
-        	}
-        }
+            #clock {
+            	color: #83a598;
+            }
 
-        #battery.critical:not(.charging) {
-        	background-color: #fb4934;
-        	color: #fbf1c7;
-        	animation-name: blink;
-        	animation-duration: 0.5s;
-        	animation-timing-function: linear;
-        	animation-iteration-count: infinite;
-        	animation-direction: alternate;
-        }
+            #battery {
+            	color: #b8bb26;
+            }
 
-        label:focus {
-        	background-color: #1d2021;
-        }
+            #battery.charging, #battery.plugged {
+            	color: #8ec07c;
+            }
 
-        #cpu {
-        	color: #83a598;
-        }
+            @keyframes blink {
+            	to {
+            		background-color: #fbf1c7;
+            		color: #1d2021;
+            	}
+            }
 
-        #memory {
-        	color: #d3869b;
-        }
+            #battery.critical:not(.charging) {
+            	background-color: #fb4934;
+            	color: #fbf1c7;
+            	animation-name: blink;
+            	animation-duration: 0.5s;
+            	animation-timing-function: linear;
+            	animation-iteration-count: infinite;
+            	animation-direction: alternate;
+            }
 
-        #disk {
-        	color: #d65d0e;
-        }
+            label:focus {
+            	background-color: #1d2021;
+            }
 
-        #backlight {
-        	color: #fabd2f;
-        }
+            #cpu {
+            	color: #83a598;
+            }
 
-        #pulseaudio {
-        	color: #8ec07c;
-        }
+            #memory {
+            	color: #d3869b;
+            }
 
-        #pulseaudio.muted {
-        	color: #bdae93;
-        }
+            #disk {
+            	color: #d65d0e;
+            }
 
-        #tray > .passive {
-        	-gtk-icon-effect: dim;
-        }
+            #backlight {
+            	color: #fabd2f;
+            }
 
-        #tray > .needs-attention {
-        	-gtk-icon-effect: highlight;
-        }
+            #pulseaudio {
+            	color: #8ec07c;
+            }
 
-        #idle_inhibitor {
-        	color: #bdae93;
-        }
+            #pulseaudio.muted {
+            	color: #bdae93;
+            }
 
-        #idle_inhibitor.activated {
-        	color: #d65d0e;
-        }
-      '';
-  };
+            #tray > .passive {
+            	-gtk-icon-effect: dim;
+            }
+
+            #tray > .needs-attention {
+            	-gtk-icon-effect: highlight;
+            }
+
+            #idle_inhibitor {
+            	color: #bdae93;
+            }
+
+            #idle_inhibitor.activated {
+            	color: #d65d0e;
+            }
+          '';
+      };
+    }
+  ];
 }

@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  systemConfig,
+  config,
   ...
 }: let
   inherit
@@ -20,7 +20,7 @@
     escapeShellArg
     ;
 
-  inherit (systemConfig.chonkos) theme;
+  inherit (config.chonkos) theme;
 
   mkMenu = name: menu: let
     configFile =
@@ -57,89 +57,93 @@
       exec ${getExe pkgs.wlr-which-key} ${configFile}
     '';
 in {
-  config.wayland.windowManager.hyprland = {
-    settings = {
-      bind = let
-        youSureSubMenu = cmd: [
-          {
-            key = "y";
-            desc = "Yes";
-            inherit cmd;
-          }
-          {
-            key = "n";
-            desc = "No";
-            cmd = "";
-          }
-        ];
-        menuShutdown = mkMenu "shutdown" [
-          {
-            key = "s";
-            desc = "Sleep";
-            submenu = youSureSubMenu "${getExe' pkgs.systemd "systemctl"} suspend";
-          }
-          {
-            key = "r";
-            desc = "Reboot";
-            submenu = youSureSubMenu "${getExe' pkgs.systemd "reboot"}";
-          }
-          {
-            key = "p";
-            desc = "Poweroff";
-            submenu = youSureSubMenu "${getExe' pkgs.systemd "poweroff"}";
-          }
-        ];
-        menuUtils = mkMenu "utils" [
-          {
-            key = "n";
-            desc = "Toggle notifications";
-            cmd = "${getExe' pkgs.dunst "dunstctl"} set-paused toggle";
-          }
-        ];
-        menuConfig = let
-          toggleCmd = value: escapeShellArg "hl.config({input = { touchpad = { disable_while_typing = ${value} } } })";
-        in
-          mkMenu "config"
-          [
+  home-manager.sharedModules = [
+    {
+      wayland.windowManager.hyprland = {
+        settings = {
+          bind = let
+            youSureSubMenu = cmd: [
+              {
+                key = "y";
+                desc = "Yes";
+                inherit cmd;
+              }
+              {
+                key = "n";
+                desc = "No";
+                cmd = "";
+              }
+            ];
+            menuShutdown = mkMenu "shutdown" [
+              {
+                key = "s";
+                desc = "Sleep";
+                submenu = youSureSubMenu "${getExe' pkgs.systemd "systemctl"} suspend";
+              }
+              {
+                key = "r";
+                desc = "Reboot";
+                submenu = youSureSubMenu "${getExe' pkgs.systemd "reboot"}";
+              }
+              {
+                key = "p";
+                desc = "Poweroff";
+                submenu = youSureSubMenu "${getExe' pkgs.systemd "poweroff"}";
+              }
+            ];
+            menuUtils = mkMenu "utils" [
+              {
+                key = "n";
+                desc = "Toggle notifications";
+                cmd = "${getExe' pkgs.dunst "dunstctl"} set-paused toggle";
+              }
+            ];
+            menuConfig = let
+              toggleCmd = value: escapeShellArg "hl.config({input = { touchpad = { disable_while_typing = ${value} } } })";
+            in
+              mkMenu "config"
+              [
+                {
+                  key = "t";
+                  desc = "Toggle touchpad while typing";
+                  cmd =
+                    pkgs.writeShellScriptBin "toggle_touchpad_typing"
+                    # bash
+                    ''
+                      val=$(${getExe' pkgs.hyprland "hyprctl"} getoption input.touchpad.disable_while_typing -j | ${getExe pkgs.jq} .bool)
+                      if [ "$val" = "true" ]; then
+                        hyprctl eval ${toggleCmd "false"}
+                      else
+                        hyprctl eval ${toggleCmd "true"}
+                      fi
+                    ''
+                    |> getExe;
+                }
+              ];
+          in [
+            # I don't think the home manager people could have come up with a worse
+            # syntax if they tried
             {
-              key = "t";
-              desc = "Toggle touchpad while typing";
-              cmd =
-                pkgs.writeShellScriptBin "toggle_touchpad_typing"
-                # bash
-                ''
-                  val=$(${getExe' pkgs.hyprland "hyprctl"} getoption input.touchpad.disable_while_typing -j | ${getExe pkgs.jq} .bool)
-                  if [ "$val" = "true" ]; then
-                    hyprctl eval ${toggleCmd "false"}
-                  else
-                    hyprctl eval ${toggleCmd "true"}
-                  fi
-                ''
-                |> getExe;
+              _args = [
+                "SUPER + SHIFT + S"
+                (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuShutdown}")'')
+              ];
+            }
+            {
+              _args = [
+                "SUPER + SHIFT + U"
+                (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuUtils}")'')
+              ];
+            }
+            {
+              _args = [
+                "SUPER + SHIFT + O"
+                (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuConfig}")'')
+              ];
             }
           ];
-      in [
-        # I don't think the home manager people could have come up with a worse
-        # syntax if they tried
-        {
-          _args = [
-            "SUPER + SHIFT + S"
-            (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuShutdown}")'')
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + U"
-            (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuUtils}")'')
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + O"
-            (mkLuaInline ''hl.dsp.exec_cmd("${getExe menuConfig}")'')
-          ];
-        }
-      ];
-    };
-  };
+        };
+      };
+    }
+  ];
 }

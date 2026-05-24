@@ -12,26 +12,30 @@
 
   hyprlandTarget = "hyprland-session.target";
 in {
-  xdg.configFile."pypr/config.toml".source = ./pyprland.toml;
+  home-manager.sharedModules = [
+    {
+      xdg.configFile."pypr/config.toml".source = ./pyprland.toml;
 
-  systemd.user.services.pyprland = {
-    Unit = {
-      Description = "Pyprland Service";
-      PartOf = [hyprlandTarget];
-      Requires = [hyprlandTarget];
-    };
+      systemd.user.services.pyprland = {
+        Unit = {
+          Description = "Pyprland Service";
+          PartOf = [hyprlandTarget];
+          Requires = [hyprlandTarget];
+        };
 
-    Install.WantedBy = [hyprlandTarget];
+        Install.WantedBy = [hyprlandTarget];
 
-    Service = {
-      Type = "simple";
-      Restart = "always";
-      ExecStart = "${getExe pyprland}";
-      RestartSec = "1";
-    };
-  };
+        Service = {
+          Type = "simple";
+          Restart = "always";
+          ExecStart = "${getExe pyprland}";
+          RestartSec = "1";
+        };
+      };
 
-  home.packages = [
-    pyprland
+      home.packages = [
+        pyprland
+      ];
+    }
   ];
 }

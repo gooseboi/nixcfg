@@ -79,6 +79,8 @@
     ${getExe lock}
   '';
 in {
+  imports = listNixWithDirs ./. |> remove ./default.nix;
+
   options.chonkos.hyprland = {
     enable = mkEnableOption "enable hyprland";
     enableMpd = mkEnableOption "enable mpd support";
@@ -108,8 +110,6 @@ in {
     home-manager.sharedModules = [
       # TODO: try niri
       {
-        imports = listNixWithDirs ./. |> remove ./default.nix;
-
         # TODO: Autolaunch blueman applet
         config = mkIf cfg.enable {
           wayland.windowManager.hyprland = {
