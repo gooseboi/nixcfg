@@ -61,6 +61,7 @@
     nushell.enable = true;
     tlp.batMaxFreq = 60;
     tlp.enable = true;
+    virt-manager.enable = true;
     zsh.enableUserShell = true;
   };
 
