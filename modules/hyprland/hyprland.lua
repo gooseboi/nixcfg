@@ -149,12 +149,11 @@ hl.bind("CTRL + ALT + N", hl.dsp.exec_cmd("$TERMINAL -e nvim"))
 hl.bind("CTRL + ALT + C", hl.dsp.exec_cmd("$TERMINAL -e calcurse"))
 hl.bind("CTRL + ALT + H", hl.dsp.exec_cmd("$TERMINAL -e btop"))
 hl.bind("CTRL + ALT + R", hl.dsp.exec_cmd("$TERMINAL -e newsboat"))
---
--- -- Launch some common scripts
--- -- TODO: boomer worked better but no worky on wayland. Maybe port?
--- TODO: Readd this
--- bind = SUPER, Z, exec, hypr-zoom -duration=0 -steps=1 -target=2
--- -- bind = SUPERSHIFT, Z, exec, pypr zoom ++0.7
+
+-- TODO: boomer worked better but no worky on wayland. Maybe port?
+
+-- Launch some common scripts
+hl.gesture({ fingers = 2, direction = "pinch", action = "cursorZoom", zoom_level = 1, mode = "live" }) -- That 1 is unused
 hl.bind("SUPER + P", hl.dsp.exec_cmd("cpcolor"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd("bgprompt"))
 hl.bind("F9", hl.dsp.exec_cmd("mountprompt"))
