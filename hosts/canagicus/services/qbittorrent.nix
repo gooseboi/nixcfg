@@ -41,6 +41,9 @@ in {
           # Stop torrents upon reaching ratio=10
           "Session\\GlobalMaxRatio" = 10;
           "Session\\ShareLimitAction" = "Stop";
+
+          # Just download and upload as many as possible at once.
+          "Session\\QueueingSystemEnabled" = false;
         };
 
         Preferences = {
