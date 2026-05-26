@@ -1,9 +1,19 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
+  inherit
+    (lib)
+    mkIf
+    ;
+
   inherit (config.chonkos) theme;
 
+  cfg = config.chonkos.hyprland;
   colours = theme.withHashtag;
 in {
-  home-manager.sharedModules = [
+  home-manager.sharedModules = mkIf cfg.enable [
     {
       services.dunst = {
         enable = true;

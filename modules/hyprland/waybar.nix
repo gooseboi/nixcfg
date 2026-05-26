@@ -1,9 +1,18 @@
-{config, ...}: let
+{
+  config,
+  lib,
+  ...
+}: let
+  inherit
+    (lib)
+    mkIf
+    ;
+
   inherit (config.chonkos) theme;
 
   cfg = config.chonkos.hyprland;
 in {
-  home-manager.sharedModules = [
+  home-manager.sharedModules = mkIf cfg.enable [
     {
       programs.waybar = {
         enable = true;
