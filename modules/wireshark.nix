@@ -15,8 +15,7 @@
   cfg = config.chonkos.wireshark;
 in {
   options.chonkos.wireshark = {
-    # FIXME: Wireshark-qt stopped building
-    enable = mkBoolOption "enable wireshark" false;
+    enable = mkBoolOption "enable wireshark" isDesktop;
   };
 
   config = mkIf cfg.enable {
