@@ -25,5 +25,16 @@ in {
         mpv
       ];
     };
+
+    home-manager.sharedModules = [
+      {
+        programs.mpv = {
+          enable = true;
+          scripts = with pkgs.mpvScripts; [
+            mpris
+          ];
+        };
+      }
+    ];
   };
 }
