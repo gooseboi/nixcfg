@@ -31,22 +31,26 @@ in {
     home-manager.sharedModules = [
       {
         home.packages =
-          (fileNames
-            |> map (
-              f: pkgs.writeShellScriptBin f (builtins.readFile (./. + "/${f}"))
-            ))
-          ++ (with pkgs; [
-            curl
-            ffmpeg-full
-            file
-            hyprpicker
-            libnotify
-            mpv
-            simple-mtpfs
-            swaybg
-            wl-clipboard
-            yt-dlp
-          ]);
+          fileNames
+          |> map (
+            f:
+              pkgs.writeShellApplication {
+                name = f;
+                text = builtins.readFile (./. + "/${f}");
+                runtimeInputs = with pkgs; [
+                  curl
+                  ffmpeg-full
+                  file
+                  hyprpicker
+                  libnotify
+                  mpv
+                  simple-mtpfs
+                  swaybg
+                  wl-clipboard
+                  yt-dlp
+                ];
+              }
+          );
 
         xdg.configFile = {
           "yt/yt-dl-channel.conf".text = ''

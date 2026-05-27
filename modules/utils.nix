@@ -136,6 +136,7 @@ in {
         handbrake
         helium
         imagemagickBig
+        libnotify
         libqalculate
         libreoffice-fresh
         librsvg
@@ -157,7 +158,9 @@ in {
         thunderbird
         ungoogled-chromium
         what-anime-cli
+        wl-clipboard
         xdg-ninja
+        yt-dlp
         zen-browser
       ];
 
