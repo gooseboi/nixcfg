@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
   inherit
@@ -13,7 +12,7 @@
 
   enable = true;
 
-  subDomain = "qbittorrent";
+  subDomain = "qb";
   torrentingPort = 52020;
   webuiPort = 8080;
 in {
