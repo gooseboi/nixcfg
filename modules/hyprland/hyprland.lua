@@ -47,11 +47,14 @@ hl.config({
 -- BINDS
 -------------------------------------------------------------------------
 
+-- Exit hyprland
+hl.bind("SUPER + ALT + Q", hl.dsp.exit())
+
 -- Kill current window
-hl.bind("SUPER + Q", hl.dsp.window.kill())
+hl.bind("SUPER + Q", hl.dsp.window.close())
 
 -- Forcekill current window
-hl.bind("SUPER + ALT + Q", hl.dsp.exit())
+hl.bind("SUPER + SHIFT + Q", hl.dsp.window.kill())
 
 -- Restart waybar
 hl.bind("SUPER + ALT + R", hl.dsp.exec_cmd("pkill --signal SIGUSR2 waybar"))
