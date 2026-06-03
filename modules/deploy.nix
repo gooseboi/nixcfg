@@ -21,7 +21,7 @@ in {
   options.chonkos.deploy = {
     enable = mkEnableOption "enable registering this device as deployable";
 
-    remoteBuild = mkEnableOption "build the config on remote instead of local";
+    remoteBuild = mkDisableOption "build the config on remote instead of local";
     sshUser = mkOption {
       type = types.str;
       default = config.chonkos.user;
