@@ -9,6 +9,7 @@ let
     ;
 in {
   "modules/secrets/chonk-hashedPassword.age".publicKeys = all;
+  "modules/secrets/builder-sshkey.age".publicKeys = all;
 
   "hosts/canagicus/restic/restic-envfile.age".publicKeys = [canagicus chonk];
   "hosts/canagicus/restic/restic-password.age".publicKeys = [canagicus chonk];

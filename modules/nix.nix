@@ -111,8 +111,7 @@ in {
               sshUser = "builder";
               protocol = "ssh-ng";
 
-              # TODO:
-              sshKey = "/root/.ssh/builder-rsa";
+              sshKey = config.age.secrets.builder-sshkey.path;
 
               systems =
                 if value.config.chonkos.binfmt.enable
@@ -130,15 +129,21 @@ in {
         );
     };
 
+    age.secrets = lib.mkIf config.chonkos.nix.useRemoteBuild {
+      builder-sshkey = {
+        mode = "400";
+        file = ./secrets/builder-sshkey.age;
+      };
+    };
     users = mkIf cfg.isRemoteBuilder {
       groups.builder = {};
       users.builder = {
-        useDefaultShell = false;
         isSystemUser = true;
         createHome = true;
         group = "builder";
         home = "/var/empty";
-        openssh.authorizedKeys.keys = [keys.all];
+        shell = pkgs.bashInteractive;
+        openssh.authorizedKeys.keys = [keys.builder];
       };
     };
 
