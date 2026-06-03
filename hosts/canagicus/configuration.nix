@@ -36,6 +36,8 @@
   chonkos = {
     type = "server";
     user = "chonk";
+    nix.disableLocalBuilds = false;
+    nix.isRemoteBuilder = true;
 
     deploy = {
       enable = true;

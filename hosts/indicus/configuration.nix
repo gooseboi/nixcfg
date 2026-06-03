@@ -36,6 +36,7 @@
   chonkos = {
     type = "desktop";
     user = "chonk";
+    nix.disableLocalBuilds = false;
 
     adb.enable = true;
     alacritty.enableEnvVar = true;
