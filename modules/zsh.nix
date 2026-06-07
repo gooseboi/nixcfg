@@ -102,6 +102,15 @@ in {
               ${optionalString config.chonkos.zsh.enableVimMode
                 # bash
                 ''
+                  # To configure menuselect
+                  zmodload zsh/complist
+
+                  # Use vim keys in tab complete menu:
+                  bindkey -M menuselect 'h' vi-backward-char
+                  bindkey -M menuselect 'j' vi-down-line-or-history
+                  bindkey -M menuselect 'k' vi-up-line-or-history
+                  bindkey -M menuselect 'l' vi-forward-char
+
                   # Fix backspace bug when switching modes
                   bindkey "^?" backward-delete-char
 
@@ -117,6 +126,24 @@ in {
                       echo -ne '\e[5 q'
                     fi
                   }
+
+                  # ci", ci', ci`, di", etc
+                  autoload -U select-quoted
+                  zle -N select-quoted
+                  for m in visual viopp; do
+                    for c in {a,i}{\',\",\`}; do
+                      bindkey -M $m $c select-quoted
+                    done
+                  done
+
+                  # ci{, ci(, ci<, di{, etc
+                  autoload -U select-bracketed
+                  zle -N select-bracketed
+                  for m in visual viopp; do
+                    for c in {a,i}''${(s..)^:-'()[]{}<>bB'}; do
+                      bindkey -M $m $c select-bracketed
+                    done
+                  done
                 ''}
 
               zle -N zle-keymap-select
