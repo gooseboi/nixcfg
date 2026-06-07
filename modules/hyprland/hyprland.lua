@@ -81,10 +81,10 @@ hl.bind("SUPER + SHIFT + R", hl.dsp.submap("resize"))
 
 hl.define_submap("resize", function()
 	-- Resize active window
-	hl.bind("H", hl.dsp.window.resize({ x = -10, y = 0 }), { repeating = true })
-	hl.bind("J", hl.dsp.window.resize({ x = 0, y = 10 }), { repeating = true })
-	hl.bind("K", hl.dsp.window.resize({ x = 0, y = -10 }), { repeating = true })
-	hl.bind("L", hl.dsp.window.resize({ x = 10, y = 0 }), { repeating = true })
+	hl.bind("H", hl.dsp.window.resize({ x = -10, y = 0, relative = true }), { repeating = true })
+	hl.bind("J", hl.dsp.window.resize({ x = 0, y = 10, relative = true }), { repeating = true })
+	hl.bind("K", hl.dsp.window.resize({ x = 0, y = -10, relative = true }), { repeating = true })
+	hl.bind("L", hl.dsp.window.resize({ x = 10, y = 0, relative = true }), { repeating = true })
 
 	-- Go back to the global submap
 	hl.bind("ESCAPE", hl.dsp.submap("reset"))
