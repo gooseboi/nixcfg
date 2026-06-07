@@ -57,6 +57,13 @@ in {
           enable = true;
 
           enableCompletion = true;
+          completionInit =
+            # zsh
+            ''
+              autoload -U compinit && compinit
+              # Include hidden files.
+              _comp_options+=(globdots)
+            '';
 
           syntaxHighlighting.enable = true;
           autocd = true;
