@@ -179,6 +179,18 @@ in {
                 }
               ];
             };
+            hyprpaper = {
+              enable = true;
+              settings = {
+                wallpaper = [
+                  {
+                    monitor = "";
+                    path = "~/.local/share/bg";
+                    fit_mode = "stretch";
+                  }
+                ];
+              };
+            };
           };
 
           home.sessionVariables.NIXOS_OZONE_WL = "1";

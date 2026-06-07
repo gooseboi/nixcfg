@@ -31,12 +31,7 @@ fi
 
 if [ -z "$(find "$bgloc" -type l -xtype f)" ]; then
 	randomfile=$(find -L "$bgloc" -iregex '.*.\(jpg\|jpeg\|png\|gif\)' -type f | shuf -n 1)
-	pidof -x swaybg 2>/dev/null | xargs --no-run-if-empty --max-args=1 kill
-	swaybg -i "$randomfile" -o stretch >/dev/null 2>/dev/null &
-	#[ -n "$1" ] && updatebetterlock "$randomfile"
-	#[ -n "$1" ] || updatebetterlock "$randomfile" "silent"
+	hyprctl hyprpaper wallpaper ", $randomfile, stretch"
 else
-	pidof -x swaybg 2>/dev/null | xargs --no-run-if-empty --max-args=1 kill
-	swaybg -i "$bgloc" -o stretch >/dev/null 2>/dev/null &
-	#[ -n "$1" ] && updatebetterlock "$bgloc"
+	hyprctl hyprpaper wallpaper ", $bgloc, stretch"
 fi
