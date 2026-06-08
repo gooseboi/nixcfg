@@ -147,7 +147,7 @@ in {
         nix-update
         obs-studio
         onlyoffice-desktopeditors
-        openscad
+        # FIXME: stopped building openscad
         pandoc
         playerctl
         python3.pkgs.grip
