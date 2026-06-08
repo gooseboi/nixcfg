@@ -1,4 +1,15 @@
-{pkgs, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
+  inherit
+    (lib)
+    mkIf
+    ;
+
+  enable = false;
+
   name = "satisfactory";
 
   mkBuilder = {
@@ -26,31 +37,33 @@
 
   builder = pkgs.callPackage mkBuilder {};
 in {
-  chonkos.unfree.allowed = [
-    "steamcmd"
-    "steam-unwrapped"
-  ];
+  config = mkIf enable {
+    chonkos.unfree.allowed = [
+      "steamcmd"
+      "steam-unwrapped"
+    ];
 
-  networking.firewall = {
-    allowedTCPPorts = [7777 8888];
-    allowedUDPPorts = [7777];
-  };
+    networking.firewall = {
+      allowedTCPPorts = [7777 8888];
+      allowedUDPPorts = [7777];
+    };
 
-  flux.servers.satisfactory = {
-    package = pkgs.mkSteamServer {
-      inherit name;
-      src = builder {
+    flux.servers.satisfactory = {
+      package = pkgs.mkSteamServer {
         inherit name;
-        appId = "1690800";
-        depotId = "1690802";
-        manifestId = "6002578218905311874";
+        src = builder {
+          inherit name;
+          appId = "1690800";
+          depotId = "1690802";
+          manifestId = "6002578218905311874";
 
-        hash = "sha256-Mn+HLd7hmlVubyYTKVothpEvdEZnDkz9swSAWE4TraY=";
+          hash = "sha256-Mn+HLd7hmlVubyYTKVothpEvdEZnDkz9swSAWE4TraY=";
+        };
+
+        startCmd = "FactoryServer.sh";
+
+        hash = "sha256-zxCOq5Uakk0iFJgcD7pVTP+59bV+4LvU8ah9hFp6EIQ=";
       };
-
-      startCmd = "FactoryServer.sh";
-
-      hash = "sha256-zxCOq5Uakk0iFJgcD7pVTP+59bV+4LvU8ah9hFp6EIQ=";
     };
   };
 }
