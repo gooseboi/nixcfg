@@ -24,6 +24,7 @@
                 name = "crypted";
                 settings = {
                   allowDiscards = true;
+                  crypttabExtraOpts = ["tries=0"];
                 };
                 content = {
                   type = "lvm_pv";
