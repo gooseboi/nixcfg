@@ -137,8 +137,8 @@ hl.bind("SUPER + SHIFT + M", hl.dsp.exec_cmd("mpc toggle"), { locked = true })
 hl.bind("SUPER + CTRL + M", hl.dsp.exec_cmd("playerctl pause -a"), { locked = true })
 
 -- Brightness
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set +5%"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set -5%"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
 
 -- -- Launch some common programs
 hl.bind("CTRL + ALT + G", hl.dsp.exec_cmd("gimp"))
