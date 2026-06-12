@@ -8,12 +8,12 @@
 
   baseUrl = "https://github.com/pingdotgg/t3code";
 
-  version = "0.0.24";
+  version = "0.0.27";
   pname = "t3code";
 
   src = fetchurl {
     url = "${baseUrl}/releases/download/v${version}/T3-Code-${version}-x86_64.AppImage";
-    hash = "sha256-t8KYAtaQKWmCVOOwvHByosYoqb0Ji35Qe4m+8Gtp/+k=";
+    hash = "sha256-ALkm7wSVbDlZR7TWVag3NRbP1kvGJQqmpR1mmZvSCAU=";
   };
 
   appimageContents = appimageTools.extract {inherit pname version src;};
@@ -25,8 +25,10 @@ in
       install -m 444 -D ${appimageContents}/${pname}.desktop \
                         $out/share/applications/${pname}.desktop
 
-      install -m 444 -D ${appimageContents}/usr/share/icons/hicolor/1024x1024/apps/${pname}.png \
-                          $out/share/icons/hicolor/1024x1024/apps/${pname}.png
+      for size in 16 22 24 32 48 64 128 256 512; do
+        install -m 444 -D ${appimageContents}/usr/share/icons/hicolor/"$size"x"$size"/apps/${pname}.png \
+                            $out/share/icons/hicolor/"$size"x"$size"/apps/${pname}.png
+      done
 
       substituteInPlace $out/share/applications/${pname}.desktop \
         --replace-fail 'Exec=AppRun' 'Exec=${meta.mainProgram}'

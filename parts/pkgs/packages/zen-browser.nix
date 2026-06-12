@@ -4,12 +4,12 @@
   fetchurl,
   ...
 }: let
-  version = "1.20.1b";
+  version = "1.21b";
   pname = "zen";
 
   src = fetchurl {
     url = "https://github.com/zen-browser/desktop/releases/download/${version}/zen-x86_64.AppImage";
-    hash = "sha256-33IoSCfEEt+ewrvmHiTFu3K6gyVpkFZYdsXbRauokQg=";
+    hash = "sha256-Gk5EtvYMQPD2/7yGgQhaMNt/MX2nvvNmRoOdB/UWtOE=";
   };
 
   appimageContents = appimageTools.extract {inherit pname version src;};
