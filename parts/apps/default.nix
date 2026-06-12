@@ -48,6 +48,18 @@
         type = "app";
         program = "${getExe' pkgs.apacheHttpd "htpasswd"}";
       };
+
+      update_packages = {
+        type = "app";
+        program =
+          pkgs.writeShellScriptBin "update_packages"
+          # bash
+          ''
+            for p in t3code mc-monitor mc-gate helium zen-browser; do
+              ${getExe pkgs.nix-update} -F packages.x86_64-linux.$p
+            done
+          '';
+      };
     };
   };
 }
