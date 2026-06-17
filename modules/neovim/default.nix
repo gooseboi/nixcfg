@@ -73,6 +73,7 @@
               vscode-langservers-extracted
               vtsls
               zls
+              csharp-ls
             ]
           );
 

@@ -54,6 +54,8 @@ local servers = {
 
 	cssls = {},
 
+	csharp_ls = {},
+
 	gopls = {},
 
 	openscad_lsp = {},
