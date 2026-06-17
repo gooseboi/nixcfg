@@ -17,7 +17,11 @@
     types
     ;
 
-  inherit (config.chonkos) isDesktop;
+  inherit
+    (config.chonkos)
+    isDesktop
+    type
+    ;
 
   cfg = config.chonkos.tailscale;
 in {
@@ -49,7 +53,13 @@ in {
     services.tailscale = {
       enable = true;
       interfaceName = cfg.interfaceName;
-      useRoutingFeatures = "both";
+      useRoutingFeatures =
+        {
+          "server" = "server";
+          "desktop" = "client";
+        }.${
+          type
+        };
     };
 
     systemd.services.tailscaled.serviceConfig = {
