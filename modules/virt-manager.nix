@@ -15,6 +15,8 @@ in {
   config = mkIf cfg.enable {
     programs.virt-manager.enable = true;
 
+    networking.firewall.trustedInterfaces = ["virbr0"];
+
     virtualisation.libvirtd = {
       enable = true;
       qemu.vhostUserPackages = with pkgs; [virtiofsd];
