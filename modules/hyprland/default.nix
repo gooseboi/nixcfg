@@ -162,22 +162,26 @@ in {
           services = {
             hyprpolkitagent.enable = true;
             network-manager-applet.enable = networkManagerEnabled;
-            swayidle = {
+            hypridle = {
               enable = true;
-              events = {
-                "before-sleep" = getExe before-sleep;
+
+              settings = {
+                general = {
+                  before_sleep_cmd = getExe before-sleep;
+                };
+
+                listener = [
+                  {
+                    timeout = minsToSecs 5;
+                    on-timeout = "${getExe' pkgs.hyprland "hyprctl"} dispatch ${escapeShellArg ''hl.dsp.dpms({action="off"})''}";
+                    on-resume = "${getExe' pkgs.hyprland "hyprctl"} dispatch ${escapeShellArg ''hl.dsp.dpms({action="on"})''}";
+                  }
+                  {
+                    timeout = minsToSecs 15;
+                    on-timeout = getExe lock;
+                  }
+                ];
               };
-              timeouts = [
-                {
-                  timeout = minsToSecs 5;
-                  command = "${getExe' pkgs.hyprland "hyprctl"} dispatch ${escapeShellArg ''hl.dsp.dpms({action="off"})''}";
-                  resumeCommand = "${getExe' pkgs.hyprland "hyprctl"} dispatch ${escapeShellArg ''hl.dsp.dpms({action="on"})''}";
-                }
-                {
-                  timeout = minsToSecs 15;
-                  command = getExe lock;
-                }
-              ];
             };
             hyprpaper = {
               enable = true;
