@@ -147,6 +147,10 @@ in {
       };
     };
 
+    environment.variables = {
+      NH_SHOW_ACTIVATION_LOGS = 1;
+    };
+
     environment.systemPackages = with pkgs; [
       nh
       nix-index
