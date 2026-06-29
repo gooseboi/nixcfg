@@ -15,6 +15,12 @@
         src = "vh.mc.gooseman.net";
         dest = "localhost:25569";
       };
+
+      servers.parkour = {
+        enable = true;
+        src = "pk.mc.gooseman.net";
+        dest = "localhost:25579";
+      };
     };
   };
 }
