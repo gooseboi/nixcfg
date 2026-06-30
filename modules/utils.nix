@@ -44,7 +44,7 @@ in {
       fastfetch =
         if cfg.desktopInstall
         then pkgs.fastfetch
-        else pkgs.fastfetch.minimal;
+        else pkgs.fastfetch-unwrapped;
       fortune = pkgs.fortune.override {withOffensive = true;};
     in
       [
