@@ -133,7 +133,7 @@ in {
         gimp
         gparted
         graphviz
-        handbrake
+        # FIXME: stopped building handbrake
         helium
         imagemagickBig
         libnotify
@@ -147,7 +147,7 @@ in {
         nix-update
         obs-studio
         onlyoffice-desktopeditors
-        # FIXME: stopped building openscad
+        openscad
         pandoc
         playerctl
         python3.pkgs.grip
