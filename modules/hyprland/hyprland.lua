@@ -155,7 +155,6 @@ hl.bind("CTRL + ALT + R", hl.dsp.exec_cmd("$TERMINAL -e newsboat"))
 -- TODO: boomer worked better but no worky on wayland. Maybe port?
 
 -- Launch some common scripts
-hl.gesture({ fingers = 2, direction = "pinch", action = "cursorZoom", zoom_level = 1, mode = "live" }) -- That 1 is unused
 hl.bind("SUPER + P", hl.dsp.exec_cmd("cpcolor"))
 hl.bind("SUPER + B", hl.dsp.exec_cmd("bgprompt"))
 hl.bind("F9", hl.dsp.exec_cmd("mountprompt"))
