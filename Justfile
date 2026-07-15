@@ -4,6 +4,9 @@ build:
 switch:
 	nh os switch .
 
+switch_remote system:
+	nh os switch --target-host {{system}} --build-host {{system}} .
+
 update:
 	nix flake update
 
