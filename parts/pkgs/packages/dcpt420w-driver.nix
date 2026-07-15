@@ -72,8 +72,17 @@ in
       # NOTE: The lpdwrapper Perl script extracts the model name from its own
       # path using a regex that assumes /opt/ prefix. On NixOS the path starts
       # with /nix/store/, so the regex must be relaxed to match any prefix.
+      #
+      # The lpdwrapper extracts $basedir using `readlink $0`, which returns a
+      # relative symlink target. Use `realpath` instead so $basedir (and thus
+      # $LPDFILTER) are absolute paths that resolve correctly from any CWD.
+      #
+      # the lpdconf thing is just plain wrong before... It copies the wrong file
+      # and therefore the print settings are not respected in the print
       substituteInPlace $WRAPPERDIR/brother_lpdwrapper_${model} \
-        --replace-fail 's/^\/opt\/.*\/Printers\///g' 's/^.*\/opt\/.*\/Printers\///g'
+        --replace-fail 'my $basedir = `readlink $0`;' 'my $basedir = `realpath $0`;' \
+        --replace-fail 's/^\/opt\/.*\/Printers\///g' 's/^.*\/opt\/.*\/Printers\///g' \
+        --replace-fail 'my $lpdconf_command = "$lpdconf $op $val -rcfile $TEMPRC";' 'my $lpdconf_command = "$lpddir$lpdconf $op $val -rcfile $TEMPRC";'
 
       wrapProgram $LPDDIR/filter_${model} \
         --prefix PATH ":" ${binPath}
