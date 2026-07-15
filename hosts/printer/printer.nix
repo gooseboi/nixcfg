@@ -43,4 +43,13 @@
       }
     ];
   };
+
+  users.users.printer = {
+    isSystemUser = true;
+    group = "lpadmin";
+    # It doesn't matter it's plaintext, since this user can't do anything,
+    # and they can't interactively login.
+    password = "printer";
+    shell = pkgs.shadow;
+  };
 }
