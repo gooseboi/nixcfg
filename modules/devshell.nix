@@ -129,7 +129,6 @@ in {
         libxrandr
         libxrender
         libxslt
-        libz
         ncurses
         nspr
         nss
