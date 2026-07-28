@@ -21,7 +21,7 @@ in {
 
   config = mkIf cfg.enable {
     chonkos.unfree.allowed = [
-      "antigravity"
+      "antigravity-ide"
       "cursor"
       "ngrok"
     ];
@@ -94,7 +94,7 @@ in {
       )
 
       # AI Slop
-      antigravity-fhs
+      antigravity-ide-fhs
       code-cursor-fhs
       codex
       gemini-cli

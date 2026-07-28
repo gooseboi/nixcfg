@@ -8,12 +8,12 @@
 
   baseUrl = "https://github.com/pingdotgg/t3code";
 
-  version = "0.0.27";
+  version = "0.0.28";
   pname = "t3code";
 
   src = fetchurl {
     url = "${baseUrl}/releases/download/v${version}/T3-Code-${version}-x86_64.AppImage";
-    hash = "sha256-ALkm7wSVbDlZR7TWVag3NRbP1kvGJQqmpR1mmZvSCAU=";
+    hash = "sha256-+mBp+wPrJRV/HpaimQHcqBuwqZcPWTbKJVNCVW7ELgo=";
   };
 
   appimageContents = appimageTools.extract {inherit pname version src;};
