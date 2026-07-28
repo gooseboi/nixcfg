@@ -23,6 +23,7 @@ in {
     chonkos.unfree.allowed = [
       "antigravity-ide"
       "cursor"
+      "cursor-cli"
       "ngrok"
     ];
 
@@ -99,7 +100,11 @@ in {
       codex
       gemini-cli
       opencode
-      t3code
+      (t3code.override {
+        enableCursor = true;
+        enableCursorCli = true;
+        enableOpencode = true;
+      })
 
       # Web Dev
       (
