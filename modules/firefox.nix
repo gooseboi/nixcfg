@@ -42,6 +42,10 @@
         uuid = "jordanlinkwarden@gmail.com";
       }
       {
+        shortId = "readeck";
+        uuid = "readeck@readeck.com";
+      }
+      {
         shortId = "ublock-origin";
         uuid = "uBlock0@raymondhill.net";
       }
