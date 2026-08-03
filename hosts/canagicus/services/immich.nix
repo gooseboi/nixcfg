@@ -23,6 +23,8 @@ in {
 
       mediaLocation = driveMountPath;
 
+      accelerationDevices = [ "/dev/dri/renderD128" ];
+
       database = {
         createDB = false;
         host = "/run/postgresql";
