@@ -4,7 +4,7 @@ build:
 switch:
 	nh os switch .
 
-switch_remote system:
+remote_switch system:
 	nh os switch --target-host {{system}} --build-host {{system}} .
 
 update:
