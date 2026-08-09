@@ -23,7 +23,7 @@ in {
 
       mediaLocation = driveMountPath;
 
-      accelerationDevices = [ "/dev/dri/renderD128" ];
+      accelerationDevices = ["/dev/dri/renderD128"];
 
       database = {
         createDB = false;
@@ -43,6 +43,10 @@ in {
     ];
 
     chonkos.services.postgresql.ensure = ["immich"];
+
+    services.restic.backups.computer = {
+      paths = [driveMountPath];
+    };
 
     chonkos.services.reverse-proxy.hosts.immich = {
       target = "http://127.0.0.1:${toString port}";
