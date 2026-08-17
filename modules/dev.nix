@@ -98,7 +98,6 @@ in {
       antigravity-ide-fhs
       code-cursor-fhs
       codex
-      gemini-cli
       opencode
       (t3code.override {
         enableCursor = true;

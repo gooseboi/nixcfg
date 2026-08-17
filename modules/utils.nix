@@ -27,10 +27,11 @@ in {
   config = mkIf cfg.enable {
     chonkos.unfree.allowed =
       [
-        "drawio"
       ]
       ++ (lists.optionals cfg.desktopInstall [
         "discord"
+        "discord-unwrapped"
+        "drawio"
       ]);
 
     environment.systemPackages = with pkgs; let
