@@ -1,4 +1,8 @@
 {
+  imports = [
+    ./nginx-fs
+  ];
+
   perSystem = {
     inputs',
     lib,
