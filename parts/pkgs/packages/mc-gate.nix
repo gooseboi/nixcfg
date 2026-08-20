@@ -5,6 +5,7 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "gate";
+  # TODO: Why do later versions not work?
   version = "0.65.0";
 
   src = fetchFromGitHub {
