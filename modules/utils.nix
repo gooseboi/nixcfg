@@ -139,7 +139,7 @@ in {
         imagemagickBig
         libnotify
         libqalculate
-        libreoffice-fresh
+        libreoffice-stable
         librsvg
         localsend
         losslesscut-bin
