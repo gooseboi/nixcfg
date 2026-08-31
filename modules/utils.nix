@@ -134,7 +134,7 @@ in {
         gimp
         gparted
         graphviz
-        # FIXME: stopped building handbrake
+        handbrake
         helium
         imagemagickBig
         libnotify

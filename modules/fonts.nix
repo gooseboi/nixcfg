@@ -57,7 +57,7 @@ in {
           |> builtins.filter lib.attrsets.isDerivation);
     };
     environment.systemPackages = with pkgs; [
-      font-manager
+      # FIXME: stopped building font-manager
     ];
   };
 }
