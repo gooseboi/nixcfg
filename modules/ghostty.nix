@@ -37,8 +37,12 @@ in {
               font-family = theme.font.mono.name;
 
               confirm-close-surface = false;
-              quit-after-last-window-closed = true;
+              gtk-single-instance = true;
+              quit-after-last-window-closed = false;
+
               window-decoration = false;
+
+              background-opacity = 0.9;
 
               keybind =
                 [] # For alignment
