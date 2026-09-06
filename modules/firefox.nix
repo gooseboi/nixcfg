@@ -263,6 +263,9 @@ in {
                   # Enable Global Privacy Control
                   "privacy.globalprivacycontrol.enabled" = true;
 
+                  # Disable Firefox Relay
+                  "signon.firefoxRelay.feature" = "unavailable";
+
                   # Disable breach alerts
                   "signon.management.page.breach-alerts.enabled" = false;
                 }
