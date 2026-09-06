@@ -5,7 +5,8 @@
 }: let
   inherit
     (lib)
-    optionalString
+    mkIf
+    mkMerge
     ;
 
   inherit
@@ -14,17 +15,16 @@
     isServer
     ;
 in {
-  services.journald.extraConfig =
-    optionalString isDesktop ''
-      # /var/log (Services)
-      SystemMaxUse=100M
-      # /run/var/log (Boot)
-      RuntimeMaxUse=50M
-    ''
-    + optionalString isServer ''
-      # /var/log (Services)
-      SystemMaxUse=1G
-      # /run/var/log (Boot)
-      RuntimeMaxUse=500M
-    '';
+  services.journald.settings.Journal = {
+    # /var/log (Services)
+    SystemMaxUse = mkMerge [
+      (mkIf isDesktop "100M")
+      (mkIf isServer "1G")
+    ];
+    # /run/var/log (Boot)
+    RuntimeMaxUse = mkMerge [
+      (mkIf isDesktop "50M")
+      (mkIf isServer "500M")
+    ];
+  };
 }
