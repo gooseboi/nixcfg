@@ -117,7 +117,7 @@ in {
       go
 
       # Solo
-      lean4
+      # FIXME: stopped building: lean4
       odin
       rocq-core
       zig
