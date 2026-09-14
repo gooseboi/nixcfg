@@ -24,7 +24,6 @@ in {
       "antigravity-ide"
       "cursor"
       "cursor-cli"
-      "ngrok"
     ];
 
     environment.systemPackages = with pkgs; [
@@ -128,7 +127,6 @@ in {
       gh
       gnumake
       mermaid-cli
-      ngrok
       tokei
       tracy
     ];
