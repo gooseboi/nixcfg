@@ -15,7 +15,7 @@ updatebetterlock() {
 }
 
 if [ -n "$1" ]; then
-	rm "$bgloc"
+	rm -f "$bgloc"
 	if [ "$1" = "-r" ]; then
 		trueloc="$(readlink -f "$2")"
 		ln -sf "$trueloc" "$bgloc" && notify-send -i "$bgloc" "Setting random wallpaper on startup..."
