@@ -53,6 +53,17 @@ in {
           )
         ];
 
+        programs.atuin = {
+          enable = true;
+          flags = [
+            "--disable-up-arrow"
+          ];
+
+          settings = {
+            sync_address = "https://atuin.gooseman.net";
+          };
+        };
+
         programs.zsh = mkIf config.chonkos.zsh.enable {
           enable = true;
 

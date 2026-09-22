@@ -180,7 +180,7 @@ in {
           };
         };
 
-        programs.fzf.enable = true;
+        # programs.fzf.enable = true;
 
         home.sessionVariables = {
           RIPGREP_CONFIG_PATH = "${homeConfig.xdg.configHome}/" + ripgrep_config;
