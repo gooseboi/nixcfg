@@ -9,7 +9,7 @@
     ;
   inherit (config.networking) domain;
 
-  enable = true;
+  enable = false;
 
   port = 4376;
   dataDir = "/var/lib/komga";
