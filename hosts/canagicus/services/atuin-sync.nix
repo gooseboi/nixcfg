@@ -23,7 +23,6 @@ in {
         createLocally = false;
       };
 
-
       maxHistoryLength = 65536;
     };
 
