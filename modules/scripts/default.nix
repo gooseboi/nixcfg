@@ -44,7 +44,6 @@ in {
                   hyprpicker
                   libnotify
                   mpv
-                  simple-mtpfs
                   swaybg
                   wl-clipboard
                   yt-dlp
