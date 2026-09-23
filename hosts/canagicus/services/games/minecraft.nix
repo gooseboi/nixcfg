@@ -4,22 +4,10 @@
       enable = true;
       openFirewall = true;
 
-      servers.homestead = {
+      servers.gtnh = {
         enable = true;
-        src = "hstead.mc.gooseman.net";
-        dest = "localhost:25566";
-      };
-
-      servers.vault_hunters = {
-        enable = true;
-        src = "vh.mc.gooseman.net";
-        dest = "localhost:25569";
-      };
-
-      servers.parkour = {
-        enable = true;
-        src = "pk.mc.gooseman.net";
-        dest = "localhost:25579";
+        src = "gtnh.mc.gooseman.net";
+        dest = "localhost:25576";
       };
     };
   };
