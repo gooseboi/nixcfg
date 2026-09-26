@@ -55,7 +55,7 @@ in {
           "yt/yt-dl-channel.conf".text = ''
             -i
             -c
-            -o "%(uploader)s/%(playlist_title)s/%(upload_date)s - %(title)s - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
+            -o "%(uploader)s/%(playlist_title)s/%(upload_date)s - %(title).100B - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
 
             # Cookies
             --cookies ~/.local/share/youtube_cookies.txt
@@ -81,7 +81,7 @@ in {
           "yt/yt-dl-playlist.conf".text = ''
             -i
             -c
-            -o "%(playlist_title)s/%(playlist_index)s - %(uploader)s - %(upload_date)s - %(title)s - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
+            -o "%(playlist_title)s/%(playlist_index)s - %(uploader)s - %(upload_date)s - %(title).100B - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
 
             # Cookies
             --cookies ~/.local/share/youtube_cookies.txt
@@ -107,7 +107,7 @@ in {
           "yt/yt-dl-vid.conf".text = ''
             -i
             -c
-            -o "%(uploader)s - %(upload_date)s - %(title)s - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
+            -o "%(uploader)s - %(upload_date)s - %(title).100B - (%(duration)ss) [%(resolution)s] [%(id)s].%(ext)s"
 
             # Cookies
             --cookies ~/.local/share/youtube_cookies.txt
