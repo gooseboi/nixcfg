@@ -1,9 +1,13 @@
 {
   config,
   keys,
+  modulesPath,
   ...
 }: {
   imports = [
+    "${modulesPath}/profiles/minimal.nix"
+    "${modulesPath}/profiles/headless.nix"
+
     ./disk-config.nix
     ./hardware-configuration.nix
 
