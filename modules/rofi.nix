@@ -32,7 +32,7 @@ in {
           plugins = [pkgs.rofi-emoji];
 
           theme = "gruvbox-dark-hard";
-          extraConfig = with theme.font; {
+          settings = with theme.font; {
             modi = "window,drun,ssh,run,emoji";
             font = "${sans.name} ${toString size.big}";
             m = "-1";
