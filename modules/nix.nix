@@ -12,12 +12,16 @@
     const
     filterAttrs
     isType
+    lists
     mapAttrs
     mapAttrsToList
+    mkBoolOption
     mkDisableOption
     mkEnableOption
     mkIf
     ;
+
+  inherit (config.chonkos) isDesktop;
 
   inputFlakes =
     inputs
@@ -31,6 +35,7 @@ in {
     disableLocalBuilds = mkDisableOption "make this machine unable to execute builds";
     useRemoteBuild = mkEnableOption "make this machine use remote builders";
     isRemoteBuilder = mkEnableOption "mark this machine as avaiable to run remote builds for others";
+    desktopInstall = mkBoolOption "install utils for desktop" isDesktop;
   };
 
   config = {
@@ -151,11 +156,14 @@ in {
       NH_SHOW_ACTIVATION_LOGS = 1;
     };
 
-    environment.systemPackages = with pkgs; [
-      nh
-      nix-index
-      nix-output-monitor
-      nix-tree
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        nh
+        nix-tree
+      ]
+      ++ (lists.optionals cfg.desktopInstall [
+        nix-index
+        nix-output-monitor
+      ]);
   };
 }
