@@ -68,6 +68,10 @@ in {
           };
         };
 
+        programs.fzf = mkIf (!cfg.desktopInstall) {
+          enable = true;
+        };
+
         programs.zsh = mkIf config.chonkos.zsh.enable {
           enable = true;
 
