@@ -6,28 +6,46 @@
 }: let
   inherit
     (lib)
+    mkBoolOption
+    mkDisableOption
     mkIf
+    mkOption
+    types
     ;
 
   inherit
     (config.chonkos)
-    isServer
     isDesktop
     ;
+
+  cfg = config.chonkos.git;
 in {
-  config = {
-    home-manager.sharedModules = [
+  options.chonkos.git = {
+    enable = mkDisableOption "enable git installation";
+    package = mkOption {
+      description = "git package to install";
+      type = types.package;
+    };
+    desktopInstall = mkBoolOption "install utils for desktop" isDesktop;
+  };
+
+  config = mkIf cfg.enable {
+    chonkos.git.package = pkgs.git.override {
+      pythonSupport = cfg.desktopInstall;
+      perlSupport = cfg.desktopInstall;
+      svnSupport = cfg.desktopInstall;
+    };
+
+    home-manager.sharedModules = let
+      inherit (cfg) desktopInstall;
+    in [
       {
         programs.git = {
           enable = true;
-          package = pkgs.git.override {
-            pythonSupport = isDesktop;
-            perlSupport = isDesktop;
-            svnSupport = isDesktop;
-          };
+          package = cfg.package;
 
           # This is to fix an evaluation warning with a new HM version
-          signing.format = mkIf isServer null;
+          signing.format = mkIf (!desktopInstall) null;
 
           settings = {
             user = {
@@ -68,7 +86,7 @@ in {
       (hmArgs: let
         hmConfig = hmArgs.config;
       in
-        mkIf isDesktop {
+        mkIf desktopInstall {
           programs.git = {
             settings = {
               core = {
