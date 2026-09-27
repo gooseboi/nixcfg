@@ -36,10 +36,7 @@ in {
 
     environment.systemPackages = with pkgs; let
       # Overrides to avoid duplication
-      ffmpeg =
-        if cfg.desktopInstall
-        then ffmpeg-full
-        else ffmpeg-headless;
+      ffmpeg = ffmpeg-full;
       # This would normally use another ffmpeg. This is to avoid duplication.
       czkawka-full = pkgs.czkawka-full.override {extraPackages = [ffmpeg];};
       fastfetch =
@@ -59,7 +56,6 @@ in {
         dust
         fastfetch
         fd
-        ffmpeg
         file
         fortune
         fzf
@@ -79,11 +75,8 @@ in {
         mc-monitor
         mcrcon
         moreutils
-        prettier
         oha
-        opustags
         p7zip
-        packwiz
         ripgrep
         rsync
         simple-http-server
@@ -106,17 +99,12 @@ in {
         zstd
 
         # Hardware
-        btrfs-progs
         dmidecode
-        dosfstools
         ethtool
-        exfatprogs
-        ntfs3g
         powertop
         smartmontools
         usbutils
         util-linux
-        zfs
       ]
       ++ lists.optionals (config.nixpkgs.hostPlatform.system == "x86_64-linux") [
         # Hardware
@@ -131,6 +119,7 @@ in {
         discord
         drawio
         ferdium
+        ffmpeg
         gimp
         gparted
         graphviz
@@ -149,8 +138,11 @@ in {
         obs-studio
         onlyoffice-desktopeditors
         openscad
+        opustags
+        packwiz
         pandoc
         playerctl
+        prettier
         python3.pkgs.grip
         restic
         rust-stakeholder
@@ -163,6 +155,13 @@ in {
         xdg-ninja
         yt-dlp
         zen-browser
+
+        # Hardware
+        btrfs-progs
+        dosfstools
+        exfatprogs
+        ntfs3g
+        zfs
       ];
 
     environment.shellAliases = {
