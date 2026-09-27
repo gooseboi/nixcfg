@@ -6,11 +6,14 @@
 }: let
   inherit
     (lib)
+    mkBoolOption
     mkDisableOption
     mkEnableOption
     mkIf
     optionalString
     ;
+
+  inherit (config.chonkos) isDesktop;
 
   cfg = config.chonkos.zsh;
 in {
@@ -18,6 +21,7 @@ in {
     enable = mkDisableOption "enable system-wide zsh support";
     enableUserShell = mkEnableOption "enable setting as default shell";
     enableVimMode = mkDisableOption "enable zsh vim mode";
+    desktopInstall = mkBoolOption "install utils for desktop" isDesktop;
   };
 
   config = mkIf cfg.enable {
@@ -53,7 +57,7 @@ in {
           )
         ];
 
-        programs.atuin = {
+        programs.atuin = mkIf cfg.desktopInstall {
           enable = true;
           flags = [
             "--disable-up-arrow"
