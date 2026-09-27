@@ -10,6 +10,8 @@ in {
     hw.common-cpu-intel
   ];
 
+  hardware.enableRedistributableFirmware = false;
+
   boot = {
     initrd = {
       availableKernelModules = ["xhci_pci" "dwc3_pci" "usb_storage" "usbhid" "sd_mod" "sdhci_acpi"];

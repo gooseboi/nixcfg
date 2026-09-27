@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   chonkos.unfree.allowed = ["cups-brother-dcpt420w"];
 
   services = {
