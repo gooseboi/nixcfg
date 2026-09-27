@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -6,13 +7,16 @@
   inherit
     (lib)
     getExe
+    mkIf
     ;
 
   pyprland = pkgs.pyprland;
 
   hyprlandTarget = "hyprland-session.target";
+
+  cfg = config.chonkos.hyprland;
 in {
-  home-manager.sharedModules = [
+  home-manager.sharedModules = mkIf cfg.enable [
     {
       xdg.configFile."pypr/config.toml".source = ./pyprland.toml;
 
