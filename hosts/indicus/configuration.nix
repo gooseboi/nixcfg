@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   # TODO: Impermanence (https://notthebe.ee/blog/nixos-ephemeral-zfs-root/)
   # TODO: lanzaboote (https://github.com/nix-community/lanzaboote)
   # TODO: https://github.com/mrusme/usbec
@@ -60,15 +56,11 @@
     ];
 
     nushell.enable = true;
-    tlp.batMaxFreq = 60;
-    tlp.enable = true;
     virt-manager.enable = true;
     zsh.enableUserShell = true;
   };
 
-  # When on the default "powersave", then the frequency is stuck on 0.8GHz,
-  # pretty unusable.
-  services.tlp.settings.CPU_SCALING_GOVERNOR_ON_BAT = lib.mkForce "performance";
+  services.auto-cpufreq.enable = true;
 
   system.stateVersion = "24.05"; # This shouldn't be changed
 }
