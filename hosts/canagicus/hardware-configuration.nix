@@ -10,7 +10,6 @@ in {
     hw.common-cpu-amd
     hw.common-cpu-amd-pstate
     hw.common-cpu-amd-zenpower
-    hw.common-gpu-amd
     hw.common-pc-laptop-ssd
   ];
 

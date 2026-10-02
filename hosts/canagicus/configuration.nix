@@ -1,9 +1,12 @@
 {
   config,
   keys,
+  modulesPath,
   ...
 }: {
   imports = [
+    "${modulesPath}/profiles/headless.nix"
+
     ./disk-config.nix
     ./freedns.nix
     ./hardware-configuration.nix
