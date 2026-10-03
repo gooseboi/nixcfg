@@ -26,6 +26,11 @@ in {
       maxHistoryLength = 65536;
     };
 
+    systemd.services.atuin = {
+      requires = ["postgresql.target"];
+      after = ["postgresql.target"];
+    };
+
     chonkos.services.postgresql.ensure = ["atuin"];
 
     chonkos.services.reverse-proxy.hosts.atuin = {
