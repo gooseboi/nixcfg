@@ -29,7 +29,7 @@ in {
     environment.systemPackages = with pkgs; [
       # C/C++
       (hiPrio gcc) # To stop conflict with clang for c++ bin
-      cdecl
+      # FIXME: cdecl
       clang
       clang-tools
       cmake
@@ -128,7 +128,7 @@ in {
       gnumake
       mermaid-cli
       tokei
-      tracy
+      # FIXME: tracy
     ];
 
     home-manager.sharedModules = [
