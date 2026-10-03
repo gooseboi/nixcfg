@@ -4,7 +4,12 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit
+    (lib)
+    attrsets
+    mkEnableOption
+    mkIf
+    ;
 
   cfg = config.chonkos.docker;
 in {
@@ -16,10 +21,17 @@ in {
     virtualisation = {
       docker = {
         enable = true;
-        package = pkgs.docker.override {
-          buildxSupport = true;
-          composeSupport = true;
-        };
+        package = pkgs.docker.override (
+          {
+            buildxSupport = true;
+            composeSupport = true;
+          }
+          // (
+            attrsets.optionalAttrs config.chonkos.git.enable {
+              gitMinimal = config.chonkos.git.package;
+            }
+          )
+        );
 
         storageDriver = "btrfs";
         enableOnBoot = false;

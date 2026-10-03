@@ -6,6 +6,7 @@
 }: let
   inherit
     (lib)
+    attrsets
     hiPrio
     mkBoolOption
     mkIf
@@ -98,11 +99,18 @@ in {
       code-cursor-fhs
       codex
       opencode
-      (t3code.override {
-        enableCursor = true;
-        enableCursorCli = true;
-        enableOpencode = true;
-      })
+      (
+        t3code.override (
+          {
+            enableCursor = true;
+            enableCursorCli = true;
+            enableOpencode = true;
+          }
+          // (attrsets.optionalAttrs config.chonkos.git.enable {
+            git = config.chonkos.git.package;
+          })
+        )
+      )
 
       # Web Dev
       (
