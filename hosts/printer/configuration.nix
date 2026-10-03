@@ -41,6 +41,8 @@
 
     deploy.enable = true;
 
+    git.enable = false;
+
     zsh.enableUserShell = true;
   };
 
