@@ -49,8 +49,6 @@
 
           extraPackages = with pkgs; (
             [
-              # Lualine doesn't work without it, for some reason
-              config.chonkos.git.package
             ]
             ++ lists.optionals isDesktop [
               alejandra
