@@ -47,7 +47,6 @@ in {
     in
       [
         asciinema
-        compose2nix
         cowsay
         curl
         dig
@@ -75,7 +74,6 @@ in {
         mc-monitor
         mcrcon
         moreutils
-        oha
         p7zip
         ripgrep
         rsync
@@ -115,6 +113,7 @@ in {
         appimage-run
         blender
         calibre # For ebook-convert
+        compose2nix
         czkawka-full
         discord
         drawio
@@ -136,6 +135,7 @@ in {
         nbt-explorer
         nix-update
         obs-studio
+        oha
         onlyoffice-desktopeditors
         openscad
         opustags
