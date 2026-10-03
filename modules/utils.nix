@@ -86,7 +86,6 @@ in {
         time
         traceroute
         tree
-        typos
         unrar-free
         unzip
         vimv-rs
@@ -149,6 +148,7 @@ in {
         scrcpy
         thunar
         thunderbird
+        typos
         ungoogled-chromium
         what-anime-cli
         wl-clipboard
