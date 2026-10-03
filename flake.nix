@@ -38,7 +38,6 @@
     # Secrets management
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

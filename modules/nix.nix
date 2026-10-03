@@ -94,7 +94,7 @@ in {
       # since there are no downsides to adding the flakes to the nix search path
       # to support this, as there is no way to change what these values point to,
       # I just do it.
-      nixPath =
+      settings.nix-path =
         inputFlakes
         |> mapAttrsToList (name: value: "${name}=${value}");
 
