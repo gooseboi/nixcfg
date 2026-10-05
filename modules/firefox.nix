@@ -197,6 +197,9 @@ in {
                   # Don't hide tabs when fullscreened
                   "browser.fullscreen.autohide" = false;
 
+                  # Disable the stupid new ui
+                  "browser.nova.enabled" = false;
+
                   # Don't warn when closing multiple tabs (cuz we save them)
                   "browser.tabs.warnOnClose" = false;
 
