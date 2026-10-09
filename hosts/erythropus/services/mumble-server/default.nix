@@ -10,7 +10,7 @@
 
   inherit (config.networking) domain;
 
-  enable = true;
+  enable = false;
   port = 64738;
   dataDir = "/var/lib/murmur";
   subDomain = "mumble.${domain}";
