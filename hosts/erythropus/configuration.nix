@@ -42,6 +42,8 @@
 
     deploy.enable = true;
 
+    git.enable = false;
+
     tailscale.enableExitNode = true;
     zsh.enableUserShell = true;
   };
