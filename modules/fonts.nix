@@ -21,6 +21,12 @@ in {
   config = mkIf cfg.enable {
     chonkos.unfree.allowed = ["corefonts" "vista-fonts"];
 
+    home-manager.sharedModules = [
+      {
+        fonts.fontconfig.enable = isDesktop;
+      }
+    ];
+
     fonts = {
       fontconfig.enable = true;
       packages =

@@ -10,8 +10,6 @@
     mkOption
     types
     ;
-
-  inherit (config.chonkos) isDesktop;
 in {
   # TODO: https://github.com/snugnug/hjem-rum/
   # TODO: https://github.com/feel-co/hjem
@@ -29,10 +27,6 @@ in {
       {
         # Let Home Manager install and manage itself.
         programs.home-manager.enable = true;
-      }
-
-      {
-        fonts.fontconfig.enable = isDesktop;
       }
     ];
 
