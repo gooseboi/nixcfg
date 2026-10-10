@@ -108,9 +108,11 @@ in {
 
   config = mkIf cfg.enable {
     environment.systemPackages = with cfg; [
+      icons.package
+    ];
+    fonts.packages = with cfg; [
       font.sans.package
       font.mono.package
-      icons.package
     ];
   };
 }

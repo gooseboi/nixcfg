@@ -23,7 +23,7 @@ in {
 
     home-manager.sharedModules = [
       {
-        fonts.fontconfig.enable = isDesktop;
+        fonts.fontconfig.enable = false;
       }
     ];
 
