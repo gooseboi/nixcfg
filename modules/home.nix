@@ -1,16 +1,8 @@
 {
   config,
   inputs,
-  lib,
-  self,
   ...
-}: let
-  inherit
-    (lib)
-    mkOption
-    types
-    ;
-in {
+}: {
   # TODO: https://github.com/snugnug/hjem-rum/
   # TODO: https://github.com/feel-co/hjem
   imports = [
@@ -27,6 +19,11 @@ in {
       {
         # Let Home Manager install and manage itself.
         programs.home-manager.enable = true;
+      }
+
+      {
+        programs.man.enable = config.documentation.man.enable;
+        manual.manpages.enable = config.documentation.man.enable;
       }
     ];
 
