@@ -9,10 +9,15 @@
   inherit
     (lib)
     lists
+    mkBoolOption
+    mkDisableOption
     mkIf
     mkMerge
     ;
+
   inherit (config.chonkos) isDesktop;
+
+  cfg = config.chonkos.nvim;
 
   nvim = nvf.lib.neovimConfiguration {
     inherit pkgs;
@@ -27,7 +32,7 @@
           ];
 
           startPlugins = mkMerge (with pkgs.vimPlugins; [
-            (mkIf isDesktop [
+            (mkIf cfg.desktopInstall [
               blink-cmp
               vim-easymotion
               harpoon2
@@ -50,7 +55,7 @@
           extraPackages = with pkgs; (
             [
             ]
-            ++ lists.optionals isDesktop [
+            ++ lists.optionals cfg.desktopInstall [
               alejandra
               basedpyright
               bash-language-server
@@ -79,7 +84,7 @@
             # lua
             ''
               vim.g.chonkos_desktop = ${
-                if isDesktop
+                if cfg.desktopInstall
                 then "true"
                 else "false"
               };
@@ -92,7 +97,7 @@
           # packages (ha) from a path instead of dynamically installing them
           # which is the default behaviour of the plugin).
           treesitter = {
-            enable = isDesktop;
+            enable = cfg.desktopInstall;
             grammars = pkgs.vimPlugins.nvim-treesitter.allGrammars;
 
             context.enable = false;
@@ -102,7 +107,13 @@
     ];
   };
 in {
-  config = {
+  options.chonkos.nvim = {
+    enable = mkDisableOption "enable neovim installation";
+
+    desktopInstall = mkBoolOption "install desktop configuration" isDesktop;
+  };
+
+  config = mkIf cfg.enable {
     environment = {
       variables = {
         EDITOR = "nvim";
@@ -110,6 +121,7 @@ in {
       };
       systemPackages = [nvim.neovim];
     };
-    programs.nvf.enableManpages = true;
+
+    programs.nvf.enableManpages = cfg.desktopInstall;
   };
 }
