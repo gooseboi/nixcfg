@@ -26,6 +26,8 @@ in {
           fonts.fontconfig.enable = false;
         }
       ];
+
+      fonts.fontconfig.enable = isDesktop;
     }
 
     (mkIf cfg.enable {
