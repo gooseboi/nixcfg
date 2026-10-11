@@ -60,7 +60,6 @@ in {
         fzf
         gdu
         htop
-        hyperfine
         iperf3
         jq
         just
@@ -123,6 +122,7 @@ in {
         graphviz
         handbrake
         helium
+        hyperfine
         imagemagickBig
         libnotify
         libqalculate
