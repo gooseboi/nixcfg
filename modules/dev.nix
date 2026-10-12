@@ -102,8 +102,6 @@ in {
       (
         t3code.override (
           {
-            enableCursor = true;
-            enableCursorCli = true;
             enableOpencode = true;
           }
           // (attrsets.optionalAttrs config.chonkos.git.enable {
