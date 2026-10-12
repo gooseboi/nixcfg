@@ -36,6 +36,7 @@ in {
         type = "btrfs";
         what = "/dev/disk/by-uuid/a5e9b07f-e704-416b-ab0c-dd67310087f1";
         where = driveMountPath;
+        options = "subvolid=256";
         wantedBy = [
           "immich-server.service"
         ];
