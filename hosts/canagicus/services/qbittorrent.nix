@@ -1,16 +1,24 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit
     (lib)
+    getExe'
     mkIf
     ;
 
   inherit (config.networking) domain;
 
   enable = true;
+
+  driveMountPath = "/media/qbittorrent";
+  driveMountUnit = "media-qbittorrent.mount";
+
+  user = "qbittorrent";
+  group = "qbittorrent";
 
   subDomain = "qb";
   torrentingPort = 52020;
@@ -26,6 +34,8 @@ in {
       inherit enable;
 
       inherit torrentingPort webuiPort;
+
+      inherit user group;
 
       serverConfig = {
         LegalNotice.Accepted = true;
@@ -51,6 +61,27 @@ in {
             Password_PBKDF2 = "MD6q8AHfFWW2YLAdGotF0A==:nxH1Q2Q6qm9JGI7nBq+zWaFx9BmAwGb1EL8QqfnbV1bcvhIEsMPdGDo7q3jLyiqucBLzLbXzVhcCH5SN/G+Uww==";
           };
         };
+      };
+    };
+
+    systemd.mounts = [
+      {
+        type = "btrfs";
+        what = "/dev/disk/by-uuid/a5e9b07f-e704-416b-ab0c-dd67310087f1";
+        where = driveMountPath;
+        options = "subvolid=257";
+      }
+    ];
+
+    systemd.services."qbittorrent-mount-perms" = {
+      requires = [driveMountUnit];
+      after = [driveMountUnit];
+      wantedBy = ["qbittorrent.service"];
+      before = ["qbittorrent.service"];
+
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "${getExe' pkgs.coreutils "chown"} ${user}:${group} ${driveMountPath}";
       };
     };
 
