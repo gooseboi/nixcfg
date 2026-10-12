@@ -57,23 +57,28 @@ in {
         StateDirectoryMode = "0750";
 
         # Hardening
-        LockPersonality = true;
-        NoNewPrivileges = true;
-        ProtectClock = true;
-        ProtectControlGroups = true;
-        ProtectHome = true;
-        ProtectHostname = true;
-        ProtectKernelLogs = true;
-        ProtectKernelModules = true;
-        ProtectKernelTunables = true;
-        ProtectProc = "invisible";
-        ProtectSystem = "strict";
-        RemoveIPC = true;
-        RestrictNamespaces = true;
-        RestrictRealtime = true;
-        RestrictSUIDSGID = true;
-        PrivateTmp = true;
-        SystemCallFilter = "~@clock @cpu-emulation @debug @obsolete @module @mount @raw-io @reboot @swap";
+        # NOTE: For some reason, when the game tries to make a backup, it
+        # reports there's no disk space left and then does nothing, and one of
+        # these options is the problem, but I cannot be asked to find out
+        # which, and therefore disable all of them.
+        #
+        # LockPersonality = true;
+        # NoNewPrivileges = true;
+        # ProtectClock = true;
+        # ProtectControlGroups = true;
+        # ProtectHome = true;
+        # ProtectHostname = true;
+        # ProtectKernelLogs = true;
+        # ProtectKernelModules = true;
+        # ProtectKernelTunables = true;
+        # ProtectProc = "invisible";
+        # ProtectSystem = "strict";
+        # RemoveIPC = true;
+        # RestrictNamespaces = true;
+        # RestrictRealtime = true;
+        # RestrictSUIDSGID = true;
+        # PrivateTmp = true;
+        # SystemCallFilter = "~@clock @cpu-emulation @debug @obsolete @module @mount @raw-io @reboot @swap";
       };
     };
   };
