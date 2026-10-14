@@ -122,7 +122,7 @@ in {
       go
 
       # Solo
-      # FIXME: stopped building: lean4
+      lean4
       odin
       rocq-core
       zig
@@ -134,7 +134,7 @@ in {
       gnumake
       mermaid-cli
       tokei
-      # FIXME: tracy
+      tracy
     ];
 
     home-manager.sharedModules = [
