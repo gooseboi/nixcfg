@@ -46,6 +46,7 @@ in {
           "Session\\GlobalUPSpeedLimit" = 1024;
           "Session\\AlternativeGlobalDLSpeedLimit" = 5120;
           "Session\\AlternativeGlobalUPSpeedLimit" = 512;
+          "Session\\DefaultSavePath" = "/media/qbittorrent";
 
           # Stop torrents upon reaching ratio=10
           "Session\\GlobalMaxRatio" = 10;
