@@ -186,11 +186,13 @@ in {
             hyprpaper = {
               enable = true;
               settings = {
+                splash = false;
+
                 wallpaper = [
                   {
                     monitor = "";
                     path = "~/.local/share/bg";
-                    fit_mode = "stretch";
+                    fit_mode = "fill";
                   }
                 ];
               };
