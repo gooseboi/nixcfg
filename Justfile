@@ -18,3 +18,6 @@ check:
 
 check_impure:
 	NIXPKGS_ALLOW_UNFREE=1 nix flake check --impure
+
+flake_hash flake:
+	jq .nodes'["{{flake}}"]' flake.lock
