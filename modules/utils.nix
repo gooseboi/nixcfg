@@ -140,6 +140,7 @@ in {
         opustags
         packwiz
         pandoc
+        pavucontrol
         playerctl
         prettier
         python3.pkgs.grip
