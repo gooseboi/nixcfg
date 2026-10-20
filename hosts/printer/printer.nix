@@ -40,6 +40,17 @@
     ];
   };
 
+  # The nixpkgs module for cups always adds samba, and this system doesn't need
+  # it. Removing it removes like 70MiB from the closure.
+  nixpkgs.overlays = [
+    (_: prev: {
+      samba = prev.writeShellScriptBin "smbspool" ''
+        echo "smb printing is not available on this host" >&2
+        exit 1
+      '';
+    })
+  ];
+
   users.users.printer = {
     isSystemUser = true;
     group = "lpadmin";
