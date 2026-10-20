@@ -40,12 +40,20 @@
     ];
   };
 
-  # The nixpkgs module for cups always adds samba, and this system doesn't need
-  # it. Removing it removes like 70MiB from the closure.
+  # These are packages that are pulled in by the cups module in nixpkgs,
+  # and that aren't needed on this server.
   nixpkgs.overlays = [
     (_: prev: {
+      # This is used for printing through samba, and the printer is always on
+      # USB.
       samba = prev.writeShellScriptBin "smbspool" ''
         echo "smb printing is not available on this host" >&2
+        exit 1
+      '';
+      # This is pulled in because on desktops cups needs to be able to open up
+      # some dialogue, and obviously this isn't a desktop.
+      xdg-utils = prev.writeShellScriptBin "xdg-open" ''
+        echo "there is no desktop on this host" >&2
         exit 1
       '';
     })
