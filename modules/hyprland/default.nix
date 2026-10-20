@@ -75,7 +75,7 @@
     ${getExe' pkgs.dunst "dunstctl"} set-paused false
   '';
   before-sleep = pkgs.writeShellScriptBin "hyprland-before-sleep.sh" ''
-    ${getExe' pkgs.hyprland "hyprctl"} dispatch dpms on
+    ${getExe' pkgs.hyprland "hyprctl"} dispatch ${escapeShellArg ''hl.dsp.dpms({action="on"})''}
     ${getExe lock}
   '';
 in {
