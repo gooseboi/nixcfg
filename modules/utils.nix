@@ -110,7 +110,7 @@ in {
         anki
         appimage-run
         blender
-        calibre # For ebook-convert
+        (calibre.override {speechSupport = false;}) # For ebook-convert
         compose2nix
         czkawka-full
         discord
