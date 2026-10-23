@@ -56,6 +56,7 @@ in {
 
             # Japanese
             # https://wiki.archlinux.org/title/Localization/Japanese#Fonts
+            furifont
             hanazono
             ipaexfont
             jigmo
