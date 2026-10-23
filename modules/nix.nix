@@ -35,7 +35,9 @@ in {
     disableLocalBuilds = mkDisableOption "make this machine unable to execute builds";
     useRemoteBuild = mkEnableOption "make this machine use remote builders";
     isRemoteBuilder = mkEnableOption "mark this machine as avaiable to run remote builds for others";
+
     desktopInstall = mkBoolOption "install utils for desktop" isDesktop;
+    linkInputs = mkBoolOption "whether to link the flake inputs into the system closure" cfg.desktopInstall;
   };
 
   config = {
@@ -51,7 +53,15 @@ in {
 
     # This is to prevent the downloaded flakes' source code from being garbage
     # collected
-    environment.etc.".system-inputs.json".text = builtins.toJSON inputFlakes;
+    environment.etc = mkIf cfg.linkInputs {
+      ".system-inputs.json".text = builtins.toJSON inputFlakes;
+    };
+
+    # We do this in this module
+    nixpkgs.flake = {
+      setFlakeRegistry = false;
+      setNixPath = false;
+    };
 
     nix = {
       settings = {
@@ -86,8 +96,11 @@ in {
       };
 
       registry =
-        inputFlakes
-        |> mapAttrs (_: flake: {inherit flake;});
+        mkIf cfg.linkInputs
+        (
+          inputFlakes
+          |> mapAttrs (_: flake: {inherit flake;})
+        );
 
       # Even though I don't like using channels and disable them above, some
       # `shell.nix`s shared online use <nixpkgs> to get the system nixpkgs, and
@@ -95,8 +108,11 @@ in {
       # to support this, as there is no way to change what these values point to,
       # I just do it.
       settings.nix-path =
-        inputFlakes
-        |> mapAttrsToList (name: value: "${name}=${value}");
+        mkIf cfg.linkInputs
+        (
+          inputFlakes
+          |> mapAttrsToList (name: value: "${name}=${value}")
+        );
 
       settings.max-jobs = mkIf cfg.disableLocalBuilds 0;
       distributedBuilds = cfg.useRemoteBuild;
