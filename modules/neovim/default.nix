@@ -65,7 +65,7 @@
               haskell-language-server
               (
                 jdt-language-server.override {
-                  jdk = pkgs.temurin-bin-21.override {gtkSupport = false;};
+                  jdk25 = pkgs.temurin-bin-25.override {gtkSupport = false;};
                 }
               )
               lua-language-server
