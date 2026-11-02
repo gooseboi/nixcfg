@@ -27,6 +27,7 @@ in {
       # The server uses some forge updating bullshit for some reason and
       # so it needs to have network-online instead of just network
       after = ["network-online.target" "mc-gate.service"];
+      wants = ["network-online.target"];
       wantedBy = ["mc-gate.service"];
 
       serviceConfig = {

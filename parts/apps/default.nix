@@ -26,6 +26,7 @@
     in {
       deploy = {
         type = "app";
+        meta.description = "deploy to a remote system using deploy-rs";
         program =
           pkgs.writeShellScriptBin "deploy"
           # bash
@@ -40,21 +41,25 @@
 
       rawDeploy = {
         type = "app";
+        meta.description = "direct binding to the deploy-rs executable, if needed";
         program = deploy-rs-exe;
       };
 
       disko = {
         type = "app";
+        meta.description = "run the disko executable";
         program = getExe disko.packages.disko;
       };
 
       htpasswd = {
         type = "app";
+        meta.description = "run htpasswd to generate an htpasswd file";
         program = "${getExe' pkgs.apacheHttpd "htpasswd"}";
       };
 
       update_packages = {
         type = "app";
+        meta.description = "update the packages inside this flake";
         program =
           pkgs.writeShellScriptBin "update_packages"
           # bash

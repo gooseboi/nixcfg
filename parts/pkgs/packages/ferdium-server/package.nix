@@ -4,7 +4,7 @@
   jq,
   lib,
   makeWrapper,
-  nodejs_22,
+  nodejs-slim_22,
   openssl,
   pnpmConfigHook,
   pnpm_10,
@@ -40,7 +40,7 @@
     '';
   };
 
-  pnpm = pnpm_10.override {nodejs = nodejs_22;};
+  pnpm = pnpm_10.override {nodejs-slim = nodejs-slim_22;};
 in
   stdenvNoCC.mkDerivation rec {
     pname = "ferdium-server";
@@ -54,7 +54,7 @@ in
     };
 
     nativeBuildInputs = [
-      nodejs_22
+      nodejs-slim_22
       pnpm
       pnpmConfigHook
       makeWrapper
@@ -105,12 +105,12 @@ in
       ln -s ${ferdium-recipes}/share/ferdium-recipes/recipes $out/lib/ferdium-server/recipes
 
       mkdir -p $out/bin
-      makeWrapper ${lib.getExe nodejs_22} $out/bin/ferdium-server \
+      makeWrapper ${lib.getExe nodejs-slim_22} $out/bin/ferdium-server \
         --add-flags "$out/lib/ferdium-server/build/server.js" \
         --set NODE_ENV "production" \
         --prefix PATH : ${
         lib.makeBinPath (
-          [nodejs_22]
+          [nodejs-slim_22]
           ++ lib.optional
           sqliteSupport
           sqlite
@@ -120,7 +120,7 @@ in
       cat > $out/bin/ferdium-server-migrate <<EOF
       #!/usr/bin/env bash
       cd $out/lib/ferdium-server
-      exec ${lib.getExe nodejs_22} ace migration:run --force "\$@"
+      exec ${lib.getExe nodejs-slim_22} ace migration:run --force "\$@"
       EOF
       chmod +x $out/bin/ferdium-server-migrate
 

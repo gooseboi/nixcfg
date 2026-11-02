@@ -40,6 +40,8 @@ in {
           enable = true;
 
           inherit (cfg) package;
+
+          loadSessionVariables = true;
         };
       }
     ];

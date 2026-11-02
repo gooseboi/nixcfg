@@ -7,6 +7,7 @@
     apps = {
       nginx-fs = {
         type = "app";
+        meta.description = "expose a local filesystem using nginx";
         program =
           lib.getExe
           <| pkgs.writeShellScriptBin "nginx-fs"

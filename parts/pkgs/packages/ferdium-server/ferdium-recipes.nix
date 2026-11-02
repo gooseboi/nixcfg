@@ -4,13 +4,13 @@
   git,
   lib,
   jq,
-  nodejs_22,
+  nodejs-slim_22,
   pnpmConfigHook,
   pnpm_10,
   stdenvNoCC,
   ...
 }: let
-  pnpm = pnpm_10.override {nodejs = nodejs_22;};
+  pnpm = pnpm_10.override {nodejs-slim = nodejs-slim_22;};
 in
   stdenvNoCC.mkDerivation rec {
     pname = "ferdium-recipes";
@@ -25,7 +25,7 @@ in
 
     nativeBuildInputs = [
       git
-      nodejs_22
+      nodejs-slim_22
       pnpm
       pnpmConfigHook
     ];
