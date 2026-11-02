@@ -21,6 +21,7 @@ in {
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       texliveFull
+      inkscape # For the latex svg package
       typst
     ];
   };
