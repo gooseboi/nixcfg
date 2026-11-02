@@ -165,7 +165,23 @@ in {
         zfs
       ];
 
-    environment.shellAliases = {
+    programs.fuse = mkIf cfg.desktopInstall {
+      enable = true;
+      userAllowOther = true;
+    };
+
+    # Alias fusermount to fusermount3, for programs that require the legacy
+    # binary.
+    security.wrappers = mkIf cfg.desktopInstall {
+      fusermount = {
+        group = "root";
+        owner = "root";
+        setuid = true;
+        source = "${lib.getBin pkgs.fuse3}/bin/fusermount3";
+      };
+    };
+
+    environment.shellAliases = mkIf cfg.desktopInstall {
       opusedit = "opustags --edit --in-place";
     };
 
