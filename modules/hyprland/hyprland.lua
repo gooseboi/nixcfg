@@ -19,6 +19,8 @@ hl.config({
 		col = {
 			active_border = "rgba(ffb52aff)",
 			inactive_border = "rgba(1d2021ff)",
+			nogroup_border_active = "rgba(ffb52aff)",
+			nogroup_border = "rgba(1d2021ff)",
 		}
 	},
 	dwindle = {
