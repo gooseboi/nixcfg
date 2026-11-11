@@ -61,6 +61,7 @@
   };
 
   services.auto-cpufreq.enable = true;
+  services.thermald.enable = true;
 
   system.stateVersion = "24.05"; # This shouldn't be changed
 }
