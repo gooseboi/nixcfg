@@ -29,6 +29,8 @@ in {
         programs.ghostty = {
           enable = true;
 
+          systemd.enable = true;
+
           clearDefaultKeybinds = true;
 
           settings =
