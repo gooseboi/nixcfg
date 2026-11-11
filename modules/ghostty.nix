@@ -42,43 +42,43 @@ in {
               gtk-single-instance = true;
               quit-after-last-window-closed = false;
 
-              window-decoration = false;
-
               background-opacity = 0.9;
 
-              keybind =
-                [] # For alignment
-                ++ (mapAttrsToList (name: value: "${name}=${value}") {
+              keybind = (
+                {
                   page_down = "scroll_page_fractional:1";
                   page_up = "scroll_page_fractional:-1";
-                })
-                ++ (mapAttrsToList (name: value: "alt+${name}=${value}") {
-                  c = "copy_to_clipboard";
-                  p = "paste_from_clipboard";
 
-                  down = "scroll_page_fractional:1";
-                  j = "scroll_page_fractional:0.5";
+                  "alt+n" = "new_tab";
+                  "alt+x" = "close_tab";
+                  "alt+1" = "goto_tab:1";
+                  "alt+2" = "goto_tab:2";
+                  "alt+3" = "goto_tab:3";
+                  "alt+4" = "goto_tab:4";
+                  "alt+5" = "goto_tab:5";
+                  "alt+6" = "goto_tab:6";
+                  "alt+7" = "goto_tab:7";
+                  "alt+8" = "goto_tab:8";
+                  "alt+9" = "goto_tab:9";
 
-                  up = "scroll_page_fractional:-1";
-                  k = "scroll_page_fractional:-0.5";
+                  "alt+c" = "copy_to_clipboard";
+                  "alt+p" = "paste_from_clipboard";
 
-                  home = "scroll_to_top";
-                  end = "scroll_to_bottom";
+                  "alt+down" = "scroll_page_fractional:1";
+                  "alt+up" = "scroll_page_fractional:-1";
+                  "alt+j" = "scroll_page_fractional:0.5";
+                  "alt+k" = "scroll_page_fractional:-0.5";
+                  "alt+home" = "scroll_to_top";
+                  "alt+end" = "scroll_to_bottom";
 
-                  plus = "increase_font_size:1";
-                  minus = "decrease_font_size:1";
-                })
-                ++ (mapAttrsToList (name: value: "alt+shift+${name}=${value}") {
-                  k = "increase_font_size:1";
-
-                  enter = "reset_font_size";
-                  q = "close_surface";
-                  j = "decrease_font_size:1";
-                })
-                ++ (mapAttrsToList (name: value: "ctrl+alt+${name}=${value}") {
-                  j = "scroll_page_lines:1";
-                  k = "scroll_page_lines:-1";
-                });
+                  "alt+plus" = "increase_font_size:1";
+                  "alt+minus" = "decrease_font_size:1";
+                  "alt+shift+k" = "increase_font_size:1";
+                  "alt+shift+j" = "decrease_font_size:1";
+                  "alt+shift+enter" = "reset_font_size";
+                }
+                |> (mapAttrsToList (name: value: "${name}=${value}"))
+              );
             }
             // (with theme.withHashtag; {
               background = base00;
