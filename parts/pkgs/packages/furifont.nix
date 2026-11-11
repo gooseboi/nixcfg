@@ -4,7 +4,6 @@
   stdenvNoCC,
   installFonts,
 }:
-
 stdenvNoCC.mkDerivation rec {
   pname = "furifont";
   version = "0.6.2";
@@ -15,7 +14,7 @@ stdenvNoCC.mkDerivation rec {
     stripRoot = false;
   };
 
-  nativeBuildInputs = [ installFonts ];
+  nativeBuildInputs = [installFonts];
   dontInstallWebfonts = true;
 
   meta = {
@@ -25,4 +24,3 @@ stdenvNoCC.mkDerivation rec {
     platforms = lib.platforms.all;
   };
 }
-
