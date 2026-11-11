@@ -23,6 +23,8 @@ in {
       openssh
     ];
 
+    environment.enableAllTerminfo = true;
+
     programs.mosh = {
       enable = true;
       openFirewall = true;
