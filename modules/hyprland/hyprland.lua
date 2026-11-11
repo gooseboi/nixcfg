@@ -92,12 +92,21 @@ hl.define_submap("resize", function()
 	hl.bind("ESCAPE", hl.dsp.submap("reset"))
 end)
 
+local terminal = os.getenv("TERMINAL") or "ghostty"
+local term_open = function(prog)
+	if terminal == "ghostty" then
+		return "ghostty +new-window -e " .. prog
+	else
+		return terminal .. " -e " .. prog
+	end
+end
+
 -- Launch terminal
-hl.bind("SUPER + Return", hl.dsp.exec_cmd("$TERMINAL"))
+hl.bind("SUPER + Return", hl.dsp.exec_cmd(term_open("")))
 -- Launch tmux-sessionizer
-hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_cmd("$TERMINAL -e tmux-sessionizer"))
+hl.bind("SUPER + SHIFT + Return", hl.dsp.exec_cmd(term_open("tmux-sessionizer")))
 -- Launch a tmux session in the nixcfg dir
-hl.bind("SUPER + C", hl.dsp.exec_cmd("$TERMINAL -e tmux-sessionizer nixcfg"))
+hl.bind("SUPER + C", hl.dsp.exec_cmd(term_open("tmux-sessionizer nixcfg")))
 
 -- Make current window floating
 hl.bind("SUPER + Y", hl.dsp.window.float({ action = "toggle" }))
@@ -148,11 +157,11 @@ hl.bind("CTRL + ALT + W", hl.dsp.exec_cmd("$BROWSER"))
 hl.bind("CTRL + ALT + F", hl.dsp.exec_cmd("Thunar"))
 --
 -- -- Launch some common terminal programs
-hl.bind("CTRL + ALT + M", hl.dsp.exec_cmd("$TERMINAL -e ncmpcpp"))
-hl.bind("CTRL + ALT + N", hl.dsp.exec_cmd("$TERMINAL -e nvim"))
-hl.bind("CTRL + ALT + C", hl.dsp.exec_cmd("$TERMINAL -e calcurse"))
-hl.bind("CTRL + ALT + H", hl.dsp.exec_cmd("$TERMINAL -e btop"))
-hl.bind("CTRL + ALT + R", hl.dsp.exec_cmd("$TERMINAL -e newsboat"))
+hl.bind("CTRL + ALT + M", hl.dsp.exec_cmd(term_open("ncmpcpp")))
+hl.bind("CTRL + ALT + N", hl.dsp.exec_cmd(term_open("nvim")))
+hl.bind("CTRL + ALT + C", hl.dsp.exec_cmd(term_open("calcurse")))
+hl.bind("CTRL + ALT + H", hl.dsp.exec_cmd(term_open("btop")))
+hl.bind("CTRL + ALT + R", hl.dsp.exec_cmd(term_open("newsboat")))
 
 -- TODO: boomer worked better but no worky on wayland. Maybe port?
 

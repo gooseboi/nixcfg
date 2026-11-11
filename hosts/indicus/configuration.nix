@@ -35,7 +35,7 @@
     nix.disableLocalBuilds = false;
 
     adb.enable = true;
-    alacritty.enableEnvVar = true;
+    ghostty.enableEnvVar = true;
     docker.enable = true;
     helix.enable = true;
     hyprland.enable = true;
