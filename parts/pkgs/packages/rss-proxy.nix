@@ -1,11 +1,21 @@
 {
   rustPlatform,
   fetchFromGitHub,
+  pkg-config,
+  zstd,
   ...
 }:
 rustPlatform.buildRustPackage {
   pname = "rss-proxy";
   version = "0.0.1";
+
+  nativeBuildInputs = [
+    pkg-config
+  ];
+
+  buildInputs = [
+    zstd
+  ];
 
   src = fetchFromGitHub {
     owner = "gooseboi";

@@ -131,7 +131,7 @@ in {
         localsend
         losslesscut-bin
         mcman
-        nbt-explorer
+        # nbt-explorer
         nix-update
         obs-studio
         oha
