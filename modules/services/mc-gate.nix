@@ -5,7 +5,16 @@
   pkgs,
   ...
 }: let
-  inherit (lib) attrsToList filter mkEnableOption mkIf mkOption types;
+  inherit
+    (lib)
+    attrsToList
+    filter
+    mkDisableOption
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
 
   cfg = config.chonkos.services.mc-gate;
 in {
@@ -47,7 +56,7 @@ in {
       type = types.attrsOf (
         types.submodule {
           options = {
-            enable = mkEnableOption "enable this forwarding";
+            enable = mkDisableOption "enable this forwarding";
             src = mkOption {
               type = types.str;
               example = "mc.example.net";
