@@ -14,7 +14,14 @@
           src = "terra.mc.gooseman.net";
           dest = "localhost:25577";
         };
+
+        tazos = {
+          src = "tazos.mc.gooseman.net";
+          dest = "localhost:25578";
+        };
       };
     };
+
+    users.groups.minecraft = {};
   };
 }
