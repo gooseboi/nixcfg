@@ -12,6 +12,17 @@
     ;
 
   cfg = config.chonkos.docker;
+  package = pkgs.docker.override (
+    {
+      buildxSupport = true;
+      composeSupport = true;
+    }
+    // (
+      attrsets.optionalAttrs config.chonkos.git.enable {
+        gitMinimal = config.chonkos.git.package;
+      }
+    )
+  );
 in {
   options.chonkos.docker = {
     enable = mkEnableOption "enable docker";
@@ -20,25 +31,20 @@ in {
   config = mkIf cfg.enable {
     virtualisation = {
       docker = {
-        enable = true;
-        package = pkgs.docker.override (
-          {
-            buildxSupport = true;
-            composeSupport = true;
-          }
-          // (
-            attrsets.optionalAttrs config.chonkos.git.enable {
-              gitMinimal = config.chonkos.git.package;
-            }
-          )
-        );
+        enable = false;
+        inherit package;
 
         storageDriver = "btrfs";
         enableOnBoot = false;
+
+        rootless = {
+          enable = true;
+          inherit package;
+
+          setSocketVariable = true;
+        };
       };
     };
-
-    users.extraGroups.docker.members = [config.chonkos.user];
 
     environment.shellAliases.docc = "docker compose";
 
